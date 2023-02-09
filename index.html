@@ -5,15 +5,88 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+    <!-- ubuntu -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <!-- gloria -->
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
     <!-- include tailwind -->
     <link rel="stylesheet" href="style.css">
 
     <title>Vite App</title>
   </head>
   <body>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    <script type="module" src="/main.js"></script>
+
+    <div class="font-codepro text-sm px-6 py-1 border-b-2 font-bold border-black bg-yellow-300">
+      Software Engineer
+    </div>
+
+    <div class="w-screen bg-indigo-500">
+
+      
+
+      <div class="px-6 pt-12 flex justify-center">
+
+        <div class="border-2 border-black bg-rose-400 w-80 rounded overflow-hidden">
+          <img src="./public/me.jpeg" alt="" class="bg-contain">
+        </div>  
+      </div>
+
+      <div class="font-gloria flex justify-center items-center gap-6">
+         
+        <svg class="w-10 rotate-90" viewBox="0 0 135 246" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.96874 245.415C28.2161 242.651 49.2199 233.393 66.0781 218.607C83.2127 203.684 95.2346 183.233 100.486 161.262C105.322 140.949 105.598 116.214 93.0237 98.3886C86.9437 89.8213 78.2382 83.6031 68.0127 80.9776C58.2017 78.4903 47.5617 79.0431 38.0271 82.4977C17.9906 89.8213 4.7251 109.305 1.40872 129.894C-0.249469 140.396 -0.111286 151.865 5.13965 161.4C10.8051 171.764 22.2743 176.185 33.1907 178.396C53.7799 182.542 75.8891 178.673 93.991 168.033C112.369 157.254 125.497 139.429 131.3 118.978C136.966 98.8032 135.308 76.9704 125.773 58.3157C116.653 40.352 100.762 25.981 82.2455 18.1046C77.8236 16.1701 73.1254 14.7883 68.4272 13.6828C64.1436 12.7155 62.209 19.3483 66.6308 20.3156C84.5946 24.1847 100.9 34.8247 112.093 49.3339C123.7 64.3958 129.089 83.0504 127.431 101.981C125.911 120.912 117.344 139.291 103.387 152.28C89.4309 165.269 70.3618 172.593 51.2926 173.007C41.758 173.145 31.6707 171.764 22.9652 168.033C18.4052 165.96 14.2597 163.058 11.6342 158.774C9.28512 154.767 8.04148 150.207 7.62693 145.509C5.96874 126.854 13.8451 106.403 28.907 95.0723C43.278 84.294 64.6963 82.774 79.3436 93.8286C95.0964 105.712 97.8601 128.236 95.9255 146.476C93.8528 167.204 85.1473 187.378 71.6054 203.131C58.2017 218.746 40.0998 230.077 20.2015 235.604C15.5033 236.847 10.6669 237.953 5.83056 238.506C4.03419 238.782 2.376 239.887 2.376 241.96C2.51418 243.618 4.17237 245.553 5.96874 245.415Z" fill="black"/>
+          <path d="M77.271 1.10815C74.0928 3.04271 70.9146 5.11543 68.0128 7.18817C66.3546 8.29363 64.8346 9.53728 63.3146 10.7809C61.7945 11.8864 60.4127 13.13 59.7218 14.9264C58.0636 19.0719 62.0709 22.8028 64.42 25.8428C66.7691 28.8828 69.2564 31.6465 71.8819 34.4101C75.0601 37.5883 79.8964 32.7519 76.7182 29.5737C74.5073 27.3628 72.4346 25.0137 70.5 22.6646C69.5328 21.5592 68.7037 20.3155 67.7364 19.2101C67.3218 18.6573 66.7691 17.9664 66.3546 17.4137C66.2164 17.2755 66.0782 16.9991 65.94 16.8609C65.94 16.9991 65.94 17.1373 66.0782 17.2755C66.0782 17.5519 65.94 17.6901 65.94 17.9664C66.0782 17.6901 66.2164 17.5519 66.0782 17.69C68.1509 16.3082 70.5 14.2355 72.711 12.5773C75.3364 10.7809 77.9619 8.98455 80.7255 7.32636C84.4565 4.70089 81.0019 -1.24095 77.271 1.10815Z" fill="black"/>
+        </svg>
+        <p class="text-lg">
+          Harvey
+        </p>   
+      </div>
+
+
+      <!-- 
+        me
+      -->
+      <div class="p-6">
+
+        <div class="border-t-2 border-x-2 rounded-t p-2 border-black bg-slate-50 flex justify-start gap-2 shadow-[#000]">
+          <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+          <div class="w-2 h-2 rounded-full bg-red-500"></div>
+        </div>
+
+        <div class="border-2 rounded-b border-black bg-slate-50 shadow-[#000]">
+          <div class="font-opensans tracking-wide text-sm p-6">
+            Programming is my passion because of its ability to challenge my mind, bring ideas to life, and make a positive impact on the world. I am excited to continue exploring the limitless possibilities of programming and building a career in this field.          
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 
+        Social media links
+      -->
+      <div class="w-full px-6 pb-6 flex justify-center gap-6">
+  
+        <div class="w-16 h-16 p-5 border-2 border-black rounded bg-emerald-400 shadow-[#000]">
+          <img src="./public/github.png" alt="">
+        </div>
+  
+        <div class="w-16 h-16 p-5 border-2 border-black rounded bg-blue-400 shadow-[#000]">
+          <img src="./public/linkedin.png" alt="">
+        </div>
+  
+      </div>
+
+
+    </div>
+
+
   </body>
 </html>
