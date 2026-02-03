@@ -20,11 +20,12 @@ cv:
       - institution: Monroe University
         location: Bronx, New York
         url: https://www.monroeu.edu/
-        area: Computer Information Systems with minor in Mathematics
-        studyType: Bachelof of Science
+        area: Computer Information Systems
+        studyType: Bachelof of Science (Magna Cum Laude)
         start_date: 2021
         end_date: 2025
         score: "3.7/4.0 GPA"
+        minor: Mathematics
 
       - institution: Lycée Privé ACEEM
         location: Madagascar
@@ -40,53 +41,49 @@ cv:
         location: New Rochelle, New York
         start_date: 2025
         end_date: ongoing
-        summary: Recreating and Optimizing 100+ dashboards on PowerBI to help the university track student performance, retention, and graduation rates.
         highlights:
-          side project 1: Built a SharePoint site for the ARAP department to streamline data sharing and collaboration among team members. 
-          side project 2: Updated the University's Library website using HTML, CSS, Javascript and LibGuide platform to enhance user experience and accessibility.
+          - Recreating and Optimizing 100+ dashboards on PowerBI to help the university track student performance, retention, and graduation rates.
+          - Built a SharePoint site for the ARAP department to streamline data sharing and collaboration among team members. 
+          - Updated the University's Library website using HTML, CSS, Javascript and LibGuide platform to enhance user experience and accessibility.
 
-      - company: California Institute of Technology
-        position: Visiting Professor
-        location: Pasadena, California, US
-        start_date: 1933
-        end_date: 1933
+      - company: Student Success Center, Monroe University
+        position: Information Technology Peer Tutor
+        location: Bronx, New York
+        start_date: 2023
+        end_date: 2025
         highlights:
-          - Description 1.
-          - Description 2.
+          - Tutored students in Excell, databases, and Programming accross multiple academic levels.
+          - Assisted alumni with real-world IT issues, including e-commerce website setup and troubleshooting.
 
-      - company: Kaiser Wilhelm Institute for Physics
-        position: Director
-        location: Berlin, Germany
-        start_date: 1917
-        end_date: 1933
+      - company: New Rochelle Council of Community Services
+        position: Software Developer Intern
+        location: New Rochelle, New York
+        start_date: 2023
+        end_date: 2023
+        highlights:
+          - Collaborated with a team to redesign the nonprofit's website using Next.js (Typescript) and Tailwind CSS.
+          - Implemented Figma wireframes into functional interfaces and recreated designs using WordPress theme and plugins.
 
-      - company: Karl-Ferdinand University
-        position: Professor of Theoretical Physics
-        location: Prague, Czechoslovakia
-        start_date: 1911
-        end_date: 1917
-
-      - company: University of Zurich
-        position: Associate Professor of Theoretical Physics
-        location: Zurich, Switzerland
-        start_date: 1909
-        end_date: 1911
+      - company: Residence Life, Monroe University
+        position: Resident Assistant
+        location: New Rochelle, New York
+        start_date: 2022
+        end_date: 2023
+        highlights:
+            - Supported 50+ dorm rooms by resolving conflicts, reporting maintenance issues, and providing resources to students.
+            - Planned and led 10+ events per semester while collaborating with fellow RAs and Residence life staff to promote community engagement.
 
     Awards:
       - title: 12 Hackathon wins
-        authors:
-          - "Royal Swedish Academy of Sciences"
-        date: 1921-11-01
-        awarder: Royal Swedish Academy of Sciences
-        url: https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/
-        summary: The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'
+        date: 2022-2024
+        awarder: Several East Coast Universities & Major League Hacking
+        url: https://devpost.com/mrava
+        summary: 12 Hackathon wins accross the U.S. (Yale, Princeton, Stony Brook, RPI, University of Penn), earning ~$4,000 in prizes.
 
-      - title: Max Planck Medal
-        authors:
-          - "German Physical Society"
-        date: 2029
-        awarder: German Physical Society
-        summary: Awarded for outstanding scientific achievement
+      - title: Dean's Award for Academic Excellence 
+        date: 2025
+        awarder: Monroe university
+        summary: Awarded for outstanding academic achievement, leadership and impact.
 
     Languages:
       - name: Malagasy
@@ -96,7 +93,7 @@ cv:
         summary: "Fluent"
 
       - name: French
-        summary: "Fluent"
+        summary: "Fluent (DELF B2 Certified)"
 
     Interests:
       - name: Applied AI & Data Systems
@@ -104,17 +101,12 @@ cv:
         keywords: "Machine Learning, Deep Learning, Data Analysis, Data Visualization, Big Data, Data Engineering, MCP, RAG"
 
     Certificates:
-      - name: Machine Learning
-        date: 2018-01-01
-        issuer: Stanford University
-        icon: fa-solid fa-location-dot
-
-      - name: Quantum Computing
-        date: 2018-01-01
-        issuer: Stanford University
+      - name: CS50P - Introduction to Programming with Python
+        date: 2022
+        issuer: Harvard University
         icon: fa-solid fa-tag
 
-      - name: Quantum Information
-        date: 2018-01-01
-        issuer: Stanford University
-        icon: fa-solid fa-envelope
+      - name: DELF B2 - French Language Proficiency
+        date: 2020
+        issuer: Alliance Française Madagascar
+        icon: fa-solid fa-tag
