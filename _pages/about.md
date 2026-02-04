@@ -1,31 +1,37 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-subtitle: Aspiring Data Scientist | <a href="https://devpost.com/mrava">12 x Hackathon Winner</a> | Queens, NY, 11377.
+subtitle: Aspiring Data Scientist. Data Analyst
 
-# profile:
-#   align: right
-#   image: prof_pic.jpg
-#   image_circular: false # crops the image to make it circular
-#   more_info: >
-#     <p>+1 347 903 5360</p>
-#     <p>Queens, New York City, 11377</p>
+social_links:
+  - name: GitHub
+    username: mravaloarison
+    url: https://github.com/
+    icon: fab fa-github
+  - name: LinkedIn
+    username: mravaloarison
+    url: https://linkedin.com/in/
+    icon: fab fa-linkedin
+  - name: Instagram
+    username: mami_ravaloarison
+    url: https://instagram.com/
+    icon: fab fa-instagram
 
-selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
-
-announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
+social: false 
 
 latest_posts:
   enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  scrollable: true 
+  limit: 3 
 ---
 
-My name is Maminiaina Ravaloarison, and I was born and raised in Madagascar. In high school, most of my classmates feared mathematics and felt pressured by it, but I was fascinated by the fact that it was precise, pattern-based, and had only one right answer. I knew I wanted to work in a field that would use this logical thinking, so it became my favorite subject, and it naturally drove my academic choices. 
+I am a data analyst with a strong background in programming and software development. I enjoy solving problems through code and building practical systems that make life easier.
 
-After high school, I was uncertain about which field of study to pursue, but I knew that I wanted mathematics to be part of it. I spent time reading job descriptions for various majors and soon noticed that, especially for someone from my country, proficiency in English or French was often required. I therefore invested a year studying both languages. 
+While I was a student, I activelly participated in hackathons, and <a href="https://devpost.com/mrava"> won 12 </a> competitions across universities on the U.S. East Coast by building iOS and watchOS apps, web applications, desktop tools, and AI-driven projects. These experiences strengthened my problem-solving skills, collaboration, and ability to prototype ideas quickly.
+
+Currently, I am a data analyst at <a href="https://www.monroeu.edu/">Monroe University</a>, where I recreate legacy dashboards in Power BI to support institutional reporting. In addition to analytics work, I build SharePoint sites for my department and maintain the university’s library website using SpringShare’s LibGuides platform.
+
+Looking ahead, I aspire to become a data scientist and continue deepening my foundations in data science through graduate study.
+
+Outside of work, I enjoy learning new songs on the piano, guitar, and bass, playing chess, and watching comedy and science fiction. I also try to stay active by cooking healthy meals and going to the gym, though I sometimes lack motivation to do so consistently. 

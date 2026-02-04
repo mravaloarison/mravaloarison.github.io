@@ -10,6 +10,12 @@
   font-optical-sizing: auto;
 }
 
+.post article p,
+.post article li {
+  word-spacing: 0.1em;
+  letter-spacing: 0.01em;
+}
+
 :root {
   color-scheme: light;
   --global-bg-color: #{v.$white-color};
