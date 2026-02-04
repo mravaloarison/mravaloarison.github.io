@@ -24,6 +24,15 @@
         <!-- Social Icons -->
         <div class="navbar-brand social">{% social_links %}</div>
       {% endif %}
+
+      <span>
+        <h4>
+          {% if page.permalink == '/' %}
+            {{ page.title }}
+          {% endif %}
+        </h4>
+      </span>
+      
       <!-- Navbar Toggle -->
       <button
         class="navbar-toggler collapsed ml-auto"

@@ -15,15 +15,39 @@ layout: default
     
     <p class="desc mb-2">{{ page.subtitle }}</p>
 
-    <div class="d-flex text-muted mb-3">
-      {% for social in page.social_links %}
-        <a href="{{ social.url }}{{ social.username }}"
-          target="_blank"
-          class="text-decoration-none text-muted mr-3">
-          <i class="{{ social.icon }}"></i> {{ social.name }}
-        </a>
-      {% endfor %}
+    <div class="row g-2 mb-3">
+  {% for social in page.social_links %}
+    <div class="col-6 col-sm-auto">
+      <a
+        href="{{ social.url }}{{ social.username }}"
+        target="_blank"
+        class="text-decoration-none"
+        style="color: rgb(123, 123, 129);"
+      >
+        <i class="{{ social.icon }}"></i> {{ social.name }}
+      </a>
     </div>
+  {% endfor %}
+
+  {% if page.cv_pdf %}
+    <div class="col-6 col-sm-auto">
+      <a
+        {% if page.cv_pdf contains '://' %}
+          href="{{ page.cv_pdf }}"
+        {% else %}
+          href="{{ page.cv_pdf | relative_url }}"
+        {% endif %}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-decoration-none"
+        style="color: rgb(123, 123, 129);"
+      >
+        <i class="fa-solid fa-file-pdf"></i> Download resume
+      </a>
+    </div>
+  {% endif %}
+</div>
+
 
   </header>
 
