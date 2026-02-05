@@ -9,43 +9,21 @@ horizontal: false
 ---
 
 <style>
-  /* ===== Projects page (match Lab exactly) ===== */
+  /* ===== Projects ===== */
 
   .projects {
     margin-top: 2rem;
   }
 
-  /* Filter bar */
+  /* Reuse blog hashtag design */
 
-  .project-filter-list {
-    border-bottom: 1px solid var(--global-divider-color);
-    margin-bottom: 2.5rem;
-  }
-
-  .project-filter-list ul {
-    padding: 0;
-    margin: 0;
-    display: flow-root;
-  }
-
-  .project-filter-list li,
-  .project-filter-list p {
-    list-style: none;
-    display: inline-block;
-    padding: 1rem 0.5rem;
-    color: var(--global-text-color-light);
+  .project-filters li {
     cursor: pointer;
   }
 
-  .project-filter-list li.active,
-  .project-filter-list li:hover {
+  .project-filters li.active,
+  .project-filters li:hover {
     color: var(--global-theme-color);
-  }
-
-  /* Hide category headers */
-
-  .projects h2.category {
-    display: none;
   }
 
   /* Cards */
@@ -72,36 +50,31 @@ horizontal: false
     line-height: 1.6;
   }
 
-  /* Mobile — IDENTICAL behavior to Lab */
+  /* Mobile — identical to Blog */
 
   @media (max-width: 576px) {
     .header-bar h3 {
       font-size: 1.5rem;
       line-height: 1.6;
     }
-
-    /* REMOVE extra vertical padding */
-    .project-filter-list {
+    
+    .project-filters {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    .project-filter-list ul {
+    .project-filters ul {
       display: flex;
       flex-wrap: nowrap;
       gap: 1rem;
-      padding: 0.5rem 0.5rem 0.75rem 0.5rem;
+      padding: 0.5rem 0.5rem 0.75rem;
       min-width: max-content;
     }
 
-    .project-filter-list li,
-    .project-filter-list p {
-      list-style: none;
-      display: inline-block;
-      padding: 1rem 0.5rem;
+    .project-filters p {
+      display: none;
     }
   }
-
 </style>
 
 <div class="post">
@@ -111,8 +84,8 @@ horizontal: false
     </div>
   {% endif %}
 
-  <!-- Filters -->
-  <div class="project-filter-list">
+  <!-- Filters (shared blog style) -->
+  <div class="tag-category-list project-filters">
     <ul class="p-0 m-0">
       <li class="active" data-filter="all">
         <i class="fa-solid fa-hashtag fa-sm"></i> all
@@ -159,7 +132,7 @@ horizontal: false
 </div>
 
 <script>
-  const filters = document.querySelectorAll('.project-filter-list li');
+  const filters = document.querySelectorAll('.project-filters li');
   const sections = document.querySelectorAll('.project-category');
 
   filters.forEach(filter => {
