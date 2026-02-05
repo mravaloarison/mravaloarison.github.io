@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: Aspiring Data Scientist. Data Analyst
+subtitle: Data Analyst
 cv_pdf: /assets/pdf/resume.pdf 
 
 social_links:

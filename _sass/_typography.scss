@@ -17,6 +17,8 @@ li,
 span,
 strong {
   color: var(--global-text-color);
+  word-spacing: 0.1em;
+  letter-spacing: 0.01em;
 }
 
 hr {

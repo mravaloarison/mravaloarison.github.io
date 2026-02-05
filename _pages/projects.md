@@ -50,9 +50,16 @@ horizontal: false
     line-height: 1.6;
   }
 
+  .projects .row {
+    row-gap: 1rem;      /* vertical spacing */
+  }
   /* Mobile — identical to Blog */
 
   @media (max-width: 576px) {
+    .projects .row {
+      row-gap: .4rem;      /* vertical spacing */
+    }
+
     .header-bar h3 {
       font-size: 1.5rem;
       line-height: 1.6;
@@ -105,7 +112,6 @@ horizontal: false
   <article class="post-content">
     <div class="projects">
 
-      <!-- ALL -->
       <section class="project-category" data-category="all">
         <div class="row row-cols-1 row-cols-md-3 g-3">
           {% assign all_projects = site.projects | sort: "title" %}
@@ -115,10 +121,9 @@ horizontal: false
         </div>
       </section>
 
-      <!-- CATEGORIES -->
       {% for category in page.display_categories %}
         <section class="project-category" data-category="{{ category }}" style="display:none;">
-          <div class="row row-cols-1 row-cols-md-3 g-3">
+          <div class="row row-cols-1 row-cols-md-3">
             {% assign categorized_projects = site.projects | where: "category", category | sort: "importance" %}
             {% for project in categorized_projects %}
               {% include projects.liquid %}
