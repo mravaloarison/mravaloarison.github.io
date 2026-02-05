@@ -31,4 +31,4 @@ Currently, I am a data analyst at <a href="https://www.monroeu.edu/">Monroe Univ
 
 This role has made me more intentional about pursuing a career in data science and my plan to deepen my foundations through graduate study.
 
-Outside of work, I enjoy learning new songs on the piano, guitar, and bass, playing chess, and watching comedy and science fiction. I also try to stay active by cooking healthy meals and going to the gym, though I sometimes lack motivation to do so consistently. 
+Outside of work, I love dogs, learning new songs on the piano, guitar, and bass, playing chess, and watching comedy and science fiction. I also try to consistently cook healthy meals and going to the gym, though I sometimes lack motivation to do so.

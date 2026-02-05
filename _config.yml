@@ -89,9 +89,11 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: Lab # blog_name will be displayed in your blog page
-blog_description: Experiments, breakdowns, and things I’m figuring out. # blog_description will be displayed in your blog page
+blog_description: Lab is for experiments, breakdowns, and things I’m figuring out. # blog_description will be displayed in your blog page
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
+
+projects_description: A gallery of projects I have worked on. # projects_description will be displayed in your projects page
 
 # Pagination
 pagination:

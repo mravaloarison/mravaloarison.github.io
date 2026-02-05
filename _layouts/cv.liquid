@@ -1,316 +1,137 @@
 ---
 layout: default
 ---
-{% comment %}
-  Unified CV layout that handles both RenderCV (YAML) and JSONResume (JSON) formats
-  - If page.cv_format is set, it determines which format to render:
-    - 'rendercv': Load and render only RenderCV data (site.data.cv.cv)
-    - 'jsonresume': Load and render only JSONResume data (site.data.resume)
-  - If page.cv_format is not set, the legacy behavior applies:
-    - RenderCV data is in site.data.cv.cv
-    - JSONResume data is in site.data.resume
-    - RenderCV is prioritized if both exist
-  Both formats use the same unified rendering includes for consistent output
-  {% endcomment %}
+  
+{% assign cv = site.data.cv.cv %}
 
-<div class="post">
-  <header class="post-header" style="margin-bottom: 1rem;">
-    <div style="display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 1rem;">
-      <h1 class="post-title" style="margin-bottom: 0;">
-        {{ page.title }}
-      </h1>
-      {% if page.cv_pdf %}
-        <a
-          {% if page.cv_pdf contains '://' %}
-            href="{{ page.cv_pdf }}"
-          {% else %}
-            href="{{ page.cv_pdf | relative_url }}"
-          {% endif %}
-          target="_blank"
-          rel="noopener noreferrer"
-          style="font-size: 0.9rem; color: var(--global-theme-color);"
-        >
-          <i class="fa-solid fa-file-pdf"></i> Download PDF
-        </a>
+<section class="cv-section">
+  <h2>Contact</h2>
+
+  <p>
+    <strong>{{ cv.name }}</strong><br>
+    {{ cv.label }}<br>
+    {{ cv.location }}
+  </p>
+
+  <p class="cv-links">
+    <a href="mailto:{{ cv.email }}">
+      <i class="fa-solid fa-envelope"></i>
+      {{ cv.email }}
+    </a>
+  </p>
+
+  <p class="cv-links">
+    {% for net in cv.social_networks %}
+      <a href="https://{{ net.network | downcase }}.com/{{ net.username }}" target="_blank" rel="noopener">
+        <i class="fa-brands fa-{{ net.network | downcase }}"></i>
+        {{ net.network }}
+      </a>
+      {% unless forloop.last %} · {% endunless %}
+    {% endfor %}
+  </p>
+</section>
+
+<hr>
+
+<section class="cv-section">
+  <h2>Education</h2>
+
+  {% for edu in cv.sections.Education %}
+    <div class="cv-item">
+      <h3>{{ edu.studyType }}{% if edu.area %}, {{ edu.area }}{% endif %}</h3>
+      <p class="cv-meta">
+        {{ edu.institution }} — {{ edu.location }}<br>
+        {{ edu.start_date }} – {{ edu.end_date }}
+        {% if edu.score %} · {{ edu.score }}{% endif %}
+        {% if edu.minor %} · Minor: {{ edu.minor }}{% endif %}
+      </p>
+    </div>
+  {% endfor %}
+</section>
+
+<hr>
+
+<section class="cv-section">
+  <h2>Experience</h2>
+
+  {% for job in cv.sections.Experience %}
+    <div class="cv-item">
+      <h3>{{ job.position }}</h3>
+      <p class="cv-meta">
+        {{ job.company }} — {{ job.location }}<br>
+        {{ job.start_date }} – {{ job.end_date }}
+      </p>
+
+      <ul>
+        {% for h in job.highlights %}
+          <li>{{ h }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</section>
+
+<hr>
+
+<section class="cv-section">
+  <h2>Awards</h2>
+
+  {% for award in cv.sections.Awards %}
+    <div class="cv-item">
+      <h3>{{ award.title }}</h3>
+      <p class="cv-meta">
+        {{ award.awarder }} · {{ award.date }}
+      </p>
+      <p>{{ award.summary }}</p>
+
+      {% if award.url %}
+        <p>
+          <a href="{{ award.url }}" target="_blank" rel="noopener">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            View
+          </a>
+        </p>
       {% endif %}
     </div>
-  </header>
+  {% endfor %}
+</section>
 
-  <article>
-    <div class="cv">
-      <div class="cv-container">
-        {% comment %} Determine which CV format to render {% endcomment %}
-        {% assign render_rendercv = false %}
-        {% assign render_jsonresume = false %}
+<hr>
 
-        {% if page.cv_format == 'rendercv' %}
-          {% assign render_rendercv = true %}
-        {% elsif page.cv_format == 'jsonresume' %}
-          {% assign render_jsonresume = true %}
-        {% else %}
-          {% if site.data.cv and site.data.cv.cv %}
-            {% assign render_rendercv = true %}
-          {% elsif site.data.resume %}
-            {% assign render_jsonresume = true %}
-          {% endif %}
-        {% endif %}
+<section class="cv-section">
+  <h2>Languages</h2>
 
-        {% if render_rendercv and site.data.cv and site.data.cv.cv %}
-          {% assign cv = site.data.cv.cv %}
+  <ul class="cv-inline-list">
+    {% for lang in cv.sections.Languages %}
+      <li>
+        <strong>{{ lang.name }}</strong>: {{ lang.summary }}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
-          <!-- Header -->
-          <div class="section-card">
-            <h2 class="section-title">
-              <i class="fa-solid fa-address-book"></i>
-              Contact
-            </h2>
-            <table class="table table-cv table-sm table-borderless">
-              {% if cv.name %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Name</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.name }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.label %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Current Role</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.label }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.email %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.phone %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Phone</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.phone }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.address %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Location</b></td>
-                  <td class="p-1 pl-2 font-weight-light">
-                    {% if cv.address.city %}{{ cv.address.city }}, {% endif %}
-                    {% if cv.address.region %}{{ cv.address.region }} {% endif %}
-                    {% if cv.address.postalCode %}{{ cv.address.postalCode }}{% endif %}
-                  </td>
-                </tr>
-              {% endif %}
-              {% if cv.social_networks and cv.social_networks.size > 0 %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Links</b></td>
-                  <td class="p-1 pl-2 font-weight-light">
-                    {% for network in cv.social_networks %}
-                      <a href="https://{{ network.network | downcase }}.com/{{ network.username }}" 
-                         target="_blank" 
-                         style="font-size: 0.9rem; color: var(--global-theme-color); margin-right: 1rem;">
-                        <i class="fa-brands fa-{{ network.network | downcase }}"></i> {{ network.network }}
-                      </a>
-                    {% endfor %}
-                  </td>
-                </tr>
-              {% endif %}
-            </table>
-          </div>
+<hr>
 
-          <!-- Summary -->
-          {% if cv.summary %}
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-user"></i>
-                About Me
-              </h2>
-              <p style="line-height: 1.8;">{{ cv.summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
-            </div>
-          {% endif %}
+<section class="cv-section">
+  <h2>Interests</h2>
 
-          <!-- Experience -->
-          {% assign exp = cv.sections.Experience | default: '' | split: ',' %}
-          {% if exp.size > 0 and exp[0] != '' %}
-            <a class="anchor" id="experience"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-briefcase"></i>
-                Experience
-              </h2>
-              {% for entry in cv.sections.Experience %}
-                <div class="timeline-item">
-                  <div class="timeline-header">
-                    <div class="timeline-title">{{ entry.position }}</div>
-                    <div class="timeline-company">{{ entry.company }}</div>
-                    <div class="timeline-meta">
-                      {% if entry.location %}
-                        <span><i class="fa-solid fa-location-dot"></i>{{ entry.location }}</span>
-                      {% endif %}
-                      {% if entry.start_date or entry.end_date %}
-                        <span>
-                          <i class="fa-solid fa-calendar"></i>
-                          {{ entry.start_date }}{% if entry.end_date %} - {{ entry.end_date }}{% endif %}
-                        </span>
-                      {% endif %}
-                    </div>
-                  </div>
-                  {% if entry.highlights %}
-                    <ul class="timeline-highlights">
-                      {% for highlight in entry.highlights %}
-                        <li>{{ highlight }}</li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
+  {% for interest in cv.sections.Interests %}
+    <p>
+      <strong>{{ interest.name }}</strong><br>
+      {{ interest.keywords }}
+    </p>
+  {% endfor %}
+</section>
 
-          <!-- Education -->
-          {% assign edu = cv.sections.Education | default: '' | split: ',' %}
-          {% if edu.size > 0 and edu[0] != '' %}
-            <a class="anchor" id="education"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-graduation-cap"></i>
-                Education
-              </h2>
-              {% for entry in cv.sections.Education %}
-                <div class="education-item">
-                  <div class="education-header">
-                    <div>
-                      <div class="education-degree">
-                        {{ entry.studyType }}{% if entry.area %} in {{ entry.area }}{% endif %}
-                      </div>
-                      <div class="education-school">{{ entry.institution }}</div>
-                    </div>
-                  </div>
-                  <div class="education-meta">
-                    {% if entry.location %}
-                      <span><i class="fa-solid fa-location-dot"></i>{{ entry.location }}</span>
-                    {% endif %}
-                    {% if entry.start_date or entry.end_date %}
-                      <span>
-                        <i class="fa-solid fa-calendar"></i>
-                        {{ entry.start_date }}{% if entry.end_date %} - {{ entry.end_date }}{% endif %}
-                      </span>
-                    {% endif %}
-                    {% if entry.score %}
-                      <span><i class="fa-solid fa-star"></i>{{ entry.score }}</span>
-                    {% endif %}
-                    {% if entry.minor %}
-                      <span><i class="fa-solid fa-book"></i>Minor: {{ entry.minor }}</span>
-                    {% endif %}
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
+<hr>
 
-          <!-- Awards -->
-          {% assign awards = cv.sections.Awards | default: '' | split: ',' %}
-          {% if awards.size > 0 and awards[0] != '' %}
-            <a class="anchor" id="awards"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-trophy"></i>
-                Awards & Honors
-              </h2>
-              {% for entry in cv.sections.Awards %}
-                <div class="award-item">
-                  <div class="award-title">{{ entry.title }}</div>
-                  <div class="award-meta">
-                    {% if entry.awarder %}{{ entry.awarder }}{% endif %}
-                    {% if entry.date %} • {{ entry.date }}{% endif %}
-                  </div>
-                  {% if entry.summary %}
-                    <div class="award-summary">{{ entry.summary }}</div>
-                  {% endif %}
-                  {% if entry.url %}
-                    <a href="{{ entry.url }}" target="_blank" style="font-size: 0.9rem; color: var(--global-theme-color);">
-                      <i class="fa-solid fa-link"></i> View Details
-                    </a>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
+<section class="cv-section">
+  <h2>Certificates</h2>
 
-          <!-- Languages -->
-          {% assign langs = cv.sections.Languages | default: '' | split: ',' %}
-          {% if langs.size > 0 and langs[0] != '' %}
-            <a class="anchor" id="languages"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-language"></i>
-                Languages
-              </h2>
-              <div class="language-grid">
-                {% for entry in cv.sections.Languages %}
-                  <div class="language-item">
-                    <div class="language-name">{{ entry.name }}</div>
-                    <div class="language-level">{{ entry.summary }}</div>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-
-          <!-- Interests -->
-          {% assign interests = cv.sections.Interests | default: '' | split: ',' %}
-          {% if interests.size > 0 and interests[0] != '' %}
-            <a class="anchor" id="interests"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-lightbulb"></i>
-                Interests
-              </h2>
-              {% for entry in cv.sections.Interests %}
-                <div class="interest-item">
-                  <div class="interest-name">{{ entry.name }}</div>
-                  {% if entry.keywords %}
-                    <div class="interest-keywords">{{ entry.keywords }}</div>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          <!-- Certificates -->
-          {% assign certs = cv.sections.Certificates | default: '' | split: ',' %}
-          {% if certs.size > 0 and certs[0] != '' %}
-            <a class="anchor" id="certificates"></a>
-            <div class="section-card">
-              <h2 class="section-title">
-                <i class="fa-solid fa-certificate"></i>
-                Certificates
-              </h2>
-              <div class="certificate-grid">
-                {% for entry in cv.sections.Certificates %}
-                  <div class="certificate-item">
-                    <div class="certificate-name">{{ entry.name }}</div>
-                    {% if entry.issuer %}
-                      <div class="certificate-issuer">{{ entry.issuer }}</div>
-                    {% endif %}
-                    {% if entry.date %}
-                      <div class="certificate-date">{{ entry.date }}</div>
-                    {% endif %}
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-
-        {% elsif render_jsonresume and site.data.resume %}
-          {% comment %} JSONResume format rendering - to be implemented if needed {% endcomment %}
-          <div class="section-card">
-            <p>JSONResume format - implement similar structure using the same CSS classes</p>
-          </div>
-        {% else %}
-          <div class="section-card">
-            <p>No CV data found. Please configure either RenderCV (cv.yml) or JSONResume (resume.json) data.</p>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </article>
-</div>
+  {% for cert in cv.sections.Certificates %}
+    <p>
+      <strong>{{ cert.name }}</strong><br>
+      {{ cert.issuer }} · {{ cert.date }}
+    </p>
+  {% endfor %}
+</section>

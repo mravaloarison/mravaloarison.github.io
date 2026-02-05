@@ -2,6 +2,46 @@
 layout: default
 ---
 
+
+<style>
+  /* Icon alignment + sizing (kept) */
+  .about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .about-links a {
+    text-decoration: none;
+    color: rgb(123, 123, 129);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .about-links a i {
+    font-size: 1em;
+    opacity: 0.8;
+    position: relative;
+    top: -0.05em;
+  }
+
+  .about-links a:hover {
+    color: var(--global-theme-color);
+  }
+
+  .about-links a:hover i {
+    opacity: 1;
+  }
+
+  /* Paragraph rhythm (kept) */
+  .post-content p {
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+</style>
+
 <div class="post">
   <header class="post-header">
     <h1 class="post-title">
@@ -12,47 +52,40 @@ layout: default
         {{ site.title }}
       {% endif %}
     </h1>
-    
+
     <p class="desc mb-2">{{ page.subtitle }}</p>
 
-    <div class="row g-2 mb-3">
-  {% for social in page.social_links %}
-    <div class="col-6 col-sm-auto">
-      <a
-        href="{{ social.url }}{{ social.username }}"
-        target="_blank"
-        class="text-decoration-none"
-        style="color: rgb(123, 123, 129);"
-      >
-        <i class="{{ social.icon }}"></i> {{ social.name }}
-      </a>
+    <div class="about-links mb-3">
+      {% for social in page.social_links %}
+        <a
+          href="{{ social.url }}{{ social.username }}"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="{{ social.icon }}"></i>
+          {{ social.name }}
+        </a>
+      {% endfor %}
+
+      {% if page.cv_pdf %}
+        <a
+          {% if page.cv_pdf contains '://' %}
+            href="{{ page.cv_pdf }}"
+          {% else %}
+            href="{{ page.cv_pdf | relative_url }}"
+          {% endif %}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fa-solid fa-file-pdf"></i>
+          Download resume
+        </a>
+      {% endif %}
     </div>
-  {% endfor %}
-
-  {% if page.cv_pdf %}
-    <div class="col-6 col-sm-auto">
-      <a
-        {% if page.cv_pdf contains '://' %}
-          href="{{ page.cv_pdf }}"
-        {% else %}
-          href="{{ page.cv_pdf | relative_url }}"
-        {% endif %}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-decoration-none"
-        style="color: rgb(123, 123, 129);"
-      >
-        <i class="fa-solid fa-file-pdf"></i> Download resume
-      </a>
-    </div>
-  {% endif %}
-</div>
-
-
   </header>
 
   <article>
-    <div class="clearfix">
+    <div class="clearfix post-content">
       {{ content }}
     </div>
 
@@ -65,5 +98,4 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
   </article>
-
 </div>
