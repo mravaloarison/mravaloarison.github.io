@@ -273,9 +273,7 @@ scholar:
   style: apa
   locale: en
 
-  source: /_bibliography/
-  bibliography: papers.bib
-  bibliography_template: bib
+
   # Note: if you have latex math in your bibtex, the latex filter
   # preprocessing may conflict with MathJAX if the latter is enabled.
   # See https://github.com/alshedivat/al-folio/issues/357.
@@ -284,7 +282,6 @@ scholar:
   replace_strings: true
   join_strings: true
 
-  details_dir: bibliography
   details_link: Details
 
   query: "@*"
