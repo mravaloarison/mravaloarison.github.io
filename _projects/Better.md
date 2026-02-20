@@ -22,7 +22,7 @@ If a user succeeds, they win back the amount they staked plus the money contribu
 
 We also needed a way to validate whether a challenge was actually completed. Since the Knot API was sponsoring a track that required participants to use their API, we decided to let users link their merchant accounts. This allowed users to create challenges like “stop ordering food online,” and the app could verify completion by checking whether purchases from services like Uber Eats were made.
 
-I worked on implementing the Knot API for the iOS version of the app using Swift and SwiftUI, and on integrating Firebase alongside my hackathon budy, [James Choi](https://www.linkedin.com/in/james-choi-b6562124b/).
+I worked on implementing the Knot API for the iOS version of the app using Swift and SwiftUI, and on integrating Firebase alongside my hackathon buddy, [James Choi](https://www.linkedin.com/in/james-choi-b6562124b/).
 
 This was a block that listed the merchants provided by the Knot API:
 
