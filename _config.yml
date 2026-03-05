@@ -13,15 +13,21 @@ url: https://mravaloarison.github.io
 baseurl:
 
 about_me: |
-    I'm a data analyst with a strong background in programming and software development. I love building software that feels like shortcuts, or smarter and more efficient approaches to problems, and I like experimenting with data and new technologies to see what else is actually possible.
+    My name is Mami, and I’m a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at <a href="https://www.monroe.edu/">Monroe University</a> and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics. 
 
-    While I was a student, I loved competing in hackathons, and even won over 12 awards across universities in the U.S. They were my way of gaining experience and exposure to technology when I couldn’t work outside campus.
+    Currently, I work as a Junior Data Analyst in New York City, which I know sounds different from the title I use, but my tasks are very broad, and I also learn a lot from them. At work, I recreate legacy dashboards in Power BI, build and maintain SharePoint sites for my department and was recently assigned to redesign my old University’s library website using <a href="https://www.springshare.com/libguides/">SpringShare’s LibGuides</a> platform as a side project. 
 
-    Currently, I'm a data analyst at my old school, where I recreate legacy dashboards in <a href="https://www.microsoft.com/en-us/power-platform/products/power-bi">Power BI</a>. I also build and maintain <a href="https://support.microsoft.com/en-us/sharepoint">SharePoint</a> sites for my department and was recently assigned to redesign the university’s library website using <a href="https://www.springshare.com/">SpringShare</a>’s LibGuides platform as a side project.
+    I chose Software Engineer because building software makes me feel like I am a magician doing a bunch of tricks behind the scenes, and then my users go “wow.” I think it is fun and I also believe that right now is a very exciting time to be a developer because of AI. It reduces a lot of development time and makes it easy to build things much faster. 
 
-    This role has made me more serious about pursuing a career in data science and learn deeper foundations through graduate study.
+    When I was a student, my work authorization was limited to on-campus jobs because of my F1 visa status, so I started going to hackathons instead to get more exposure building software, working with different teams and under deadlines, experimenting with many APIs, SDKs, and new frameworks. 
 
-    Outside of work, I love dogs, learning new songs on the piano, guitar, and bass, playing chess, and video games. I also try to consistently cook healthy meals and going to the gym, though I’m still working on making those habits stick!
+    At one point I was honestly obsessed with hackathons, because during my academic years I won 12 of them across different U.S. Eastern universities like <a href="https://www.yale.edu/">Yale</a>, <a href="https://www.princeton.edu/">Princeton</a>, <a href="https://www.stonybrook.edu/">Stony Brook</a>, and more. 
+
+    Outside of tech, I used to hate reading and writing, but I recently started pushing myself to do both more often. I also try to consistently cook healthy meals and go to the gym, though I’m still working on making those habits stick. Other things I love:
+    - Dogs
+    - Piano, guitar, and bass
+    - Chess
+    - Video games
 
 sections:
     Education:
