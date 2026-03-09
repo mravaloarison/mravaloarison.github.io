@@ -32,7 +32,7 @@ image: /assets/images/DiscoverNature.png
     </a>
 </div>
 
-Despite the hype around new technologies and vast environmental datasets, it seems like the general public needs advanced biological training to interpret the data. As a result, many people simply give up. The next generation spends increasing amounts of time on mobile devices and I firmly believe we miss a critical opportunity if we view this technology solely as a distraction rather than a tool for exploration.
+Even though, we have so many technologies and environment datasets, it seems very inaccessible to non-biologist to interpret the data. As a result many peopple simply give up trying to understand and learn about the nature around them. Specifically the next generation that seems to spend increasing amounts of time on mobile devices. I believe we miss an important opportunity if we don't use that technology to help them explore and stay curious.
 
 I started building Discover Nature as a more accessible version of iNaturalist for non-scientists. But I also wanted users to enjoy the experience, so I added daily quizzes based on species they love or want to learn about, along with random facts to keep learning engaging.
 
