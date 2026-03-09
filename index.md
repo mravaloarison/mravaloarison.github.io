@@ -5,11 +5,11 @@ title: About me
 
 <div class="container-fluid container-lg my-5">
   <div class="row">
-    <aside class="col-12 col-md-3 flex">
-      {% include cv-header.html %}
-    </aside>
+    <!-- <aside class="col-12 col-md-3 flex">
+    </aside> -->
 
-    <section class="col-12 col-md-6">
+    <section class="col-12 col-md-9">
+      {% include cv-header.html %}
       {% include cv-content.html %}
     </section>
 

@@ -36,7 +36,7 @@ Even though, we have so many technologies and environment datasets, it seems ver
 
 I started building Discover Nature as a more accessible version of iNaturalist for non-scientists. But I also wanted users to enjoy the experience, so I added daily quizzes based on species they love or want to learn about, along with random facts to keep learning engaging.
 
-Most apps either focus on collecting data (like iNaturalist, Merlin, and eBird) or on gamified learning (like Kahoot!, Duolingo, and Quizlet). My goal is to bring both into one app so people learn, understand, and protect the ecosystems around them.
+Most apps either focus on collecting data (like iNaturalist, Merlin, and eBird) or on gamified learning (like Kahoot!, Duolingo, and Quizlet). My goal is to bring both into one app so people learn and have fun doing so.
 
 ---
 
