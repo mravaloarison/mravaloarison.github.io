@@ -1,7 +1,16 @@
 ---
 layout: default
 ---
-{% include breadcrumb.html section_title="Projects" section_url="/projects/" current=page.title %}
+{% assign categories = site.data.categories.projects %}
+{% assign cat_label = page.category %}
+{% assign cat_url = "" %}
+{% for cat in categories %}
+  {% if cat.name == page.category %}
+    {% assign cat_label = cat.label %}
+    {% assign cat_url = "/projects/category/" | append: cat.slug | append: "/" %}
+  {% endif %}
+{% endfor %}
+{% include breadcrumb.html section_title="Projects" section_url="/projects/" category_title=cat_label category_url=cat_url current=page.title %}
 
 {% assign eyebrow_label = page.category %}
 {% if page.category == "Hackathon" %}{% assign eyebrow_label = "Hackathons" %}{% endif %}

@@ -2,6 +2,7 @@
 layout: default
 title: Work Projects
 description: Data analytics, dashboards, and internal tools Mami Ravaloarison has built as part of her day job at Monroe University.
+nav_slug: work
 ---
 
 {% include breadcrumb.html section_title="Projects" section_url="/projects/" current="Work" %}

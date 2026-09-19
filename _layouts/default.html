@@ -1,5 +1,11 @@
 <!doctype html>
-<html lang="{{ site.lang | default: 'en' }}">
+{% assign nav_depth = 2 %}
+{% if page.url == '/' %}
+  {% assign nav_depth = 0 %}
+{% elsif page.url == '/projects/' or page.url == '/arts/' or page.url == '/blog/' %}
+  {% assign nav_depth = 1 %}
+{% endif %}
+<html lang="{{ site.lang | default: 'en' }}" data-nav-depth="{{ nav_depth }}">
 {% include head.html %}
 <body>
   <a class="skip-link" href="#main">Skip to content</a>

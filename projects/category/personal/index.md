@@ -2,6 +2,7 @@
 layout: default
 title: Personal Projects
 description: Self-directed apps and experiments Mami Ravaloarison has built outside of work and hackathons, from iOS apps to machine learning games.
+nav_slug: personal
 ---
 
 {% include breadcrumb.html section_title="Projects" section_url="/projects/" current="Personal" %}

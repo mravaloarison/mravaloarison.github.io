@@ -1,15 +1,31 @@
-<nav class="nav-panel" aria-label="Arts navigation">
-  <a class="nav-back" href="{{ '/' | relative_url }}">&larr; All sections</a>
-  <a class="nav-panel-title" href="{{ '/arts/' | relative_url }}" {% if page.url == '/arts/' %}aria-current="page"{% endif %}>Arts</a>
-
-  {% assign nav_mediums = "Procreate,Traditional,Sketchbook" | split: "," %}
-  {% for medium in nav_mediums %}
-  {% assign nav_medium_items = site.arts | where: "medium", medium | sort: "date" | reverse %}
-  <p class="nav-group-label">{{ medium }}</p>
+{% assign mediums = site.data.categories.arts %}
+<nav class="nav-panel sidebar-panel" aria-label="Arts navigation">
+{% if page.url == '/arts/' %}
+  <a class="nav-panel-header" href="{{ '/' | relative_url }}" aria-label="Back to all sections">&larr; Arts</a>
   <ul class="sidebar-list">
-    {% for a in nav_medium_items %}
-    <li><a href="{{ a.url | relative_url }}" {% if page.url == a.url %}aria-current="page"{% endif %}>{{ a.title }}</a></li>
+    {% for medium in mediums %}
+    {% assign count = site.arts | where: "medium", medium.name | size %}
+    <li><a href="{{ '/arts/medium/' | append: medium.slug | append: '/' | relative_url }}">{{ medium.label }} ({{ count }}) &rsaquo;</a></li>
     {% endfor %}
   </ul>
+{% else %}
+  {% assign current_slug = page.nav_slug %}
+  {% if page.collection == "arts" %}
+    {% for medium in mediums %}
+      {% if medium.name == page.medium %}{% assign current_slug = medium.slug %}{% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% for medium in mediums %}
+    {% if medium.slug == current_slug %}
+    <a class="nav-panel-header" href="{{ '/arts/' | relative_url }}" aria-label="Back to Arts">&larr; {{ medium.label }}</a>
+    {% assign items = site.arts | where: "medium", medium.name | sort: "date" | reverse %}
+    <ul class="sidebar-list">
+      {% for a in items %}
+      <li><a href="{{ a.url | relative_url }}" {% if page.url == a.url %}aria-current="page"{% endif %}>{{ a.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   {% endfor %}
+{% endif %}
 </nav>

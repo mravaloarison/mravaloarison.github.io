@@ -1,7 +1,9 @@
 ---
 layout: default
 ---
-{% include breadcrumb.html section_title="Blog" section_url="/blog/" current=page.title %}
+{% assign post_year = page.date | date: "%Y" %}
+{% assign post_year_url = "/blog/" | append: post_year | append: "/" %}
+{% include breadcrumb.html section_title="Blog" section_url="/blog/" category_title=post_year category_url=post_year_url current=page.title %}
 
 {% include page-header.html eyebrow="Blog" title=page.title abstract=page.description %}
 

@@ -194,36 +194,7 @@
     });
   }
 
-  function initViewTransitionDirection() {
-    function depth(url) {
-      try {
-        var path = new URL(url, location.origin).pathname;
-        return path.split("/").filter(Boolean).length;
-      } catch (err) {
-        return 0;
-      }
-    }
-
-    function applyDirection(fromUrl, toUrl) {
-      if (!fromUrl || !toUrl) return;
-      var direction = depth(toUrl) >= depth(fromUrl) ? "forward" : "back";
-      document.documentElement.setAttribute("data-nav-direction", direction);
-    }
-
-    if (!("onpageswap" in window)) return;
-
-    window.addEventListener("pageswap", function (event) {
-      if (event.viewTransition && event.activation) {
-        applyDirection(
-          event.activation.from && event.activation.from.url,
-          event.activation.entry && event.activation.entry.url
-        );
-      }
-    });
-  }
-
   initThemeToggle();
   initNavDrawer();
   initOnThisPage();
-  initViewTransitionDirection();
 })();

@@ -1,0 +1,21 @@
+projects:
+  - name: Work
+    slug: work
+    label: Work
+  - name: Personal
+    slug: personal
+    label: Personal
+  - name: Hackathon
+    slug: hackathons
+    label: Hackathons
+
+arts:
+  - name: Procreate
+    slug: procreate
+    label: Procreate
+  - name: Traditional
+    slug: traditional
+    label: Traditional
+  - name: Sketchbook
+    slug: sketchbook
+    label: Sketchbook

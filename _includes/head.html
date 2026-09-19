@@ -1,27 +1,16 @@
 <head>
   <script>
-    // Registered here (not deferred) because pagereveal fires on the incoming
-    // document before deferred scripts run — a deferred listener would miss it.
     (function () {
-      try {
-        function depth(url) {
-          var path = new URL(url, location.origin).pathname;
-          return path.split("/").filter(Boolean).length;
-        }
-        function applyDirection(fromUrl, toUrl) {
-          if (!fromUrl || !toUrl) return;
-          var direction = depth(toUrl) >= depth(fromUrl) ? "forward" : "back";
-          document.documentElement.setAttribute("data-nav-direction", direction);
-        }
-        if ("onpagereveal" in window) {
-          window.addEventListener("pagereveal", function (event) {
-            var activation = window.navigation && window.navigation.activation;
-            if (event.viewTransition && activation) {
-              applyDirection(activation.from && activation.from.url, activation.entry && activation.entry.url);
-            }
-          });
-        }
-      } catch (e) {}
+      var el = document.documentElement;
+      var depth = Number(el.dataset.navDepth || 0);
+      var prev = null;
+      try { prev = sessionStorage.getItem('navDepth'); } catch (e) {}
+      if (prev !== null) {
+        var p = Number(prev);
+        if (depth > p) el.dataset.navDir = 'forward';
+        else if (depth < p) el.dataset.navDir = 'back';
+      }
+      try { sessionStorage.setItem('navDepth', String(depth)); } catch (e) {}
     })();
   </script>
   <meta charset="utf-8">
