@@ -1,0 +1,28 @@
+<nav class="nav-panel" aria-label="Projects navigation">
+  <a class="nav-back" href="{{ '/' | relative_url }}">&larr; All sections</a>
+  <a class="nav-panel-title" href="{{ '/projects/' | relative_url }}" {% if page.url == '/projects/' %}aria-current="page"{% endif %}>Projects</a>
+
+  {% assign nav_work = site.projects | where: "category", "Work" | sort: "date" | reverse %}
+  <p class="nav-group-label">Work</p>
+  <ul class="sidebar-list">
+    {% for p in nav_work %}
+    <li><a href="{{ p.url | relative_url }}" {% if page.url == p.url %}aria-current="page"{% endif %}>{{ p.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  {% assign nav_personal = site.projects | where: "category", "Personal" | sort: "date" | reverse %}
+  <p class="nav-group-label">Personal</p>
+  <ul class="sidebar-list">
+    {% for p in nav_personal %}
+    <li><a href="{{ p.url | relative_url }}" {% if page.url == p.url %}aria-current="page"{% endif %}>{{ p.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  {% assign nav_hackathons = site.projects | where: "category", "Hackathon" | sort: "date" | reverse %}
+  <p class="nav-group-label">Hackathons</p>
+  <ul class="sidebar-list">
+    {% for p in nav_hackathons %}
+    <li><a href="{{ p.url | relative_url }}" {% if page.url == p.url %}aria-current="page"{% endif %}>{{ p.title }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>

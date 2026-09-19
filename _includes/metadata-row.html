@@ -1,0 +1,6 @@
+{% if include.tech or include.award %}
+<div class="metadata-row">
+  {% if include.award %}<span class="pill pill-award">{{ include.award }}</span>{% endif %}
+  {% for t in include.tech %}<span class="pill">{{ t }}</span>{% endfor %}
+</div>
+{% endif %}

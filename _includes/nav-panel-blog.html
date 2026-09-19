@@ -1,0 +1,14 @@
+<nav class="nav-panel" aria-label="Blog navigation">
+  <a class="nav-back" href="{{ '/' | relative_url }}">&larr; All sections</a>
+  <a class="nav-panel-title" href="{{ '/blog/' | relative_url }}" {% if page.url == '/blog/' %}aria-current="page"{% endif %}>Blog</a>
+
+  {% assign nav_year_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for group in nav_year_groups %}
+  <p class="nav-group-label">{{ group.name }}</p>
+  <ul class="sidebar-list">
+    {% for post in group.items %}
+    <li><a href="{{ post.url | relative_url }}" {% if page.url == post.url %}aria-current="page"{% endif %}>{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</nav>

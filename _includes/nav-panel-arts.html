@@ -1,0 +1,15 @@
+<nav class="nav-panel" aria-label="Arts navigation">
+  <a class="nav-back" href="{{ '/' | relative_url }}">&larr; All sections</a>
+  <a class="nav-panel-title" href="{{ '/arts/' | relative_url }}" {% if page.url == '/arts/' %}aria-current="page"{% endif %}>Arts</a>
+
+  {% assign nav_mediums = "Procreate,Traditional,Sketchbook" | split: "," %}
+  {% for medium in nav_mediums %}
+  {% assign nav_medium_items = site.arts | where: "medium", medium | sort: "date" | reverse %}
+  <p class="nav-group-label">{{ medium }}</p>
+  <ul class="sidebar-list">
+    {% for a in nav_medium_items %}
+    <li><a href="{{ a.url | relative_url }}" {% if page.url == a.url %}aria-current="page"{% endif %}>{{ a.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</nav>

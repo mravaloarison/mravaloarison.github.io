@@ -1,0 +1,7 @@
+{% if include.tags %}
+<div class="metadata-row">
+  {% for tag in include.tags %}
+  <a class="pill pill-tag" href="{{ '/blog/tag/' | append: tag | append: '/' | relative_url }}">{{ tag }}</a>
+  {% endfor %}
+</div>
+{% endif %}

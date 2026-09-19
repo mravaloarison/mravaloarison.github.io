@@ -1,0 +1,20 @@
+<div class="card-grid">
+  {% for item in include.items %}
+  {% assign dims = site.data.image_dimensions[item.image] %}
+  <a class="card" href="{{ item.url | relative_url }}">
+    {% if item.image %}
+    <img
+      src="{{ item.image | relative_url }}"
+      alt="{{ item.image_alt }}"
+      {% if dims %}width="{{ dims.width }}" height="{{ dims.height }}"{% endif %}
+      loading="lazy"
+    >
+    {% endif %}
+    <div class="card-body">
+      <h3>{{ item.title }}</h3>
+      <p class="card-description">{{ item.description }}</p>
+      {% if item.tech %}<p class="meta">{{ item.tech | join: " · " }}</p>{% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>

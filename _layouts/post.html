@@ -1,0 +1,16 @@
+---
+layout: default
+---
+{% include breadcrumb.html section_title="Blog" section_url="/blog/" current=page.title %}
+
+{% include page-header.html eyebrow="Blog" title=page.title abstract=page.description %}
+
+{% include post-meta.html post=page %}
+
+{% include tag-list.html tags=page.tags %}
+
+{{ content }}
+
+{% include see-also.html collection=site.posts %}
+
+{% include prev-next.html %}

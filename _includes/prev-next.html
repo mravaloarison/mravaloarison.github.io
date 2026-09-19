@@ -1,0 +1,16 @@
+{% if page.previous or page.next %}
+<nav class="prev-next" aria-label="Sibling pages">
+  {% if page.previous %}
+  <a class="prev-next-link prev" href="{{ page.previous.url | relative_url }}">
+    <span class="prev-next-label">Previous</span>
+    {{ page.previous.title }}
+  </a>
+  {% endif %}
+  {% if page.next %}
+  <a class="prev-next-link next" href="{{ page.next.url | relative_url }}">
+    <span class="prev-next-label">Next</span>
+    {{ page.next.title }}
+  </a>
+  {% endif %}
+</nav>
+{% endif %}

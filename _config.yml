@@ -1,0 +1,53 @@
+title: Maminiaina Ravaloarison
+tagline: Software Engineer
+description: >-
+  Maminiaina Ravaloarison — Software Engineer in New York.
+  Projects, writing, and drawings.
+url: https://mravaloarison.github.io
+baseurl: ""
+lang: en-US
+
+author:
+  name: Maminiaina Ravaloarison
+  email: mravaloarison@gmail.com
+
+social:
+  name: Maminiaina Ravaloarison
+  links:
+    - https://github.com/mravaloarison
+    - https://www.linkedin.com/in/mravaloarison/
+    - https://devpost.com/mrava
+
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+    sort_by: date
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - CLAUDE.md

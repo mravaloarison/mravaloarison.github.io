@@ -1,0 +1,49 @@
+{% if page.url == "/" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ site.author.name | jsonify }},
+  "alternateName": {{ site.social.name | jsonify }},
+  "jobTitle": {{ site.tagline | jsonify }},
+  "email": {{ "mailto:" | append: site.author.email | jsonify }},
+  "url": {{ site.url | append: site.baseurl | append: "/" | jsonify }},
+  "alumniOf": [
+    {% for edu in site.data.about.education %}
+    {"@type": "CollegeOrUniversity", "name": {{ edu.institution | jsonify }}}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "sameAs": {{ site.social.links | jsonify }},
+  "knowsLanguage": [{% for lang in site.data.about.languages %}{{ lang.name | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "award": [{% for award in site.data.about.awards %}{{ award.title | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}]
+}
+</script>
+{% elsif page.collection == "projects" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }},
+  "author": { "@type": "Person", "name": {{ site.author.name | jsonify }} },
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+  "image": {{ page.image | absolute_url | jsonify }},
+  "keywords": {{ page.tech | join: ", " | jsonify }}
+}
+</script>
+{% elsif page.collection == "arts" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VisualArtwork",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }},
+  "artMedium": {{ page.medium | jsonify }},
+  "creator": { "@type": "Person", "name": {{ site.author.name | jsonify }} },
+  "dateCreated": {{ page.date | date_to_xmlschema | jsonify }},
+  "image": {{ page.image | absolute_url | jsonify }}
+}
+</script>
+{% endif %}

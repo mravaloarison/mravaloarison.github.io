@@ -1,0 +1,48 @@
+---
+layout: default
+---
+{% include breadcrumb.html section_title="Projects" section_url="/projects/" current=page.title %}
+
+{% assign eyebrow_label = page.category %}
+{% if page.category == "Hackathon" %}{% assign eyebrow_label = "Hackathons" %}{% endif %}
+{% include page-header.html eyebrow=eyebrow_label title=page.title abstract=page.description %}
+
+{% include metadata-row.html tech=page.tech award=page.award %}
+
+{% if page.event or page.organization %}
+<p class="meta">
+  {%- if page.event -%}{{ page.event }}{%- endif -%}
+  {%- if page.event and page.organization %} · {% endif -%}
+  {%- if page.organization -%}{{ page.organization }}{%- endif -%}
+</p>
+{% endif %}
+
+{% assign dims = site.data.image_dimensions[page.image] %}
+{% assign body_parts = content | split: '<h2 id="what-i-built">' %}
+
+{{ body_parts[0] }}
+
+<figure class="project-screenshot">
+  <img
+    src="{{ page.image | relative_url }}"
+    alt="{{ page.image_alt }}"
+    {% if dims %}width="{{ dims.width }}" height="{{ dims.height }}"{% endif %}
+    loading="eager"
+  >
+</figure>
+
+{% if body_parts[1] %}
+<h2 id="what-i-built">{{ body_parts[1] }}
+{% endif %}
+
+{% if page.links %}
+<nav class="outbound-links" aria-label="Project links">
+  {% if page.links.demo %}<a class="button" href="{{ page.links.demo }}">View live demo</a>{% endif %}
+  {% if page.links.github %}<a class="button" href="{{ page.links.github }}">View on GitHub</a>{% endif %}
+  {% if page.links.devpost %}<a class="button" href="{{ page.links.devpost }}">View on Devpost</a>{% endif %}
+</nav>
+{% endif %}
+
+{% include see-also.html collection=site.projects %}
+
+{% include prev-next.html %}

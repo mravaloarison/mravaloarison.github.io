@@ -1,0 +1,11 @@
+<aside class="sidebar" id="sidebar" aria-label="Section navigation">
+  {% if page.collection == "projects" or page.url contains "/projects/" %}
+    {% include nav-panel-projects.html %}
+  {% elsif page.collection == "arts" or page.url contains "/arts/" %}
+    {% include nav-panel-arts.html %}
+  {% elsif page.collection == "posts" or page.url contains "/blog/" %}
+    {% include nav-panel-blog.html %}
+  {% else %}
+    {% include nav-panel-root.html %}
+  {% endif %}
+</aside>

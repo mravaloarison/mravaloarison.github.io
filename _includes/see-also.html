@@ -1,0 +1,40 @@
+{% assign pool = include.collection %}
+{% assign related_items = "" | split: "" %}
+
+{% if page.related %}
+  {% for slug in page.related %}
+    {% assign match = pool | where: "slug", slug | first %}
+    {% if match %}{% assign related_items = related_items | push: match %}{% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if related_items.size == 0 and page.category %}
+  {% assign related_items = pool | where: "category", page.category | where_exp: "p", "p.url != page.url" | sort: "date" | reverse | slice: 0, 3 %}
+{% endif %}
+
+{% if related_items.size == 0 and page.tags %}
+  {% assign tag_matches = "" | split: "" %}
+  {% for item in pool %}
+    {% assign is_match = false %}
+    {% for t in item.tags %}
+      {% if page.tags contains t %}{% assign is_match = true %}{% endif %}
+    {% endfor %}
+    {% if is_match and item.url != page.url %}{% assign tag_matches = tag_matches | push: item %}{% endif %}
+  {% endfor %}
+  {% assign related_items = tag_matches | sort: "date" | reverse | slice: 0, 3 %}
+{% endif %}
+
+{% if related_items.size == 0 %}
+  {% assign related_items = pool | where_exp: "p", "p.url != page.url" | sort: "date" | reverse | slice: 0, 3 %}
+{% endif %}
+
+{% if related_items.size > 0 %}
+<section class="see-also" aria-label="See also">
+  <p class="eyebrow">See Also</p>
+  <ul>
+    {% for item in related_items %}
+    <li><a href="{{ item.url | relative_url }}">Read: {{ item.title }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

@@ -1,0 +1,35 @@
+<head>
+  <script>
+    // Registered here (not deferred) because pagereveal fires on the incoming
+    // document before deferred scripts run — a deferred listener would miss it.
+    (function () {
+      try {
+        function depth(url) {
+          var path = new URL(url, location.origin).pathname;
+          return path.split("/").filter(Boolean).length;
+        }
+        function applyDirection(fromUrl, toUrl) {
+          if (!fromUrl || !toUrl) return;
+          var direction = depth(toUrl) >= depth(fromUrl) ? "forward" : "back";
+          document.documentElement.setAttribute("data-nav-direction", direction);
+        }
+        if ("onpagereveal" in window) {
+          window.addEventListener("pagereveal", function (event) {
+            var activation = window.navigation && window.navigation.activation;
+            if (event.viewTransition && activation) {
+              applyDirection(activation.from && activation.from.url, activation.entry && activation.entry.url);
+            }
+          });
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.homepage %}{{ page.title }}{% elsif page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  {% seo title=false %}
+  {% feed_meta %}
+  {% include json-ld.html %}
+  <!-- Google Search Console verification meta tag goes here -->
+</head>

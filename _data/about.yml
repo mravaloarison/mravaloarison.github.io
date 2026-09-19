@@ -1,0 +1,86 @@
+contact:
+  resume: /assets/pdf/resume.pdf
+
+experience:
+  - position: Junior Data Analyst
+    company: Office of Academic Records, Assessment, and Planning, Monroe University
+    location: New Rochelle, New York
+    start_date: "2025"
+    end_date: ongoing
+    highlights:
+      - Recreating and optimizing 100+ dashboards in Power BI to help the university track student performance, retention, and graduation rates.
+      - Built a SharePoint site for the ARAP department to streamline data sharing and collaboration among team members.
+      - Updated the university's library website using HTML, CSS, JavaScript, and the LibGuides platform to enhance user experience and accessibility.
+  - position: Information Technology Peer Tutor
+    company: Student Success Center, Monroe University
+    location: Bronx, New York
+    start_date: "2023"
+    end_date: "2025"
+    highlights:
+      - Tutored students in Excel, databases, and programming across multiple academic levels.
+      - Assisted alumni with real-world IT issues, including e-commerce website setup and troubleshooting.
+  - position: Software Developer Intern
+    company: New Rochelle Council of Community Services
+    location: New Rochelle, New York
+    start_date: "2023"
+    end_date: "2023"
+    highlights:
+      - Collaborated with a team to redesign the nonprofit's website using Next.js (TypeScript) and Tailwind CSS.
+      - Implemented Figma wireframes into functional interfaces and recreated designs using a WordPress theme and plugins.
+  - position: Resident Assistant
+    company: Residence Life, Monroe University
+    location: New Rochelle, New York
+    start_date: "2022"
+    end_date: "2023"
+    highlights:
+      - Supported 50+ dorm rooms by resolving conflicts, reporting maintenance issues, and providing resources to students.
+      - Planned and led 10+ events per semester while collaborating with fellow RAs and Residence Life staff to promote community engagement.
+
+education:
+  - studyType: Bachelor of Science (Magna Cum Laude)
+    area: Computer Information Systems
+    institution: Monroe University
+    location: Bronx, New York
+    url: https://www.monroeu.edu/
+    start_date: "2021"
+    end_date: "2025"
+    score: 3.7/4.0 GPA
+    minor: Mathematics
+  - studyType: Baccalauréat
+    area: Scientific
+    institution: Lycée Privé ACEEM
+    location: Madagascar
+    url: https://www.youtube.com/@aceemgroupe8437
+    start_date: "2015"
+    end_date: "2018"
+
+awards:
+  - title: 12 Hackathon wins
+    awarder: Several East Coast Universities & Major League Hacking
+    date: 2022–2024
+    summary: 12 hackathon wins across the U.S. (Yale, Princeton, Stony Brook, RPI, University of Penn), earning ~$4,000 in prizes.
+    url: https://devpost.com/mrava
+  - title: Dean's Award for Academic Excellence
+    awarder: Monroe University
+    date: "2025"
+    summary: Awarded for outstanding academic achievement, leadership, and impact.
+
+certificates:
+  - name: "CS50P: Introduction to Programming with Python"
+    issuer: Harvard University
+    date: "2022"
+  - name: "DELF B2: French Language Proficiency"
+    issuer: Alliance Française Madagascar
+    date: "2020"
+
+languages:
+  - name: Malagasy
+    summary: Native speaker
+  - name: English
+    summary: Fluent
+  - name: French
+    summary: Fluent (DELF B2 Certified)
+
+interests:
+  - name: Applied AI & Data Systems
+    keywords: Machine Learning, Deep Learning, Data Analysis, Data Visualization, Big Data, Data Engineering, MCP, RAG
