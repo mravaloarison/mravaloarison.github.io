@@ -42,45 +42,39 @@ person, not a marketing page.
 
 **This is an aesthetic direction, not a clone.** Never use Apple's logo,
 wordmark, icons, or any Apple branding. Never self-host SF Pro or SF Mono —
-they're licensed fonts. Use the system font stack, which renders as SF on
-Apple devices and degrades cleanly elsewhere, and costs zero network requests.
+they're licensed fonts. Fonts are self-hosted in `assets/fonts/` (from
+Google Fonts, `font-display: swap`), and only what's used is shipped:
 
-### Tokens
+- **Indie Flower 400** (`--font-display`) — big titles only: the page h1
+  (clamp 36–46px), section h2s like Overview and Latest work (32px), and the
+  topbar name. Both are sized up because handwriting reads small. It has one
+  weight and gets hard to read below ~28px, so never use it for h3, the
+  sidebar, or body text. No faux bold (`font-synthesis: none`).
+- **Nunito 400/600/700** (`--font-sans`) — everything else: h3–h6, sidebar,
+  body, labels, UI. Code stays monospace.
+- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 and ☀️ for the theme
+  toggle (1.5 KB, COLRv1). Safari doesn't support COLRv1 and falls back to
+  Apple Color Emoji; Google's Safari build of the font is ~500 KB, so it
+  isn't shipped.
 
-Define all of these on `:root`, redefine under
-`@media (prefers-color-scheme: dark)` guarded by `:root:not([data-theme="light"])`,
-and again under `:root[data-theme="dark"]` so the manual toggle works.
-
-```
-Light                          Dark
---bg:              #ffffff     #000000
---bg-elevated:     #fbfbfd     #1d1d1f
---fill:            #f5f5f7     #2c2c2e
---text:            #1d1d1f     #f5f5f7
---text-secondary:  #6e6e73     #a1a1a6
---text-tertiary:   #86868b     #86868b
---link:            #0066cc     #2997ff
---border:          #d2d2d7     #424245
---border-subtle:   #e8e8ed     #333336
-```
-
-Give `body` an explicit background. Ship a theme toggle that defaults to
-system preference and remembers the choice in `localStorage` inside a
-try/catch — the page must render correctly if storage throws.
+Both Indie Flower and Nunito latin files are preloaded from the head include.
 
 ### Type
 
 ```
---font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-             Helvetica, Arial, sans-serif;
+--font-sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
+             Roboto, Helvetica, Arial, sans-serif;
+--font-display: "Indie Flower", var(--font-sans);   /* h1, h2, topbar name */
+--font-emoji: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
+              sans-serif;                            /* theme toggle */
 --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 ```
 
 | Role                                | Size                   | Weight                | Tracking |
 | ----------------------------------- | ---------------------- | --------------------- | -------- |
 | Eyebrow (section label above title) | 12px, uppercase        | 600                   | 0.08em   |
-| Page title (h1)                     | clamp(32px, 5vw, 40px) | 700                   | -0.015em |
-| Section (h2)                        | 28px                   | 600                   | -0.01em  |
+| Page title (h1)                     | clamp(36px, 6vw, 46px) | 400 (Indie Flower)    | normal   |
+| Section (h2)                        | 32px                   | 400 (Indie Flower)    | normal   |
 | Subsection (h3)                     | 21px                   | 600                   | normal   |
 | Body                                | 17px, line-height 1.6  | 400                   | normal   |
 | Meta / caption                      | 14px                   | 400                   | normal   |
