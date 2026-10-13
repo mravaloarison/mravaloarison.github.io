@@ -5,7 +5,7 @@
   <ul class="sidebar-list">
     {% for medium in mediums %}
     {% assign count = site.arts | where: "medium", medium.name | size %}
-    <li><a href="{{ '/arts/medium/' | append: medium.slug | append: '/' | relative_url }}">{{ medium.label }} ({{ count }}) &rsaquo;</a></li>
+    {% if count > 0 %}<li><a href="{{ '/arts/medium/' | append: medium.slug | append: '/' | relative_url }}">{{ medium.label }} ({{ count }}) &rsaquo;</a></li>{% endif %}
     {% endfor %}
   </ul>
 {% else %}

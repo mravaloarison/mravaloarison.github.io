@@ -12,6 +12,10 @@
   {% assign related_items = pool | where: "category", page.category | where_exp: "p", "p.url != page.url" | sort: "date" | reverse | slice: 0, 3 %}
 {% endif %}
 
+{% if related_items.size == 0 and page.medium %}
+  {% assign related_items = pool | where: "medium", page.medium | where_exp: "p", "p.url != page.url" | sort: "date" | reverse | slice: 0, 3 %}
+{% endif %}
+
 {% if related_items.size == 0 and page.tags %}
   {% assign tag_matches = "" | split: "" %}
   {% for item in pool %}

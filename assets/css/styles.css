@@ -761,6 +761,94 @@ pre {
   margin: 0 0 var(--space-8);
 }
 
+/* Gallery grid (Arts): denser than the card grid, square crops */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-16);
+  margin: var(--space-24) 0 var(--space-48);
+}
+
+.gallery-item {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.gallery-item:hover img {
+  transform: translateY(-2px);
+  border-color: var(--border);
+}
+
+.gallery-title {
+  display: block;
+  margin-top: var(--space-8);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.gallery-item:hover .gallery-title {
+  color: var(--link);
+}
+
+/* Figure (art detail and anywhere else an image needs a caption) */
+
+.figure,
+.art-figure {
+  margin: var(--space-32) 0;
+}
+
+.figure img,
+.art-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.figure figcaption,
+.art-figure figcaption {
+  margin-top: var(--space-8);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Art details (medium, tools, date) */
+
+.art-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-8) var(--space-24);
+  margin: 0 0 var(--space-32);
+  padding: var(--space-16) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 14px;
+}
+
+.art-details div {
+  display: contents;
+}
+
+.art-details dt {
+  color: var(--text-secondary);
+}
+
+.art-details dd {
+  margin: 0;
+}
+
 /* See also */
 
 .see-also {

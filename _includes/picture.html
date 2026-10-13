@@ -1,0 +1,16 @@
+{%- comment -%}
+  Responsive image. Serves the WebP variants listed for `src` in
+  _data/image_dimensions.yml (written by scripts/optimize-images.py), with the
+  original file as the fallback. Images without variants render as a plain <img>.
+
+  Params: src (required), alt (required), sizes (default 100vw),
+          loading (lazy | eager, default lazy), class (on the <img>)
+{%- endcomment -%}
+{%- assign pic = site.data.image_dimensions[include.src] -%}
+{%- assign pic_loading = include.loading | default: "lazy" -%}
+<picture>
+  {%- if pic.webp -%}
+  <source type="image/webp" sizes="{{ include.sizes | default: '100vw' }}" srcset="{% for v in pic.webp %}{{ v.src | relative_url }} {{ v.w }}w{% unless forloop.last %}, {% endunless %}{% endfor %}">
+  {%- endif -%}
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}"{% if pic %} width="{{ pic.width }}" height="{{ pic.height }}"{% endif %}{% if include.class %} class="{{ include.class }}"{% endif %} loading="{{ pic_loading }}" decoding="async"{% if pic_loading == "eager" %} fetchpriority="high"{% endif %}>
+</picture>

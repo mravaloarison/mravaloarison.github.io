@@ -17,6 +17,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.homepage %}{{ page.title }}{% elsif page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  {%- comment -%} Keep empty Arts pages out of search until there's art to show. {%- endcomment -%}
+  {%- if page.url contains '/arts/' and page.collection != "arts" -%}
+    {%- if page.medium_name -%}
+      {%- assign arts_items = site.arts | where: "medium", page.medium_name -%}
+    {%- else -%}
+      {%- assign arts_items = site.arts -%}
+    {%- endif -%}
+    {%- if arts_items.size == 0 %}
+  <meta name="robots" content="noindex">
+    {%- endif -%}
+  {%- endif %}
   {% seo title=false %}
   {% feed_meta %}
   {% include json-ld.html %}

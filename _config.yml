@@ -32,6 +32,10 @@ collections:
     output: true
     permalink: /projects/:name/
     sort_by: date
+  arts:
+    output: true
+    permalink: /arts/:name/
+    sort_by: date
 
 defaults:
   - scope:
@@ -39,6 +43,11 @@ defaults:
       type: projects
     values:
       layout: project
+  - scope:
+      path: ""
+      type: arts
+    values:
+      layout: art
   - scope:
       path: ""
       type: posts

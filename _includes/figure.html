@@ -1,0 +1,10 @@
+{%- comment -%}
+  Image plus optional caption. Params: src, alt, caption (Markdown),
+  sizes, loading, class (on the <figure>, default "figure").
+{%- endcomment -%}
+<figure class="{{ include.class | default: 'figure' }}">
+  {% include picture.html src=include.src alt=include.alt sizes=include.sizes loading=include.loading %}
+  {%- if include.caption %}
+  <figcaption>{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip }}</figcaption>
+  {%- endif %}
+</figure>

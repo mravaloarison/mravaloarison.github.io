@@ -1,0 +1,9 @@
+{%- comment -%} Dense square gallery for Arts. Param: items {%- endcomment -%}
+<div class="gallery-grid">
+  {% for item in include.items %}
+  <a class="gallery-item" href="{{ item.url | relative_url }}">
+    {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 50vw, 220px" %}
+    <span class="gallery-title">{{ item.title }}</span>
+  </a>
+  {% endfor %}
+</div>

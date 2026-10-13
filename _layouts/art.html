@@ -1,0 +1,40 @@
+---
+layout: default
+---
+{% assign mediums = site.data.categories.arts %}
+{% assign medium_label = page.medium %}
+{% assign medium_url = "/arts/" %}
+{% for m in mediums %}
+  {% if m.name == page.medium %}
+    {% assign medium_label = m.label %}
+    {% assign medium_url = "/arts/medium/" | append: m.slug | append: "/" %}
+  {% endif %}
+{% endfor %}
+{% include breadcrumb.html section_title="Arts" section_url="/arts/" category_title=medium_label category_url=medium_url current=page.title %}
+
+{% include page-header.html eyebrow=medium_label title=page.title abstract=page.description %}
+
+{% include figure.html src=page.image alt=page.image_alt loading="eager" sizes="(max-width: 1023px) calc(100vw - 32px), 800px" class="art-figure" %}
+
+<dl class="art-details">
+  <div>
+    <dt>Medium</dt>
+    <dd><a href="{{ medium_url | relative_url }}">{{ medium_label }}</a></dd>
+  </div>
+  {% if page.tools and page.tools.size > 0 %}
+  <div>
+    <dt>Tools</dt>
+    <dd>{{ page.tools | join: ", " }}</dd>
+  </div>
+  {% endif %}
+  <div>
+    <dt>Date</dt>
+    <dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd>
+  </div>
+</dl>
+
+{{ content }}
+
+{% include see-also.html collection=site.arts %}
+
+{% include prev-next.html %}
