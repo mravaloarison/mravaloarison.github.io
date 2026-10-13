@@ -1,0 +1,10 @@
+{%- comment -%}
+  Note / Tip aside with a left accent rule.
+  Usage: {% include callout.html label="Note" text="Markdown **allowed**." %}
+  `type` (optional: note | tip) picks the accent color; `label` defaults to the type.
+{%- endcomment -%}
+{%- assign callout_type = include.type | default: "note" | downcase -%}
+<aside class="callout callout-{{ callout_type }}">
+  <p class="callout-label">{{ include.label | default: callout_type }}</p>
+  {{ include.text | markdownify }}
+</aside>

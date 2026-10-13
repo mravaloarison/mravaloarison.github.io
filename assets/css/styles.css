@@ -8,6 +8,7 @@
   --text-secondary: #6e6e73;
   --text-tertiary: #86868b;
   --link: #0066cc;
+  --tip: #248a3d;
   --border: #d2d2d7;
   --border-subtle: #e8e8ed;
 
@@ -46,6 +47,7 @@
     --text-secondary: #a1a1a6;
     --text-tertiary: #86868b;
     --link: #2997ff;
+    --tip: #30d158;
     --border: #424245;
     --border-subtle: #333336;
   }
@@ -59,6 +61,7 @@
   --text-secondary: #a1a1a6;
   --text-tertiary: #86868b;
   --link: #2997ff;
+  --tip: #30d158;
   --border: #424245;
   --border-subtle: #333336;
 }
@@ -653,6 +656,62 @@ pre {
 
 .entry-highlights li {
   margin-bottom: var(--space-4);
+}
+
+/* Award-winning projects listed under the hackathon award */
+
+.win-list {
+  list-style: none;
+  margin: 0 0 var(--space-16);
+  padding: 0;
+}
+
+.win-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-8);
+  padding: var(--space-4) 0;
+}
+
+.win-list a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.win-list a:hover {
+  text-decoration: underline;
+}
+
+.win-list .meta {
+  margin: 0;
+}
+
+/* Callout (Note / Tip aside) */
+
+.callout {
+  margin: 0 0 var(--space-32);
+  padding: var(--space-12) var(--space-16);
+  border-left: 3px solid var(--link);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-elevated);
+}
+
+.callout-tip {
+  border-left-color: var(--tip);
+}
+
+.callout-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-4);
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
 }
 
 /* Card grid */

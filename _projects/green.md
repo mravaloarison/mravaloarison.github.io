@@ -6,6 +6,7 @@ description: A solo-built iOS app that routes drivers around traffic to cut emis
 category: Hackathon
 date: 2021-01-01
 award: Best Sustainability Hack
+event: HackRPI
 organization: Rensselaer Polytechnic Institute
 image: /assets/images/Green.png
 image_alt: Screenshot of the Green iOS app showing a low-emission driving route on a map
