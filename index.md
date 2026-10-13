@@ -24,6 +24,13 @@ seo:
 {% capture looking_for %}Graduate programs and scholarships. If you know of one that might be a good fit, I'd love to hear about it at [{{ site.author.email }}](mailto:{{ site.author.email }}).{% endcapture %}
 {% include callout.html label="Looking for" text=looking_for %}
 
+## Latest work
+
+The two projects that best show what I'm working on right now.
+
+{% assign latest = site.projects | where: "featured", true | sort: "date" | reverse %}
+{% include card-grid.html items=latest %}
+
 ## Overview
 
 My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.

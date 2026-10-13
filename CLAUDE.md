@@ -121,7 +121,7 @@ Level 0   /                          About me · Projects › · Arts › · Blo
 
 Level 1   /projects/                 ← Projects            → /
                                      Work (2) ›            → /projects/category/work/
-                                     Personal (3) ›        → /projects/category/personal/
+                                     Personal (5) ›        → /projects/category/personal/
                                      Hackathons (6) ›      → /projects/category/hackathons/
 
 Level 2   /projects/category/work/   ← Work                → /projects/
@@ -309,16 +309,20 @@ A long-form documentation page, not a landing page. Structure it as:
 Overview (the bio) → Topics: Experience, Education, Awards, Certificates,
 Languages, Interests. A "Looking for" callout (currently: graduate programs
 and scholarships) sits between the profile links and the Overview, and the
-hackathon award lists every project with an `award` in its front matter. On-this-page rail active. Existing copy is good — keep
+hackathon award lists every project with an `award` in its front matter. A "Latest work"
+card grid shows projects marked `featured: true` (MyTime and DogDuckGo). On-this-page rail active. Existing copy is good — keep
 its voice, don't corporate-ize it.
 
 ### Projects
 
-Eleven items, grouped **Work (2) · Personal (3) · Hackathons (6)**. Each
+Thirteen items, grouped **Work (2) · Personal (5) · Hackathons (6)**. Each
 already has a detail page and a screenshot in `assets/images/`. Discover
 Nature was removed on purpose — don't bring it back from the old site.
+MyTime has no public code or screenshots yet; its image is a placeholder
+cover to replace with real screens. DogDuckGo's repo (mravaloarison/save)
+is private, so it has no GitHub link.
 
-The index at `/projects/` shows all eleven under category headings. Each
+The index at `/projects/` shows all thirteen under category headings. Each
 category page shows only its own.
 
 Detail page order: breadcrumb → eyebrow (category) → title → abstract →

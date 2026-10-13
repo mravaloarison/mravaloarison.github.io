@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Personal Projects
-description: Self-directed experiments Mami Ravaloarison has built outside of work and hackathons, from computer-vision games to a first portfolio site.
+description: Self-directed projects Mami Ravaloarison has built outside of work and hackathons, from an iOS time tracker and a typing game to computer-vision experiments.
 nav_slug: personal
 ---
 
