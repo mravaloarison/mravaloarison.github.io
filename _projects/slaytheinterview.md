@@ -13,6 +13,8 @@ image_alt: Screenshot of the SlayTheInterview app's mock interview recording scr
 tech: [Flask, MongoDB, Speech Recognition, Python, OpenAI, React]
 links:
   devpost: https://devpost.com/software/hackyourinterview
+redirect_from:
+  - /projects/slaytheinveterview/
 ---
 
 ## Overview

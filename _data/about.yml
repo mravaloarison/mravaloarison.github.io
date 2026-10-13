@@ -58,8 +58,9 @@ awards:
   - title: 12 Hackathon wins
     awarder: Several East Coast Universities & Major League Hacking
     date: 2022–2024
-    summary: 12 hackathon wins across the U.S. (Yale, Princeton, Stony Brook, RPI, University of Penn), earning ~$4,000 in prizes.
+    summary: 12 hackathon wins across the U.S. (Yale, Princeton, Stony Brook, RPI, UPenn), earning ~$4,000 in prizes.
     url: https://devpost.com/mrava
+    show_wins: true
   - title: Dean's Award for Academic Excellence
     awarder: Monroe University
     date: "2025"

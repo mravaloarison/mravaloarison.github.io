@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Work Projects
-description: Data analytics, dashboards, and internal tools Mami Ravaloarison has built as part of her day job at Monroe University.
+description: Data analytics, dashboards, and internal tools Mami Ravaloarison has built on the job at Monroe University's Office of Academic Records, Assessment, and Planning.
 nav_slug: work
 ---
 
