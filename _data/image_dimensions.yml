@@ -1,33 +1,89 @@
+# Written by scripts/optimize-images.py. Re-run it after adding or replacing an image.
 /assets/images/ARAPPowerBI.jpeg:
   width: 1664
   height: 1062
+  webp:
+    - src: /assets/images/ARAPPowerBI-800w.webp
+      w: 800
+    - src: /assets/images/ARAPPowerBI-1600w.webp
+      w: 1600
 /assets/images/ARAPSharePoint.png:
   width: 2376
   height: 1466
+  webp:
+    - src: /assets/images/ARAPSharePoint-800w.webp
+      w: 800
+    - src: /assets/images/ARAPSharePoint-1600w.webp
+      w: 1600
 /assets/images/Better.png:
   width: 2240
   height: 1328
+  webp:
+    - src: /assets/images/Better-800w.webp
+      w: 800
+    - src: /assets/images/Better-1600w.webp
+      w: 1600
 /assets/images/Cat-Culus.png:
   width: 2880
   height: 1800
+  webp:
+    - src: /assets/images/Cat-Culus-800w.webp
+      w: 800
+    - src: /assets/images/Cat-Culus-1600w.webp
+      w: 1600
 /assets/images/Flappy-x-ML.png:
   width: 2281
   height: 1583
+  webp:
+    - src: /assets/images/Flappy-x-ML-800w.webp
+      w: 800
+    - src: /assets/images/Flappy-x-ML-1600w.webp
+      w: 1600
 /assets/images/GeneReel.png:
   width: 2880
   height: 1800
+  webp:
+    - src: /assets/images/GeneReel-800w.webp
+      w: 800
+    - src: /assets/images/GeneReel-1600w.webp
+      w: 1600
 /assets/images/Green.png:
   width: 2669
   height: 1597
+  webp:
+    - src: /assets/images/Green-800w.webp
+      w: 800
+    - src: /assets/images/Green-1600w.webp
+      w: 1600
 /assets/images/PennApps.png:
   width: 2880
   height: 1800
+  webp:
+    - src: /assets/images/PennApps-800w.webp
+      w: 800
+    - src: /assets/images/PennApps-1600w.webp
+      w: 1600
 /assets/images/Portfoliov1.0.png:
   width: 2877
   height: 1656
+  webp:
+    - src: /assets/images/Portfoliov1.0-800w.webp
+      w: 800
+    - src: /assets/images/Portfoliov1.0-1600w.webp
+      w: 1600
 /assets/images/SharpeningDotStudy.png:
   width: 2592
   height: 1586
+  webp:
+    - src: /assets/images/SharpeningDotStudy-800w.webp
+      w: 800
+    - src: /assets/images/SharpeningDotStudy-1600w.webp
+      w: 1600
 /assets/images/SlayTheInterview.png:
   width: 1920
   height: 1183
+  webp:
+    - src: /assets/images/SlayTheInterview-800w.webp
+      w: 800
+    - src: /assets/images/SlayTheInterview-1600w.webp
+      w: 1600

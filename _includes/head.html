@@ -17,6 +17,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.homepage %}{{ page.title }}{% elsif page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
+  <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
   {%- comment -%} Keep empty Arts pages out of search until there's art to show. {%- endcomment -%}
   {%- if page.url contains '/arts/' and page.collection != "arts" -%}
     {%- if page.medium_name -%}

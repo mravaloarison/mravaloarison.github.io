@@ -38,6 +38,12 @@ collections:
     sort_by: date
 
 defaults:
+  # Social preview image for pages without their own (About, Blog, posts, category pages).
+  # Projects and arts set `image` in front matter, which wins over this.
+  - scope:
+      path: ""
+    values:
+      image: /assets/social/og-default.png
   - scope:
       path: ""
       type: projects
@@ -60,3 +66,4 @@ exclude:
   - vendor
   - node_modules
   - CLAUDE.md
+  - scripts

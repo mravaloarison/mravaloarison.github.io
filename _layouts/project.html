@@ -26,18 +26,12 @@ layout: default
 </p>
 {% endif %}
 
-{% assign dims = site.data.image_dimensions[page.image] %}
 {% assign body_parts = content | split: '<h2 id="what-i-built">' %}
 
 {{ body_parts[0] }}
 
 <figure class="project-screenshot">
-  <img
-    src="{{ page.image | relative_url }}"
-    alt="{{ page.image_alt }}"
-    {% if dims %}width="{{ dims.width }}" height="{{ dims.height }}"{% endif %}
-    loading="eager"
-  >
+  {% include picture.html src=page.image alt=page.image_alt loading="eager" sizes="(max-width: 1023px) calc(100vw - 32px), 800px" %}
 </figure>
 
 {% if body_parts[1] %}

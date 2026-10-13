@@ -1,14 +1,8 @@
 <div class="card-grid">
   {% for item in include.items %}
-  {% assign dims = site.data.image_dimensions[item.image] %}
   <a class="card" href="{{ item.url | relative_url }}">
     {% if item.image %}
-    <img
-      src="{{ item.image | relative_url }}"
-      alt="{{ item.image_alt }}"
-      {% if dims %}width="{{ dims.width }}" height="{{ dims.height }}"{% endif %}
-      loading="lazy"
-    >
+    {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
     {% endif %}
     <div class="card-body">
       <h3>{{ item.title }}</h3>
