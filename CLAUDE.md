@@ -121,7 +121,7 @@ Level 0   /                          About me · Projects › · Arts › · Blo
 
 Level 1   /projects/                 ← Projects            → /
                                      Work (2) ›            → /projects/category/work/
-                                     Personal (4) ›        → /projects/category/personal/
+                                     Personal (3) ›        → /projects/category/personal/
                                      Hackathons (6) ›      → /projects/category/hackathons/
 
 Level 2   /projects/category/work/   ← Work                → /projects/
@@ -274,6 +274,9 @@ drawer opens or closes.
 - `on-this-page.html` — builds from h2/h3 in the article, with scroll spy
 - `callout.html` — Note / Tip aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
+- `picture.html` — every content image goes through this: `<picture>` with the
+  WebP variants from `_data/image_dimensions.yml`, original as fallback
+- `gallery-grid.html` — the dense square grid used on Arts
 - `prev-next.html` — sibling navigation within a collection
 
 Transitions elsewhere are 150–200ms ease, opacity and small transforms only.
@@ -304,15 +307,18 @@ detail pages.
 
 A long-form documentation page, not a landing page. Structure it as:
 Overview (the bio) → Topics: Experience, Education, Awards, Certificates,
-Languages, Interests. On-this-page rail active. Existing copy is good — keep
+Languages, Interests. A "Looking for" callout (currently: graduate programs
+and scholarships) sits between the profile links and the Overview, and the
+hackathon award lists every project with an `award` in its front matter. On-this-page rail active. Existing copy is good — keep
 its voice, don't corporate-ize it.
 
 ### Projects
 
-Twelve items, grouped **Work (2) · Personal (4) · Hackathons (6)**. Each
-already has a detail page and a screenshot in `assets/images/`.
+Eleven items, grouped **Work (2) · Personal (3) · Hackathons (6)**. Each
+already has a detail page and a screenshot in `assets/images/`. Discover
+Nature was removed on purpose — don't bring it back from the old site.
 
-The index at `/projects/` shows all twelve under category headings. Each
+The index at `/projects/` shows all eleven under category headings. Each
 category page shows only its own.
 
 Detail page order: breadcrumb → eyebrow (category) → title → abstract →
@@ -324,6 +330,12 @@ See Also → prev/next.
 
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
+
+Built and waiting for the first piece. Until `_arts/` has at least one item,
+the Arts sidebar row and the "drawing" link in the About bio stay hidden, and
+the Arts pages render a short note with `noindex`. All of that switches on by
+itself when the first piece is added — copy `_arts/_TEMPLATE.md` (ignored by
+Jekyll because of the underscore) and follow the steps in it.
 
 Index is a gallery grid, denser than the projects grid. Detail page shows the
 full piece large, then medium, tools, date, and a short note about the piece.
@@ -506,6 +518,11 @@ done.
 - `loading="lazy"` on everything below the fold; the hero image on a detail
   page loads eagerly.
 - Meaningful `alt` on every image. For artwork, describe the piece.
+- How it works here: put the original in `assets/images/` (Arts in
+  `assets/images/arts/`), then run `python3 scripts/optimize-images.py`
+  (needs Pillow). It writes `<name>-800w.webp` / `-1600w.webp` and rewrites
+  `_data/image_dimensions.yml`, which `picture.html` reads. Never hand-edit
+  that data file.
 - Serve WebP or AVIF with a fallback, and provide `srcset` for anything
   displayed wider than 600px. Uncompressed Procreate exports will destroy
   Largest Contentful Paint if dropped in raw.
