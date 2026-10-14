@@ -136,6 +136,7 @@ cards and images, pills fully rounded.
   Home / Projects / Hackathons / Better
 - `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
+- `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — pill badges for tech stack and awards
 - `card-grid.html` — project cards
 - `see-also.html` — trailing block of related links (details below)
@@ -219,7 +220,9 @@ the image rules below; do not skip them here.
 
 Reverse-chronological. Two posts exist. Tags: `first-post`, `life`,
 `technology`. Show date and reading time. The blog index links to the year pages
-and the tag pages under "Browse".
+and the tag pages under "Browse" (`blog-browse.html`). The same block sits
+at the bottom of every year and tag page too, with the current one
+highlighted, so you can hop between tags without going back.
 
 ---
 

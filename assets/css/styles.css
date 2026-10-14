@@ -629,6 +629,12 @@ main:focus {
   border-color: var(--border-strong);
 }
 
+.tag-index a[aria-current] {
+  color: var(--text);
+  font-weight: 700;
+  border-color: var(--accent);
+}
+
 /* Embedded videos: full column width, 16:9, never wider than the screen */
 
 main iframe {

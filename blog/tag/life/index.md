@@ -13,3 +13,5 @@ tag: life
 
 {% assign tagged_posts = site.posts | where_exp: "p", "p.tags contains page.tag" %}
 {% include post-list.html posts=tagged_posts descriptions=true %}
+
+{% include blog-browse.html %}

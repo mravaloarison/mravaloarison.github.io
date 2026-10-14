@@ -1,0 +1,31 @@
+{%- comment -%}
+  "Browse" block: every year and tag page, on the blog index and on each
+  year/tag page. The page you're on is marked with aria-current.
+{%- endcomment -%}
+<h2 id="browse">Browse</h2>
+
+<div class="browse">
+  <div>
+    <p class="browse-label">By year</p>
+    <ul class="tag-index">
+      {%- assign year_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" -%}
+      {%- for group in year_groups -%}
+      {%- assign year_url = "/blog/" | append: group.name | append: "/" -%}
+      {%- assign year_page = site.pages | where: "url", year_url | first -%}
+      {%- if year_page %}
+      <li><a href="{{ year_url | relative_url }}"{% if page.url == year_url %} aria-current="page"{% endif %}>{{ group.name }}</a></li>
+      {%- endif -%}
+      {%- endfor %}
+    </ul>
+  </div>
+  <div>
+    <p class="browse-label">By tag</p>
+    <ul class="tag-index">
+      {%- assign all_tags = site.tags | sort -%}
+      {%- for tag in all_tags -%}
+      {%- assign tag_url = "/blog/tag/" | append: tag[0] | append: "/" %}
+      <li><a href="{{ tag_url | relative_url }}"{% if page.url == tag_url %} aria-current="page"{% endif %}>{{ tag[0] }}</a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</div>

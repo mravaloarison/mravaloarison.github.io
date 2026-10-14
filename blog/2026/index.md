@@ -17,3 +17,5 @@ nav_slug: "2026"
 {% include post-list.html posts=group.items descriptions=true %}
 {% endif %}
 {% endfor %}
+
+{% include blog-browse.html %}
