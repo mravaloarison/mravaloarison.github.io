@@ -84,26 +84,21 @@ links, the callout rule, award pills.
 
 | Role                    | Size                      | Font / weight         |
 | ----------------------- | ------------------------- | --------------------- |
-| Eyebrow                 | 14px, uppercase, 0.06em   | Nunito 600            |
-| Page title (h1)         | clamp(40px, 7vw, 60px)    | Newsreader 500        |
-| Abstract under h1       | 25px (21px on phones)     | Newsreader            |
-| Section (h2)            | 34px (29px on phones)     | Newsreader 500        |
-| Subsection (h3)         | 24px                      | Newsreader 500        |
-| Body                    | 19px (18px on phones), line-height 1.7 | Nunito 400 |
-| Meta / caption          | 15px                      | Nunito 400            |
-
-Spacing is generous, in the spirit of maggieappleton.com: 96px above each
-h2, 24px between paragraphs, 64px above the page title.
+| Eyebrow                 | 13px, uppercase, 0.06em   | Nunito 600            |
+| Page title (h1)         | clamp(34px, 6vw, 44px)    | Newsreader 500        |
+| Abstract under h1       | 21px                      | Newsreader            |
+| Section (h2)            | 27px                      | Newsreader 500        |
+| Subsection (h3)         | 21px                      | Newsreader 500        |
+| Body                    | 17px, line-height 1.65    | Nunito 400            |
+| Meta / caption          | 14px                      | Nunito 400            |
 
 Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px small, 10px
 cards and images, pills fully rounded.
 
 ### Layout
 
-- One centered reading column, `--measure` 720px of text width, 24px side
-  padding (16px under 600px). The header, footer and project card grids
-  span a wider frame, `--wide` 1120px — the card grid breaks out of the
-  column with negative inline margins. No horizontal page scroll, ever.
+- One centered column, `--measure` 680px of text width, 24px side padding
+  (16px under 600px). No horizontal page scroll, ever.
 - Header: "Mami Ravaloarison" in Newsreader on the left; plain text links
   on the right (About · Projects · Arts · Blog) and the theme toggle. The
   current section's link is bold and carries `aria-current`. The Arts link
