@@ -5,7 +5,7 @@
 #    (Files starting with "_" are ignored by Jekyll, which is why this one never shows up.)
 # 3. Fill in the fields below, then run:  python3 scripts/optimize-images.py
 #    That writes the WebP versions and the image's width/height.
-# The Arts link in the sidebar, the gallery, and the "drawing" link in the About bio
+# The Arts link in the top nav, the gallery, and the "drawing" link in the About bio
 # all switch on automatically once the first piece exists.
 title: Morning light over the bay
 description: One or two sentences about the piece, 120–160 characters, written so it reads well as a search result snippet.

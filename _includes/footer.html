@@ -1,3 +1,14 @@
 <footer class="site-footer">
-  <p>© {{ 'now' | date: "%Y" }} {{ site.author.name }}.</p>
+  <ul class="footer-links">
+    <li><a href="mailto:{{ site.author.email }}">Email</a></li>
+    {% for link in site.social.links %}
+    {% assign label = link %}
+    {% if link contains "github.com" %}{% assign label = "GitHub" %}{% endif %}
+    {% if link contains "linkedin.com" %}{% assign label = "LinkedIn" %}{% endif %}
+    {% if link contains "devpost.com" %}{% assign label = "Devpost" %}{% endif %}
+    <li><a href="{{ link }}" target="_blank" rel="noopener">{{ label }}</a></li>
+    {% endfor %}
+    <li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li>
+  </ul>
+  <p>© {{ 'now' | date: "%Y" }} Mami Ravaloarison</p>
 </footer>

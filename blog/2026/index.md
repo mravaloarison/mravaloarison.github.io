@@ -12,17 +12,8 @@ nav_slug: "2026"
 # 2026
 
 {% assign year_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-<ul class="post-list">
-  {% for group in year_groups %}
-  {% if group.name == page.nav_slug %}
-  {% for post in group.items %}
-  <li>
-    <h3><a href="{{ post.url | relative_url }}">Read: {{ post.title }}</a></h3>
-    {% include post-meta.html post=post %}
-    <p class="card-description">{{ post.description }}</p>
-    {% include tag-list.html tags=post.tags %}
-  </li>
-  {% endfor %}
-  {% endif %}
-  {% endfor %}
-</ul>
+{% for group in year_groups %}
+{% if group.name == page.nav_slug %}
+{% include post-list.html posts=group.items descriptions=true %}
+{% endif %}
+{% endfor %}

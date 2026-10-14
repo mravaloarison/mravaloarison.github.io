@@ -24,258 +24,108 @@ and the About page body so both spellings are indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (drawer toggle, theme toggle, scroll spy). The nav-direction snippet is the
-  one exception — it is inline in `<head>` and not deferred, because it must
-  run before first paint. All content renders server-side at build time —
-  never fetch or render content client-side.
+  (the theme toggle). The one exception is the inline theme snippet in
+  `<head>`, which must run before first paint. All content renders
+  server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
 - Components live in `_includes/` as Liquid partials. Filenames kebab-case.
 
 ---
 
-## Design language: Apple developer documentation
+## Design language: warm, simple, single column
 
-The visual target is Apple's developer documentation — quiet, dense with
-information, structured, high-contrast text on near-white, hairline rules
-instead of boxes and shadows. It should feel like a reference manual for a
-person, not a marketing page.
+The visual target is a personal site in the spirit of leerob.com (plain,
+text-first, one narrow column, nothing extra) with the warmth of
+maggieappleton.com (paper-toned background, serif headings, a hand-made
+feel). It should read like a well-set page in a book, not a marketing site
+and not a docs portal. When in doubt, remove things.
 
-**This is an aesthetic direction, not a clone.** Never use Apple's logo,
-wordmark, icons, or any Apple branding. Never self-host SF Pro or SF Mono —
-they're licensed fonts. Fonts are self-hosted in `assets/fonts/` (from
-Google Fonts, `font-display: swap`), and only what's used is shipped:
+This replaced an earlier Apple-documentation design (three columns, sliding
+sidebar, on-this-page rail) in October 2026, at Mami's request. Don't bring
+the sidebar, drawer, or on-this-page rail back.
 
-- **Indie Flower 400** (`--font-display`) — big titles only: the page h1
-  (clamp 36–46px), section h2s like Overview and Latest work (32px), and the
-  topbar name. Both are sized up because handwriting reads small. It has one
-  weight and gets hard to read below ~28px, so never use it for h3, the
-  sidebar, or body text. No faux bold (`font-synthesis: none`).
-- **Nunito 400/600/700** (`--font-sans`) — everything else: h3–h6, sidebar,
-  body, labels, UI. Code stays monospace.
+Fonts are self-hosted in `assets/fonts/` (`font-display: swap`), and only
+what's used is shipped:
+
+- **Newsreader** (`--font-serif`, variable weight, normal + italic) — h1,
+  h2, h3, the site name, post titles in lists, card titles, and the italic
+  abstract under each page title. Weight 500 for headings.
+- **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
+  Code stays monospace.
 - **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 and ☀️ for the theme
-  toggle (1.5 KB, COLRv1). Safari doesn't support COLRv1 and falls back to
-  Apple Color Emoji; Google's Safari build of the font is ~500 KB, so it
-  isn't shipped.
+  toggle.
 
-Both Indie Flower and Nunito latin files are preloaded from the head include.
+Newsreader latin and Nunito latin are preloaded from the head include.
+
+### Color
+
+Warm paper and ink. Tokens live on `:root` with a dark set under
+`prefers-color-scheme: dark` (guarded by `:not([data-theme="light"])`) and
+again under `[data-theme="dark"]`:
+
+| Token              | Light     | Dark      |
+| ------------------ | --------- | --------- |
+| `--bg`             | `#fbf8f3` | `#171513` |
+| `--surface`        | `#f3eee5` | `#211e1b` |
+| `--text`           | `#24211d` | `#ede8e0` |
+| `--text-secondary` | `#635c52` | `#a89f93` |
+| `--accent`         | `#a64b22` | `#e9926a` |
+| `--border`         | `#e3dccf` | `#312d29` |
+
+All text pairs are at least 4.5:1. Links are ink-colored with a soft accent
+underline that turns fully accent on hover. Use the accent sparingly:
+links, the callout rule, award pills.
 
 ### Type
 
-```
---font-sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
-             Roboto, Helvetica, Arial, sans-serif;
---font-display: "Indie Flower", var(--font-sans);   /* h1, h2, topbar name */
---font-emoji: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
-              sans-serif;                            /* theme toggle */
---font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-```
+| Role                    | Size                      | Font / weight         |
+| ----------------------- | ------------------------- | --------------------- |
+| Eyebrow                 | 13px, uppercase, 0.06em   | Nunito 600            |
+| Page title (h1)         | clamp(34px, 6vw, 44px)    | Newsreader 500        |
+| Abstract under h1       | 21px, italic              | Newsreader            |
+| Section (h2)            | 27px                      | Newsreader 500        |
+| Subsection (h3)         | 21px                      | Newsreader 500        |
+| Body                    | 17px, line-height 1.65    | Nunito 400            |
+| Meta / caption          | 14px                      | Nunito 400            |
 
-| Role                                | Size                   | Weight                | Tracking |
-| ----------------------------------- | ---------------------- | --------------------- | -------- |
-| Eyebrow (section label above title) | 12px, uppercase        | 600                   | 0.08em   |
-| Page title (h1)                     | clamp(36px, 6vw, 46px) | 400 (Indie Flower)    | normal   |
-| Section (h2)                        | 32px                   | 400 (Indie Flower)    | normal   |
-| Subsection (h3)                     | 21px                   | 600                   | normal   |
-| Body                                | 17px, line-height 1.6  | 400                   | normal   |
-| Meta / caption                      | 14px                   | 400                   | normal   |
-| Sidebar row                         | 14px                   | 400 (600 when active) | normal   |
-
-Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96.
-Radii: 8px small, 12px cards, 18px large panels.
+Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px small, 10px
+cards and images, pills fully rounded.
 
 ### Layout
 
-Three columns on wide screens, which is the signature of the reference:
+- One centered column, `--measure` 680px of text width, 24px side padding
+  (16px under 600px). No horizontal page scroll, ever.
+- Header: "Mami Ravaloarison" in Newsreader on the left; plain text links
+  on the right (About · Projects · Arts · Blog) and the theme toggle. The
+  current section's link is bold and carries `aria-current`. The Arts link
+  only appears once `_arts/` has a piece. On small screens the links wrap
+  under the name; there is no hamburger menu.
+- Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
+  the copyright line.
+- Post lists are quiet rows: serif title on the left, date on the right,
+  hairline between rows (`post-list.html`).
+- Project cards: image first (rounded, hairline border), serif title, one
+  line of description. No boxes around cards, no shadows.
 
-```
-[ sidebar 260px ][ content max 800px ][ on-this-page 200px ]
-```
+### Components in `_includes/`
 
-- Container max 1400px, centered.
-- Sidebar is persistent and sticky, and uses push navigation — see the next
-  section, which is the most detailed part of this brief.
-- Below 1024px the sidebar collapses to a slide-out drawer behind a menu
-  button; the on-this-page rail disappears into a collapsible summary at the
-  top of the article.
-- 16px side gutter at phone width. No horizontal page scroll, ever.
-
----
-
-## Sidebar navigation
-
-The sidebar is **push navigation** — a drill-down, the pattern Facebook's
-account menu uses — not a flat list and not disclosure groups. Selecting a
-row slides the panel left to reveal a deeper panel; a back row at the top
-slides it right.
-
-### Three levels
-
-```
-Level 0   /                          About me · Projects › · Arts › · Blog ›
-
-Level 1   /projects/                 ← Projects            → /
-                                     Work (2) ›            → /projects/category/work/
-                                     Personal (5) ›        → /projects/category/personal/
-                                     Hackathons (6) ›      → /projects/category/hackathons/
-
-Level 2   /projects/category/work/   ← Work                → /projects/
-                                     ARAP SharePoint
-                                     ARAP Databook
-```
-
-**The header row is a single row** — back chevron plus the current panel's
-name — and the whole row links to the parent, Facebook style. There is no
-separate title row and no row that links to the page you're already on. Its
-accessible name states the destination ("Back to all sections", "Back to
-Projects"), not just the arrow.
-
-Because the category page is not linked from the panel while you're on a
-detail page, the breadcrumb carries it: Home › Projects › Work › ARAP
-SharePoint.
-
-Arts mirrors this with **mediums** (Procreate, Traditional, Sketchbook), Blog
-with **years**, newest first.
-
-On a detail page — `/projects/better/` — the sidebar renders **level 2 for
-that item's group**, with the item highlighted. The group comes from front
-matter (`category`, `medium`, or the post's year). Counts are derived from the
-collection at build time; never hardcode them.
-
-### Rules that are not negotiable
-
-1. **The open panel is server-rendered by Jekyll from the current URL.** No JS
-   decides it. Hard refresh, JS disabled, and a crawler all get the correct
-   panel in the HTML.
-2. **Every row is a real `<a href>`.** Selecting "Projects" navigates to
-   `/projects/` — the URL changes and the content column renders the Projects
-   index. Never a JS-only panel switch that leaves the URL alone.
-3. **The nav hierarchy and the URL hierarchy are the same thing.** Level 1 is
-   the section index, level 2 is a category page. Those category pages are
-   required anyway (see Linking rules) — the drill-down is just a view of
-   them.
-4. **Only the sidebar panel animates.** The content column, header, and
-   on-this-page rail stay completely still during a navigation. No fade, no
-   transform on the container.
-
-### The slide
-
-**Do not use the View Transitions API.** It was tried twice and failed both
-times — once animating the whole container, once not firing at all. The
-approach below is settled: a CSS keyframe on the panel, played on page load,
-with direction derived from nav depth. It works in every browser and cannot
-leak onto the content column.
-
-Nav depth goes on `<html>`, rendered by Jekyll: `0` for `/`, `1` for a section
-index (`/projects/`, `/arts/`, `/blog/`), `2` for a category page or any
-detail page.
-
-```html
-<html lang="en" data-nav-depth="2"></html>
-```
-
-An **inline, non-deferred** script in `<head>` compares it to the previous
-page's depth. This is the one exception to the defer-everything rule — it has
-to run before first paint.
-
-```html
-<script>
-	(function () {
-		var el = document.documentElement;
-		var depth = Number(el.dataset.navDepth || 0);
-		var prev = null;
-		try {
-			prev = sessionStorage.getItem("navDepth");
-		} catch (e) {}
-		if (prev !== null) {
-			var p = Number(prev);
-			if (depth > p) el.dataset.navDir = "forward";
-			else if (depth < p) el.dataset.navDir = "back";
-		}
-		try {
-			sessionStorage.setItem("navDepth", String(depth));
-		} catch (e) {}
-	})();
-</script>
-```
-
-```css
-.sidebar {
-	overflow-x: clip;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	:root[data-nav-dir="forward"] .sidebar-panel {
-		animation: panel-from-right 260ms cubic-bezier(0.32, 0.72, 0, 1) both;
-	}
-	:root[data-nav-dir="back"] .sidebar-panel {
-		animation: panel-from-left 260ms cubic-bezier(0.32, 0.72, 0, 1) both;
-	}
-}
-
-@keyframes panel-from-right {
-	from {
-		transform: translateX(100%);
-		opacity: 0;
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-	}
-}
-@keyframes panel-from-left {
-	from {
-		transform: translateX(-100%);
-		opacity: 0;
-	}
-	to {
-		transform: translateX(0);
-		opacity: 1;
-	}
-}
-```
-
-Rules around it:
-
-- The animation selector targets `.sidebar-panel` and nothing else. If the
-  content column moves, the selector is wrong.
-- `overflow-x: clip` on `.sidebar` keeps the incoming panel from flying across
-  the content column. Don't drop it, and don't swap it for `overflow: hidden`,
-  which breaks sticky positioning.
-- Depth 2 → depth 2 (a category page to a detail page in the same category)
-  produces no animation. That's correct — the panel didn't change, only the
-  highlighted row.
-- With JS off, `data-nav-dir` is never set, no rule matches, and the panel
-  renders normally at full opacity.
-- Only the new panel slides in; the outgoing one is gone with the old
-  document. That is accepted, not a bug to fix.
-
-Mobile: the same drill-down inside the existing drawer. Don't change how the
-drawer opens or closes.
-
-### Components to build in `_includes/`
-
-- `sidebar.html` — picks the panel from `page.url` and the collection
-- `sidebar-panel.html` — one panel: back row, title, rows
-- `sidebar-back-row.html` — ← chevron plus parent label
 - `breadcrumb.html` — on every page below the top level, including the group:
-  Home › Projects › Hackathons › Better
-- `page-header.html` — eyebrow, h1, one-paragraph abstract in `--text-secondary`
-- `metadata-row.html` — pill badges for tech stack, styled like availability
-  badges: small, hairline border, no fill, `--text-secondary`
-- `card-grid.html` — a "Topics" grid. Hairline border, 12px radius, subtle
-  hover lift only, no drop shadows
+  Home / Projects / Hackathons / Better
+- `page-header.html` — eyebrow, h1, italic serif abstract
+- `post-list.html` — title/date rows; `descriptions=true` adds a line under each
+- `metadata-row.html` — pill badges for tech stack and awards
+- `card-grid.html` — project cards
 - `see-also.html` — trailing block of related links (details below)
-- `on-this-page.html` — builds from h2/h3 in the article, with scroll spy
-- `callout.html` — Note / Tip aside with a left accent rule
+- `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
 - `prev-next.html` — sibling navigation within a collection
 
-Transitions elsewhere are 150–200ms ease, opacity and small transforms only.
-Nothing bouncy. Honor `prefers-reduced-motion: reduce`. Visible focus rings on
-every interactive element.
+Transitions are 150–200ms ease, color and small transforms only. Nothing
+bouncy. Honor `prefers-reduced-motion: reduce`. Visible focus rings on every
+interactive element.
 
 ---
 
@@ -299,12 +149,12 @@ detail pages.
 
 ### About (`/`)
 
-A long-form documentation page, not a landing page. Structure it as:
+A long-form page, not a landing page. Structure it as:
 Overview (the bio) → Topics: Experience, Education, Awards, Certificates,
 Languages, Interests. A "Looking for" callout (currently: graduate programs
 and scholarships) sits between the profile links and the Overview, and the
 hackathon award lists every project with an `award` in its front matter. A "Latest work"
-card grid shows projects marked `featured: true` (MyTime and DogDuckGo). On-this-page rail active. Existing copy is good — keep
+card grid shows projects marked `featured: true` (MyTime and DogDuckGo). Existing copy is good — keep
 its voice, don't corporate-ize it.
 
 ### Projects
@@ -330,7 +180,7 @@ New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
 
 Built and waiting for the first piece. Until `_arts/` has at least one item,
-the Arts sidebar row and the "drawing" link in the About bio stay hidden, and
+the Arts nav link and the "drawing" link in the About bio stay hidden, and
 the Arts pages render a short note with `noindex`. All of that switches on by
 itself when the first piece is added — copy `_arts/_TEMPLATE.md` (ignored by
 Jekyll because of the underscore) and follow the steps in it.
@@ -343,9 +193,8 @@ the image rules below; do not skip them here.
 ### Blog / Journal
 
 Reverse-chronological. Two posts exist. Tags: `first-post`, `life`,
-`technology`. Show date and reading time. The sidebar groups posts by year;
-the tag pages are separate facets. Post pages get the on-this-page rail when
-they have three or more h2s.
+`technology`. Show date and reading time. The blog index links to the year pages
+and the tag pages under "Browse".
 
 ---
 
@@ -372,7 +221,7 @@ style changes, so nothing already indexed 404s.
 ```yaml
 title: # required
 description: # required, 120–160 chars, written for a search snippet
-category: # Work | Personal | Hackathon — drives the sidebar panel
+category: # Work | Personal | Hackathon — drives the category page and breadcrumb
 date: # YYYY-MM-DD
 image: # /assets/images/*.png — required, used for OG card
 image_alt: # required
@@ -392,7 +241,7 @@ related: [] # optional slugs; auto-fill from category when absent
 ```yaml
 title:
 description:
-medium: # Procreate | Traditional | Sketchbook — drives the sidebar panel
+medium: # Procreate | Traditional | Sketchbook — drives the medium page and breadcrumb
 date:
 image:
 image_alt: # required — describe the artwork, not "drawing"
@@ -419,11 +268,12 @@ linkable. Enforce all of these:
 
 1. **Every collection item renders its own page** at a stable permalink.
    No item exists only as a card on an index.
-2. **Every item is reachable from the sidebar in at most two selections**
-   from its section panel. This is the guarantee that nothing is orphaned.
+2. **Every item is reachable in at most two clicks from its section index**
+   (section index → item, or section index → category page → item). This
+   is the guarantee that nothing is orphaned.
 3. **Category, medium, and tag pages are real pages**, generated at build
    time — `/projects/category/hackathons/`, `/arts/medium/procreate/`,
-   `/blog/tag/technology/`. They double as the level-2 sidebar panels. The
+   `/blog/tag/technology/`, and the section index links to each of them. The
    old site linked these to `#`, which meant search engines saw zero of them.
 4. **`see-also.html` renders on every detail page and is never empty.** Use
    `related` when set; otherwise fall back to same category/tag, then to most
@@ -532,11 +382,10 @@ done.
 - Semantic landmarks: `<header>`, `<nav>`, `<main>`, `<aside>`, `<footer>`.
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
-- The sidebar back row is a link, reachable by keyboard, with an accessible
-  name that says where it goes ("Back to Projects"), not just "←".
-- Nav drawer traps focus while open and closes on Escape.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state.
+  delivers, content or navigation state. The only JS is the theme toggle
+  (deferred) plus a tiny inline head script that applies the saved theme
+  before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
 
@@ -544,23 +393,13 @@ done.
 
 ## Things that have already gone wrong
 
-Read this before touching the sidebar.
-
-- **View Transitions failed twice and are now banned for this feature.** First
-  attempt: `@view-transition` without a scoped name, so the default root
-  transition slid the whole content container. Second attempt: the panels were
-  correct but nothing animated at all. Use the keyframe approach in "The
-  slide" — do not reintroduce the API, even as an enhancement.
-- **The sidebar stayed a flat list while the animation was added.** Structure
-  first, motion second — an animation has nothing to slide between until the
-  panels exist. If asked for both at once, build and verify the panels
-  before writing a line of animation CSS.
-- **The level-1 panel had a "Projects" row that linked to `/projects/`** while
-  already on `/projects/`. A panel never contains a link to the page it is
-  currently showing.
 - **Category filters linked to `#`** on the old site, making every facet
-  invisible to search engines. They are real pages now, and they are also the
-  level-2 panels.
+  invisible to search engines. They are real pages now, linked from each
+  section index.
+- **The sidebar design was dropped** (October 2026) for the single-column
+  layout above. The View Transitions API was tried twice for its slide
+  animation and failed both times; if page-to-page motion ever comes back,
+  don't reach for it first.
 
 ---
 
@@ -568,12 +407,11 @@ Read this before touching the sidebar.
 
 - One change at a time. When a request bundles structure and animation, or
   layout and content, do the structural half, verify it, then continue.
-- Make one section work end to end before starting the next. Order:
-  design system → layout shell → sidebar → Projects → About → Blog → Arts →
-  SEO pass.
+- Make one section work end to end before starting the next.
 - When migrating existing content, preserve Mami's wording. The voice is
   first-person, plain, and a little wry. Don't inflate it.
 - Run `bundle exec jekyll serve` and click through a page before saying it's
-  done. For sidebar work, check `/`, `/projects/`,
-  `/projects/category/work/`, and `/projects/better/`.
+  done. For layout work, check `/`, `/projects/`,
+  `/projects/category/work/`, `/projects/better/`, and `/blog/`, at phone
+  width and in dark mode.
 - Don't add dependencies without asking.

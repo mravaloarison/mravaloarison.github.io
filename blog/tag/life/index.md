@@ -12,12 +12,4 @@ tag: life
 # Tagged: life
 
 {% assign tagged_posts = site.posts | where_exp: "p", "p.tags contains page.tag" %}
-<ul class="post-list">
-  {% for post in tagged_posts %}
-  <li>
-    <h3><a href="{{ post.url | relative_url }}">Read: {{ post.title }}</a></h3>
-    {% include post-meta.html post=post %}
-    <p class="card-description">{{ post.description }}</p>
-  </li>
-  {% endfor %}
-</ul>
+{% include post-list.html posts=tagged_posts descriptions=true %}
