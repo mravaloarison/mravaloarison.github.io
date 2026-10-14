@@ -147,8 +147,8 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards; tech shows as a row of 26px icons (names
-  in alt text and tooltips, not links — the whole card is already a link),
+- `card-grid.html` — project cards; tech shows as 22px icon + name, wrapping
+  (plain text, not links — the whole card is already a link),
   plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule

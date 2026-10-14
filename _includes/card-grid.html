@@ -10,7 +10,7 @@
       {% if item.tech %}
       <ul class="card-tech" aria-label="Built with">
         {%- for t in item.tech %}
-        <li title="{{ t | escape }}">{% include tech-icon.html name=t alt=t px=26 %}</li>
+        <li>{% include tech-icon.html name=t px=22 %}<span>{{ t }}</span></li>
         {%- endfor %}
       </ul>
       {% endif %}
