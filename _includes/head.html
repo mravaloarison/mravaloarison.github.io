@@ -1,7 +1,10 @@
 <head>
   <script>
-    /* Apply the saved theme before first paint so the page doesn't flash. */
+    /* Apply the saved theme before first paint so the page doesn't flash.
+       The "js" class lets the phone layout swap the wrapped links for the
+       burger menu only when the script that opens it can run. */
     (function () {
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('theme');
         if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);

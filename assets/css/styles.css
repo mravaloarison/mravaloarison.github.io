@@ -353,8 +353,17 @@ main,
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--space-8) var(--space-24);
+  gap: var(--space-8) var(--space-16);
   padding-block: var(--space-32);
+}
+
+/* Desktop: name, then links pushed right, then the toggle */
+.site-nav {
+  margin-left: auto;
+}
+
+.menu-button {
+  display: none;
 }
 
 .site-brand {
@@ -423,6 +432,24 @@ main,
   font-family: var(--font-emoji);
   font-size: 16px;
   line-height: 1;
+  display: inline-block;
+  transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* A small turn of the moon/sun whenever the theme flips */
+.theme-toggle.is-turning::before {
+  animation: toggle-turn 420ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes toggle-turn {
+  from {
+    transform: rotate(-90deg) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -590,6 +617,19 @@ main:focus {
 .tag-index a:hover {
   color: var(--text);
   border-color: var(--border-strong);
+}
+
+/* Embedded videos: full column width, 16:9, never wider than the screen */
+
+main iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-md);
+  margin: var(--space-24) 0;
 }
 
 /* Project screenshot */
@@ -963,7 +1003,18 @@ figcaption {
   }
 
   .site-header-inner {
-    padding-block: var(--space-24) var(--space-8);
+    padding-block: var(--space-16) var(--space-8);
+  }
+
+  .site-brand {
+    font-size: 19px;
+  }
+
+  /* Without JS the links wrap onto their own line under the name */
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin-left: 0;
   }
 
   main {
@@ -990,5 +1041,155 @@ figcaption {
 
   .prev-next-link.next {
     grid-column: 1;
+  }
+}
+
+/* Phone menu (JS on): burger · name · toggle across the top,
+   links slide in from the left as a drawer. */
+
+.nav-overlay {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .js .site-header-inner {
+    flex-wrap: nowrap;
+  }
+
+  .js .menu-button {
+    position: relative;
+    z-index: 60;
+    width: 40px;
+    height: 40px;
+    margin-left: -8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .js .theme-toggle {
+    width: 40px;
+    height: 40px;
+    margin-right: -8px;
+  }
+
+  .menu-icon {
+    position: relative;
+    width: 20px;
+    height: 14px;
+  }
+
+  .menu-icon span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1),
+      opacity 200ms ease, top 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .menu-icon span:nth-child(1) { top: 0; }
+  .menu-icon span:nth-child(2) { top: 6px; }
+  .menu-icon span:nth-child(3) { top: 12px; }
+
+  .menu-open .menu-icon span:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+  }
+  .menu-open .menu-icon span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  .menu-open .menu-icon span:nth-child(3) {
+    top: 6px;
+    transform: rotate(-45deg);
+  }
+
+  /* The drawer */
+  .js .site-nav {
+    display: block;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    width: min(80vw, 320px);
+    margin: 0;
+    padding: 88px var(--space-24) var(--space-32);
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1),
+      visibility 0s linear 360ms;
+  }
+
+  .js.menu-open .site-nav {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1),
+      visibility 0s linear 0s;
+  }
+
+  .js .site-nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .js .site-nav li {
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 240ms ease, transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .js.menu-open .site-nav li {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js.menu-open .site-nav li:nth-child(1) { transition-delay: 80ms; }
+  .js.menu-open .site-nav li:nth-child(2) { transition-delay: 130ms; }
+  .js.menu-open .site-nav li:nth-child(3) { transition-delay: 180ms; }
+  .js.menu-open .site-nav li:nth-child(4) { transition-delay: 230ms; }
+
+  .js .site-nav a {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text);
+    padding: var(--space-12) 0;
+  }
+
+  .js .site-nav a[aria-current] {
+    color: var(--accent);
+  }
+
+  .js .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgb(20 16 12 / 0.35);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+
+  .js.menu-open .nav-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menu-open body {
+    overflow: hidden;
   }
 }

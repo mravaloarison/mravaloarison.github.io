@@ -24,7 +24,7 @@ and the About page body so both spellings are indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle). The one exception is the inline theme snippet in
+  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
   `<head>`, which must run before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -98,8 +98,15 @@ cards and images, pills fully rounded.
 - Header: "Mami Ravaloarison" in Newsreader on the left; plain text links
   on the right (About · Projects · Arts · Blog) and the theme toggle. The
   current section's link is bold and carries `aria-current`. The Arts link
-  only appears once `_arts/` has a piece. On small screens the links wrap
-  under the name; there is no hamburger menu.
+  only appears once `_arts/` has a piece.
+- Phones (≤600px): burger · name · theme toggle spread across the header
+  (`justify-content: space-between`). The burger morphs into an × and slides
+  the links in from the left as a drawer (360ms,
+  `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
+  a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
+  inside while open. This only applies when `html.js` is set by the head
+  script — with JS off the links wrap onto their own line under the name.
+- The theme toggle's moon/sun gives a small turn when the theme flips.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
 - Post lists are quiet rows: serif title on the left, date on the right,
@@ -384,8 +391,8 @@ done.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
   delivers, content or navigation state. The only JS is the theme toggle
-  (deferred) plus a tiny inline head script that applies the saved theme
-  before first paint.
+  and the phone menu (deferred), plus a tiny inline head script that applies
+  the saved theme and the `js` class before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
 
@@ -415,3 +422,5 @@ done.
   `/projects/category/work/`, `/projects/better/`, and `/blog/`, at phone
   width and in dark mode.
 - Don't add dependencies without asking.
+- Mami's workflow: commit and push changes straight to `main`, then send
+  screenshots of every page (phone and desktop) once a change is done.

@@ -16,18 +16,24 @@
 
   <header class="site-header">
     <div class="site-header-inner">
+      <button type="button" class="menu-button" id="menu-button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Menu</span>
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
       <a class="site-brand" href="{{ '/' | relative_url }}">Mami Ravaloarison</a>
-      <nav class="site-nav" aria-label="Main">
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
           <li><a href="{{ '/' | relative_url }}"{% if section == "about" %} aria-current="{% if page.url == '/' %}page{% else %}true{% endif %}"{% endif %}>About</a></li>
           <li><a href="{{ '/projects/' | relative_url }}"{% if section == "projects" %} aria-current="{% if page.url == '/projects/' %}page{% else %}true{% endif %}"{% endif %}>Projects</a></li>
           {% if site.arts.size > 0 %}<li><a href="{{ '/arts/' | relative_url }}"{% if section == "arts" %} aria-current="{% if page.url == '/arts/' %}page{% else %}true{% endif %}"{% endif %}>Arts</a></li>{% endif %}
           <li><a href="{{ '/blog/' | relative_url }}"{% if section == "blog" %} aria-current="{% if page.url == '/blog/' %}page{% else %}true{% endif %}"{% endif %}>Blog</a></li>
         </ul>
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme"></button>
       </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme"></button>
     </div>
   </header>
+
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
 
   <main id="main" tabindex="-1">
     {{ content }}
