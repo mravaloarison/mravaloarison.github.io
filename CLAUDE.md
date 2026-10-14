@@ -110,7 +110,10 @@ cards and images, pills fully rounded.
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
   inside while open. This only applies when `html.js` is set by the head
   script — with JS off the links wrap onto their own line under the name.
-- The theme toggle's moon/sun gives a small turn when the theme flips.
+- The theme toggle has no box: 🌙 and ☀️ sit on a "day/night wheel"
+  pivoting below the button. Clicking turns it — the moon swings out right
+  while the sun swings in from the left (450ms), and back. The transition is
+  only enabled after a click (`.is-switching`) so it never plays on load.
 - **Art rail** (`art-rail.html`): pages with `art_rail: true` (About, Blog
   index) show the three latest pieces from `_arts/` in a 220px sticky rail
   beside the column at ≥1100px (header and footer widen to match), and as a

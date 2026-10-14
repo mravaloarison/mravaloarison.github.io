@@ -20,12 +20,10 @@
       var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       var current = root.getAttribute("data-theme") || (prefersDark ? "dark" : "light");
       var next = current === "dark" ? "light" : "dark";
+      // turn the day/night wheel (transitions are off until the first click)
+      toggle.classList.add("is-switching");
       root.setAttribute("data-theme", next);
       storeTheme(next);
-      // replay the little turn on the icon
-      toggle.classList.remove("is-turning");
-      void toggle.offsetWidth;
-      toggle.classList.add("is-turning");
     });
   }
 
