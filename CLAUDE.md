@@ -137,7 +137,12 @@ cards and images, pills fully rounded.
 - `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
-- `metadata-row.html` — pill badges for tech stack and awards
+- `metadata-row.html` — pill badges for tech stack and awards. Each tech
+  pill has a small inline SVG icon before the name, looked up in
+  `_data/tech_icons.yml` (exact tech name → file in `_includes/tech-icons/`),
+  falling back to `code.svg`. Brand logos come from Simple Icons (CC0),
+  generic ones from Lucide (ISC); icons use `currentColor` so they follow
+  the theme. Add new tech there when a project uses something unmapped.
 - `card-grid.html` — project cards
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule

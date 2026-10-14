@@ -1,0 +1,53 @@
+# Icon shown in each tech pill on project pages. Keys are the exact names used
+# in a project's `tech:` list; values are files in _includes/tech-icons/.
+# Brand logos are from Simple Icons (CC0); generic ones are from Lucide (ISC),
+# used where a brand has no free logo (Microsoft apps, OpenAI, Twilio, PixiJS…)
+# or the item is a concept. Anything not listed gets code.svg.
+#
+# To add one: save the SVG into _includes/tech-icons/ with fill="currentColor"
+# (or stroke="currentColor" for line icons), class="pill-icon", width/height 14,
+# aria-hidden="true", then add the name here.
+
+SharePoint: share-2
+Microsoft Office: file-text
+Excel: sheet
+Power BI: chart-column
+Python: python
+Gemini: googlegemini
+OpenCV: opencv
+PyGames: gamepad-2
+Mediapipe: mediapipe
+SwiftUI: swift
+Swift: swift
+Firebase: firebase
+Firestore: firebase
+Knotapi: credit-card
+TypeScript: typescript
+JavaScript: javascript
+KaboomJS: gamepad-2
+Face detection: scan-face
+PixiJS: shapes
+Vite: vite
+AssetPack: package
+MapKit: map
+Xcode: xcode
+Giphy API: giphy
+Flask: flask
+Manifest V3: puzzle
+Chrome Extensions API: googlechrome
+OpenAI: bot
+MVVM: layers
+watchOS: watch
+Siri: sparkles
+Next.Js: nextdotjs
+Vercel: vercel
+GreenSock: greensock
+Material UI: mui
+auth0: auth0
+cloudflare: cloudflare
+twilio: message-square
+video-to-transcript: captions
+workers-ai: cloudflareworkers
+MongoDB: mongodb
+Speech Recognition: mic
+React: react

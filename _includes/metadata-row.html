@@ -1,6 +1,9 @@
 {% if include.tech or include.award %}
 <div class="metadata-row">
   {% if include.award %}<span class="pill pill-award">{{ include.award }}</span>{% endif %}
-  {% for t in include.tech %}<span class="pill">{{ t }}</span>{% endfor %}
+  {%- for t in include.tech %}
+  {%- assign icon = site.data.tech_icons[t] | default: "code" %}
+  <span class="pill pill-tech">{% include tech-icons/{{ icon }}.svg %}{{ t }}</span>
+  {%- endfor %}
 </div>
 {% endif %}

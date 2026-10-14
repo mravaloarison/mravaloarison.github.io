@@ -530,6 +530,20 @@ main:focus {
   text-decoration: none;
 }
 
+.pill-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 8px;
+}
+
+.pill-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--text);
+}
+
 .pill-award {
   color: var(--accent);
   border-color: color-mix(in srgb, var(--accent) 40%, transparent);
