@@ -1,7 +1,9 @@
 {%- comment -%}
   One technology icon from _data/tech_icons.yml (Icons8 PNGs).
-  Params: name (the tech, as written in front matter), alt (default empty —
-  use the name when no visible label sits next to the icon).
+  Params: name (the tech, as written in front matter), px (icon size, default 24),
+  alt (default empty — use the name when no visible label sits next to it).
 {%- endcomment -%}
-{%- assign tech_icon = site.data.tech_icons[include.name] | default: "source-code" -%}
-<img class="tech-icon" src="{{ '/assets/icons/tech/' | append: tech_icon | append: '.png' | relative_url }}" width="16" height="16" alt="{{ include.alt | escape }}" loading="lazy" decoding="async">
+{%- assign tech_entry = site.data.tech_icons[include.name] -%}
+{%- assign tech_icon = tech_entry.icon | default: "source-code" -%}
+{%- assign tech_size = include.px | default: 24 -%}
+<img class="tech-icon" src="{{ '/assets/icons/tech/' | append: tech_icon | append: '.png' | relative_url }}" width="{{ tech_size }}" height="{{ tech_size }}" alt="{{ include.alt | escape }}" loading="lazy" decoding="async">

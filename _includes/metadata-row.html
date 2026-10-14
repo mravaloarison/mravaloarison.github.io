@@ -1,9 +1,14 @@
-{% if include.tech or include.award or include.status %}
+{% if include.status == "ongoing" or include.award %}
 <div class="metadata-row">
   {% if include.status == "ongoing" %}<span class="pill pill-status">In progress</span>{% endif %}
   {% if include.award %}<span class="pill pill-award">{{ include.award }}</span>{% endif %}
-  {%- for t in include.tech %}
-  <span class="pill pill-tech">{% include tech-icon.html name=t %}{{ t }}</span>
-  {%- endfor %}
 </div>
+{% endif %}
+{% if include.tech %}
+<ul class="tech-list" aria-label="Built with">
+  {%- for t in include.tech %}
+  {%- assign tech_url = site.data.tech_icons[t].url %}
+  <li>{% if tech_url %}<a href="{{ tech_url }}" target="_blank" rel="noopener">{% include tech-icon.html name=t %}{{ t }}</a>{% else %}<span>{% include tech-icon.html name=t %}{{ t }}</span>{% endif %}</li>
+  {%- endfor %}
+</ul>
 {% endif %}

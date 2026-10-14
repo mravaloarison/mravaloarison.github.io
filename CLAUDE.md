@@ -137,14 +137,19 @@ cards and images, pills fully rounded.
 - `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
-- `metadata-row.html` — pill badges: "In progress" (when `status:
-  ongoing`), award, then tech. Each tech pill has its icon before the name.
-- `tech-icon.html` — one tech icon. Icons are Icons8 "Color" 48px PNGs in
-  `assets/icons/tech/`, mapped from the exact tech name in
-  `_data/tech_icons.yml` (fallback `source-code.png`). The free Icons8
-  licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards; tech shows as a row of icons (names in
-  alt text and tooltips), plus the "In progress" pill on ongoing projects
+- `metadata-row.html` — "In progress" (when `status: ongoing`) and award
+  pills, then the tech stack as a boxless row: 24px icon + name, each
+  linking to the tech's official site (new tab, `rel="noopener"`, since the
+  reader is mid-article). Tech without a `url` renders unlinked.
+- `tech-icon.html` — one tech icon (`px` sets the size; not `size`, which
+  Liquid reserves). Icons are Icons8 "Color" 48px PNGs in
+  `assets/icons/tech/`; icon and link per exact tech name live in
+  `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
+  own icon where Icons8 has one (Firebase and Firestore differ). The free
+  Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
+- `card-grid.html` — project cards; tech shows as a row of 26px icons (names
+  in alt text and tooltips, not links — the whole card is already a link),
+  plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts

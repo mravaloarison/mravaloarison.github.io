@@ -530,17 +530,39 @@ main:focus {
   text-decoration: none;
 }
 
-.pill-tech {
+/* Tech stack on project pages: icon + name, no box, links to the tech's site */
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12) var(--space-24);
+  list-style: none;
+  margin: var(--space-16) 0 var(--space-24);
+  padding: 0;
+}
+
+.tech-list a,
+.tech-list span {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding-left: 6px;
+  gap: var(--space-8);
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.tech-list a:hover {
+  color: var(--accent);
+}
+
+.tech-list a:hover .tech-icon {
+  transform: translateY(-2px);
 }
 
 .tech-icon {
   flex: none;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
+  transition: transform var(--transition);
 }
 
 .pill-status {
@@ -564,15 +586,15 @@ main:focus {
 .card-tech {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-8);
+  gap: var(--space-12);
   list-style: none;
   margin: var(--space-8) 0 0;
   padding: 0;
 }
 
 .card-tech .tech-icon {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
 }
 
 .card h3 .pill {

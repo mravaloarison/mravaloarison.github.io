@@ -1,55 +1,140 @@
-# Icon for each technology, shown in the tech pills on project pages and as a
-# row of icons on project cards. Keys are the exact names used in a project's
-# `tech:` list; values are PNGs in /assets/icons/tech/ (without .png).
-# Anything not listed gets source-code.png.
+# Icon and link for each technology. Keys are the exact names used in a
+# project's `tech:` list.
+#   icon: PNG in /assets/icons/tech/ (without .png); unlisted tech gets source-code
+#   url:  official site or docs; the tech links there on project pages (optional)
 #
 # Icons are from Icons8 (https://icons8.com), "Color" style, 48px PNG. The free
 # licence requires the "Icons by Icons8" link in the footer — keep it.
 #
 # To add one: find the icon on icons8.com (Color style), download it with
 #   curl -o assets/icons/tech/<name>.png https://img.icons8.com/color/48/<name>.png
-# then add the tech name here.
+# then add the tech name here with its icon and url.
 
-SharePoint: microsoft-sharepoint-2019
-Microsoft Office: microsoft-office-2019
-Excel: microsoft-excel-2019
-Power BI: power-bi
-Python: python
-Gemini: gemini-ai
-OpenCV: opencv
-PyGames: controller
-Mediapipe: motion-detector
-SwiftUI: swiftui
-Swift: swift
-Firebase: firebase
-Firestore: firebase
-Knotapi: bank-cards
-TypeScript: typescript
-JavaScript: javascript
-KaboomJS: joystick
-Face detection: face-id
-PixiJS: paint-palette
-Vite: vite
-AssetPack: package
-MapKit: map
-Xcode: xcode
-Giphy API: giphy
-Flask: flask
-Manifest V3: puzzle
-Chrome Extensions API: chrome
-OpenAI: chatgpt
-MVVM: layers
-watchOS: apple-watch
-Siri: siri
-Next.Js: nextjs
-Vercel: vercel
-GreenSock: animation
-Material UI: material-ui
-auth0: lock
-cloudflare: cloudflare
-twilio: sms
-video-to-transcript: subtitles
-workers-ai: cloud-function
-MongoDB: mongodb
-Speech Recognition: microphone
-React: react-native
+SharePoint:
+  icon: microsoft-sharepoint-2019
+  url: "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration"
+Microsoft Office:
+  icon: microsoft-office-2019
+  url: "https://www.microsoft.com/en-us/microsoft-365"
+Excel:
+  icon: microsoft-excel-2019
+  url: "https://www.microsoft.com/en-us/microsoft-365/excel"
+Power BI:
+  icon: power-bi
+  url: "https://www.microsoft.com/en-us/power-platform/products/power-bi"
+Python:
+  icon: python
+  url: "https://www.python.org/"
+Gemini:
+  icon: gemini-ai
+  url: "https://ai.google.dev/"
+OpenCV:
+  icon: opencv
+  url: "https://opencv.org/"
+PyGames:
+  icon: controller
+  url: "https://www.pygame.org/"
+Mediapipe:
+  icon: motion-detector
+  url: "https://ai.google.dev/edge/mediapipe/solutions/guide"
+SwiftUI:
+  icon: swiftui
+  url: "https://developer.apple.com/xcode/swiftui/"
+Swift:
+  icon: swift
+  url: "https://www.swift.org/"
+Firebase:
+  icon: firebase
+  url: "https://firebase.google.com/"
+Firestore:
+  icon: cloud-firestore
+  url: "https://firebase.google.com/docs/firestore"
+Knotapi:
+  icon: bank-cards
+  url: "https://www.knotapi.com/"
+TypeScript:
+  icon: typescript
+  url: "https://www.typescriptlang.org/"
+JavaScript:
+  icon: javascript
+  url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+KaboomJS:
+  icon: joystick
+  url: "https://github.com/replit/kaboom"
+Face detection:
+  icon: face-id
+  url: "https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector"
+PixiJS:
+  icon: paint-palette
+  url: "https://pixijs.com/"
+Vite:
+  icon: vite
+  url: "https://vite.dev/"
+AssetPack:
+  icon: package
+  url: "https://pixijs.io/assetpack/"
+MapKit:
+  icon: map
+  url: "https://developer.apple.com/documentation/mapkit"
+Xcode:
+  icon: xcode
+  url: "https://developer.apple.com/xcode/"
+Giphy API:
+  icon: giphy
+  url: "https://developers.giphy.com/"
+Flask:
+  icon: flask
+  url: "https://flask.palletsprojects.com/"
+Manifest V3:
+  icon: puzzle
+  url: "https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3"
+Chrome Extensions API:
+  icon: chrome
+  url: "https://developer.chrome.com/docs/extensions/reference/api"
+OpenAI:
+  icon: chatgpt
+  url: "https://platform.openai.com/"
+MVVM:
+  icon: layers
+  url: "https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel"
+watchOS:
+  icon: apple-watch
+  url: "https://developer.apple.com/watchos/"
+Siri:
+  icon: siri
+  url: "https://developer.apple.com/siri/"
+Next.Js:
+  icon: nextjs
+  url: "https://nextjs.org/"
+Vercel:
+  icon: vercel
+  url: "https://vercel.com/"
+GreenSock:
+  icon: animation
+  url: "https://gsap.com/"
+Material UI:
+  icon: material-ui
+  url: "https://mui.com/material-ui/"
+auth0:
+  icon: lock
+  url: "https://auth0.com/"
+cloudflare:
+  icon: cloudflare
+  url: "https://www.cloudflare.com/"
+twilio:
+  icon: sms
+  url: "https://www.twilio.com/"
+video-to-transcript:
+  icon: subtitles
+workers-ai:
+  icon: cloud-function
+  url: "https://developers.cloudflare.com/workers-ai/"
+MongoDB:
+  icon: mongodb
+  url: "https://www.mongodb.com/"
+Speech Recognition:
+  icon: microphone
+  url: "https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API"
+React:
+  icon: react-native
+  url: "https://react.dev/"
