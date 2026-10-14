@@ -9,9 +9,13 @@
 {%- elsif page.url != "/" -%}
   {%- assign section = "" -%}
 {%- endif %}
+{%- assign show_rail = false -%}
+{%- if page.art_rail and site.arts.size > 0 -%}
+  {%- assign show_rail = true -%}
+{%- endif %}
 <html lang="{{ site.lang | default: 'en' }}">
 {% include head.html %}
-<body>
+<body{% if show_rail %} class="has-rail"{% endif %}>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -35,9 +39,14 @@
 
   <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
 
-  <main id="main" tabindex="-1">
-    {{ content }}
-  </main>
+  <div class="page-frame">
+    <main id="main" tabindex="-1">
+      {{ content }}
+    </main>
+    {%- if show_rail %}
+    {% include art-rail.html %}
+    {%- endif %}
+  </div>
 
   {% include footer.html %}
 

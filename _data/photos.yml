@@ -1,0 +1,10 @@
+# Personal photos shown in a small grid at the end of the Overview on the About page,
+# in the spirit of leerob.com. The grid stays hidden until this list has an entry.
+#
+# HOW TO ADD A PHOTO
+# 1. Put the photo in /assets/images/photos/ (JPG straight from the phone is fine).
+# 2. Run:  python3 scripts/optimize-images.py   (writes the WebP copies and its size)
+# 3. Add an entry below. The first photo is shown large; up to five are used.
+#
+# - src: /assets/images/photos/beach.jpg
+#   alt: Me at the beach in Malibu, squinting at the sun

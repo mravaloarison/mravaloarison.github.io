@@ -111,6 +111,15 @@ cards and images, pills fully rounded.
   inside while open. This only applies when `html.js` is set by the head
   script — with JS off the links wrap onto their own line under the name.
 - The theme toggle's moon/sun gives a small turn when the theme flips.
+- **Art rail** (`art-rail.html`): pages with `art_rail: true` (About, Blog
+  index) show the three latest pieces from `_arts/` in a 220px sticky rail
+  beside the column at ≥1100px (header and footer widen to match), and as a
+  row of three under the content on smaller screens. Hidden — layout stays
+  single column — until `_arts/` has a piece.
+- **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
+  the end of the About Overview. Listed in `_data/photos.yml`, files in
+  `assets/images/photos/`, run through `optimize-images.py`. First photo
+  large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
 - Post lists are quiet rows: serif title on the left, date on the right,
@@ -132,6 +141,8 @@ cards and images, pills fully rounded.
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
+- `art-rail.html` — latest arts beside the content (see Layout)
+- `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 
 Transitions are 150–200ms ease, color and small transforms only. Nothing

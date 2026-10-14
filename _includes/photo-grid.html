@@ -1,0 +1,17 @@
+{%- comment -%}
+  Personal photo grid from _data/photos.yml. The first photo is shown large,
+  the rest fill in beside it. Renders nothing until a photo is listed.
+{%- endcomment -%}
+{%- if site.data.photos and site.data.photos.size > 0 -%}
+<div class="photo-grid photo-grid-{{ site.data.photos.size | at_most: 5 }}">
+  {%- for photo in site.data.photos limit: 5 %}
+  <div class="photo">
+    {%- if forloop.first -%}
+    {% include picture.html src=photo.src alt=photo.alt sizes="(min-width: 728px) 453px, 66vw" %}
+    {%- else -%}
+    {% include picture.html src=photo.src alt=photo.alt sizes="(min-width: 728px) 227px, 33vw" %}
+    {%- endif -%}
+  </div>
+  {%- endfor %}
+</div>
+{%- endif -%}

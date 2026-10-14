@@ -1,5 +1,6 @@
 ---
 layout: default
+art_rail: true
 title: Maminiaina "Mami" Ravaloarison — Software Engineer
 description: Maminiaina "Mami" Ravaloarison is a Software Engineer from Madagascar, currently a Junior Data Analyst in New York. Experience, education, awards, and projects.
 homepage: true
@@ -44,6 +45,8 @@ As an international student, I could only work on campus, so I started going to 
 At one point I was honestly obsessed with hackathons, because during my academic years I won 12 of them across different U.S. Eastern universities like [Yale](https://www.yale.edu/){:target="_blank" rel="noopener"}, [Princeton](https://www.princeton.edu/){:target="_blank" rel="noopener"}, [Stony Brook](https://www.stonybrook.edu/){:target="_blank" rel="noopener"}, and more.
 
 Outside of tech, I used to hate reading and writing, but I recently started pushing myself to do both more often. I also try to consistently cook healthy meals and go to the gym, though I'm still working on making those habits stick. Other things I love: dogs, piano, guitar and bass, chess, video games, {% if site.arts.size > 0 %}[drawing]({{ '/arts/' | relative_url }}){% else %}drawing{% endif %} (lately in Procreate), the beach, the sun, and Malibu.
+
+{% include photo-grid.html %}
 
 ## Experience
 
