@@ -5,9 +5,15 @@
     {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
     {% endif %}
     <div class="card-body">
-      <h3>{{ item.title }}</h3>
+      <h3>{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
       <p class="card-description">{{ item.description }}</p>
-      {% if item.tech %}<p class="meta">{{ item.tech | join: " · " }}</p>{% endif %}
+      {% if item.tech %}
+      <ul class="card-tech" aria-label="Built with">
+        {%- for t in item.tech %}
+        <li title="{{ t | escape }}">{% include tech-icon.html name=t alt=t %}</li>
+        {%- endfor %}
+      </ul>
+      {% endif %}
     </div>
   </a>
   {% endfor %}

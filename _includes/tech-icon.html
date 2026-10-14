@@ -1,0 +1,7 @@
+{%- comment -%}
+  One technology icon from _data/tech_icons.yml (Icons8 PNGs).
+  Params: name (the tech, as written in front matter), alt (default empty —
+  use the name when no visible label sits next to the icon).
+{%- endcomment -%}
+{%- assign tech_icon = site.data.tech_icons[include.name] | default: "source-code" -%}
+<img class="tech-icon" src="{{ '/assets/icons/tech/' | append: tech_icon | append: '.png' | relative_url }}" width="16" height="16" alt="{{ include.alt | escape }}" loading="lazy" decoding="async">

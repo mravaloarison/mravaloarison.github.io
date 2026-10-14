@@ -5,6 +5,7 @@ seo:
 description: A native time-tracking app I'm building in SwiftUI for iPhone, iPad and Apple Watch, with hand-drawn task icons and Siri to start and stop timers by voice.
 category: Personal
 featured: true
+status: ongoing # shows an "In progress" pill; remove when it ships
 date: 2026-10-12
 image: /assets/images/MyTime.png
 image_alt: MyTime cover with an orange stopwatch app icon, the app name, and the label "In development · SwiftUI"

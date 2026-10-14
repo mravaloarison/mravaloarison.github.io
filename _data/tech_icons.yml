@@ -1,32 +1,34 @@
-# Icon shown in each tech pill on project pages. Keys are the exact names used
-# in a project's `tech:` list; values are files in _includes/tech-icons/.
-# Brand logos are from Simple Icons (CC0); generic ones are from Lucide (ISC),
-# used where a brand has no free logo (Microsoft apps, OpenAI, Twilio, PixiJS…)
-# or the item is a concept. Anything not listed gets code.svg.
+# Icon for each technology, shown in the tech pills on project pages and as a
+# row of icons on project cards. Keys are the exact names used in a project's
+# `tech:` list; values are PNGs in /assets/icons/tech/ (without .png).
+# Anything not listed gets source-code.png.
 #
-# To add one: save the SVG into _includes/tech-icons/ with fill="currentColor"
-# (or stroke="currentColor" for line icons), class="pill-icon", width/height 14,
-# aria-hidden="true", then add the name here.
+# Icons are from Icons8 (https://icons8.com), "Color" style, 48px PNG. The free
+# licence requires the "Icons by Icons8" link in the footer — keep it.
+#
+# To add one: find the icon on icons8.com (Color style), download it with
+#   curl -o assets/icons/tech/<name>.png https://img.icons8.com/color/48/<name>.png
+# then add the tech name here.
 
-SharePoint: share-2
-Microsoft Office: file-text
-Excel: sheet
-Power BI: chart-column
+SharePoint: microsoft-sharepoint-2019
+Microsoft Office: microsoft-office-2019
+Excel: microsoft-excel-2019
+Power BI: power-bi
 Python: python
-Gemini: googlegemini
+Gemini: gemini-ai
 OpenCV: opencv
-PyGames: gamepad-2
-Mediapipe: mediapipe
-SwiftUI: swift
+PyGames: controller
+Mediapipe: motion-detector
+SwiftUI: swiftui
 Swift: swift
 Firebase: firebase
 Firestore: firebase
-Knotapi: credit-card
+Knotapi: bank-cards
 TypeScript: typescript
 JavaScript: javascript
-KaboomJS: gamepad-2
-Face detection: scan-face
-PixiJS: shapes
+KaboomJS: joystick
+Face detection: face-id
+PixiJS: paint-palette
 Vite: vite
 AssetPack: package
 MapKit: map
@@ -34,20 +36,20 @@ Xcode: xcode
 Giphy API: giphy
 Flask: flask
 Manifest V3: puzzle
-Chrome Extensions API: googlechrome
-OpenAI: bot
+Chrome Extensions API: chrome
+OpenAI: chatgpt
 MVVM: layers
-watchOS: watch
-Siri: sparkles
-Next.Js: nextdotjs
+watchOS: apple-watch
+Siri: siri
+Next.Js: nextjs
 Vercel: vercel
-GreenSock: greensock
-Material UI: mui
-auth0: auth0
+GreenSock: animation
+Material UI: material-ui
+auth0: lock
 cloudflare: cloudflare
-twilio: message-square
-video-to-transcript: captions
-workers-ai: cloudflareworkers
+twilio: sms
+video-to-transcript: subtitles
+workers-ai: cloud-function
 MongoDB: mongodb
-Speech Recognition: mic
-React: react
+Speech Recognition: microphone
+React: react-native

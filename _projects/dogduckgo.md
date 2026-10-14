@@ -5,6 +5,7 @@ seo:
 description: A browser typing game on a watercolour pond. Dogs disguised as ducks swim at you carrying words; type each one before it reaches you. PixiJS and TypeScript.
 category: Personal
 featured: true
+status: ongoing # shows an "In progress" pill; remove when it ships
 date: 2026-10-13
 image: /assets/images/DogDuckGo.png
 image_alt: Gameplay of DogDuckGo, a white duck in the middle of a watercolour pond while dogs wearing yellow shuttlecock beaks swim toward it, each labeled with a word to type

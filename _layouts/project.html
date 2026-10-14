@@ -16,7 +16,7 @@ layout: default
 {% if page.category == "Hackathon" %}{% assign eyebrow_label = "Hackathons" %}{% endif %}
 {% include page-header.html eyebrow=eyebrow_label title=page.title abstract=page.description %}
 
-{% include metadata-row.html tech=page.tech award=page.award %}
+{% include metadata-row.html tech=page.tech award=page.award status=page.status %}
 
 {% if page.event or page.organization %}
 <p class="meta">

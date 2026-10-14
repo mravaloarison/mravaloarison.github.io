@@ -27,7 +27,7 @@ seo:
 
 ## Latest work
 
-The two projects that best show what I'm working on right now.
+The two projects I'm working on right now. Both are still in progress.
 
 {% assign latest = site.projects | where: "featured", true | sort: "date" | reverse %}
 {% include card-grid.html items=latest %}

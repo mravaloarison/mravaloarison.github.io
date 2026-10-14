@@ -29,7 +29,8 @@
   "author": { "@type": "Person", "name": {{ site.author.name | jsonify }} },
   "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
   "image": {{ page.image | absolute_url | jsonify }},
-  "keywords": {{ page.tech | join: ", " | jsonify }}
+  "keywords": {{ page.tech | join: ", " | jsonify }}{% if page.status == "ongoing" %},
+  "creativeWorkStatus": "In progress"{% endif %}
 }
 </script>
 {% elsif page.collection == "arts" %}

@@ -534,14 +534,50 @@ main:focus {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding-left: 8px;
+  padding-left: 6px;
 }
 
-.pill-icon {
+.tech-icon {
   flex: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+}
+
+.pill-status {
   color: var(--text);
+  border-color: var(--accent);
+  vertical-align: middle;
+}
+
+.pill-status::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: 1px;
+}
+
+/* Card tech row: icons only, names in alt text and tooltips */
+.card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  list-style: none;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+
+.card-tech .tech-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.card h3 .pill {
+  font-family: var(--font-sans);
+  font-weight: 400;
 }
 
 .pill-award {
@@ -1013,6 +1049,10 @@ figcaption {
 .footer-links a {
   color: var(--text-secondary);
   text-decoration: none;
+}
+
+.footer-credit {
+  color: inherit;
 }
 
 .footer-links a:hover {
