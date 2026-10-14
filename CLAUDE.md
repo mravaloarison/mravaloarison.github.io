@@ -84,13 +84,13 @@ links, the callout rule, award pills.
 
 | Role                    | Size                      | Font / weight         |
 | ----------------------- | ------------------------- | --------------------- |
-| Eyebrow                 | 13px, uppercase, 0.06em   | Nunito 600            |
-| Page title (h1)         | clamp(34px, 6vw, 44px)    | Newsreader 500        |
-| Abstract under h1       | 21px                      | Newsreader            |
-| Section (h2)            | 27px                      | Newsreader 500        |
-| Subsection (h3)         | 21px                      | Newsreader 500        |
-| Body                    | 17px, line-height 1.65    | Nunito 400            |
-| Meta / caption          | 14px                      | Nunito 400            |
+| Eyebrow                 | 14px, uppercase, 0.06em   | Nunito 600            |
+| Page title (h1)         | clamp(36px, 6vw, 48px)    | Newsreader 500        |
+| Abstract under h1       | 22px                      | Newsreader            |
+| Section (h2)            | 29px                      | Newsreader 500        |
+| Subsection (h3)         | 22px                      | Newsreader 500        |
+| Body                    | 18px, line-height 1.65    | Nunito 400            |
+| Meta / caption          | 15px                      | Nunito 400            |
 
 Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px small, 10px
 cards and images, pills fully rounded.
@@ -137,13 +137,14 @@ cards and images, pills fully rounded.
 - `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
-- `metadata-row.html` — pill badges for tech stack and awards. Each tech
-  pill has a small inline SVG icon before the name, looked up in
-  `_data/tech_icons.yml` (exact tech name → file in `_includes/tech-icons/`),
-  falling back to `code.svg`. Brand logos come from Simple Icons (CC0),
-  generic ones from Lucide (ISC); icons use `currentColor` so they follow
-  the theme. Add new tech there when a project uses something unmapped.
-- `card-grid.html` — project cards
+- `metadata-row.html` — pill badges: "In progress" (when `status:
+  ongoing`), award, then tech. Each tech pill has its icon before the name.
+- `tech-icon.html` — one tech icon. Icons are Icons8 "Color" 48px PNGs in
+  `assets/icons/tech/`, mapped from the exact tech name in
+  `_data/tech_icons.yml` (fallback `source-code.png`). The free Icons8
+  licence needs the "Icons by Icons8" footer link — never remove it.
+- `card-grid.html` — project cards; tech shows as a row of icons (names in
+  alt text and tooltips), plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
@@ -194,7 +195,9 @@ Thirteen items, grouped **Work (2) · Personal (5) · Hackathons (6)**. Each
 already has a detail page and a screenshot in `assets/images/`. Discover
 Nature was removed on purpose — don't bring it back from the old site.
 MyTime has no public code or screenshots yet; its image is a placeholder
-cover to replace with real screens. DogDuckGo's repo (mravaloarison/save)
+cover to replace with real screens. MyTime and DogDuckGo are ongoing
+(`status: ongoing` in front matter → "In progress" pill on cards and the
+detail page, `creativeWorkStatus` in JSON-LD); drop the field when one ships. DogDuckGo's repo (mravaloarison/save)
 is private, so it has no GitHub link.
 
 The index at `/projects/` shows all thirteen under category headings. Each
@@ -267,6 +270,7 @@ links:
     github:
     devpost:
 related: [] # optional slugs; auto-fill from category when absent
+status: # optional; "ongoing" shows an In progress pill
 ```
 
 ### Front matter — `_arts/*.md`
