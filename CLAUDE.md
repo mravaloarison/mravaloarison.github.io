@@ -47,8 +47,8 @@ the sidebar, drawer, or on-this-page rail back.
 Fonts are self-hosted in `assets/fonts/` (`font-display: swap`), and only
 what's used is shipped:
 
-- **Newsreader** (`--font-serif`, variable weight, normal + italic) — h1,
-  h2, h3, the site name, post titles in lists, card titles, and the italic
+- **Newsreader** (`--font-serif`, variable weight, upright only) — h1,
+  h2, h3, the site name, post titles in lists, card titles, and the
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
@@ -56,6 +56,10 @@ what's used is shipped:
   toggle.
 
 Newsreader latin and Nunito latin are preloaded from the head include.
+
+**Nothing is italic** — not the abstract, not blockquotes, not Markdown
+`*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No
+italic font file is shipped.
 
 ### Color
 
@@ -82,7 +86,7 @@ links, the callout rule, award pills.
 | ----------------------- | ------------------------- | --------------------- |
 | Eyebrow                 | 13px, uppercase, 0.06em   | Nunito 600            |
 | Page title (h1)         | clamp(34px, 6vw, 44px)    | Newsreader 500        |
-| Abstract under h1       | 21px, italic              | Newsreader            |
+| Abstract under h1       | 21px                      | Newsreader            |
 | Section (h2)            | 27px                      | Newsreader 500        |
 | Subsection (h3)         | 21px                      | Newsreader 500        |
 | Body                    | 17px, line-height 1.65    | Nunito 400            |
@@ -118,7 +122,7 @@ cards and images, pills fully rounded.
 
 - `breadcrumb.html` — on every page below the top level, including the group:
   Home / Projects / Hackathons / Better
-- `page-header.html` — eyebrow, h1, italic serif abstract
+- `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `metadata-row.html` — pill badges for tech stack and awards
 - `card-grid.html` — project cards
