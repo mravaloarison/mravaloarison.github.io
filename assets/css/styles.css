@@ -82,7 +82,6 @@
   --radius-md: 10px;
 
   --measure: 680px;
-  --rail-width: 280px;
   /* Gap left above a heading when jumping to it with an #anchor link */
   --jump-offset: 40px;
 
@@ -1292,13 +1291,20 @@ figcaption {
 }
 
 @media (min-width: 1100px) {
-  /* About: the text column moves left to make room on the right; the
-     drawings float out of the column into that space, level with the Bio.
-     Header and footer widen to match so everything lines up. */
+  /* About: the text column keeps its width and moves left; the drawings
+     stay fixed on screen in the space to its right, centered vertically,
+     sized so both always fit in the window. Header and footer widen to
+     match so everything lines up. */
+  .has-rail {
+    /* as wide as the screen allows next to the text, up to 440px */
+    --rail-width: clamp(240px, calc(100vw - var(--measure) - 144px), 440px);
+    --frame-width: calc(var(--measure) + var(--space-48) + var(--rail-width) + 2 * var(--space-24));
+  }
+
   .has-rail .page-frame,
   .has-rail .site-header-inner,
   .has-rail .site-footer {
-    max-width: calc(var(--measure) + var(--space-48) + var(--rail-width) + 2 * var(--space-24));
+    max-width: var(--frame-width);
   }
 
   .has-rail .page-frame {
@@ -1313,16 +1319,40 @@ figcaption {
   }
 
   .has-rail .art-rail {
-    float: right;
-    clear: right;
+    position: fixed;
+    top: 50%;
+    right: calc(max(0px, (100vw - var(--frame-width)) / 2) + var(--space-24));
+    z-index: 5;
     width: var(--rail-width);
-    /* pulled fully out of the column, so the text keeps its full width */
-    margin: 0 calc(-1 * (var(--rail-width) + var(--space-48))) var(--space-24) 0;
+    margin: 0;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  .has-rail .art-rail .eyebrow {
+    margin-bottom: var(--space-12);
   }
 
   .has-rail .art-rail-list {
     grid-template-columns: 1fr;
-    gap: var(--space-24);
+    gap: var(--space-16);
+    justify-items: center;
+  }
+
+  .has-rail .art-rail-list picture {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Two drawings plus label, titles and link always fit the window */
+  .has-rail .art-rail-list img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc((100vh - 260px) / 2);
+  }
+
+  .has-rail .art-rail-title {
+    margin-top: var(--space-4);
   }
 }
 

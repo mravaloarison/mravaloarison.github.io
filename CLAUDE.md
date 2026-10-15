@@ -120,12 +120,14 @@ cards and images, pills fully rounded.
 - **Drawings beside the Bio** (`art-rail.html`, "Lately drawing"): the two
   newest Procreate pieces from `_arts/`, stacked, at their own proportions,
   included right after the About page's `## Bio` heading. From 1100px the
-  About page (`art_rail: true` → `body.has-rail`) widens by a 280px
-  (`--rail-width`) column; the text column keeps its 680px and moves left,
-  and the drawings float out of it into that space, level with the Bio
-  (negative right margin, so the text never wraps around them). Header and
-  footer widen to match. Below 1100px the two sit side by side under the
-  heading. Hidden — single column — until `_arts/` has a Procreate piece.
+  About page (`art_rail: true` → `body.has-rail`) widens by a column
+  (`--rail-width`, as wide as the screen allows up to 440px); the text keeps
+  its 680px and moves left. The drawings are `position: fixed` in that
+  column, vertically centered in the window, and sized
+  (`max-height: (100vh - 260px) / 2` each) so both are always fully on
+  screen while scrolling. Header and footer widen to match. Below 1100px
+  the two sit side by side under the Bio heading, in the normal flow.
+  Hidden — single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
