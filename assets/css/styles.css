@@ -946,19 +946,27 @@ main iframe {
   text-decoration: none;
 }
 
-.card img {
+/* Cover image: the card and its frame stay still; the only hover effect is
+   the image zooming a little inside the frame. Scoped to the cover so the
+   tech icons aren't affected. */
+.card > picture {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.card > picture img {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  transition: transform var(--transition), border-color var(--transition);
+  transition: transform 300ms ease;
 }
 
-.card:hover img {
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
+.card:hover > picture img,
+.card:focus-visible > picture img {
+  transform: scale(1.04);
 }
 
 .card-body {
@@ -968,10 +976,6 @@ main iframe {
 .card-body h3 {
   font-size: 21px;
   margin: 0 0 var(--space-4);
-}
-
-.card:hover h3 {
-  color: var(--accent);
 }
 
 .card-description {

@@ -138,7 +138,9 @@ cards and images, pills fully rounded.
 - Post lists are quiet rows: serif title on the left, date on the right,
   hairline between rows (`post-list.html`).
 - Project cards: image first (rounded, hairline border), serif title, one
-  line of description. No boxes around cards, no shadows.
+  line of description. No boxes around cards, no shadows. On hover the
+  card never moves (no lift); the only effect is the cover image zooming
+  to 1.04 inside its frame (`overflow: hidden`), 300ms.
 
 ### Components in `_includes/`
 
