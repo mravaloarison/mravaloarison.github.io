@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: An Adobe Express add-on that auto-generates short-form Reels from a prompt, awarded Most Creative Add-On at YHack; I built it and led the workflow.
 category: Hackathon
-date: 2021-01-01
+date: 2024-10-08
 award: Most Creative Adobe Express Add-On
 event: YHack
 organization: Yale University

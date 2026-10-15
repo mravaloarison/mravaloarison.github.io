@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: A Pygame where hand-tracked math problems save a cat from a ghost, inspired by Google's Cat Academy. I built the hand detection and game logic.
 category: Personal
-date: 2021-05-01
+date: 2024-11-04
 image: /assets/images/Cat-Culus.png
 image_alt: Screenshot of the Cat-Culus PyGame showing a math problem and the cat character
 tech: [Python, Gemini, OpenCV, PyGames, Mediapipe]

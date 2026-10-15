@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: A just-for-fun Chrome extension that replaces everything you type with "I love PennApps," awarded Most Useless Hack at PennApps XXV.
 category: Hackathon
-date: 2021-01-01
+date: 2024-09-21
 award: Most Useless App
 event: PennApps XXV
 organization: University of Pennsylvania

@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: Building and maintaining a SharePoint site for Monroe University's ARAP office, with templates so each department can fill in its own content.
 category: Work
-date: 2022-02-01
+date: 2025-08-01
 image: /assets/images/ARAPSharePoint.png
 image_alt: Screenshot of the ARAP Office SharePoint site homepage
 tech: [SharePoint, Microsoft Office]

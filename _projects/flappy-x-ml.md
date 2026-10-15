@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: Flappy Bird controlled by your nose — MediaPipe face detection drives the bird's position, built with Kaboom.js for the game mechanics.
 category: Personal
-date: 2021-03-01
+date: 2024-10-04
 image: /assets/images/Flappy-x-ML.png
 image_alt: Screenshot of the Flappy x ML game controlled by face detection
 tech: [Mediapipe, JavaScript, KaboomJS, Face detection]

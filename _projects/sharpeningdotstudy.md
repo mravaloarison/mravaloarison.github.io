@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: Sharpening.study was a project I built at Rutgers during HackRU, where it won Best Solo Hack and Best AI App with Cloudflare.
 category: Hackathon
-date: 2021-04-01
+date: 2024-03-24
 award: "Best Solo Hack, Best AI App with Cloudflare"
 event: HackRU
 organization: Rutgers University

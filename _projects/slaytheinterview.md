@@ -2,11 +2,11 @@
 title: SlayTheInterview
 seo:
   type: CreativeWork
-description: A mock-interview app built at HackSBU where we won Best Overall; I built the backend, MongoDB integration, voice-to-text, and AI question generation.
+description: A mock-interview app built at SBUHacks where we won Best Overall; I built the backend, MongoDB integration, voice-to-text, and AI question generation.
 category: Hackathon
-date: 2021-04-01
+date: 2024-02-11
 award: Best Overall
-event: HackSBU
+event: SBUHacks
 organization: Stony Brook University
 image: /assets/images/SlayTheInterview.png
 image_alt: Screenshot of the SlayTheInterview app's mock interview recording screen
@@ -19,7 +19,7 @@ redirect_from:
 
 ## Overview
 
-We built a classic interview preparation app at Stony Brook University during HackSBU, where we won Best Overall for execution and functionality. I worked on implementing voice-to-text on the frontend, setting up the backend, integrating AI features, and connecting the app to MongoDB for data storage.
+We built a classic interview preparation app at Stony Brook University during SBUHacks, where we won Best Overall for execution and functionality. I worked on implementing voice-to-text on the frontend, setting up the backend, integrating AI features, and connecting the app to MongoDB for data storage.
 
 <div class="ratio ratio-16x9 mb-4">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Q6GH9J05LaM?si=ylAborTilKTgUDXm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

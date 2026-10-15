@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: A betting app built at HackPrinceton where we won Best Use of the Knot API; I built the iOS app and integrated Knot to track users' purchases.
 category: Hackathon
-date: 2021-12-12
+date: 2025-11-09
 award: Best Use of Knot API
 event: HackPrinceton
 organization: Princeton University

@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: A solo-built iOS app that routes drivers around traffic to cut emissions, rewarding low-emission trips with redeemable points. Built with MapKit and SwiftUI.
 category: Hackathon
-date: 2021-01-01
+date: 2024-11-10
 award: Best Sustainability Hack
 event: HackRPI
 organization: Rensselaer Polytechnic Institute

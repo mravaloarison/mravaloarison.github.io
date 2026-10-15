@@ -4,7 +4,7 @@ seo:
   type: CreativeWork
 description: My first portfolio, built in a rush before graduation with Next.js, Material UI, and GSAP, and kept online as a memory of where I started.
 category: Personal
-date: 2021-02-01
+date: 2024-10-02
 image: /assets/images/Portfoliov1.0.png
 image_alt: Screenshot of the Portfolio 1.0 website homepage built with Next.js
 tech: [Next.Js, Vercel, GreenSock, Material UI]
