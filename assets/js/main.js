@@ -94,8 +94,11 @@
 
   // Drawings strip: previous / next buttons on top of scroll-snap.
   function initArtCarousel() {
-    var rail = document.querySelector(".art-rail");
-    if (!rail) return;
+    // There can be two copies (inline for phones, side for wide screens).
+    Array.prototype.forEach.call(document.querySelectorAll(".art-rail"), initOneCarousel);
+  }
+
+  function initOneCarousel(rail) {
     var strip = rail.querySelector(".art-carousel");
     var controls = rail.querySelector(".art-rail-controls");
     if (!strip || !controls) return;

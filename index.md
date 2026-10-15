@@ -27,7 +27,7 @@ seo:
 
 ## Bio
 
-{% include art-rail.html %}
+{% include art-rail.html placement="inline" %}
 
 My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
 

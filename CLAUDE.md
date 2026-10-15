@@ -136,9 +136,13 @@ cards and images, pills fully rounded.
   column; from 1100px the About page (`art_rail: true` →
   `body.has-rail`) is twice that — text column plus an equal drawings
   column (`--rail-width`, 680px, narrower only when the screen can't fit
-  both), centered as a pair, with the footer widening to match. The strip
-  is `position: fixed` in its column, vertically centered, so it's always
-  on screen. Below 1100px it's inline under the Bio heading. Hidden —
+  both), centered as a pair, with the footer widening to match. The strip is
+  rendered twice: `placement="inline"` in `index.md` after `## Bio`
+  (phones/tablets) and `placement="side"` from `default.html` in the
+  right grid column (≥1100px); only one shows at a time. The side copy has
+  the same 32px top padding as `main`, so "Lately drawing" lines up with
+  the "About" eyebrow and the drawing with the name, then it sticks 32px
+  from the top while scrolling (`position: sticky; top: 0`). Hidden —
   single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
