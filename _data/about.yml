@@ -14,7 +14,7 @@
 
 # The line under your name, at the top of the page.
 headline: >-
-  Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way.
+  I build iOS and macOS apps, web tools, and Power BI dashboards, and I won 12 hackathons during my bachelor's. I'm currently looking for a master's program and scholarships.
 
 # Facts for search engines and AI assistants. Not shown on the page as-is:
 # they go into the hidden structured data (JSON-LD) and /llms.txt, which is
@@ -37,9 +37,7 @@ profile:
   knows_about: [Software Engineering, iOS Development, Web Development, Data Analysis, Power BI, Hackathons, Drawing]
 
 # The "Looking for" box. Delete the text (leave `looking_for:` empty) to hide it.
-looking_for: >-
-  Graduate programs and scholarships. If you know of one that might be a
-  good fit, I'd love to hear about it at [%email%](mailto:%email%).
+looking_for:
 
 # The Bio section.
 bio: |

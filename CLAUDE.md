@@ -226,8 +226,10 @@ never in `index.md`.
 
 A long-form page, not a landing page. Structure it as:
 Bio (the h2 is "Bio", not "Overview"; "About" eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,
-Languages, Interests. A "Looking for" callout (currently: graduate programs
-and scholarships) sits between the profile links and the Bio, and the
+Languages, Interests. The headline under the name says what Mami builds
+and that Mami is looking for a master's program and scholarships. The
+"Looking for" callout is off (`looking_for:` empty in `about.yml`; filling
+it in brings the box back between the profile links and the Bio). The
 hackathon award lists every project with an `award` in its front matter. There
 is no "Latest work" section (removed October 2026; `featured: true` is still
 in MyTime's and DogDuckGo's front matter but nothing reads it). Existing copy is good — keep
