@@ -137,8 +137,9 @@ cards and images, pills fully rounded.
 
 ### Components in `_includes/`
 
-- `breadcrumb.html` — on every page below the top level, including the group:
-  Home / Projects / Hackathons / Better
+- `breadcrumb.html` — on every page below the top level, including the group,
+  starting at the section (there is no home page, only About):
+  Projects / Hackathons / Better. Same in the BreadcrumbList JSON-LD.
 - `page-header.html` — eyebrow, h1, serif abstract
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page

@@ -1,6 +1,5 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
-    <li><a href="{{ '/' | relative_url }}">Home</a></li>
     {% if include.section_title %}
     <li><a href="{{ include.section_url | relative_url }}">{{ include.section_title }}</a></li>
     {% endif %}
@@ -11,16 +10,19 @@
   </ol>
 </nav>
 
-{% assign crumb_pos = 1 %}
+{%- comment -%}
+  Trail starts at the section (Projects, Blog, Arts), not at "/": the site
+  has no home page, only About, and a project's natural parent is Projects.
+{%- endcomment -%}
+{% assign crumb_pos = 0 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Home", "item": {{ "/" | absolute_url | jsonify }}}
     {% if include.section_title %}
     {% assign crumb_pos = crumb_pos | plus: 1 %}
-    ,{"@type": "ListItem", "position": {{ crumb_pos }}, "name": {{ include.section_title | jsonify }}, "item": {{ include.section_url | absolute_url | jsonify }}}
+    {"@type": "ListItem", "position": {{ crumb_pos }}, "name": {{ include.section_title | jsonify }}, "item": {{ include.section_url | absolute_url | jsonify }}}
     {% endif %}
     {% if include.category_title %}
     {% assign crumb_pos = crumb_pos | plus: 1 %}
