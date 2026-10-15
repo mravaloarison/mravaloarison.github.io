@@ -7,10 +7,7 @@ tag: life
 
 {% include breadcrumb.html section_title="Blog" section_url="/blog/" current="life" %}
 
-<p class="eyebrow">Blog</p>
-
-# Tagged: life
-
+{% include page-header.html eyebrow="Blog" title="Tagged: life" %}
 {% assign tagged_posts = site.posts | where_exp: "p", "p.tags contains page.tag" %}
 {% include post-list.html posts=tagged_posts descriptions=true %}
 

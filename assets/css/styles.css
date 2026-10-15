@@ -1410,7 +1410,8 @@ figcaption {
     position: sticky;
     top: 0;
     align-self: start;
-    margin: 0;
+    /* stops the same 64px above the footer as the text (main's bottom padding) */
+    margin: 0 0 var(--space-64);
     padding-top: var(--space-32);
   }
 

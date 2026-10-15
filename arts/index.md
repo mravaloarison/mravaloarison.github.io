@@ -4,11 +4,7 @@ title: Arts
 description: Drawings by Maminiaina Ravaloarison, from digital pieces made in Procreate to traditional work and sketchbook pages.
 ---
 
-<p class="eyebrow">Arts</p>
-
-# Arts
-
-I love drawing, and I recently started doing digital work in Procreate. This is where those pieces live.
+{% include page-header.html eyebrow="Arts" title="Arts" abstract="I love drawing, and I recently started doing digital work in Procreate. This is where those pieces live." %}
 
 {% assign mediums = site.data.categories.arts %}
 {% if site.arts.size == 0 %}

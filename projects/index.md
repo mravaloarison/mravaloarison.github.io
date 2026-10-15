@@ -4,11 +4,7 @@ title: Projects
 description: Work, personal builds, and hackathon projects from Maminiaina Ravaloarison, spanning iOS, web, data, and machine learning.
 ---
 
-<p class="eyebrow">Projects</p>
-
-# Projects
-
-A collection of the projects I've built, at work, on my own time, and at hackathons across the East Coast. Each one taught me something new about technology, design, or how to think better.
+{% include page-header.html eyebrow="Projects" title="Projects" abstract="A collection of the projects I've built, at work, on my own time, and at hackathons across the East Coast. Each one taught me something new about technology, design, or how to think better." %}
 
 {%- comment -%} Two most recent per type; the category page has the rest. {%- endcomment -%}
 {% for cat in site.data.categories.projects %}

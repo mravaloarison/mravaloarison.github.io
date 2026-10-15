@@ -8,11 +8,7 @@ medium_name: Procreate
 
 {% include breadcrumb.html section_title="Arts" section_url="/arts/" current="Procreate" %}
 
-<p class="eyebrow">Arts</p>
-
-# Procreate
-
-Digital pieces made in Procreate.
+{% include page-header.html eyebrow="Arts" title="Procreate" abstract="Digital pieces made in Procreate." %}
 
 {% assign items = site.arts | where: "medium", "Procreate" | sort: "date" | reverse %}
 {% if items.size > 0 %}

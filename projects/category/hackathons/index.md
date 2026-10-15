@@ -7,11 +7,7 @@ nav_slug: hackathons
 
 {% include breadcrumb.html section_title="Projects" section_url="/projects/" current="Hackathons" %}
 
-<p class="eyebrow">Projects</p>
-
-# Hackathons
-
-Projects built at hackathons across the East Coast, most of which won an award.
+{% include page-header.html eyebrow="Projects" title="Hackathons" abstract="Projects built at hackathons across the East Coast, most of which won an award." %}
 
 {% assign hackathons = site.projects | where: "category", "Hackathon" | sort: "date" | reverse %}
 {% include card-grid.html items=hackathons %}

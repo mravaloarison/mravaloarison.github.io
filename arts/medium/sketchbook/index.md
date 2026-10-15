@@ -8,11 +8,7 @@ medium_name: Sketchbook
 
 {% include breadcrumb.html section_title="Arts" section_url="/arts/" current="Sketchbook" %}
 
-<p class="eyebrow">Arts</p>
-
-# Sketchbook
-
-Quick studies and pages from my sketchbook.
+{% include page-header.html eyebrow="Arts" title="Sketchbook" abstract="Quick studies and pages from my sketchbook." %}
 
 {% assign items = site.arts | where: "medium", "Sketchbook" | sort: "date" | reverse %}
 {% if items.size > 0 %}

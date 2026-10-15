@@ -7,10 +7,7 @@ nav_slug: "2026"
 
 {% include breadcrumb.html section_title="Blog" section_url="/blog/" current="2026" %}
 
-<p class="eyebrow">Blog</p>
-
-# 2026
-
+{% include page-header.html eyebrow="Blog" title="2026" %}
 {% assign year_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
 {% for group in year_groups %}
 {% if group.name == page.nav_slug %}

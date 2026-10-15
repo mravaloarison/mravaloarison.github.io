@@ -8,11 +8,7 @@ medium_name: Traditional
 
 {% include breadcrumb.html section_title="Arts" section_url="/arts/" current="Traditional" %}
 
-<p class="eyebrow">Arts</p>
-
-# Traditional
-
-Drawings made by hand, on paper.
+{% include page-header.html eyebrow="Arts" title="Traditional" abstract="Drawings made by hand, on paper." %}
 
 {% assign items = site.arts | where: "medium", "Traditional" | sort: "date" | reverse %}
 {% if items.size > 0 %}

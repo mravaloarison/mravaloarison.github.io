@@ -142,7 +142,9 @@ cards and images, pills fully rounded.
   right grid column (≥1100px); only one shows at a time. The side copy has
   the same 32px top padding as `main`, so "Lately drawing" lines up with
   the "About" eyebrow and the drawing with the name, then it sticks 32px
-  from the top while scrolling (`position: sticky; top: 0`). Hidden —
+  from the top while scrolling (`position: sticky; top: 0`). Its 64px
+  bottom margin matches `main`'s bottom padding, so at the end of the page
+  the drawings and the text both stop 64px above the footer. Hidden —
   single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
@@ -160,7 +162,10 @@ cards and images, pills fully rounded.
 - `breadcrumb.html` — on every page below the top level, including the group,
   starting at the section (there is no home page, only About):
   Projects / Hackathons / Better. Same in the BreadcrumbList JSON-LD.
-- `page-header.html` — eyebrow, h1, serif abstract
+- `page-header.html` — eyebrow, h1, serif abstract. Every page opens with
+  it — About, section indexes, category/medium/tag/year pages, and detail
+  pages — so titles and intros are the same size everywhere. Never write a
+  page's eyebrow/h1/intro by hand in Markdown.
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — "In progress" (when `status: ongoing`) and award

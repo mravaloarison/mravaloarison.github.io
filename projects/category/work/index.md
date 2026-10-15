@@ -7,11 +7,7 @@ nav_slug: work
 
 {% include breadcrumb.html section_title="Projects" section_url="/projects/" current="Work" %}
 
-<p class="eyebrow">Projects</p>
-
-# Work
-
-Projects built as part of my day-to-day role at Monroe University.
+{% include page-header.html eyebrow="Projects" title="Work" abstract="Projects built as part of my day-to-day role at Monroe University." %}
 
 {% assign work = site.projects | where: "category", "Work" | sort: "date" | reverse %}
 {% include card-grid.html items=work %}

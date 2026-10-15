@@ -7,10 +7,7 @@ tag: first-post
 
 {% include breadcrumb.html section_title="Blog" section_url="/blog/" current="first-post" %}
 
-<p class="eyebrow">Blog</p>
-
-# Tagged: first-post
-
+{% include page-header.html eyebrow="Blog" title="Tagged: first-post" %}
 {% assign tagged_posts = site.posts | where_exp: "p", "p.tags contains page.tag" %}
 {% include post-list.html posts=tagged_posts descriptions=true %}
 
