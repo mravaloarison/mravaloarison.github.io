@@ -82,6 +82,9 @@
   --radius-md: 10px;
 
   --measure: 680px;
+  /* Gap above a heading jumped to from the table of contents; the sticky
+     table of contents sits the same distance from the top, so they line up */
+  --jump-offset: 40px;
 
   --transition: 160ms ease;
 }
@@ -325,9 +328,14 @@ blockquote {
   top: var(--space-16);
 }
 
-/* Jumping to a section from the table of contents leaves room above it */
+/* Jumping to a section from the table of contents glides there and leaves
+   the same room above it as above the table of contents */
+html {
+  scroll-behavior: smooth;
+}
+
 [id] {
-  scroll-margin-top: var(--space-48);
+  scroll-margin-top: var(--jump-offset);
 }
 
 .sr-only {
@@ -1383,10 +1391,10 @@ figcaption {
     justify-self: end;
     align-self: start;
     position: sticky;
-    top: var(--space-32);
+    top: var(--jump-offset);
     width: 200px;
     margin: var(--space-32) var(--space-24) 0 0;
-    max-height: calc(100vh - var(--space-64));
+    max-height: calc(100vh - 2 * var(--jump-offset));
     overflow-y: auto;
   }
 

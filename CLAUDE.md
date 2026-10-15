@@ -116,13 +116,16 @@ cards and images, pills fully rounded.
   Color Emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
-- **Table of contents** (`toc-items.html`, rendered in `default.html`):
+- **Table of contents** (`toc-items.html`, rendered in `default.html`).
+  Clicking an entry scrolls smoothly (`scroll-behavior: smooth`, off under
+  reduced motion).
   built at build time from the page's h2s that have an id; shown on pages
   with two or more (opt out with `toc: false`). None on phones; 768–1199px
   a collapsible "On this page" box before the first h2; ≥1200px a sticky
   200px list in the left margin, with the column still centered. Every
-  `[id]` has `scroll-margin-top: 48px` so a jumped-to heading isn't flush
-  against the top of the window. As you scroll, `main.js` marks the section
+  `[id]` has `scroll-margin-top: var(--jump-offset)` (40px), the same as
+  the sticky list's `top`, so a jumped-to heading lines up with the top of
+  the table of contents. As you scroll, `main.js` marks the section
   you're reading (the last h2 above 30% of the viewport) with
   `aria-current="location"` in both forms of the list; bold with an accent
   rule on its left.
@@ -211,11 +214,12 @@ detail pages.
 ### About (`/`)
 
 A long-form page, not a landing page. Structure it as:
-Bio (the h2 is "Bio", not "Overview"; no eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,
+Bio (the h2 is "Bio", not "Overview"; "About" eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,
 Languages, Interests. A "Looking for" callout (currently: graduate programs
 and scholarships) sits between the profile links and the Bio, and the
-hackathon award lists every project with an `award` in its front matter. A "Latest work"
-card grid shows projects marked `featured: true` (MyTime and DogDuckGo). Existing copy is good — keep
+hackathon award lists every project with an `award` in its front matter. There
+is no "Latest work" section (removed October 2026; `featured: true` is still
+in MyTime's and DogDuckGo's front matter but nothing reads it). Existing copy is good — keep
 its voice, don't corporate-ize it.
 
 ### Projects

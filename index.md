@@ -8,7 +8,7 @@ seo:
   type: Person
 ---
 
-{% include page-header.html title="Maminiaina Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
+{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
@@ -24,13 +24,6 @@ seo:
 
 {% capture looking_for %}Graduate programs and scholarships. If you know of one that might be a good fit, I'd love to hear about it at [{{ site.author.email }}](mailto:{{ site.author.email }}).{% endcapture %}
 {% include callout.html label="Looking for" text=looking_for %}
-
-## Latest work
-
-The two projects I'm working on right now. Both are still in progress.
-
-{% assign latest = site.projects | where: "featured", true | sort: "date" | reverse %}
-{% include card-grid.html items=latest %}
 
 ## Bio
 
