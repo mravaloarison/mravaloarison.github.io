@@ -115,6 +115,13 @@ cards and images, pills fully rounded.
   only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
+- Phones (≤600px): burger on the left, theme toggle on the right
+  (`justify-content: space-between`). The burger morphs into an × and slides
+  the links in from the left as a drawer (360ms,
+  `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
+  a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
+  inside while open. This only applies when `html.js` is set by the head
+  script — with JS off the links stay inline on the left, wrapping if needed.
 - The theme toggle has no box: 🌙 and ☀️ sit on a "day/night wheel"
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
