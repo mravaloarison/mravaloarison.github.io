@@ -20,16 +20,21 @@
   <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
   <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
-  {%- comment -%} Keep empty Arts pages out of search until there's art to show. {%- endcomment -%}
+  {%- comment -%} Keep Arts pages out of search until there's real (non-placeholder) art to show. {%- endcomment -%}
   {%- if page.url contains '/arts/' and page.collection != "arts" -%}
     {%- if page.medium_name -%}
       {%- assign arts_items = site.arts | where: "medium", page.medium_name -%}
     {%- else -%}
       {%- assign arts_items = site.arts -%}
     {%- endif -%}
+    {%- assign arts_items = arts_items | where_exp: "a", "a.placeholder != true" -%}
     {%- if arts_items.size == 0 %}
   <meta name="robots" content="noindex">
     {%- endif -%}
+  {%- endif %}
+  {%- comment -%} Placeholder art (stand-ins until real pieces exist) stays out of search. {%- endcomment -%}
+  {%- if page.placeholder %}
+  <meta name="robots" content="noindex">
   {%- endif %}
   {% seo title=false %}
   {% feed_meta %}

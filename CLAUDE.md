@@ -228,6 +228,13 @@ See Also → prev/next.
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
 
+**Two placeholder pieces are live** (`_arts/placeholder-sunset.md`,
+`_arts/placeholder-ocean.md`, generated abstract images in
+`assets/images/arts/placeholder-*`) so the drawings beside the Bio can be
+seen. They carry `placeholder: true` (→ `noindex`, and Arts index/medium
+pages stay `noindex` while only placeholders exist) and `sitemap: false`.
+Delete both files and their images once real pieces are added.
+
 Built and waiting for the first piece. Until `_arts/` has at least one item,
 the Arts nav link and the "drawing" link in the About bio stay hidden, and
 the Arts pages render a short note with `noindex`. All of that switches on by
