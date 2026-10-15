@@ -946,9 +946,9 @@ main iframe {
   text-decoration: none;
 }
 
-/* Cover image: the card and its frame stay still; the only hover effect is
-   the image zooming a little inside the frame. Scoped to the cover so the
-   tech icons aren't affected. */
+/* Cover image: the card and its frame stay still; on hover the image zooms
+   a little inside the frame and the title turns accent. Scoped to the
+   cover so the tech icons aren't affected. */
 .card > picture {
   display: block;
   overflow: hidden;
@@ -967,6 +967,11 @@ main iframe {
 .card:hover > picture img,
 .card:focus-visible > picture img {
   transform: scale(1.04);
+}
+
+.card:hover h3,
+.card:focus-visible h3 {
+  color: var(--accent);
 }
 
 .card-body {

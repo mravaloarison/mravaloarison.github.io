@@ -139,8 +139,8 @@ cards and images, pills fully rounded.
   hairline between rows (`post-list.html`).
 - Project cards: image first (rounded, hairline border), serif title, one
   line of description. No boxes around cards, no shadows. On hover the
-  card never moves (no lift); the only effect is the cover image zooming
-  to 1.04 inside its frame (`overflow: hidden`), 300ms.
+  card never moves (no lift); the cover image zooms to 1.04 inside its
+  frame (`overflow: hidden`, 300ms) and the title turns accent.
 
 ### Components in `_includes/`
 
