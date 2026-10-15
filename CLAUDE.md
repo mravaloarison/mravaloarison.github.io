@@ -26,7 +26,7 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle, the phone menu, the table-of-contents highlight). The one exception is the inline theme snippet in
+  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
   `<head>`, which must run before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -44,8 +44,9 @@ and not a docs portal. When in doubt, remove things.
 
 This replaced an earlier Apple-documentation design (three columns, sliding
 sidebar, on-this-page rail) in October 2026, at Mami's request. Don't bring
-the sliding sidebar back. A table of contents came back later, as a test,
-in a lighter form (see Layout).
+the sliding sidebar back. A table of contents was tried again in October
+2026 (left-margin list plus scroll highlight) and removed; don't re-add it
+unless asked.
 
 Fonts are self-hosted in `assets/fonts/` (`font-display: swap`), and only
 what's used is shipped:
@@ -55,11 +56,8 @@ what's used is shipped:
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
-- **Noto Color Emoji** (`--font-emoji`) — one 4 KB COLRv1 subset
-  (`noto-color-emoji-subset.woff2`) with just 🌙 ☀️ for the theme toggle and
-  💼 🌱 🏆 for the Projects dropdown. Adding an emoji anywhere means
-  re-fetching the subset from Google Fonts with `text=` set to all of them
-  and updating `unicode-range`.
+- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 and ☀️ for the theme
+  toggle (1.5 KB, `noto-color-emoji-theme.woff2`).
 
 Newsreader latin and Nunito latin are preloaded from the head include.
 
@@ -111,41 +109,21 @@ cards and images, pills fully rounded.
   current section's link is bold and carries `aria-current`. The Arts link
   only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
-  a small menu of every project type, each with its emoji (`emoji` in
-  `_data/categories.yml`: 💼 Work, 🌱 Personal, 🏆 Hackathons; 18px Noto
-  Color Emoji), CSS only (`:hover` / `:focus-within`).
+  a small menu of every project type (from `_data/categories.yml`; labels
+  only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
-- **Table of contents** (`toc-items.html`, rendered in `default.html`).
-  Clicking an entry scrolls smoothly (`scroll-behavior: smooth`, off under
-  reduced motion).
-  built at build time from the page's h2s that have an id; shown on pages
-  with two or more (opt out with `toc: false`). None on phones; 768–1199px
-  a collapsible "On this page" box before the first h2; ≥1200px a sticky
-  200px list in the left margin, with the column still centered. Every
-  `[id]` has `scroll-margin-top: var(--jump-offset)` (40px), the same as
-  the sticky list's `top`, so a jumped-to heading lines up with the top of
-  the table of contents. As you scroll, `main.js` marks the section
-  you're reading (the last h2 above 30% of the viewport) with
-  `aria-current="location"` in both forms of the list; bold with an accent
-  rule on its left.
-- Phones (≤600px): burger · name · theme toggle spread across the header
-  (`justify-content: space-between`). The burger morphs into an × and slides
-  the links in from the left as a drawer (360ms,
-  `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
-  a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
-  inside while open. This only applies when `html.js` is set by the head
-  script — with JS off the links wrap onto their own line under the name.
 - The theme toggle has no box: 🌙 and ☀️ sit on a "day/night wheel"
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
   only enabled after a click (`.is-switching`) so it never plays on load.
-- **Art rail** (`art-rail.html`): pages with `art_rail: true` (About, Blog
-  index) show the three latest pieces from `_arts/` in a 220px sticky rail
-  in the right margin at ≥1200px (mirroring the table of contents on the
-  left, column still centered), and as a row of three under the content on
-  smaller screens. Hidden — layout stays
-  single column — until `_arts/` has a piece.
+- **Drawings column** (`art-rail.html`, "Lately drawing"): the About page
+  (`art_rail: true`) shows the newest Procreate pieces from `_arts/`, up to
+  three, at their own proportions. From 1100px it is a 280px column
+  (`--rail-width`) to the right of the text, with header and footer
+  widening to match; below that the pieces sit in a row under the page. Not
+  sticky, so tall pieces never get cut off. Hidden — single column — until
+  `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -183,7 +161,7 @@ cards and images, pills fully rounded.
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
-- `art-rail.html` — latest arts beside the content (see Layout)
+- `art-rail.html` — newest Procreate drawings beside the About page (see Layout)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 
@@ -454,8 +432,8 @@ done.
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the theme toggle,
-  the phone menu and the table-of-contents highlight (deferred), plus a tiny inline head script that applies
+  delivers, content or navigation state. The only JS is the theme toggle
+  and the phone menu (deferred), plus a tiny inline head script that applies
   the saved theme and the `js` class before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.

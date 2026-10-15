@@ -1,6 +1,5 @@
 ---
 layout: default
-art_rail: true
 title: Blog
 description: Maminiaina Ravaloarison's journal — writing on technology, AI, and life, in reverse-chronological order.
 ---

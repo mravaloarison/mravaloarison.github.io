@@ -92,56 +92,6 @@
     });
   }
 
-  // Table of contents: mark the section you're reading as you scroll.
-  function initTocSpy() {
-    var links = Array.prototype.slice.call(document.querySelectorAll(".toc a[href^='#']"));
-    if (!links.length) return;
-
-    var headings = [];
-    links.forEach(function (link) {
-      var el = document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (el && headings.indexOf(el) === -1) headings.push(el);
-    });
-    if (!headings.length) return;
-
-    var current = null;
-    var ticking = false;
-
-    function update() {
-      ticking = false;
-      // The last heading above this line is the section being read.
-      var line = window.innerHeight * 0.3;
-      var active = null;
-      for (var i = 0; i < headings.length; i++) {
-        if (headings[i].getBoundingClientRect().top <= line) active = headings[i];
-        else break;
-      }
-      // At the very bottom, the last section wins even if its heading is low.
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-        active = headings[headings.length - 1];
-      }
-      var id = active ? active.id : null;
-      if (id === current) return;
-      current = id;
-      links.forEach(function (link) {
-        if (id && link.hash === "#" + id) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
-      });
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
-      }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
-  }
-
   initThemeToggle();
   initMenu();
-  initTocSpy();
 })();

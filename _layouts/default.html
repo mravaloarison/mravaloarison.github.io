@@ -9,21 +9,14 @@
 {%- elsif page.url != "/" -%}
   {%- assign section = "" -%}
 {%- endif %}
-{%- comment -%} Table of contents: pages with two or more h2s {%- endcomment -%}
-{%- capture toc_items -%}{% include toc-items.html html=content %}{%- endcapture -%}
-{%- assign toc_count = toc_items | split: "<li>" | size | minus: 1 -%}
-{%- assign show_toc = false -%}
-{%- if toc_count >= 2 and page.toc != false -%}
-  {%- assign show_toc = true -%}
-{%- endif -%}
 {%- assign show_rail = false -%}
-{%- if page.art_rail and site.arts.size > 0 -%}
+{%- assign rail_pieces = site.arts | where: "medium", "Procreate" -%}
+{%- if page.art_rail and rail_pieces.size > 0 -%}
   {%- assign show_rail = true -%}
 {%- endif %}
 <html lang="{{ site.lang | default: 'en' }}">
 {% include head.html %}
-{%- capture body_class -%}{% if show_toc %}has-toc {% endif %}{% if show_rail %}has-rail{% endif %}{%- endcapture -%}
-<body{% assign body_class = body_class | strip %}{% if body_class != "" %} class="{{ body_class }}"{% endif %}>
+<body{% if show_rail %} class="has-rail"{% endif %}>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -41,7 +34,7 @@
             <ul class="nav-sub" aria-label="Project types">
               {%- for cat in site.data.categories.projects %}
               {%- assign cat_url = "/projects/category/" | append: cat.slug | append: "/" %}
-              <li><a href="{{ cat_url | relative_url }}"{% if page.url == cat_url %} aria-current="page"{% elsif page.collection == "projects" and page.category == cat.name %} aria-current="true"{% endif %}><span class="nav-emoji" aria-hidden="true">{{ cat.emoji }}</span>{{ cat.label }}</a></li>
+              <li><a href="{{ cat_url | relative_url }}"{% if page.url == cat_url %} aria-current="page"{% elsif page.collection == "projects" and page.category == cat.name %} aria-current="true"{% endif %}>{{ cat.label }}</a></li>
               {%- endfor %}
             </ul>
           </li>
@@ -59,24 +52,8 @@
   <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
 
   <div class="page-frame">
-    {%- if show_toc %}
-    <nav class="toc toc-rail" aria-label="On this page">
-      <p class="toc-label">On this page</p>
-      <ul>{{ toc_items }}</ul>
-    </nav>
-    {%- endif %}
     <main id="main" tabindex="-1">
-      {%- if show_toc -%}
-      {%- assign content_parts = content | split: "<h2" -%}
-      {{ content_parts[0] }}
-      <details class="toc toc-inline">
-        <summary>On this page</summary>
-        <ul>{{ toc_items }}</ul>
-      </details>
-      {%- for part in content_parts offset: 1 -%}<h2{{ part }}{%- endfor -%}
-      {%- else %}
       {{ content }}
-      {%- endif %}
     </main>
     {%- if show_rail %}
     {% include art-rail.html %}

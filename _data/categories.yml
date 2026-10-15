@@ -2,15 +2,12 @@ projects:
   - name: Work
     slug: work
     label: Work
-    emoji: "💼"
   - name: Personal
     slug: personal
     label: Personal
-    emoji: "🌱"
   - name: Hackathon
     slug: hackathons
     label: Hackathons
-    emoji: "🏆"
 
 arts:
   - name: Procreate
