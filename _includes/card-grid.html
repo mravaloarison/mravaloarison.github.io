@@ -7,6 +7,15 @@
     <div class="card-body">
       <h3>{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
       <p class="card-description">{{ item.description }}</p>
+      {% if item.award %}
+      <p class="card-award">
+        <span class="award-emoji" aria-hidden="true">🏆</span>
+        <span>
+          <strong><span class="sr-only">Winner: </span>{{ item.award }}</strong>
+          {% if item.event or item.organization %}<span class="meta">{{ item.event }}{% if item.event and item.organization %} · {% endif %}{{ item.organization }}</span>{% endif %}
+        </span>
+      </p>
+      {% endif %}
       {% if item.tech %}
       <ul class="card-tech" aria-label="Built with">
         {%- for t in item.tech %}

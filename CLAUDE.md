@@ -56,8 +56,10 @@ what's used is shipped:
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
-- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 and ☀️ for the theme
-  toggle (1.5 KB, `noto-color-emoji-theme.woff2`).
+- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 ☀️ (theme toggle)
+  and 🏆 (hackathon awards), 2.9 KB, `noto-color-emoji-theme.woff2`.
+  Adding an emoji means re-fetching the subset from Google Fonts with
+  `text=` set to all of them and updating `unicode-range`.
 
 Newsreader latin and Nunito latin are preloaded from the head include.
 
@@ -81,11 +83,21 @@ unreadable on paper.
 | `--surface`        | `#211e1b`      | `#f3eee5` |
 | `--text`           | `#ede8e0`      | `#24211d` |
 | `--text-secondary` | `#a89f93`      | `#635c52` |
-| `--accent`         | `#f5c542`      | `#8a6400` |
+| `--accent`         | `#f5c542`      | `#7d5a00` |
 | `--border`         | `#312d29`      | `#e3dccf` |
 
-All text pairs are at least 4.5:1 (accent: 11.2:1 dark, 5.1:1 light, 4.7:1
-on `--surface`). Links are ink-colored with a soft accent underline that
+**Paper texture**: `body` (and the phone drawer) paint `--paper` over
+`--bg` — two inline SVG noise layers per theme: fine grain (220px tile) plus
+a soft cold-press mottle (640px tile), warm brown specks on light, faint
+light specks on dark. No image downloads. Two gotchas when editing them:
+the filter needs `color-interpolation-filters='sRGB'` (the default
+linearRGB pushes every speck to transparent), and the `#` in `url(#p)`
+must be escaped as `%23` in the data URI. Check contrast against the
+*textured* paper, not the flat `--bg`: the light gold was deepened from
+`#8a6400` to `#7d5a00` because the grain darkens the paper.
+
+All text pairs are at least 4.5:1 against the average textured paper
+(light: secondary 5.3:1, accent ≈5:1; dark: secondary 6:1, accent 9.7:1). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout
 rule, award pills.
 
@@ -154,7 +166,7 @@ cards and images, pills fully rounded.
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — "In progress" (when `status: ongoing`) and award
-  pills, then the tech stack as a boxless row: 24px icon + name, each
+  pills (the award pill starts with 🏆), then the tech stack as a boxless row: 24px icon + name, each
   linking to the tech's official site (new tab, `rel="noopener"`, since the
   reader is mid-article). Tech without a `url` renders unlinked.
 - `tech-icon.html` — one tech icon (`px` sets the size; not `size`, which
@@ -163,7 +175,9 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards; tech shows as 22px icon + name, wrapping
+- `card-grid.html` — project cards. Projects with an `award` get a 🏆 line
+  under the description: the award in bold, then "event · organization"
+  (the university). Tech shows as 22px icon + name, wrapping
   (plain text, not links — the whole card is already a link),
   plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)

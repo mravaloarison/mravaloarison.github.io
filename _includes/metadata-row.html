@@ -1,7 +1,7 @@
 {% if include.status == "ongoing" or include.award %}
 <div class="metadata-row">
   {% if include.status == "ongoing" %}<span class="pill pill-status">In progress</span>{% endif %}
-  {% if include.award %}<span class="pill pill-award">{{ include.award }}</span>{% endif %}
+  {% if include.award %}<span class="pill pill-award"><span class="award-emoji" aria-hidden="true">🏆</span><span class="sr-only">Winner: </span>{{ include.award }}</span>{% endif %}
 </div>
 {% endif %}
 {% if include.tech %}
