@@ -1275,13 +1275,13 @@ figcaption {
 }
 
 @media (min-width: 1100px) {
-  /* About: the text column keeps its width and moves left; the drawings
-     stay fixed on screen in the space to its right, centered vertically,
-     sized so both always fit in the window. Header and footer widen to
-     match so everything lines up. */
+  /* Every page uses the same centered 680px column. About is twice that:
+     the text column, then an equal column for the drawings (narrower only
+     when the screen can't fit both), centered as a pair. The drawings stay
+     fixed on screen in their column, centered vertically, sized so both
+     always fit in the window. The footer widens to match. */
   .has-rail {
-    /* as wide as the screen allows next to the text, up to 440px */
-    --rail-width: clamp(240px, calc(100vw - var(--measure) - 144px), 440px);
+    --rail-width: clamp(240px, calc(100vw - var(--measure) - 144px), var(--measure));
     --frame-width: calc(var(--measure) + var(--space-48) + var(--rail-width) + 2 * var(--space-24));
   }
 
