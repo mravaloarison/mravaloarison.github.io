@@ -1,13 +1,14 @@
 <head>
   <script>
-    /* Apply the saved theme before first paint so the page doesn't flash.
+    /* Every visit starts in dark. A light choice lasts only for this visit
+       (sessionStorage), applied before first paint so pages don't flash.
        The "js" class lets the phone layout swap the wrapped links for the
        burger menu only when the script that opens it can run. */
     (function () {
       document.documentElement.classList.add('js');
+      try { localStorage.removeItem('theme'); } catch (e) {}
       try {
-        var t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        if (sessionStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
       } catch (e) {}
     })();
   </script>

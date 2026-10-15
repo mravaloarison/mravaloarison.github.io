@@ -72,8 +72,10 @@ italic font file is shipped.
 **Dark is the default** for every visitor, whatever their system setting.
 Dark tokens live on `:root`; the light set lives under
 `:root[data-theme="light"]` and only applies when chosen with the toggle
-(saved in `localStorage`, applied by the inline head script before first
-paint). There is no `prefers-color-scheme` rule. The accent is **yellow**:
+(kept in `sessionStorage` for the current visit only, applied by the
+inline head script before first paint). Every new visit starts in dark,
+even if light was picked last time; the head script also clears any old
+`localStorage` theme from before this rule. There is no `prefers-color-scheme` rule. The accent is **yellow**:
 bright in dark mode, a deep gold in light mode because bright yellow is
 unreadable on paper.
 
@@ -86,18 +88,20 @@ unreadable on paper.
 | `--accent`         | `#f5c542`      | `#7d5a00` |
 | `--border`         | `#312d29`      | `#e3dccf` |
 
-**Paper texture**: `body` (and the phone drawer) paint `--paper` over
-`--bg` — two inline SVG noise layers per theme: fine grain (220px tile) plus
-a soft cold-press mottle (640px tile), warm brown specks on light, faint
-light specks on dark. No image downloads. Two gotchas when editing them:
-the filter needs `color-interpolation-filters='sRGB'` (the default
-linearRGB pushes every speck to transparent), and the `#` in `url(#p)`
-must be escaped as `%23` in the data URI. Check contrast against the
-*textured* paper, not the flat `--bg`: the light gold was deepened from
-`#8a6400` to `#7d5a00` because the grain darkens the paper.
+**Paper texture** — cold-press watercolor paper (Mami's reference: a
+bumpy, embossed sheet, not specks). `body` and the phone drawer paint
+`--paper` over `--bg`: one inline SVG per theme where fractal noise
+(`baseFrequency 0.04`, 4 octaves, slight blur) is lit by
+`feDiffuseLighting` from the top-left, then turned into soft shadows +
+highlights over the paper color (warm shadows and white highlights on
+light; deeper shadows, faint highlights on dark). 300px stitched tile, no
+image downloads. Gotchas: the filter needs
+`color-interpolation-filters='sRGB'`, and the `#` in `url(#p)` must be
+`%23` inside the data URI or nothing renders. Always check contrast
+against the *textured* paper, not flat `--bg`.
 
 All text pairs are at least 4.5:1 against the average textured paper
-(light: secondary 5.3:1, accent ≈5:1; dark: secondary 6:1, accent 9.7:1). Links are ink-colored with a soft accent underline that
+(light: secondary 6:1, accent 5.7:1; dark: secondary 7:1, accent 11.2:1). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout
 rule, award pills.
 
@@ -175,9 +179,11 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards. Projects with an `award` get a 🏆 line
-  under the description: the award in bold, then "event · organization"
-  (the university). Tech shows as 22px icon + name, wrapping
+- `card-grid.html` — project cards. Projects with an `award` get a badge
+  on the bottom-left corner of the cover image: 🏆, the award in bold, then
+  "event · organization" (the university). Always a dark translucent chip
+  with light text (it sits on screenshots), and it doesn't zoom with the
+  image on hover. Tech shows as 22px icon + name, wrapping
   (plain text, not links — the whole card is already a link),
   plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)

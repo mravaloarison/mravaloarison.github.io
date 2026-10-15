@@ -2,20 +2,22 @@
   {% for item in include.items %}
   <a class="card" href="{{ item.url | relative_url }}">
     {% if item.image %}
-    {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
-    {% endif %}
-    <div class="card-body">
-      <h3>{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
-      <p class="card-description">{{ item.description }}</p>
+    <div class="card-media">
+      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
       {% if item.award %}
       <p class="card-award">
         <span class="award-emoji" aria-hidden="true">🏆</span>
         <span>
           <strong><span class="sr-only">Winner: </span>{{ item.award }}</strong>
-          {% if item.event or item.organization %}<span class="meta">{{ item.event }}{% if item.event and item.organization %} · {% endif %}{{ item.organization }}</span>{% endif %}
+          {% if item.event or item.organization %}<span class="card-award-where">{{ item.event }}{% if item.event and item.organization %} · {% endif %}{{ item.organization }}</span>{% endif %}
         </span>
       </p>
       {% endif %}
+    </div>
+    {% endif %}
+    <div class="card-body">
+      <h3>{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
+      <p class="card-description">{{ item.description }}</p>
       {% if item.tech %}
       <ul class="card-tech" aria-label="Built with">
         {%- for t in item.tech %}
