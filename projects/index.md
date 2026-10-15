@@ -10,18 +10,17 @@ description: Work, personal builds, and hackathon projects from Mami Ravaloariso
 
 A collection of the projects I've built, at work, on my own time, and at hackathons across the East Coast. Each one taught me something new about technology, design, or how to think better.
 
-{% assign work = site.projects | where: "category", "Work" | sort: "date" | reverse %}
-{% assign personal = site.projects | where: "category", "Personal" | sort: "date" | reverse %}
-{% assign hackathons = site.projects | where: "category", "Hackathon" | sort: "date" | reverse %}
+{%- comment -%} Two most recent per type; the category page has the rest. {%- endcomment -%}
+{% for cat in site.data.categories.projects %}
+{% assign cat_items = site.projects | where: "category", cat.name | sort: "date" | reverse %}
+{% assign cat_url = "/projects/category/" | append: cat.slug | append: "/" %}
 
-## <a href="{{ '/projects/category/work/' | relative_url }}">Work</a>
+## <a href="{{ cat_url | relative_url }}">{{ cat.label }}</a>
 
-{% include card-grid.html items=work %}
+{% assign cat_preview = cat_items | slice: 0, 2 %}
+{% include card-grid.html items=cat_preview %}
 
-## <a href="{{ '/projects/category/personal/' | relative_url }}">Personal</a>
-
-{% include card-grid.html items=personal %}
-
-## <a href="{{ '/projects/category/hackathons/' | relative_url }}">Hackathons</a>
-
-{% include card-grid.html items=hackathons %}
+{% if cat_items.size > 2 %}
+<p class="see-more"><a href="{{ cat_url | relative_url }}">See all {{ cat_items.size }} {{ cat.name | downcase }} projects</a></p>
+{% endif %}
+{% endfor %}

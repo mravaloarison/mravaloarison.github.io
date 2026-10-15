@@ -42,7 +42,8 @@ and not a docs portal. When in doubt, remove things.
 
 This replaced an earlier Apple-documentation design (three columns, sliding
 sidebar, on-this-page rail) in October 2026, at Mami's request. Don't bring
-the sidebar, drawer, or on-this-page rail back.
+the sliding sidebar back. A table of contents came back later, as a test,
+in a lighter form (see Layout).
 
 Fonts are self-hosted in `assets/fonts/` (`font-display: swap`), and only
 what's used is shipped:
@@ -103,6 +104,16 @@ cards and images, pills fully rounded.
   on the right (About · Projects · Arts · Blog) and the theme toggle. The
   current section's link is bold and carries `aria-current`. The Arts link
   only appears once `_arts/` has a piece.
+- **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
+  a small menu of every project type with counts (from
+  `_data/categories.yml`), CSS only (`:hover` / `:focus-within`).
+  "Projects" itself stays a link to `/projects/`. In the phone drawer the
+  types sit indented under Projects.
+- **Table of contents** (`toc-items.html`, rendered in `default.html`):
+  built at build time from the page's h2s that have an id; shown on pages
+  with two or more (opt out with `toc: false`). None on phones; 768–1199px
+  a collapsible "On this page" box before the first h2; ≥1200px a sticky
+  200px list in the left margin, with the column still centered.
 - Phones (≤600px): burger · name · theme toggle spread across the header
   (`justify-content: space-between`). The burger morphs into an × and slides
   the links in from the left as a drawer (360ms,
@@ -116,8 +127,9 @@ cards and images, pills fully rounded.
   only enabled after a click (`.is-switching`) so it never plays on load.
 - **Art rail** (`art-rail.html`): pages with `art_rail: true` (About, Blog
   index) show the three latest pieces from `_arts/` in a 220px sticky rail
-  beside the column at ≥1100px (header and footer widen to match), and as a
-  row of three under the content on smaller screens. Hidden — layout stays
+  in the right margin at ≥1200px (mirroring the table of contents on the
+  left, column still centered), and as a row of three under the content on
+  smaller screens. Hidden — layout stays
   single column — until `_arts/` has a piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Overview. Listed in `_data/photos.yml`, files in
@@ -205,8 +217,9 @@ cover to replace with real screens. MyTime and DogDuckGo are ongoing
 detail page, `creativeWorkStatus` in JSON-LD); drop the field when one ships. DogDuckGo's repo (mravaloarison/save)
 is private, so it has no GitHub link.
 
-The index at `/projects/` shows all thirteen under category headings. Each
-category page shows only its own.
+The index at `/projects/` shows the two most recent projects per type
+under each heading, then "See all N … projects" to the category page when
+there are more. Each category page shows all of its own.
 
 Detail page order: breadcrumb → eyebrow (category) → title → abstract →
 metadata row (tech stack) + award badges + host university → Overview →

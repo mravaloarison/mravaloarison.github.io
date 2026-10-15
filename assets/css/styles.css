@@ -950,6 +950,15 @@ main iframe {
   margin-bottom: 0;
 }
 
+.see-more {
+  margin: calc(-1 * var(--space-24)) 0 var(--space-48);
+  font-weight: 600;
+}
+
+.see-more a::after {
+  content: " →";
+}
+
 /* Card grid: image first, title and one line under it */
 
 .card-grid {
