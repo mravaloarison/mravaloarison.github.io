@@ -92,37 +92,6 @@
     });
   }
 
-  // Drawings strip: previous / next buttons on top of scroll-snap.
-  function initArtCarousel() {
-    // There can be two copies (inline for phones, side for wide screens).
-    Array.prototype.forEach.call(document.querySelectorAll(".art-rail"), initOneCarousel);
-  }
-
-  function initOneCarousel(rail) {
-    var strip = rail.querySelector(".art-carousel");
-    var controls = rail.querySelector(".art-rail-controls");
-    if (!strip || !controls) return;
-    var buttons = controls.querySelectorAll(".art-rail-btn");
-    controls.hidden = false;
-
-    function update() {
-      var max = strip.scrollWidth - strip.clientWidth - 2;
-      buttons[0].disabled = strip.scrollLeft <= 2;
-      buttons[1].disabled = strip.scrollLeft >= max;
-    }
-
-    Array.prototype.forEach.call(buttons, function (btn) {
-      btn.addEventListener("click", function () {
-        var dir = Number(btn.getAttribute("data-dir"));
-        strip.scrollBy({ left: dir * strip.clientWidth, behavior: "smooth" });
-      });
-    });
-    strip.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  }
-
   initThemeToggle();
   initMenu();
-  initArtCarousel();
 })();

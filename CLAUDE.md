@@ -26,7 +26,7 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle, the phone menu, the drawings strip's arrow buttons). The one exception is the inline theme snippet in
+  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
   `<head>`, which must run before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -105,8 +105,7 @@ cards and images, pills fully rounded.
   (16px under 600px). No horizontal page scroll, ever.
 - Header: no site name or logo. The nav links (About · Projects · Arts ·
   Blog) on the left and the theme toggle on the right, spanning the same
-  centered 680px column on every page — including About — so it never
-  moves between pages. The current section's link is bold and carries
+  centered 680px column on every page, so it never moves between pages. The current section's link is bold and carries
   `aria-current`. The Arts link only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
   a small menu of every project type (from `_data/categories.yml`; labels
@@ -124,28 +123,6 @@ cards and images, pills fully rounded.
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
   only enabled after a click (`.is-switching`) so it never plays on load.
-- **Drawings beside the Bio** (`art-rail.html`, "Lately drawing"): the three
-  newest Procreate pieces from `_arts/` as a sideways-scrolling strip — one
-  drawing at a time at the full column width (very tall pieces fit inside
-  the window height with `object-fit: contain`). CSS scroll-snap with smooth
-  scrolling does the work, so it swipes/scrolls without JS; `main.js` adds
-  ←/→ buttons (hidden until JS runs, disabled at the ends). Where
-  scroll-driven animations are supported, each drawing scales up as it
-  reaches the middle (off under reduced motion). Included right after the
-  About page's `## Bio` heading. Every page uses the same centered 680px
-  column; from 1100px the About page (`art_rail: true` →
-  `body.has-rail`) is twice that — text column plus an equal drawings
-  column (`--rail-width`, 680px, narrower only when the screen can't fit
-  both), centered as a pair, with the footer widening to match. The strip is
-  rendered twice: `placement="inline"` in `index.md` after `## Bio`
-  (phones/tablets) and `placement="side"` from `default.html` in the
-  right grid column (≥1100px); only one shows at a time. The side copy has
-  the same 32px top padding as `main`, so "Lately drawing" lines up with
-  the "About" eyebrow and the drawing with the name, then it sticks 32px
-  from the top while scrolling (`position: sticky; top: 0`). Its 64px
-  bottom margin matches `main`'s bottom padding, so at the end of the page
-  the drawings and the text both stop 64px above the footer. Hidden —
-  single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -187,7 +164,6 @@ cards and images, pills fully rounded.
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
-- `art-rail.html` — the three newest Procreate drawings as a strip beside the Bio (see Layout)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 
@@ -250,13 +226,6 @@ See Also → prev/next.
 
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
-
-**Three placeholder pieces are live** (`_arts/placeholder-sunset.md`,
-`_arts/placeholder-ocean.md`, `_arts/placeholder-forest.md`, generated abstract images in
-`assets/images/arts/placeholder-*`) so the drawings beside the Bio can be
-seen. They carry `placeholder: true` (→ `noindex`, and Arts index/medium
-pages stay `noindex` while only placeholders exist) and `sitemap: false`.
-Delete them and their images once real pieces are added.
 
 Built and waiting for the first piece. Until `_arts/` has at least one item,
 the Arts nav link and the "drawing" link in the About bio stay hidden, and
@@ -465,8 +434,8 @@ done.
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the theme toggle,
-  the phone menu and the drawings strip's buttons (deferred), plus a tiny inline head script that applies
+  delivers, content or navigation state. The only JS is the theme toggle
+  and the phone menu (deferred), plus a tiny inline head script that applies
   the saved theme and the `js` class before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
@@ -478,6 +447,10 @@ done.
 - **Category filters linked to `#`** on the old site, making every facet
   invisible to search engines. They are real pages now, linked from each
   section index.
+- **A drawings column beside the About Bio was tried and removed** (October
+  2026): stacked, then fixed, then a sideways carousel with placeholder
+  art. Mami didn't like it. Don't bring back art on the About page unless
+  asked.
 - **The sidebar design was dropped** (October 2026) for the single-column
   layout above. The View Transitions API was tried twice for its slide
   animation and failed both times; if page-to-page motion ever comes back,

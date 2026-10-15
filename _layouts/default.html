@@ -9,14 +9,9 @@
 {%- elsif page.url != "/" -%}
   {%- assign section = "" -%}
 {%- endif %}
-{%- assign show_rail = false -%}
-{%- assign rail_pieces = site.arts | where: "medium", "Procreate" -%}
-{%- if page.art_rail and rail_pieces.size > 0 -%}
-  {%- assign show_rail = true -%}
-{%- endif %}
 <html lang="{{ site.lang | default: 'en' }}">
 {% include head.html %}
-<body{% if show_rail %} class="has-rail"{% endif %}>
+<body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -54,9 +49,6 @@
     <main id="main" tabindex="-1">
       {{ content }}
     </main>
-    {%- if show_rail %}
-    {% include art-rail.html placement="side" %}
-    {%- endif %}
   </div>
 
   {% include footer.html %}

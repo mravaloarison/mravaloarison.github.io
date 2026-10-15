@@ -1,6 +1,5 @@
 ---
 layout: default
-art_rail: true
 title: Maminiaina "Mami" Ravaloarison — Software Engineer
 description: Maminiaina "Mami" Ravaloarison is a Software Engineer from Madagascar, currently a Junior Data Analyst in New York. Experience, education, awards, and projects.
 homepage: true
@@ -26,8 +25,6 @@ seo:
 {% include callout.html label="Looking for" text=looking_for %}
 
 ## Bio
-
-{% include art-rail.html placement="inline" %}
 
 My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
 
