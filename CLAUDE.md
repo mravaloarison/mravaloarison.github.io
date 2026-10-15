@@ -381,7 +381,25 @@ and posts rank on their own.
 ### Plugins
 
 `jekyll-seo-tag`, `jekyll-sitemap`, `jekyll-feed`, `jekyll-redirect-from`.
-Add `{% seo %}` to the head include.
+`{% seo %}` is in the head include, with its JSON-LD stripped (see below).
+
+Plus the site's own plugins in `_plugins/` (fine, since it builds with
+GitHub Actions — `.github/workflows/pages.yml`, Pages source "GitHub Actions"):
+
+- `structured_data.rb` — the `{% structured_data %}` tag in `head.html`:
+  one JSON-LD `@graph` per page. The only JSON-LD on the site besides
+  `breadcrumb.html`'s BreadcrumbList — don't add a second one.
+- `sitemap_and_llms.rb` — writes `/sitemap.xml` (with an image entry for
+  every screenshot, artwork and About photo; replaces jekyll-sitemap's, which
+  then skips itself), `/llms.txt` and `/llms-full.txt` (everything on the
+  site as plain Markdown for AI assistants, built from the raw content).
+- `content_check.rb` — the build-time check from linking rule 8.
+- `seo_helpers.rb` — shared helpers.
+
+All of it is generated from existing content, so new projects, posts, art
+and photos are picked up with no extra work. Facts that aren't visible on the
+page (full/given/family name, other names, job titles, employer, location,
+country, extra topics) live under `profile:` in `_data/about.yml`.
 
 ### `_config.yml`
 
@@ -416,6 +434,10 @@ lang: en-US
 
 ### Structured data (JSON-LD)
 
+Implemented in `_plugins/structured_data.rb`. Every page carries the full
+`Person` (fixed `@id` `/#person`) and the `WebSite`, then its own node, all
+pointing back to that `@id`:
+
 Emit per page type:
 
 - About → `Person` with `name: "Maminiaina Ravaloarison"`,
@@ -437,7 +459,12 @@ done.
 - `sitemap.xml` generated and referenced from `robots.txt`, including every
   category, medium, and tag page.
 - `robots.txt` at root, allowing everything, pointing at the sitemap.
-- RSS feed at `/feed.xml` for the blog.
+- RSS feed at `/feed.xml` for the blog, `/feed/projects.xml` for projects.
+- `robots.txt` names the AI crawlers (GPTBot, ClaudeBot, PerplexityBot,
+  Google-Extended, …) as allowed, and points at `/llms.txt`.
+- Every page: `<meta name="robots">` with `max-image-preview:large` (or
+  `noindex` on the 404 and empty Arts pages), `og:image:alt`, `rel="me"`
+  links to the profiles, and a link to `/llms.txt`.
 - A real `404.html`.
 - Leave a placeholder comment in the head include for the Google Search
   Console verification meta tag.

@@ -16,6 +16,26 @@
 headline: >-
   Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way.
 
+# Facts for search engines and AI assistants. Not shown on the page as-is:
+# they go into the hidden structured data (JSON-LD) and /llms.txt, which is
+# what Google and tools like ChatGPT, Claude or Perplexity read to answer
+# "who is Mami Ravaloarison?". Keep them true and up to date.
+profile:
+  full_name: Maminiaina Ravaloarison
+  given_name: Maminiaina
+  family_name: Ravaloarison
+  also_known_as: [Mami Ravaloarison, Mami, mravaloarison]
+  one_liner: Malagasy software engineer and data analyst in New York, Monroe University graduate and 12-time hackathon winner.
+  job_titles: [Software Engineer, Junior Data Analyst]
+  works_for:
+    name: Monroe University
+    url: https://www.monroeu.edu/
+    department: Office of Academic Records, Assessment, and Planning
+  home_location: New York, USA
+  from_country: Madagascar
+  # Extra topics you know, on top of every technology listed on your projects.
+  knows_about: [Software Engineering, iOS Development, Web Development, Data Analysis, Power BI, Hackathons, Drawing]
+
 # The "Looking for" box. Delete the text (leave `looking_for:` empty) to hide it.
 looking_for: >-
   Graduate programs and scholarships. If you know of one that might be a

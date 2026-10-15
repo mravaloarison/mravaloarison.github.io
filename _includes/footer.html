@@ -6,7 +6,7 @@
     {% if link contains "github.com" %}{% assign label = "GitHub" %}{% endif %}
     {% if link contains "linkedin.com" %}{% assign label = "LinkedIn" %}{% endif %}
     {% if link contains "devpost.com" %}{% assign label = "Devpost" %}{% endif %}
-    <li><a href="{{ link }}" target="_blank" rel="noopener">{{ label }}</a></li>
+    <li><a href="{{ link }}" target="_blank" rel="me noopener">{{ label }}</a></li>
     {% endfor %}
     <li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li>
   </ul>

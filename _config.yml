@@ -21,6 +21,11 @@ social:
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
+feed:
+  # /feed.xml for the blog, plus /feed/projects.xml so new projects get picked up too.
+  collections:
+    - projects
+
 plugins:
   - jekyll-redirect-from
   - jekyll-seo-tag

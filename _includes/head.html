@@ -21,20 +21,41 @@
   <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
   <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
-  {%- comment -%} Keep empty Arts pages out of search until there's art to show. {%- endcomment -%}
+  {%- comment -%}
+    Robots: empty Arts pages and the 404 stay out of search; everything else
+    is indexable, with large image previews and full-length snippets allowed.
+  {%- endcomment -%}
+  {%- assign robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" -%}
+  {%- if page.url == "/404.html" -%}{%- assign robots = "noindex" -%}{%- endif -%}
   {%- if page.url contains '/arts/' and page.collection != "arts" -%}
     {%- if page.medium_name -%}
       {%- assign arts_items = site.arts | where: "medium", page.medium_name -%}
     {%- else -%}
       {%- assign arts_items = site.arts -%}
     {%- endif -%}
-    {%- if arts_items.size == 0 %}
-  <meta name="robots" content="noindex">
-    {%- endif -%}
+    {%- if arts_items.size == 0 -%}{%- assign robots = "noindex" -%}{%- endif -%}
   {%- endif %}
+  <meta name="robots" content="{{ robots }}">
 
-  {% seo title=false %}
+  {%- comment -%}
+    jekyll-seo-tag writes the title/description/canonical/Open Graph tags.
+    Its own JSON-LD is dropped here: {% structured_data %} (in _plugins/)
+    writes a fuller one that ties every page back to the same Person.
+  {%- endcomment -%}
+  {%- capture seo_tags -%}{% seo title=false %}{%- endcapture -%}
+  {{ seo_tags | split: '<script type="application/ld+json">' | first }}
+  <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | default: site.title | escape }}">
+  <meta name="twitter:image:alt" content="{{ page.image_alt | default: page.title | default: site.title | escape }}">
   {% feed_meta %}
-  {% include json-ld.html %}
-  <!-- Google Search Console verification meta tag goes here -->
+  <link rel="alternate" type="text/markdown" title="Summary of this site for AI assistants" href="{{ '/llms.txt' | relative_url }}">
+  {%- for link in site.social.links %}
+  <link rel="me" href="{{ link }}">
+  {%- endfor %}
+  {% structured_data %}
+  {%- comment -%}
+    Google Search Console: paste the verification tag Google gives you here,
+    e.g. <meta name="google-site-verification" content="...">. Same for Bing
+    Webmaster Tools (<meta name="msvalidate.01" content="...">), which also
+    feeds Copilot and ChatGPT search.
+  {%- endcomment %}
 </head>

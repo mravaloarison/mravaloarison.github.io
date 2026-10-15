@@ -21,7 +21,7 @@ seo:
   {% if link contains "github.com" %}{% assign label = "GitHub" %}{% endif %}
   {% if link contains "linkedin.com" %}{% assign label = "LinkedIn" %}{% endif %}
   {% if link contains "devpost.com" %}{% assign label = "Devpost" %}{% endif %}
-  <a href="{{ link }}" target="_blank" rel="noopener">{{ label }}</a>
+  <a href="{{ link }}" target="_blank" rel="me noopener">{{ label }}</a>
   {% endfor %}
   <a href="{{ site.data.about.contact.resume | relative_url }}" target="_blank" rel="noopener">Resume</a>
 </div>
