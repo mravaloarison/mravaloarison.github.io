@@ -1,24 +1,36 @@
 {%- comment -%}
-  "Lately drawing": the two newest Procreate pieces from _arts/, stacked, at
-  their own proportions. Included right after the About page's Bio heading:
-  from 1100px it floats into the space to the right of the text, level with
-  the Bio; below that the two sit side by side under the heading.
+  "Lately drawing": the three newest Procreate pieces from _arts/ as a
+  sideways-scrolling strip, one drawing at a time at the full column width.
+  Scroll-snap does the scrolling (works without JS); main.js adds the
+  previous/next buttons. Included right after the About page's Bio heading:
+  from 1100px it sits fixed and vertically centered in the right half of
+  the page; below that it's inline under the heading.
   Renders nothing until a Procreate piece exists.
 {%- endcomment -%}
 {%- assign rail_items = site.arts | where: "medium", "Procreate" | sort: "date" | reverse -%}
 {%- if rail_items.size > 0 -%}
 <aside class="art-rail" aria-labelledby="art-rail-label">
-  <p class="eyebrow" id="art-rail-label">Lately drawing</p>
-  <ul class="art-rail-list">
-    {%- for art in rail_items limit: 2 %}
-    <li>
-      <a href="{{ art.url | relative_url }}">
-        {% include picture.html src=art.image alt=art.image_alt sizes="(min-width: 1100px) 280px, (min-width: 600px) 30vw, 45vw" %}
-        <span class="art-rail-title">{{ art.title }}</span>
-      </a>
-    </li>
-    {%- endfor %}
-  </ul>
+  <div class="art-rail-head">
+    <p class="eyebrow" id="art-rail-label">Lately drawing</p>
+    {%- if rail_items.size > 1 %}
+    <div class="art-rail-controls" hidden>
+      <button type="button" class="art-rail-btn" data-dir="-1" aria-label="Previous drawing"><span aria-hidden="true">←</span></button>
+      <button type="button" class="art-rail-btn" data-dir="1" aria-label="Next drawing"><span aria-hidden="true">→</span></button>
+    </div>
+    {%- endif %}
+  </div>
+  <div class="art-carousel" tabindex="0" aria-label="Lately drawing, scroll sideways for more">
+    <ul class="art-rail-list">
+      {%- for art in rail_items limit: 3 %}
+      <li>
+        <a href="{{ art.url | relative_url }}">
+          {% include picture.html src=art.image alt=art.image_alt sizes="(min-width: 1100px) 680px, (min-width: 600px) 680px, 100vw" %}
+          <span class="art-rail-title">{{ art.title }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
   <a class="art-rail-more" href="{{ '/arts/' | relative_url }}">All arts</a>
 </aside>
 {%- endif -%}

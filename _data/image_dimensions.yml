@@ -103,6 +103,14 @@
       w: 800
     - src: /assets/images/SlayTheInterview-1600w.webp
       w: 1600
+/assets/images/arts/placeholder-forest.png:
+  width: 1200
+  height: 1500
+  webp:
+    - src: /assets/images/arts/placeholder-forest-800w.webp
+      w: 800
+    - src: /assets/images/arts/placeholder-forest-1200w.webp
+      w: 1200
 /assets/images/arts/placeholder-ocean.png:
   width: 1200
   height: 1500

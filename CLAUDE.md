@@ -26,7 +26,7 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
+  (the theme toggle, the phone menu, the drawings strip's arrow buttons). The one exception is the inline theme snippet in
   `<head>`, which must run before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -104,12 +104,10 @@ cards and images, pills fully rounded.
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
 - Header: no site name or logo. The nav links (About · Projects · Arts ·
-  Blog) sit on the left, where the text column starts, and the theme toggle
-  on the right, at the text column's right edge (on About, where the frame
-  is wider for the drawings, the header stops at the text's edge so the
-  toggle never sits over the drawings). The current section's link is bold
-  and carries `aria-current`. The Arts link only appears once `_arts/` has a
-  piece.
+  Blog) on the left and the theme toggle on the right, spanning the same
+  centered 680px column on every page — including About — so it never
+  moves between pages. The current section's link is bold and carries
+  `aria-current`. The Arts link only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
   a small menu of every project type (from `_data/categories.yml`; labels
   only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
@@ -126,19 +124,22 @@ cards and images, pills fully rounded.
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
   only enabled after a click (`.is-switching`) so it never plays on load.
-- **Drawings beside the Bio** (`art-rail.html`, "Lately drawing"): the two
-  newest Procreate pieces from `_arts/`, stacked, at their own proportions,
-  included right after the About page's `## Bio` heading. Every page uses
-  the same centered 680px column; from 1100px the About page
-  (`art_rail: true` → `body.has-rail`) is twice that: the text column plus
-  an equal drawings column (`--rail-width`, 680px, narrower only when the
-  screen can't fit both), centered as a pair. The drawings are `position: fixed` in that
-  column, vertically centered in the window, and sized
-  (`max-height: (100vh - 260px) / 2` each) so both are always fully on
-  screen while scrolling. The footer widens to match; the header keeps
-  the text column's width (see Header). Below 1100px
-  the two sit side by side under the Bio heading, in the normal flow.
-  Hidden — single column — until `_arts/` has a Procreate piece.
+- **Drawings beside the Bio** (`art-rail.html`, "Lately drawing"): the three
+  newest Procreate pieces from `_arts/` as a sideways-scrolling strip — one
+  drawing at a time at the full column width (very tall pieces fit inside
+  the window height with `object-fit: contain`). CSS scroll-snap with smooth
+  scrolling does the work, so it swipes/scrolls without JS; `main.js` adds
+  ←/→ buttons (hidden until JS runs, disabled at the ends). Where
+  scroll-driven animations are supported, each drawing scales up as it
+  reaches the middle (off under reduced motion). Included right after the
+  About page's `## Bio` heading. Every page uses the same centered 680px
+  column; from 1100px the About page (`art_rail: true` →
+  `body.has-rail`) is twice that — text column plus an equal drawings
+  column (`--rail-width`, 680px, narrower only when the screen can't fit
+  both), centered as a pair, with the footer widening to match. The strip
+  is `position: fixed` in its column, vertically centered, so it's always
+  on screen. Below 1100px it's inline under the Bio heading. Hidden —
+  single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -177,7 +178,7 @@ cards and images, pills fully rounded.
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
-- `art-rail.html` — the two newest Procreate drawings beside the Bio (see Layout)
+- `art-rail.html` — the three newest Procreate drawings as a strip beside the Bio (see Layout)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 
@@ -241,12 +242,12 @@ See Also → prev/next.
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
 
-**Two placeholder pieces are live** (`_arts/placeholder-sunset.md`,
-`_arts/placeholder-ocean.md`, generated abstract images in
+**Three placeholder pieces are live** (`_arts/placeholder-sunset.md`,
+`_arts/placeholder-ocean.md`, `_arts/placeholder-forest.md`, generated abstract images in
 `assets/images/arts/placeholder-*`) so the drawings beside the Bio can be
 seen. They carry `placeholder: true` (→ `noindex`, and Arts index/medium
 pages stay `noindex` while only placeholders exist) and `sitemap: false`.
-Delete both files and their images once real pieces are added.
+Delete them and their images once real pieces are added.
 
 Built and waiting for the first piece. Until `_arts/` has at least one item,
 the Arts nav link and the "drawing" link in the About bio stay hidden, and
@@ -455,8 +456,8 @@ done.
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the theme toggle
-  and the phone menu (deferred), plus a tiny inline head script that applies
+  delivers, content or navigation state. The only JS is the theme toggle,
+  the phone menu and the drawings strip's buttons (deferred), plus a tiny inline head script that applies
   the saved theme and the `js` class before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
