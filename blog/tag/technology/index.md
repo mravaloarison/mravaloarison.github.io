@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Posts tagged: technology"
-description: Blog posts tagged technology — Mami Ravaloarison's journal entries on software, AI, and building things.
+description: Blog posts tagged technology — Maminiaina Ravaloarison's journal entries on software, AI, and building things.
 tag: technology
 ---
 

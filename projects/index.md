@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Projects
-description: Work, personal builds, and hackathon projects from Mami Ravaloarison, spanning iOS, web, data, and machine learning.
+description: Work, personal builds, and hackathon projects from Maminiaina Ravaloarison, spanning iOS, web, data, and machine learning.
 ---
 
 <p class="eyebrow">Projects</p>

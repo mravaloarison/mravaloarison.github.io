@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Traditional Drawings
-description: Traditional drawings by Mami Ravaloarison, made by hand on paper, newest first.
+description: Traditional drawings by Maminiaina Ravaloarison, made by hand on paper, newest first.
 nav_slug: traditional
 medium_name: Traditional
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Procreate Drawings
-description: Digital drawings Mami Ravaloarison has made in Procreate, newest first.
+description: Digital drawings Maminiaina Ravaloarison has made in Procreate, newest first.
 nav_slug: procreate
 medium_name: Procreate
 ---

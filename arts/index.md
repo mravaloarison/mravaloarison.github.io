@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Arts
-description: Drawings by Mami Ravaloarison, from digital pieces made in Procreate to traditional work and sketchbook pages.
+description: Drawings by Maminiaina Ravaloarison, from digital pieces made in Procreate to traditional work and sketchbook pages.
 ---
 
 <p class="eyebrow">Arts</p>

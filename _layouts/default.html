@@ -32,7 +32,13 @@
         <span class="sr-only">Menu</span>
         <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="site-brand" href="{{ '/' | relative_url }}">Mami Ravaloarison</a>
+      <a class="site-brand" href="{{ '/' | relative_url }}">
+        <svg class="site-logo" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true" focusable="false">
+          <rect width="64" height="64" rx="14" fill="currentColor"/>
+          <path d="M18 45V19l14 17 14-17v26" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="sr-only">{{ site.author.name }}, home</span>
+      </a>
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
           <li><a href="{{ '/' | relative_url }}"{% if section == "about" %} aria-current="{% if page.url == '/' %}page{% else %}true{% endif %}"{% endif %}>About</a></li>

@@ -8,7 +8,7 @@ seo:
   type: Person
 ---
 
-{% include page-header.html eyebrow="About" title="Mami Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
+{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>

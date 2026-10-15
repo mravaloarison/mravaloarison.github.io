@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Hackathon Projects
-description: Award-winning hackathon projects Mami Ravaloarison has built across East Coast universities, including Princeton, Yale, and Stony Brook.
+description: Award-winning hackathon projects Maminiaina Ravaloarison has built across East Coast universities, including Princeton, Yale, and Stony Brook.
 nav_slug: hackathons
 ---
 

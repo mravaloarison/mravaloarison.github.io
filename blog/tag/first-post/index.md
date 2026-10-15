@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Posts tagged: first-post"
-description: Blog posts tagged first-post — Mami Ravaloarison's journal entries introducing the blog itself.
+description: Blog posts tagged first-post — Maminiaina Ravaloarison's journal entries introducing the blog itself.
 tag: first-post
 ---
 

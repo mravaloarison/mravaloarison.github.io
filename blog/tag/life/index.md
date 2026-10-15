@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Posts tagged: life"
-description: Blog posts tagged life — Mami Ravaloarison's journal entries on life outside of software.
+description: Blog posts tagged life — Maminiaina Ravaloarison's journal entries on life outside of software.
 tag: life
 ---
 

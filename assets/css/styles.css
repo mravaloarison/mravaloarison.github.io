@@ -325,6 +325,11 @@ blockquote {
   top: var(--space-16);
 }
 
+/* Jumping to a section from the table of contents leaves room above it */
+[id] {
+  scroll-margin-top: var(--space-48);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -365,12 +370,28 @@ main,
   display: none;
 }
 
+/* Logo: the M monogram, drawn in ink so it follows the theme */
 .site-brand {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text);
+  border-radius: 10px;
   text-decoration: none;
+}
+
+.site-logo {
+  display: block;
+  width: 36px;
+  height: 36px;
+  transition: transform var(--transition);
+}
+
+.site-logo path {
+  stroke: var(--bg);
+}
+
+.site-brand:hover .site-logo {
+  transform: rotate(-6deg);
 }
 
 .site-brand:hover {
@@ -1404,8 +1425,9 @@ figcaption {
     padding-block: var(--space-16) var(--space-8);
   }
 
-  .site-brand {
-    font-size: 20px;
+  .site-logo {
+    width: 32px;
+    height: 32px;
   }
 
   /* Without JS the links wrap onto their own line under the name */

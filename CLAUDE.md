@@ -7,15 +7,17 @@ before making changes and follow it over your own defaults.
 ## Who this is for
 
 - **Full name:** Maminiaina Ravaloarison
-- **Display name:** Mami Ravaloarison
+- **Display name:** Maminiaina Ravaloarison (goes by Mami)
 - **Role:** Software Engineer (currently Junior Data Analyst, Monroe University)
 - **Based:** New York, USA. From Madagascar.
 - **Links:** github.com/mravaloarison · linkedin.com/in/mravaloarison · devpost.com/mrava
 - **Email:** mravaloarison@gmail.com
 
-Both name forms matter for search. Use "Mami Ravaloarison" in visible UI, and
-carry "Maminiaina Ravaloarison" in structured data, `<title>` on the homepage,
-and the About page body so both spellings are indexable.
+Use the full name, **Maminiaina Ravaloarison**, everywhere visible: the
+About h1, `<title>`s (via `site.title`), page descriptions, the footer.
+"Mami" appears only where the bio says "I go by Mami" and as
+`alternateName: "Mami Ravaloarison"` in the Person JSON-LD, so the short
+form is still indexable.
 
 ## Stack and constraints
 
@@ -49,7 +51,7 @@ Fonts are self-hosted in `assets/fonts/` (`font-display: swap`), and only
 what's used is shipped:
 
 - **Newsreader** (`--font-serif`, variable weight, upright only) — h1,
-  h2, h3, the site name, post titles in lists, card titles, and the
+  h2, h3, post titles in lists, card titles, and the
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
@@ -100,7 +102,9 @@ cards and images, pills fully rounded.
 
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
-- Header: "Mami Ravaloarison" in Newsreader on the left; plain text links
+- Header: the M monogram logo on the left (inline SVG drawn in `--text`
+  with the M in `--bg`, so it follows the theme; same mark as
+  `favicon.svg`; the link's accessible name is the full name); plain text links
   on the right (About · Projects · Arts · Blog) and the theme toggle. The
   current section's link is bold and carries `aria-current`. The Arts link
   only appears once `_arts/` has a piece.
@@ -113,7 +117,9 @@ cards and images, pills fully rounded.
   built at build time from the page's h2s that have an id; shown on pages
   with two or more (opt out with `toc: false`). None on phones; 768–1199px
   a collapsible "On this page" box before the first h2; ≥1200px a sticky
-  200px list in the left margin, with the column still centered.
+  200px list in the left margin, with the column still centered. Every
+  `[id]` has `scroll-margin-top: 48px` so a jumped-to heading isn't flush
+  against the top of the window.
 - Phones (≤600px): burger · name · theme toggle spread across the header
   (`justify-content: space-between`). The burger morphs into an × and slides
   the links in from the left as a drawer (360ms,
@@ -359,7 +365,7 @@ Add `{% seo %}` to the head include.
 ### `_config.yml`
 
 ```yaml
-title: Mami Ravaloarison
+title: Maminiaina Ravaloarison
 tagline: Software Engineer
 description: >-
     Maminiaina "Mami" Ravaloarison — Software Engineer in New York.
@@ -369,7 +375,7 @@ author:
     name: Maminiaina Ravaloarison
     email: mravaloarison@gmail.com
 social:
-    name: Mami Ravaloarison
+    name: Maminiaina Ravaloarison
     links:
         - https://github.com/mravaloarison
         - https://www.linkedin.com/in/mravaloarison/

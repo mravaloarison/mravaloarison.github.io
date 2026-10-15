@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Sketchbook
-description: Sketchbook pages and quick studies by Mami Ravaloarison, newest first.
+description: Sketchbook pages and quick studies by Maminiaina Ravaloarison, newest first.
 nav_slug: sketchbook
 medium_name: Sketchbook
 ---

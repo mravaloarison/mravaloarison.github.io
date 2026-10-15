@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "2026"
-description: Mami Ravaloarison's journal entries from 2026, in reverse-chronological order.
+description: Maminiaina Ravaloarison's journal entries from 2026, in reverse-chronological order.
 nav_slug: "2026"
 ---
 
