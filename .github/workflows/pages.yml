@@ -27,8 +27,6 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      - id: pages
-        uses: actions/configure-pages@v5
       - name: Build
         run: bundle exec jekyll build
         env:
