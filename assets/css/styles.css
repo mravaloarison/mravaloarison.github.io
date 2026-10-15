@@ -45,8 +45,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("../fonts/noto-color-emoji-theme.woff2") format("woff2") tech(color-COLRv1);
-  unicode-range: U+2600, U+FE0F, U+1F319;
+  src: url("../fonts/noto-color-emoji-subset.woff2") format("woff2") tech(color-COLRv1);
+  unicode-range: U+2600, U+FE0F, U+1F319, U+1F331, U+1F3C6, U+1F4BC;
 }
 
 /* Tokens */
@@ -370,28 +370,12 @@ main,
   display: none;
 }
 
-/* Logo: the M monogram, drawn in ink so it follows the theme */
 .site-brand {
-  display: inline-flex;
-  align-items: center;
-  color: var(--text);
-  border-radius: 10px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   text-decoration: none;
-}
-
-.site-logo {
-  display: block;
-  width: 36px;
-  height: 36px;
-  transition: transform var(--transition);
-}
-
-.site-logo path {
-  stroke: var(--bg);
-}
-
-.site-brand:hover .site-logo {
-  transform: rotate(-6deg);
 }
 
 .site-brand:hover {
@@ -450,10 +434,11 @@ main,
   display: none;
 }
 
-.nav-count {
-  color: var(--text-secondary);
+.nav-emoji {
+  font-family: var(--font-emoji);
+  font-size: 18px;
+  line-height: 1;
   font-weight: 400;
-  font-size: 0.85em;
 }
 
 @media (min-width: 601px) {
@@ -502,8 +487,8 @@ main,
 
   .site-nav .nav-sub a {
     display: flex;
-    justify-content: space-between;
-    gap: var(--space-16);
+    align-items: center;
+    gap: var(--space-12);
     padding: var(--space-8) var(--space-12);
     border-radius: var(--radius-sm);
     white-space: nowrap;
@@ -1336,6 +1321,18 @@ figcaption {
   color: var(--accent);
 }
 
+/* Section you're reading right now (set by main.js as you scroll) */
+.toc a[aria-current] {
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: inset 2px 0 0 var(--accent);
+  padding-left: var(--space-12);
+}
+
+.toc a {
+  transition: color var(--transition), padding-left var(--transition);
+}
+
 .toc-label,
 .toc summary {
   font-size: 14px;
@@ -1425,9 +1422,8 @@ figcaption {
     padding-block: var(--space-16) var(--space-8);
   }
 
-  .site-logo {
-    width: 32px;
-    height: 32px;
+  .site-brand {
+    font-size: 20px;
   }
 
   /* Without JS the links wrap onto their own line under the name */
@@ -1638,6 +1634,9 @@ figcaption {
   }
 
   .js .site-nav .nav-sub a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
     font-family: var(--font-sans);
     font-size: 18px;
     color: var(--text-secondary);

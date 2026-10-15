@@ -8,7 +8,7 @@ seo:
   type: Person
 ---
 
-{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
+{% include page-header.html title="Maminiaina Ravaloarison" abstract="Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way." %}
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
@@ -32,7 +32,7 @@ The two projects I'm working on right now. Both are still in progress.
 {% assign latest = site.projects | where: "featured", true | sort: "date" | reverse %}
 {% include card-grid.html items=latest %}
 
-## Overview
+## Bio
 
 My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
 

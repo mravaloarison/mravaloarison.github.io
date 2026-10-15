@@ -32,13 +32,7 @@
         <span class="sr-only">Menu</span>
         <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
-      <a class="site-brand" href="{{ '/' | relative_url }}">
-        <svg class="site-logo" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true" focusable="false">
-          <rect width="64" height="64" rx="14" fill="currentColor"/>
-          <path d="M18 45V19l14 17 14-17v26" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="sr-only">{{ site.author.name }}, home</span>
-      </a>
+      <a class="site-brand" href="{{ '/' | relative_url }}">@mami_portfolio</a>
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
           <li><a href="{{ '/' | relative_url }}"{% if section == "about" %} aria-current="{% if page.url == '/' %}page{% else %}true{% endif %}"{% endif %}>About</a></li>
@@ -47,8 +41,7 @@
             <ul class="nav-sub" aria-label="Project types">
               {%- for cat in site.data.categories.projects %}
               {%- assign cat_url = "/projects/category/" | append: cat.slug | append: "/" %}
-              {%- assign cat_count = site.projects | where: "category", cat.name | size %}
-              <li><a href="{{ cat_url | relative_url }}"{% if page.url == cat_url %} aria-current="page"{% elsif page.collection == "projects" and page.category == cat.name %} aria-current="true"{% endif %}>{{ cat.label }} <span class="nav-count">{{ cat_count }}</span></a></li>
+              <li><a href="{{ cat_url | relative_url }}"{% if page.url == cat_url %} aria-current="page"{% elsif page.collection == "projects" and page.category == cat.name %} aria-current="true"{% endif %}><span class="nav-emoji" aria-hidden="true">{{ cat.emoji }}</span>{{ cat.label }}</a></li>
               {%- endfor %}
             </ul>
           </li>

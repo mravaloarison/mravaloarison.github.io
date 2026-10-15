@@ -26,7 +26,7 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
+  (the theme toggle, the phone menu, the table-of-contents highlight). The one exception is the inline theme snippet in
   `<head>`, which must run before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -55,8 +55,11 @@ what's used is shipped:
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
-- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 and ☀️ for the theme
-  toggle.
+- **Noto Color Emoji** (`--font-emoji`) — one 4 KB COLRv1 subset
+  (`noto-color-emoji-subset.woff2`) with just 🌙 ☀️ for the theme toggle and
+  💼 🌱 🏆 for the Projects dropdown. Adding an emoji anywhere means
+  re-fetching the subset from Google Fonts with `text=` set to all of them
+  and updating `unicode-range`.
 
 Newsreader latin and Nunito latin are preloaded from the head include.
 
@@ -102,15 +105,15 @@ cards and images, pills fully rounded.
 
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
-- Header: the M monogram logo on the left (inline SVG drawn in `--text`
-  with the M in `--bg`, so it follows the theme; same mark as
-  `favicon.svg`; the link's accessible name is the full name); plain text links
+- Header: "@mami_portfolio" in Newsreader 600 on the left, linking home;
+  plain text links
   on the right (About · Projects · Arts · Blog) and the theme toggle. The
   current section's link is bold and carries `aria-current`. The Arts link
   only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
-  a small menu of every project type with counts (from
-  `_data/categories.yml`), CSS only (`:hover` / `:focus-within`).
+  a small menu of every project type, each with its emoji (`emoji` in
+  `_data/categories.yml`: 💼 Work, 🌱 Personal, 🏆 Hackathons; 18px Noto
+  Color Emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
 - **Table of contents** (`toc-items.html`, rendered in `default.html`):
@@ -119,7 +122,10 @@ cards and images, pills fully rounded.
   a collapsible "On this page" box before the first h2; ≥1200px a sticky
   200px list in the left margin, with the column still centered. Every
   `[id]` has `scroll-margin-top: 48px` so a jumped-to heading isn't flush
-  against the top of the window.
+  against the top of the window. As you scroll, `main.js` marks the section
+  you're reading (the last h2 above 30% of the viewport) with
+  `aria-current="location"` in both forms of the list; bold with an accent
+  rule on its left.
 - Phones (≤600px): burger · name · theme toggle spread across the header
   (`justify-content: space-between`). The burger morphs into an × and slides
   the links in from the left as a drawer (360ms,
@@ -138,7 +144,7 @@ cards and images, pills fully rounded.
   smaller screens. Hidden — layout stays
   single column — until `_arts/` has a piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
-  the end of the About Overview. Listed in `_data/photos.yml`, files in
+  the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
@@ -205,9 +211,9 @@ detail pages.
 ### About (`/`)
 
 A long-form page, not a landing page. Structure it as:
-Overview (the bio) → Topics: Experience, Education, Awards, Certificates,
+Bio (the h2 is "Bio", not "Overview"; no eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,
 Languages, Interests. A "Looking for" callout (currently: graduate programs
-and scholarships) sits between the profile links and the Overview, and the
+and scholarships) sits between the profile links and the Bio, and the
 hackathon award lists every project with an `award` in its front matter. A "Latest work"
 card grid shows projects marked `featured: true` (MyTime and DogDuckGo). Existing copy is good — keep
 its voice, don't corporate-ize it.
@@ -444,8 +450,8 @@ done.
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the theme toggle
-  and the phone menu (deferred), plus a tiny inline head script that applies
+  delivers, content or navigation state. The only JS is the theme toggle,
+  the phone menu and the table-of-contents highlight (deferred), plus a tiny inline head script that applies
   the saved theme and the `js` class before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
