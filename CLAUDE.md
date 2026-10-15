@@ -67,22 +67,27 @@ italic font file is shipped.
 
 ### Color
 
-Warm paper and ink. Tokens live on `:root` with a dark set under
-`prefers-color-scheme: dark` (guarded by `:not([data-theme="light"])`) and
-again under `[data-theme="dark"]`:
+**Dark is the default** for every visitor, whatever their system setting.
+Dark tokens live on `:root`; the light set lives under
+`:root[data-theme="light"]` and only applies when chosen with the toggle
+(saved in `localStorage`, applied by the inline head script before first
+paint). There is no `prefers-color-scheme` rule. The accent is **yellow**:
+bright in dark mode, a deep gold in light mode because bright yellow is
+unreadable on paper.
 
-| Token              | Light     | Dark      |
-| ------------------ | --------- | --------- |
-| `--bg`             | `#fbf8f3` | `#171513` |
-| `--surface`        | `#f3eee5` | `#211e1b` |
-| `--text`           | `#24211d` | `#ede8e0` |
-| `--text-secondary` | `#635c52` | `#a89f93` |
-| `--accent`         | `#a64b22` | `#e9926a` |
-| `--border`         | `#e3dccf` | `#312d29` |
+| Token              | Dark (default) | Light     |
+| ------------------ | -------------- | --------- |
+| `--bg`             | `#171513`      | `#fbf8f3` |
+| `--surface`        | `#211e1b`      | `#f3eee5` |
+| `--text`           | `#ede8e0`      | `#24211d` |
+| `--text-secondary` | `#a89f93`      | `#635c52` |
+| `--accent`         | `#f5c542`      | `#8a6400` |
+| `--border`         | `#312d29`      | `#e3dccf` |
 
-All text pairs are at least 4.5:1. Links are ink-colored with a soft accent
-underline that turns fully accent on hover. Use the accent sparingly:
-links, the callout rule, award pills.
+All text pairs are at least 4.5:1 (accent: 11.2:1 dark, 5.1:1 light, 4.7:1
+on `--surface`). Links are ink-colored with a soft accent underline that
+turns fully accent on hover. Use the accent sparingly: links, the callout
+rule, award pills.
 
 ### Type
 
@@ -119,7 +124,8 @@ cards and images, pills fully rounded.
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
   inside while open. This only applies when `html.js` is set by the head
   script — with JS off the links stay inline on the left, wrapping if needed.
-- The theme toggle has no box: 🌙 and ☀️ sit on a "day/night wheel"
+- The theme toggle has no box: ☀️ shows in dark mode (the default), 🌙 in
+  light mode. They sit on a "day/night wheel"
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
   only enabled after a click (`.is-switching`) so it never plays on load.
@@ -192,6 +198,13 @@ detail pages.
 ```
 
 ### About (`/`)
+
+**All About text lives in `_data/about.yml`** — the headline under the name,
+the "Looking for" box, the Bio (Markdown), and every resume section
+(experience, education, awards, certificates, languages, interests).
+`index.md` is layout only. In the YAML, `%email%` becomes the site email
+and `%drawing%` becomes the Arts link once art exists. Edit content there,
+never in `index.md`.
 
 A long-form page, not a landing page. Structure it as:
 Bio (the h2 is "Bio", not "Overview"; "About" eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,

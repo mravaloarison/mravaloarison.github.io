@@ -1,6 +1,48 @@
+# ─────────────────────────────────────────────────────────────────────────
+# Everything written on the About page lives in this file. Edit the text
+# here; index.md only lays it out. Save, and the site rebuilds on push.
+#
+# Tips
+# - `looking_for` and `bio` are Markdown: blank line = new paragraph,
+#   [text](https://link) = link. `headline` is plain text, one paragraph. Add {:target="_blank" rel="noopener"}
+#   after a link to open it in a new tab (as the university links do).
+# - Keep the indentation (two spaces) under `bio: |` and the other blocks.
+# - Put text in "quotes" if it contains a colon followed by a space.
+# - %email% is replaced with your email; %drawing% becomes a link to the
+#   Arts page once you've posted art (plain "drawing" until then).
+# ─────────────────────────────────────────────────────────────────────────
+
+# The line under your name, at the top of the page.
+headline: >-
+  Software engineer and data analyst in New York, from Madagascar. I build iOS apps, AI-powered web tools, and Power BI dashboards, and I've won 12 hackathons along the way.
+
+# The "Looking for" box. Delete the text (leave `looking_for:` empty) to hide it.
+looking_for: >-
+  Graduate programs and scholarships. If you know of one that might be a
+  good fit, I'd love to hear about it at [%email%](mailto:%email%).
+
+# The Bio section.
+bio: |
+  My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
+
+  Currently, I work as a Junior Data Analyst in New York City. My tasks are very broad, and I learn a lot from them. At work, I recreate legacy dashboards in Power BI, build and maintain SharePoint sites for my department, and was recently assigned to redesign my old university's library website using [SpringShare's LibGuides](https://www.springshare.com/libguides/){:target="_blank" rel="noopener"} platform as a side project.
+
+  I chose Software Engineer because building software makes me feel like I am a magician doing a bunch of tricks behind the scenes, and then my users go "wow." I think it is fun, and I also believe that right now is a very exciting time to be a developer because of AI. It reduces a lot of development time and makes it easy to build things much faster.
+
+  As an international student, I could only work on campus, so I started going to hackathons instead to get more exposure building software, working with different teams and under deadlines, experimenting with many APIs, SDKs, and new frameworks.
+
+  At one point I was honestly obsessed with hackathons, because during my academic years I won 12 of them across different U.S. Eastern universities like [Yale](https://www.yale.edu/){:target="_blank" rel="noopener"}, [Princeton](https://www.princeton.edu/){:target="_blank" rel="noopener"}, [Stony Brook](https://www.stonybrook.edu/){:target="_blank" rel="noopener"}, and more.
+
+  Outside of tech, I used to hate reading and writing, but I recently started pushing myself to do both more often. I also try to consistently cook healthy meals and go to the gym, though I'm still working on making those habits stick. Other things I love: dogs, piano, guitar and bass, chess, video games, %drawing% (lately in Procreate), the beach, the sun, and Malibu.
+
+# ─── Resume sections below the Bio, in page order ───────────────────────
+# Each item starts with "- ". Copy an existing item to add a new one.
+
+# Link used by the "Resume" button next to your profile links.
 contact:
   resume: /assets/pdf/resume.pdf
 
+# Experience: newest first. `highlights` are the bullet points.
 experience:
   - position: Junior Data Analyst
     company: Office of Academic Records, Assessment, and Planning, Monroe University
@@ -36,6 +78,7 @@ experience:
       - Supported 50+ dorm rooms by resolving conflicts, reporting maintenance issues, and providing resources to students.
       - Planned and led 10+ events per semester while collaborating with fellow RAs and Residence Life staff to promote community engagement.
 
+# Education: newest first. `url`, `score` and `minor` are optional.
 education:
   - studyType: Bachelor of Science (Magna Cum Laude)
     area: Computer Information Systems
@@ -54,6 +97,7 @@ education:
     start_date: "2015"
     end_date: "2018"
 
+# Awards. `show_wins: true` lists every project with an `award` under it.
 awards:
   - title: 12 Hackathon wins
     awarder: Several East Coast Universities & Major League Hacking
@@ -66,6 +110,7 @@ awards:
     date: "2025"
     summary: Awarded for outstanding academic achievement, leadership, and impact.
 
+# Certificates.
 certificates:
   - name: "CS50P: Introduction to Programming with Python"
     issuer: Harvard University
@@ -74,6 +119,7 @@ certificates:
     issuer: Alliance Française Madagascar
     date: "2020"
 
+# Languages.
 languages:
   - name: Malagasy
     summary: Native speaker
@@ -82,6 +128,7 @@ languages:
   - name: French
     summary: Fluent (DELF B2 Certified)
 
+# Interests. `keywords` is one line, comma-separated.
 interests:
   - name: Applied AI & Data Systems
     keywords: Machine Learning, Deep Learning, Data Analysis, Data Visualization, Big Data, Data Engineering, MCP, RAG

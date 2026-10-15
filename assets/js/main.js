@@ -17,8 +17,8 @@
     if (!toggle) return;
 
     toggle.addEventListener("click", function () {
-      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var current = root.getAttribute("data-theme") || (prefersDark ? "dark" : "light");
+      // Dark is the default; light only when chosen.
+      var current = root.getAttribute("data-theme") || "dark";
       var next = current === "dark" ? "light" : "dark";
       // turn the day/night wheel (transitions are off until the first click)
       toggle.classList.add("is-switching");
