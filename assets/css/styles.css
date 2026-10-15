@@ -690,9 +690,13 @@ main:focus {
   font-weight: 400;
 }
 
+/* Award pill on project pages: the same gold foil as the card badge */
 .pill-award {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: #2b1d00;
+  font-weight: 700;
+  border-color: rgb(255 255 255 / 0.5);
+  background: linear-gradient(135deg, #fff1b8 0%, #f8d35e 38%, #eab53a 70%, #f7d774 100%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.7);
 }
 
 .pill-tag:hover {
@@ -993,9 +997,11 @@ main iframe {
   transform: scale(1.04);
 }
 
-/* Hackathon award, on the image's bottom-left corner. Always a dark chip
-   with light text, since it sits on screenshots, not on the page. */
+/* Hackathon award, on the image's bottom-left corner: a gold-foil chip
+   with confetti flecks. On hover a shine sweeps across it and the trophy
+   wiggles. Same in both themes, since it sits on screenshots. */
 .card-award {
+  --gold-foil: linear-gradient(135deg, #fff1b8 0%, #f8d35e 38%, #eab53a 70%, #f7d774 100%);
   position: absolute;
   left: var(--space-12);
   bottom: var(--space-12);
@@ -1005,25 +1011,85 @@ main iframe {
   gap: var(--space-8);
   max-width: calc(100% - 2 * var(--space-12));
   margin: 0;
-  padding: 6px 12px 6px 8px;
+  padding: 7px 14px 7px 9px;
+  overflow: hidden;
+  isolation: isolate;
   border-radius: var(--radius-sm);
-  background: rgb(20 18 16 / 0.82);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: #f5efe6;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  background: var(--gold-foil);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.7),
+    inset 0 -1px 0 rgb(120 80 0 / 0.25);
+  color: #2b1d00;
   font-size: 14px;
   line-height: 1.3;
 }
 
+/* confetti flecks, kept along the top and bottom edges, clear of the text */
+.card-award::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 9% 12%, #e2557a 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 27% 90%, #2f9e8f 0 1.4px, transparent 2px),
+    radial-gradient(circle at 46% 9%, #ffffff 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 63% 91%, #6c63d9 0 1.4px, transparent 2px),
+    radial-gradient(circle at 79% 10%, #e2557a 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 94% 88%, #2f9e8f 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 97% 18%, #ffffff 0 1.1px, transparent 1.7px);
+  opacity: 0.85;
+}
+
+/* shine that sweeps across on hover */
+.card-award::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% 0;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.75), transparent);
+  transform: translateX(-160%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.card-award .award-emoji {
+  font-size: 20px;
+  filter: drop-shadow(0 1px 1px rgb(120 80 0 / 0.35));
+}
+
 .card-award strong {
   display: block;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
 .card-award-where {
   display: block;
   font-size: 13px;
-  color: #d9d1c5;
+  color: #4a3500;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .card-award::after,
+  .card:focus-visible .card-award::after {
+    animation: award-shine 900ms ease-out;
+  }
+
+  .card:hover .card-award .award-emoji,
+  .card:focus-visible .card-award .award-emoji {
+    animation: trophy-wiggle 700ms ease-in-out;
+  }
+}
+
+@keyframes award-shine {
+  to { transform: translateX(380%) skewX(-18deg); }
+}
+
+@keyframes trophy-wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg) scale(1.08); }
+  50% { transform: rotate(9deg) scale(1.08); }
+  75% { transform: rotate(-5deg); }
 }
 
 .card:hover h3,

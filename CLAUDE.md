@@ -182,11 +182,14 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards. Projects with an `award` get a badge
-  on the bottom-left corner of the cover image: 🏆, the award in bold, then
-  "event · organization" (the university). Always a dark translucent chip
-  with light text (it sits on screenshots), and it doesn't zoom with the
-  image on hover. Tech shows as 22px icon + name, wrapping
+- `card-grid.html` — project cards. Projects with an `award` get a festive
+  badge on the bottom-left corner of the cover image: 🏆, the award in bold,
+  then "event · organization" (the university). Gold-foil gradient with
+  dark text (8:1+), a raised edge, and confetti flecks along its top and
+  bottom edges (kept off the text). On card hover a shine sweeps across it
+  and the trophy wiggles (off under reduced motion). Same in both themes;
+  it doesn't zoom with the image. The award pill on project pages uses
+  the same gold foil. Tech shows as 22px icon + name, wrapping
   (plain text, not links — the whole card is already a link),
   plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)
