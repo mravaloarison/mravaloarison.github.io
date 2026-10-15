@@ -1242,17 +1242,16 @@ figcaption {
   border: 1px solid var(--border);
 }
 
-/* Art rail: latest pieces beside the content on wide screens */
+/* Drawings beside the Bio (About). Phones and tablets: two side by side
+   under the Bio heading. */
 
 .art-rail {
-  max-width: calc(var(--measure) + 2 * var(--space-24));
-  margin-inline: auto;
-  padding: 0 var(--space-24) var(--space-48);
+  margin: var(--space-16) 0 var(--space-32);
 }
 
 .art-rail-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-16);
   list-style: none;
   margin: 0 0 var(--space-12);
@@ -1293,8 +1292,9 @@ figcaption {
 }
 
 @media (min-width: 1100px) {
-  /* About: text column plus a drawings column on the right; header and
-     footer widen to match so everything lines up */
+  /* About: the text column moves left to make room on the right; the
+     drawings float out of the column into that space, level with the Bio.
+     Header and footer widen to match so everything lines up. */
   .has-rail .page-frame,
   .has-rail .site-header-inner,
   .has-rail .site-footer {
@@ -1302,24 +1302,22 @@ figcaption {
   }
 
   .has-rail .page-frame {
-    display: grid;
-    grid-template-columns: minmax(0, var(--measure)) var(--rail-width);
-    gap: var(--space-48);
     margin-inline: auto;
     padding-inline: var(--space-24);
   }
 
   .has-rail main {
-    max-width: none;
+    max-width: var(--measure);
     margin: 0;
     padding-inline: 0;
   }
 
   .has-rail .art-rail {
-    align-self: start;
-    max-width: none;
-    margin: 0;
-    padding: var(--space-32) 0 0;
+    float: right;
+    clear: right;
+    width: var(--rail-width);
+    /* pulled fully out of the column, so the text keeps its full width */
+    margin: 0 calc(-1 * (var(--rail-width) + var(--space-48))) var(--space-24) 0;
   }
 
   .has-rail .art-rail-list {
@@ -1363,10 +1361,6 @@ figcaption {
 
   .abstract {
     font-size: 20px;
-  }
-
-  .art-rail {
-    padding-inline: var(--space-16);
   }
 
   .photo-grid {

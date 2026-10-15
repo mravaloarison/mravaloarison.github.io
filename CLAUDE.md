@@ -117,13 +117,15 @@ cards and images, pills fully rounded.
   pivoting below the button. Clicking turns it — the moon swings out right
   while the sun swings in from the left (450ms), and back. The transition is
   only enabled after a click (`.is-switching`) so it never plays on load.
-- **Drawings column** (`art-rail.html`, "Lately drawing"): the About page
-  (`art_rail: true`) shows the newest Procreate pieces from `_arts/`, up to
-  three, at their own proportions. From 1100px it is a 280px column
-  (`--rail-width`) to the right of the text, with header and footer
-  widening to match; below that the pieces sit in a row under the page. Not
-  sticky, so tall pieces never get cut off. Hidden — single column — until
-  `_arts/` has a Procreate piece.
+- **Drawings beside the Bio** (`art-rail.html`, "Lately drawing"): the two
+  newest Procreate pieces from `_arts/`, stacked, at their own proportions,
+  included right after the About page's `## Bio` heading. From 1100px the
+  About page (`art_rail: true` → `body.has-rail`) widens by a 280px
+  (`--rail-width`) column; the text column keeps its 680px and moves left,
+  and the drawings float out of it into that space, level with the Bio
+  (negative right margin, so the text never wraps around them). Header and
+  footer widen to match. Below 1100px the two sit side by side under the
+  heading. Hidden — single column — until `_arts/` has a Procreate piece.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -162,7 +164,7 @@ cards and images, pills fully rounded.
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the dense square grid used on Arts
-- `art-rail.html` — newest Procreate drawings beside the About page (see Layout)
+- `art-rail.html` — the two newest Procreate drawings beside the Bio (see Layout)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 

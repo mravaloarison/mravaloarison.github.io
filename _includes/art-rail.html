@@ -1,14 +1,16 @@
 {%- comment -%}
-  "Lately drawing": the newest Procreate pieces from _arts/, up to three, at
-  their own proportions. A column beside the About page from 1100px, a row
-  under it on smaller screens. Only included when the page sets
-  `art_rail: true` and at least one Procreate piece exists.
+  "Lately drawing": the two newest Procreate pieces from _arts/, stacked, at
+  their own proportions. Included right after the About page's Bio heading:
+  from 1100px it floats into the space to the right of the text, level with
+  the Bio; below that the two sit side by side under the heading.
+  Renders nothing until a Procreate piece exists.
 {%- endcomment -%}
 {%- assign rail_items = site.arts | where: "medium", "Procreate" | sort: "date" | reverse -%}
+{%- if rail_items.size > 0 -%}
 <aside class="art-rail" aria-labelledby="art-rail-label">
   <p class="eyebrow" id="art-rail-label">Lately drawing</p>
   <ul class="art-rail-list">
-    {%- for art in rail_items limit: 3 %}
+    {%- for art in rail_items limit: 2 %}
     <li>
       <a href="{{ art.url | relative_url }}">
         {% include picture.html src=art.image alt=art.image_alt sizes="(min-width: 1100px) 280px, (min-width: 600px) 30vw, 45vw" %}
@@ -19,3 +21,4 @@
   </ul>
   <a class="art-rail-more" href="{{ '/arts/' | relative_url }}">All arts</a>
 </aside>
+{%- endif -%}

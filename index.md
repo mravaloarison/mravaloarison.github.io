@@ -27,6 +27,8 @@ seo:
 
 ## Bio
 
+{% include art-rail.html %}
+
 My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
 
 Currently, I work as a Junior Data Analyst in New York City. My tasks are very broad, and I learn a lot from them. At work, I recreate legacy dashboards in Power BI, build and maintain SharePoint sites for my department, and was recently assigned to redesign my old university's library website using [SpringShare's LibGuides](https://www.springshare.com/libguides/){:target="_blank" rel="noopener"} platform as a side project.
