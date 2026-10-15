@@ -85,26 +85,15 @@ unreadable on paper.
 | `--surface`        | `#211e1b`      | `#f3eee5` |
 | `--text`           | `#ede8e0`      | `#24211d` |
 | `--text-secondary` | `#a89f93`      | `#635c52` |
-| `--accent`         | `#f5c542`      | `#7d5a00` |
+| `--accent`         | `#f5c542`      | `#8a6400` |
 | `--border`         | `#312d29`      | `#e3dccf` |
 
-**Paper texture** — cold-press watercolor paper (Mami's reference: a
-fine, bumpy, embossed sheet, not specks). It is **one sheet, never tiled**:
-`body::before` is a fixed, full-window layer (`z-index: -1`,
-`background-size: cover`) painting `--paper`, so the page scrolls over a
-single still sheet; the phone drawer uses the same image, also `cover`.
-`--paper` is one inline 1600×1000 SVG per theme: fractal noise
-(`baseFrequency 0.11` — small bumps, "zoomed out"; 4 octaves, slight blur)
-lit by `feDiffuseLighting` from the top-left, turned into soft shadows +
-highlights over `--bg` (warm shadows/white highlights on light; deeper
-shadows, faint highlights on dark). Keep the shadows gentle — bigger bumps
-or stronger shading reads as stucco. No image downloads. Gotchas: the
-filter needs `color-interpolation-filters='sRGB'`, and the `#` in
-`url(#p)` must be `%23` inside the data URI or nothing renders. Always
-check contrast against the *textured* paper, not flat `--bg`.
+**Backgrounds are flat** `--bg`. A drawing-paper texture (grain, then an
+embossed watercolor relief) was tried in October 2026 and removed at
+Mami's request; don't bring it back unless asked.
 
-All text pairs are at least 4.5:1 against the average textured paper
-(light: secondary 6:1, accent 5.7:1; dark: secondary 7:1, accent 11.2:1). Links are ink-colored with a soft accent underline that
+All text pairs are at least 4.5:1 (accent: 11.2:1 dark, 5.1:1 light, 4.7:1
+on `--surface`). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout
 rule, award pills.
 
@@ -183,13 +172,14 @@ cards and images, pills fully rounded.
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
 - `card-grid.html` — project cards. Projects with an `award` get a festive
-  badge on the bottom-left corner of the cover image: 🏆, the award in bold,
-  then "event · organization" (the university). Gold-foil gradient with
-  dark text (8:1+), a raised edge, and confetti flecks along its top and
-  bottom edges (kept off the text). On card hover a shine sweeps across it
-  and the trophy wiggles (off under reduced motion). Same in both themes;
-  it doesn't zoom with the image. The award pill on project pages uses
-  the same gold foil. Tech shows as 22px icon + name, wrapping
+  gold-foil band across the whole bottom of the cover image (no border, no
+  inset from the edges): 🏆, the award in bold, then "event ·
+  organization" (the university), dark text (8:1+). Ten confetti pieces
+  (`.confetti i`, in the markup) fall through the band on a loop at
+  different speeds; under reduced motion they rest, scattered. On card
+  hover a shine sweeps across and the trophy wiggles. Same in both themes;
+  it doesn't zoom with the image. The award pill on project pages uses the
+  same gold foil. Tech shows as 22px icon + name, wrapping
   (plain text, not links — the whole card is already a link),
   plus the "In progress" pill on ongoing projects
 - `see-also.html` — trailing block of related links (details below)

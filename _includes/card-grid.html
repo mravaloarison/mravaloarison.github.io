@@ -6,6 +6,7 @@
       {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
       {% if item.award %}
       <p class="card-award">
+        <span class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="award-emoji" aria-hidden="true">🏆</span>
         <span>
           <strong><span class="sr-only">Winner: </span>{{ item.award }}</strong>
