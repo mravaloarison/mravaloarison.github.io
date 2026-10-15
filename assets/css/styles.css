@@ -61,10 +61,10 @@
   --border: #312d29;
   --border-strong: #46413b;
 
-  /* Cold-press watercolor paper: noise turned into a bumpy surface and lit
-     from the top-left, so the bumps cast soft shadows and highlights.
-     Inline SVG, no image downloads. */
-  --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.7' edgeMode='wrap' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2.5' diffuseConstant='1' lighting-color='white' result='l'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0.000 0 0 0 0 0.000 0 0 0 0 0.000 -0.85 0 0 0 0.6963'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.14 0 0 0 -0.1147'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  /* Cold-press watercolor paper: noise turned into a fine bumpy surface and
+     lit from the top-left, so the bumps cast soft shadows and highlights.
+     One sheet covering the window (no tiling), inline SVG, no downloads. */
+  --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='4' seed='3'/%3E%3CfeGaussianBlur stdDeviation='0.5' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='1.6' diffuseConstant='1' lighting-color='white' result='l'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0.000 0 0 0 0 0.000 0 0 0 0 0.000 -0.52 0 0 0 0.4410'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.14 0 0 0 -0.1187'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -105,7 +105,7 @@
   --border-strong: #cfc5b4;
 
   /* Same paper relief on light: warm shadows, white highlights */
-  --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4' seed='3' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.7' edgeMode='wrap' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2.5' diffuseConstant='1' lighting-color='white' result='l'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0.235 0 0 0 0 0.176 0 0 0 0 0.118 -0.65 0 0 0 0.5324'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.5 0 0 0 -0.4096'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='4' seed='3'/%3E%3CfeGaussianBlur stdDeviation='0.5' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='1.6' diffuseConstant='1' lighting-color='white' result='l'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0.235 0 0 0 0 0.176 0 0 0 0 0.118 -0.4 0 0 0 0.3392'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.3 0 0 0 -0.2544'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 }
 
 /* Reset */
@@ -128,13 +128,24 @@ html[data-theme="light"] {
 body {
   margin: 0;
   background-color: var(--bg);
-  background-image: var(--paper);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 18px;
   line-height: 1.65;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* One sheet of paper behind everything, fixed so the page scrolls over it */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--paper);
+  background-size: cover;
+  background-position: center;
 }
 
 button,
@@ -1422,6 +1433,8 @@ figcaption {
     padding: 88px var(--space-24) var(--space-32);
     background-color: var(--bg);
     background-image: var(--paper);
+    background-size: cover;
+    background-position: center;
     border-right: 1px solid var(--border);
     transform: translateX(-100%);
     visibility: hidden;

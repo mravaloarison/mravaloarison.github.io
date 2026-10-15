@@ -89,16 +89,19 @@ unreadable on paper.
 | `--border`         | `#312d29`      | `#e3dccf` |
 
 **Paper texture** — cold-press watercolor paper (Mami's reference: a
-bumpy, embossed sheet, not specks). `body` and the phone drawer paint
-`--paper` over `--bg`: one inline SVG per theme where fractal noise
-(`baseFrequency 0.04`, 4 octaves, slight blur) is lit by
-`feDiffuseLighting` from the top-left, then turned into soft shadows +
-highlights over the paper color (warm shadows and white highlights on
-light; deeper shadows, faint highlights on dark). 300px stitched tile, no
-image downloads. Gotchas: the filter needs
-`color-interpolation-filters='sRGB'`, and the `#` in `url(#p)` must be
-`%23` inside the data URI or nothing renders. Always check contrast
-against the *textured* paper, not flat `--bg`.
+fine, bumpy, embossed sheet, not specks). It is **one sheet, never tiled**:
+`body::before` is a fixed, full-window layer (`z-index: -1`,
+`background-size: cover`) painting `--paper`, so the page scrolls over a
+single still sheet; the phone drawer uses the same image, also `cover`.
+`--paper` is one inline 1600×1000 SVG per theme: fractal noise
+(`baseFrequency 0.11` — small bumps, "zoomed out"; 4 octaves, slight blur)
+lit by `feDiffuseLighting` from the top-left, turned into soft shadows +
+highlights over `--bg` (warm shadows/white highlights on light; deeper
+shadows, faint highlights on dark). Keep the shadows gentle — bigger bumps
+or stronger shading reads as stucco. No image downloads. Gotchas: the
+filter needs `color-interpolation-filters='sRGB'`, and the `#` in
+`url(#p)` must be `%23` inside the data URI or nothing renders. Always
+check contrast against the *textured* paper, not flat `--bg`.
 
 All text pairs are at least 4.5:1 against the average textured paper
 (light: secondary 6:1, accent 5.7:1; dark: secondary 7:1, accent 11.2:1). Links are ink-colored with a soft accent underline that
