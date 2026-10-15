@@ -103,11 +103,13 @@ cards and images, pills fully rounded.
 
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
-- Header: "@mami_portfolio" in Newsreader 600 on the left, linking home;
-  plain text links
-  on the right (About · Projects · Arts · Blog) and the theme toggle. The
-  current section's link is bold and carries `aria-current`. The Arts link
-  only appears once `_arts/` has a piece.
+- Header: no site name or logo. The nav links (About · Projects · Arts ·
+  Blog) sit on the left, where the text column starts, and the theme toggle
+  on the right, at the text column's right edge (on About, where the frame
+  is wider for the drawings, the header stops at the text's edge so the
+  toggle never sits over the drawings). The current section's link is bold
+  and carries `aria-current`. The Arts link only appears once `_arts/` has a
+  piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
   a small menu of every project type (from `_data/categories.yml`; labels
   only, no counts or emoji), CSS only (`:hover` / `:focus-within`).

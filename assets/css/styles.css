@@ -367,25 +367,9 @@ main,
   padding-block: var(--space-32);
 }
 
-/* Desktop: name, then links pushed right, then the toggle */
-.site-nav {
-  margin-left: auto;
-}
-
+/* Desktop: links on the left, theme toggle at the right edge of the text */
 .menu-button {
   display: none;
-}
-
-.site-brand {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-}
-
-.site-brand:hover {
-  color: var(--accent);
 }
 
 .site-nav {
@@ -1302,7 +1286,6 @@ figcaption {
   }
 
   .has-rail .page-frame,
-  .has-rail .site-header-inner,
   .has-rail .site-footer {
     max-width: var(--frame-width);
   }
@@ -1310,6 +1293,13 @@ figcaption {
   .has-rail .page-frame {
     margin-inline: auto;
     padding-inline: var(--space-24);
+  }
+
+  /* Header spans the same frame so the links start where the text starts,
+     but stops at the text's right edge so the toggle lines up with it */
+  .has-rail .site-header-inner {
+    max-width: var(--frame-width);
+    padding-right: calc(var(--space-24) + var(--space-48) + var(--rail-width));
   }
 
   .has-rail main {
@@ -1369,16 +1359,7 @@ figcaption {
     padding-block: var(--space-16) var(--space-8);
   }
 
-  .site-brand {
-    font-size: 20px;
-  }
-
-  /* Without JS the links wrap onto their own line under the name */
-  .site-nav {
-    order: 3;
-    flex-basis: 100%;
-    margin-left: 0;
-  }
+  /* Without JS the links stay on the left and wrap if they must */
 
   main {
     padding-top: var(--space-24);
