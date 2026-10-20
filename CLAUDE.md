@@ -26,8 +26,8 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the theme toggle, the phone menu). The one exception is the inline theme snippet in
-  `<head>`, which must run before first paint. All content renders
+  (the phone menu). The one exception is the tiny inline snippet in `<head>`
+  that adds the `js` class before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
 - Components live in `_includes/` as Liquid partials. Filenames kebab-case.
@@ -56,8 +56,7 @@ what's used is shipped:
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
-- **Noto Color Emoji** (`--font-emoji`) — subset to 🌙 ☀️ (theme toggle)
-  and 🏆 (hackathon awards), 2.9 KB, `noto-color-emoji-theme.woff2`.
+- **Noto Color Emoji** (`--font-emoji`) — subset to 🏆 (hackathon awards), 2.9 KB, `noto-color-emoji-theme.woff2`.
   Adding an emoji means re-fetching the subset from Google Fonts with
   `text=` set to all of them and updating `unicode-range`.
 
@@ -69,30 +68,25 @@ italic font file is shipped.
 
 ### Color
 
-**Dark is the default** for every visitor, whatever their system setting.
-Dark tokens live on `:root`; the light set lives under
-`:root[data-theme="light"]` and only applies when chosen with the toggle
-(kept in `sessionStorage` for the current visit only, applied by the
-inline head script before first paint). Every new visit starts in dark,
-even if light was picked last time; the head script also clears any old
-`localStorage` theme from before this rule. There is no `prefers-color-scheme` rule. The accent is **yellow**:
-bright in dark mode, a deep gold in light mode because bright yellow is
-unreadable on paper.
+**Dark only.** There is no light theme and no theme toggle (removed October
+2026 at Mami's request; don't bring either back unless asked). The tokens live
+on `:root`, there is no `prefers-color-scheme` rule and no `data-theme`
+attribute. The accent is **yellow** (`#f5c542`).
 
-| Token              | Dark (default) | Light     |
-| ------------------ | -------------- | --------- |
-| `--bg`             | `#171513`      | `#fbf8f3` |
-| `--surface`        | `#211e1b`      | `#f3eee5` |
-| `--text`           | `#ede8e0`      | `#24211d` |
-| `--text-secondary` | `#a89f93`      | `#635c52` |
-| `--accent`         | `#f5c542`      | `#8a6400` |
-| `--border`         | `#312d29`      | `#e3dccf` |
+| Token              | Value     |
+| ------------------ | --------- |
+| `--bg`             | `#171513` |
+| `--surface`        | `#211e1b` |
+| `--text`           | `#ede8e0` |
+| `--text-secondary` | `#a89f93` |
+| `--accent`         | `#f5c542` |
+| `--border`         | `#312d29` |
 
 **Backgrounds are flat** `--bg`. A drawing-paper texture (grain, then an
 embossed watercolor relief) was tried in October 2026 and removed at
 Mami's request; don't bring it back unless asked.
 
-All text pairs are at least 4.5:1 (accent: 11.2:1 dark, 5.1:1 light, 4.7:1
+All text pairs are at least 4.5:1 (accent: 11.2:1 on `--bg`, 4.7:1
 on `--surface`). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout
 rule, award pills.
@@ -117,26 +111,20 @@ cards and images, pills fully rounded.
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
 - Header: no site name or logo. The nav links (About · Projects · Arts ·
-  Blog) on the left and the theme toggle on the right, spanning the same
-  centered 680px column on every page, so it never moves between pages. The current section's link is bold and carries
-  `aria-current`. The Arts link only appears once `_arts/` has a piece.
+  Blog) on the left, spanning the same centered 680px column on every page,
+  so it never moves between pages. The current section's link is bold and
+  carries `aria-current`. The Arts link only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
   a small menu of every project type (from `_data/categories.yml`; labels
   only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
-- Phones (≤600px): burger on the left, theme toggle on the right
-  (`justify-content: space-between`). The burger morphs into an × and slides
+- Phones (≤600px): burger on the left. The burger morphs into an × and slides
   the links in from the left as a drawer (360ms,
   `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
   inside while open. This only applies when `html.js` is set by the head
   script — with JS off the links stay inline on the left, wrapping if needed.
-- The theme toggle has no box: ☀️ shows in dark mode (the default), 🌙 in
-  light mode. They sit on a "day/night wheel"
-  pivoting below the button. Clicking turns it — the moon swings out right
-  while the sun swings in from the left (450ms), and back. The transition is
-  only enabled after a click (`.is-switching`) so it never plays on load.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the About Bio. Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -177,7 +165,7 @@ cards and images, pills fully rounded.
   organization" (the university), dark text (8:1+). Ten confetti pieces
   (`.confetti i`, in the markup) fall through the band on a loop at
   different speeds; under reduced motion they rest, scattered. On card
-  hover a shine sweeps across and the trophy wiggles. Same in both themes;
+  hover a shine sweeps across and the trophy wiggles;
   it doesn't zoom with the image. The award pill on project pages uses the
   same gold foil. Tech shows as 22px icon + name, wrapping
   (plain text, not links — the whole card is already a link),
@@ -492,11 +480,11 @@ done.
 
 - Semantic landmarks: `<header>`, `<nav>`, `<main>`, `<aside>`, `<footer>`.
 - Skip-to-content link as the first focusable element.
-- Text contrast at least 4.5:1 in both themes. Check `--text-secondary`.
+- Text contrast at least 4.5:1. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the theme toggle
-  and the phone menu (deferred), plus a tiny inline head script that applies
-  the saved theme and the `js` class before first paint.
+  delivers, content or navigation state. The only JS is the phone menu
+  (deferred), plus a tiny inline head script that adds the `js` class before
+  first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
 
@@ -504,6 +492,9 @@ done.
 
 ## Things that have already gone wrong
 
+- **A light theme existed** until October 2026, with a day/night toggle in the
+  header and `sessionStorage` to carry the choice. Mami asked for dark only;
+  the toggle, light tokens and their script were all removed.
 - **Category filters linked to `#`** on the old site, making every facet
   invisible to search engines. They are real pages now, linked from each
   section index.

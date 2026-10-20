@@ -1,33 +1,6 @@
 (function () {
   "use strict";
 
-  // The theme for this visit is applied by the inline script in head.html
-  // before first paint; this only wires up the toggle button. The choice is
-  // kept for the visit only, so every new visit starts in dark.
-  function storeTheme(theme) {
-    try {
-      sessionStorage.setItem("theme", theme);
-    } catch (err) {
-      /* storage unavailable, theme just won't carry across pages */
-    }
-  }
-
-  function initThemeToggle() {
-    var root = document.documentElement;
-    var toggle = document.getElementById("theme-toggle");
-    if (!toggle) return;
-
-    toggle.addEventListener("click", function () {
-      // Dark is the default; light only when chosen.
-      var current = root.getAttribute("data-theme") || "dark";
-      var next = current === "dark" ? "light" : "dark";
-      // turn the day/night wheel (transitions are off until the first click)
-      toggle.classList.add("is-switching");
-      root.setAttribute("data-theme", next);
-      storeTheme(next);
-    });
-  }
-
   // Phone menu: the burger slides the nav in as a drawer from the left.
   // Without JS the links simply wrap under the name (see .js in styles.css).
   function initMenu() {
@@ -93,6 +66,5 @@
     });
   }
 
-  initThemeToggle();
   initMenu();
 })();

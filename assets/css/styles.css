@@ -1,7 +1,7 @@
 /* Fonts — self-hosted from Google Fonts / Fontsource, all SIL OFL.
    Newsreader (variable weight) for headings and the name,
    Nunito (variable weight) for everything else,
-   Noto Color Emoji subset to the moon and sun on the theme toggle. */
+   Noto Color Emoji subset to the trophy on award pills. */
 
 @font-face {
   font-family: "Newsreader";
@@ -46,7 +46,7 @@
   font-weight: 400;
   font-display: swap;
   src: url("../fonts/noto-color-emoji-theme.woff2") format("woff2") tech(color-COLRv1);
-  unicode-range: U+2600, U+FE0F, U+1F319, U+1F3C6;
+  unicode-range: U+1F3C6;
 }
 
 /* Tokens */
@@ -89,19 +89,6 @@
   --transition: 160ms ease;
 }
 
-:root[data-theme="light"] {
-  /* Light, chosen with the toggle: warm paper, deep gold accent
-     (bright yellow is unreadable on paper; this keeps 4.5:1) */
-  --bg: #fbf8f3;
-  --surface: #f3eee5;
-  --text: #24211d;
-  --text-secondary: #635c52;
-  --accent: #8a6400;
-  --border: #e3dccf;
-  --border-strong: #cfc5b4;
-
-}
-
 /* Reset */
 
 *,
@@ -113,10 +100,6 @@
 html {
   -webkit-text-size-adjust: 100%;
   color-scheme: dark;
-}
-
-html[data-theme="light"] {
-  color-scheme: light;
 }
 
 body {
@@ -363,7 +346,7 @@ main,
   padding-block: var(--space-32);
 }
 
-/* Desktop: links on the left, theme toggle at the right edge of the text */
+/* Desktop: links on the left */
 .menu-button {
   display: none;
 }
@@ -477,60 +460,6 @@ main,
     background: var(--surface);
     color: var(--text);
   }
-}
-
-.theme-toggle {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-/* Day/night wheel: both emoji sit on a wheel pivoting below the button.
-   Switching turns it, so one icon swings out right while the other swings
-   in from the left. Moon shows in light mode, sun in dark mode. */
-.theme-icon {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-emoji);
-  font-size: 20px;
-  line-height: 1;
-  transform-origin: 50% 160%;
-  transition: scale var(--transition);
-}
-
-/* Dark (default) shows the sun; light shows the moon */
-.theme-icon-moon {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-
-:root[data-theme="light"] .theme-icon-moon {
-  transform: rotate(0);
-  opacity: 1;
-}
-
-:root[data-theme="light"] .theme-icon-sun {
-  transform: rotate(-90deg);
-  opacity: 0;
-}
-
-/* Only animate after a click, so the saved theme never plays the turn on load */
-.theme-toggle.is-switching .theme-icon {
-  transition: transform 450ms cubic-bezier(0.32, 0.72, 0, 1), opacity 300ms ease,
-    scale var(--transition);
-}
-
-.theme-toggle:hover .theme-icon {
-  scale: 1.1;
 }
 
 /* Main column */
@@ -981,7 +910,7 @@ main iframe {
 
 /* Hackathon award: a gold-foil band across the whole bottom of the cover
    image, with confetti drifting down through it. On hover a shine sweeps
-   across and the trophy wiggles. Same in both themes (it sits on
+   across and the trophy wiggles. The band sits on
    screenshots). */
 .card-award {
   --gold-foil: linear-gradient(135deg, #fff1b8 0%, #f8d35e 38%, #eab53a 70%, #f7d774 100%);
@@ -1468,12 +1397,6 @@ figcaption {
     border-radius: 50%;
     color: var(--text);
     cursor: pointer;
-  }
-
-  .js .theme-toggle {
-    width: 40px;
-    height: 40px;
-    margin-right: -8px;
   }
 
   .menu-icon {
