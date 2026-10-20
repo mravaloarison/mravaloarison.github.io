@@ -492,7 +492,8 @@ done. That test only lists types Google turns into rich results — here
 Validator (validator.schema.org). Every reference to the Person carries
 `@type`, `name` and `url` (`PortfolioSEO.person_ref`), because the Rich
 Results Test doesn't follow `@id` links — a bare `{"@id": …}` reference
-made the About page show no items (October 2026).
+in the About page's `mainEntity` is the likely reason a test in October
+2026 reported "No items detected".
 
 ### Crawlability
 
