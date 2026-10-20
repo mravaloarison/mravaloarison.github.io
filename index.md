@@ -15,6 +15,8 @@ seo:
 
 {% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract=site.data.about.headline %}
 
+{% include bio-switch.html current="short" %}
+
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
   {% for link in site.social.links %}
@@ -25,7 +27,6 @@ seo:
   <a href="{{ link }}" target="_blank" rel="me noopener">{{ label }}</a>
   {% endfor %}
   <a href="{{ site.data.about.contact.resume | relative_url }}" target="_blank" rel="noopener">Resume</a>
-  <a href="{{ '/bio/' | relative_url }}">Full bio</a>
 </div>
 
 {% if site.data.about.looking_for and site.data.about.looking_for != "" %}

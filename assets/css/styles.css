@@ -787,6 +787,35 @@ main iframe {
   border-color: var(--text-secondary);
 }
 
+/* Short | Long switch under the name (About) */
+
+.bio-switch {
+  display: inline-flex;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-24);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 15px;
+}
+
+.bio-switch a {
+  padding: var(--space-4) var(--space-16);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.bio-switch a:hover {
+  color: var(--text);
+}
+
+.bio-switch a[aria-current] {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* Profile links (About) */
 
 .profile-links {

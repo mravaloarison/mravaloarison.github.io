@@ -11,7 +11,9 @@ permalink: /bio/
 {%- endcomment %}
 
 
-{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract="The full version: my story, my experience and education, the awards, and what I'm into." %}
+{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" %}
+
+{% include bio-switch.html current="long" %}
 
 ## Bio
 

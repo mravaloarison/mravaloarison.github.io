@@ -215,13 +215,15 @@ content there, never in the layout files.
 
 About is split in two:
 
-- **Short About (`/`, `index.md`)**, in this order: the headline as the
-  abstract under the name, the profile links (email, GitHub, LinkedIn,
-  Devpost, Resume, and a "Full bio" link), the "Looking for" callout (off
+- **Short About (`/`, `index.md`)**, in this order: the name, a Short | Long
+  switch (`bio-switch.html`, two plain links to `/` and `/bio/`), the headline
+  as the abstract, the profile links (email, GitHub, LinkedIn,
+  Devpost, Resume), the "Looking for" callout (off
   while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects") and **Blog** (the two most
   recent posts, with "See all blog posts").
-- **Full bio (`/bio/`, `bio.md`)**: the **Bio** h2 (Markdown from
+- **Full bio (`/bio/`, `bio.md`)**: the name and the same Short | Long switch
+  (no abstract), then the **Bio** h2 (Markdown from
   `about.yml`), the personal photo grid, then Experience, Education,
   Awards, Certificates, Languages and Interests. The hackathon award lists
   every project with an `award` in its front matter. Existing copy is good —

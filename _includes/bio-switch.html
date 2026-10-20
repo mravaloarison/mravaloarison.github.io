@@ -1,0 +1,9 @@
+{%- comment -%}
+  Short | Long switch under the name, on both About pages. Two plain links
+  (not a script), so it works with JavaScript off. Pass current="short" or
+  current="long" to mark the page you're on with aria-current.
+{%- endcomment -%}
+<nav class="bio-switch" aria-label="Bio length">
+  <a href="{{ '/' | relative_url }}"{% if include.current == "short" %} aria-current="page"{% endif %}>Short</a>
+  <a href="{{ '/bio/' | relative_url }}"{% if include.current == "long" %} aria-current="page"{% endif %}>Long</a>
+</nav>
