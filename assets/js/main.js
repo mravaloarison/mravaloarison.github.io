@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  // Phone menu: the burger slides the nav in as a drawer from the left.
-  // Without JS the links simply wrap under the name (see .js in styles.css).
+  // Below 1040px the burger slides the nav in as a drawer from the right.
+  // Without JS the links are a plain row instead (see .js in styles.css).
   function initMenu() {
     var root = document.documentElement;
     var button = document.getElementById("menu-button");
@@ -10,7 +10,7 @@
     var overlay = document.getElementById("nav-overlay");
     if (!button || !nav || !overlay) return;
 
-    var phone = window.matchMedia("(max-width: 600px)");
+    var phone = window.matchMedia("(max-width: 1039px)");
 
     function links() {
       return Array.prototype.slice.call(nav.querySelectorAll("a[href]"));

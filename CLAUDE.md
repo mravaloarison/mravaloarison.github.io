@@ -44,7 +44,9 @@ and not a docs portal. When in doubt, remove things.
 
 This replaced an earlier Apple-documentation design (three columns, sliding
 sidebar, on-this-page rail) in October 2026, at Mami's request. Don't bring
-the sliding sidebar back. A table of contents was tried again in October
+the sliding sidebar back. The side nav on wide screens (see Layout) is
+different: added later in October 2026 at Mami's request, it is only the
+site nav, it never slides, and there is no on-this-page rail. A table of contents was tried again in October
 2026 (left-margin list plus scroll highlight) and removed; don't re-add it
 unless asked.
 
@@ -109,25 +111,26 @@ cards and images, pills fully rounded.
 
 ### Layout
 
-- One centered column, `--measure` 680px of text width, 24px side padding
-  (16px under 600px). No horizontal page scroll, ever.
-- Header: the logo on the left (the M mark, drawn in CSS colours in the
-  accent yellow). The logo is the only link to About; there is no "About"
-  nav link (removed October 2026 at Mami's request). The nav links
-  (Projects · Arts · Blog) on the right, so the nav sits at the same spot on every page. The
-  current section's link is bold and carries `aria-current`. The Arts link
-  only appears once `_arts/` has a piece.
-- **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
-  a small menu of every project type (from `_data/categories.yml`; labels
-  only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
-  "Projects" itself stays a link to `/projects/`. In the phone drawer the
-  types sit indented under Projects.
-- Phones (≤600px): logo on the left, burger on the right. The burger morphs
-  into an × and slides the links in from the right as a drawer (360ms,
+- One text column, `--measure` 680px of text width, 24px side padding
+  (16px under 600px). From 1040px the nav sits in a `--nav-width` (160px)
+  column to its left with a 32px gap, and the two are centered together.
+  No horizontal page scroll, ever.
+- **Nav** (no logo, no site name): About · Projects · Arts · Blog, with the
+  project types (Work · Personal · Hackathons, from `_data/categories.yml`)
+  indented under Projects. One look everywhere, the one Mami liked in the
+  phone drawer: Newsreader 30px links with a hairline under each, the types
+  in Nunito 18px `--text-secondary`, the current section and type in the
+  accent with `aria-current`. The Arts link only appears once `_arts/` has a
+  piece. About is current on both `/` and `/bio/`.
+- **1040px and up**: the nav is a sticky column on the left (80px from the
+  top, so "About" lines up with the h1; `main` has 96px top padding). Pure
+  CSS, works with JS off.
+- **Below 1040px**: a burger at the top right. It morphs into an × and slides
+  the nav in from the right as a drawer (360ms,
   `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
   inside while open. This only applies when `html.js` is set by the head
-  script — with JS off the links stay inline on the left, wrapping if needed.
+  script — with JS off the nav is a plain row of small links instead.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
   the end of the full bio (`/bio/`). Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
@@ -521,8 +524,10 @@ done.
   2026): stacked, then fixed, then a sideways carousel with placeholder
   art. Mami didn't like it. Don't bring back art on the About page unless
   asked.
+- **A logo in the header** (the M mark) was tried in October 2026 and removed
+  when the nav moved to the side; the favicon still uses the mark.
 - **The sidebar design was dropped** (October 2026) for the single-column
-  layout above. The View Transitions API was tried twice for its slide
+  layout above (the later wide-screen side nav is the site nav only). The View Transitions API was tried twice for its slide
   animation and failed both times; if page-to-page motion ever comes back,
   don't reach for it first.
 
@@ -538,7 +543,7 @@ done.
 - Run `bundle exec jekyll serve` and click through a page before saying it's
   done. For layout work, check `/`, `/projects/`,
   `/projects/category/work/`, `/projects/better/`, and `/blog/`, at phone
-  width and in dark mode.
+  width, a tablet width (burger) and 1040px+ (side nav).
 - Don't add dependencies without asking.
 - Mami's workflow: commit and push changes straight to `main`, then send
   screenshots of every page (phone and desktop) once a change is done.
