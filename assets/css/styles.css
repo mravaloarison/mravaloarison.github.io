@@ -50,6 +50,8 @@
   --text: #ede8e0;
   --text-secondary: #a89f93;
   --accent: #f5c542;
+  /* the soft square behind the trophy on awards */
+  --accent-tint: rgb(245 197 66 / 0.13);
   --border: #312d29;
   --border-strong: #46413b;
 
@@ -813,7 +815,7 @@ main iframe {
   text-decoration: none;
 }
 
-/* the trophy is as tall as the award and project lines beside it */
+/* the trophy's square is as tall as the award and project lines beside it */
 .win-row .award-icon {
   align-self: center;
 }
@@ -960,8 +962,8 @@ main iframe {
   transform: scale(1.04);
 }
 
-/* Hackathon award (award.html): one unit everywhere. The trophy (Google's
-   🏆 as an image) sits on the left, as tall as the two lines beside it:
+/* Hackathon award (award.html): one unit everywhere. On the left, Google's
+   🏆 centred in a soft yellow square as tall as the two lines beside it:
    the award in bold, then university · event · year, muted. Nothing sits
    on the screenshot and nothing moves on its own. */
 .award {
@@ -972,12 +974,16 @@ main iframe {
   margin: var(--space-4) 0 var(--space-8);
 }
 
-/* 48px = the 26px award line + the 22px line under it (bio and project
-   pages); project lists use 44px for their two 22px lines */
+/* The square: 48px = the 26px award line + the 22px line under it (bio and
+   project pages); project lists use 44px for their two 22px lines. The
+   padding is the space around the cup, which is about half as tall. */
 .award-icon {
   display: block;
   width: 48px;
   height: 48px;
+  padding: 11px;
+  background: var(--accent-tint);
+  border-radius: var(--radius-sm);
 }
 
 .award-text {
@@ -1060,9 +1066,9 @@ main iframe {
   margin: var(--space-12) 0 var(--space-4);
 }
 
-/* Award in project lists: the trophy beside two lines, the award title,
-   then university · year. If the title wraps on a narrow phone, the
-   trophy stays centred on the block. */
+/* Award in project lists: the trophy's square beside two lines, the award
+   title, then university · year. If the title wraps on a narrow phone,
+   the square stays centred on the block. */
 .award-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1074,6 +1080,7 @@ main iframe {
 .award-card .award-icon {
   width: 44px;
   height: 44px;
+  padding: 10px;
 }
 
 .award-card-text {

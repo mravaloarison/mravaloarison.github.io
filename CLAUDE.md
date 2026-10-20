@@ -89,6 +89,7 @@ attribute. The accent is **yellow** (`#f5c542`).
 | `--text`           | `#ede8e0` |
 | `--text-secondary` | `#a89f93` |
 | `--accent`         | `#f5c542` |
+| `--accent-tint`    | `rgb(245 197 66 / 0.13)` (the square behind the trophy) |
 | `--border`         | `#312d29` |
 
 **Backgrounds are flat** `--bg`. A drawing-paper texture (grain, then an
@@ -98,7 +99,8 @@ Mami's request; don't bring it back unless asked.
 All text pairs are at least 4.5:1 (accent: 11.2:1 on `--bg`, 4.7:1
 on `--surface`). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout and
-award-box rule, the current-page dot in the nav.
+award-box rule, the current-page dot in the nav, and (as `--accent-tint`)
+the square behind the trophy.
 
 ### Type
 
@@ -158,9 +160,10 @@ things, cards and images (Mami wanted them a little squarer than the old
 - Project lists (`card-grid.html`) are one project per row, like
   brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
   6px radius, hairline border) on the left; on the right the serif title with
-  a 🔗 after it, the award on award projects (the trophy, as tall as the two
-  lines beside it: the award title, then "university · year"), and the
-  description; a hairline between rows, like the post list.
+  a 🔗 after it, the award on award projects (the trophy in a soft yellow
+  square as tall as the two lines beside it: the award title, then
+  "university · year"), and the description; a hairline between rows, like
+  the post list.
   On phones each project stacks (image, then the text) with 32px between —
   Mami likes the phone version as it is. No tech stack in lists; it's on each
   project page. No boxes, no shadows. On hover the row never moves; the
@@ -198,20 +201,23 @@ things, cards and images (Mami wanted them a little squarer than the old
   2026 (it was a ↗ before, like brittanychiang.com). The last word and the
   emoji are wrapped together (`.title-end`, `nowrap`) so the emoji never
   wraps alone. On hover it nudges 2px up and right.
-- `award.html` — a hackathon award as one unit: Google's 🏆
-  (`assets/emoji/trophy.svg`) on the left, as tall as the two lines beside
-  it (Mami wants the cup to cover both), then the award in bold `--text`
-  with **university · event · year** in `--text-secondary` under it
+- `award.html` — a hackathon award as one unit: on the left, Google's 🏆
+  (`assets/emoji/trophy.svg`) centred in a soft yellow square
+  (`--accent-tint`, 6px radius) as tall as the two lines beside it, the cup
+  about half the square's height. Mami asked for the cup to cover both
+  lines, then found a cup that big too much; the square covers the lines and
+  keeps the cup small. Beside it the award in bold `--text`, with
+  **university · event · year** in `--text-secondary` under it
   (university first: it's the name people recognise). Lines only break
   between parts, never inside a name, unless one name alone is wider than
   the line (a long university on a small phone): then it wraps instead of
   running off the page (`.award-part` is `inline-block`). Wrapped award
   names and lines are balanced (`text-wrap: balance`), so no "Add-" / "On"
   or lone year. `size="large"` on project pages puts it in a callout-style
-  box (`--surface`, 3px accent rule) with a 48px trophy (a 26px and a 22px
+  box (`--surface`, 3px accent rule) with a 48px square (a 26px and a 22px
   line). `size="card"` (project lists) is two 22px lines beside a 44px
-  trophy: the award title in bold, then "university · year", muted. Where a
-  long title wraps (narrow rows, phones) the trophy stays centred on the
+  square: the award title in bold, then "university · year", muted. Where a
+  long title wraps (narrow rows, phones) the square stays centred on the
   block. No foil, nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
@@ -272,9 +278,9 @@ the content under the tabs differs:
 - **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`, in
   `.bio-text`), the personal photo grid, then Experience, Education, Awards,
   Certificates, Languages and Interests. The hackathon award lists every project with an
-  `award` as rows like the post list (a 48px trophy covering the award and
-  project lines on the left, university and year on the right; each row
-  links to the project), then
+  `award` as rows like the post list (the trophy in its 48px square,
+  covering the award and project lines, on the left; university and year on
+  the right; each row links to the project), then
   "All 12 hackathon wins on Devpost". Existing copy is good — keep its voice, don't
   corporate-ize it.
 
