@@ -101,6 +101,10 @@
 html {
   -webkit-text-size-adjust: 100%;
   color-scheme: dark;
+  /* Keep the scrollbar's space on every page, so short pages that don't
+     scroll (blog index, a small category) line up exactly with long ones
+     instead of jumping sideways when you move between them. */
+  scrollbar-gutter: stable;
 }
 
 body {

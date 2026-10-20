@@ -516,6 +516,11 @@ done.
 
 ## Things that have already gone wrong
 
+- **Pages jumped sideways between each other** (October 2026): with a mouse
+  or "always show scroll bars", short pages that don't scroll (`/blog/`,
+  `/projects/category/work/`) had no scrollbar, so the centred layout sat
+  7px off from every long page. `html { scrollbar-gutter: stable; }` keeps
+  the scrollbar's space on every page. Keep it.
 - **Stale CSS after a deploy** (October 2026): GitHub Pages lets browsers
   cache assets for 10 minutes and a normal reload keeps them, so new markup
   showed up with the old stylesheet and looked broken. The stylesheet and
