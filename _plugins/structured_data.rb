@@ -36,8 +36,8 @@ module PortfolioSEO
         "alternateName" => ["Mami Ravaloarison", "mravaloarison"],
         "description" => site.config["description"].to_s.strip,
         "inLanguage" => site.config["lang"] || "en-US",
-        "author" => { "@id" => PortfolioSEO.person_id(site) },
-        "publisher" => { "@id" => PortfolioSEO.person_id(site) },
+        "author" => PortfolioSEO.person_ref(site),
+        "publisher" => PortfolioSEO.person_ref(site),
       }
     end
 
@@ -117,16 +117,18 @@ module PortfolioSEO
         "description" => page["description"],
         "inLanguage" => site.config["lang"] || "en-US",
         "isPartOf" => { "@id" => PortfolioSEO.website_id(site) },
-        "author" => { "@id" => PortfolioSEO.person_id(site) },
-        "about" => { "@id" => PortfolioSEO.person_id(site) },
+        "author" => PortfolioSEO.person_ref(site),
+        "about" => PortfolioSEO.person_ref(site),
       }.compact
     end
 
     def page_nodes(site, page, url)
       collection = page["collection"]
-      if url == "/"
+      if url == "/" || url == "/bio/"
+        # Both About pages (short and long bio) are "About Me" profile pages.
+        # Google wants the person itself, with a name, inside mainEntity.
         node = webpage(site, page, url, "ProfilePage")
-        node["mainEntity"] = { "@id" => PortfolioSEO.person_id(site) }
+        node["mainEntity"] = profile_entity(site)
         node["dateModified"] = site.time.iso8601
         [node]
       elsif collection == "projects"
@@ -140,6 +142,19 @@ module PortfolioSEO
       else
         [webpage(site, page, url)]
       end
+    end
+
+    # The Person for a ProfilePage: the required name plus the recommended
+    # alternateName, description, sameAs and image (when there's a photo).
+    def profile_entity(site)
+      prof = PortfolioSEO.profile(site)
+      photo = PortfolioSEO.photos(site).first
+      PortfolioSEO.person_ref(site).merge(
+        "alternateName" => Array(prof["also_known_as"]).first,
+        "description" => PortfolioSEO.plain(PortfolioSEO.about(site)["headline"]),
+        "sameAs" => Array(site.config.dig("social", "links")),
+        "image" => photo && PortfolioSEO.abs(site, photo["src"]),
+      ).compact
     end
 
     def item_ref(site, doc)
@@ -156,8 +171,8 @@ module PortfolioSEO
         "description" => page["description"],
         "url" => PortfolioSEO.abs(site, url),
         "mainEntityOfPage" => "#{PortfolioSEO.abs(site, url)}#webpage",
-        "author" => { "@id" => PortfolioSEO.person_id(site) },
-        "creator" => { "@id" => PortfolioSEO.person_id(site) },
+        "author" => PortfolioSEO.person_ref(site),
+        "creator" => PortfolioSEO.person_ref(site),
         "datePublished" => PortfolioSEO.date_iso(page["date"]),
         "genre" => page["category"] == "Hackathon" ? "Hackathon project" : "#{page['category']} project",
         "keywords" => Array(page["tech"]).join(", "),
@@ -186,8 +201,8 @@ module PortfolioSEO
         "description" => page["description"],
         "url" => PortfolioSEO.abs(site, url),
         "mainEntityOfPage" => "#{PortfolioSEO.abs(site, url)}#webpage",
-        "creator" => { "@id" => PortfolioSEO.person_id(site) },
-        "author" => { "@id" => PortfolioSEO.person_id(site) },
+        "creator" => PortfolioSEO.person_ref(site),
+        "author" => PortfolioSEO.person_ref(site),
         "artMedium" => page["medium"] == "Procreate" ? "Digital painting (Procreate)" : page["medium"],
         "artform" => page["medium"] == "Sketchbook" ? "Sketch" : "Drawing",
         "dateCreated" => PortfolioSEO.date_iso(page["date"]),
@@ -209,8 +224,8 @@ module PortfolioSEO
         "description" => page["description"],
         "url" => PortfolioSEO.abs(site, url),
         "mainEntityOfPage" => "#{PortfolioSEO.abs(site, url)}#webpage",
-        "author" => { "@id" => PortfolioSEO.person_id(site) },
-        "publisher" => { "@id" => PortfolioSEO.person_id(site) },
+        "author" => PortfolioSEO.person_ref(site),
+        "publisher" => PortfolioSEO.person_ref(site),
         "datePublished" => PortfolioSEO.date_iso(page["date"]),
         "dateModified" => PortfolioSEO.date_iso(page["last_modified_at"] || page["date"]),
         "keywords" => Array(page["tags"]).join(", "),

@@ -26,6 +26,18 @@ module PortfolioSEO
     "#{base(site)}/#website"
   end
 
+  # A pointer to the Person that also carries @type, name and url. JSON-LD
+  # merges it with the full Person node by @id, and tools that don't follow
+  # @id links (Google's Rich Results Test, for one) still see who it is.
+  def person_ref(site)
+    {
+      "@type" => "Person",
+      "@id" => person_id(site),
+      "name" => profile(site)["full_name"] || site.config.dig("author", "name"),
+      "url" => "#{base(site)}/",
+    }
+  end
+
   def about(site)
     site.data["about"] || {}
   end
@@ -61,7 +73,7 @@ module PortfolioSEO
       "url" => abs(site, src),
       "contentUrl" => abs(site, src),
       "caption" => caption,
-      "creator" => { "@id" => person_id(site) },
+      "creator" => person_ref(site),
       "creditText" => profile(site)["full_name"] || site.config.dig("author", "name"),
       "copyrightNotice" => "© #{profile(site)['full_name'] || site.config.dig('author', 'name')}",
     }

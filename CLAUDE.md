@@ -471,7 +471,9 @@ pointing back to that `@id`:
 
 Emit per page type:
 
-- About → `Person` with `name: "Maminiaina Ravaloarison"`,
+- About → both About pages (`/` and `/bio/`) are `ProfilePage`, with the
+  Person nested in `mainEntity` (Google requires its `name`). The `Person`
+  has `name: "Maminiaina Ravaloarison"`,
   `alternateName: "Mami Ravaloarison"`, `jobTitle`, `alumniOf`, `sameAs`
   array of all profile URLs, `knowsLanguage`, `award`.
 - Project detail → `CreativeWork` (or `SoftwareApplication` where it's a real
@@ -483,7 +485,14 @@ Emit per page type:
 - Every page below root → `BreadcrumbList`.
 
 Validate output against Google's Rich Results Test before considering a page
-done.
+done. That test only lists types Google turns into rich results — here
+**Profile page** (`/`, `/bio/`), **Breadcrumbs** (every inner page) and
+**Article** (blog posts). Projects, awards and the Person never show there
+("No items detected" on them is normal); check those in the Schema Markup
+Validator (validator.schema.org). Every reference to the Person carries
+`@type`, `name` and `url` (`PortfolioSEO.person_ref`), because the Rich
+Results Test doesn't follow `@id` links — a bare `{"@id": …}` reference
+made the About page show no items (October 2026).
 
 ### Crawlability
 
