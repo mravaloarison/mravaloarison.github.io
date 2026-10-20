@@ -362,16 +362,20 @@ main,
   padding: 0;
 }
 
-.site-nav > ul > li {
-  border-bottom: 1px solid var(--border);
+/* a hairline between items, none after the last */
+.site-nav > ul > li + li {
+  border-top: 1px solid var(--border);
 }
 
+/* Links are muted so the nav stays quieter than the page; hover and the
+   current page brighten to --text. */
 .site-nav a {
+  position: relative;
   display: block;
   font-family: var(--font-serif);
   font-size: 30px;
   font-weight: 500;
-  color: var(--text);
+  color: var(--text-secondary);
   text-decoration: none;
   padding: var(--space-12) 0;
   transition: color var(--transition);
@@ -379,7 +383,26 @@ main,
 
 .site-nav a:hover,
 .site-nav a[aria-current] {
-  color: var(--accent);
+  color: var(--text);
+}
+
+/* "You are here": a small accent dot hanging in the margin, so the current
+   page isn't marked by colour alone. Only the most specific item gets it:
+   on a project page the dot sits on its type, and Projects just brightens. */
+.site-nav a[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.site-nav li:has(> .nav-sub a[aria-current]) > a::before {
+  content: none;
 }
 
 .site-nav .nav-sub {
@@ -390,16 +413,7 @@ main,
   font-family: var(--font-sans);
   font-size: 18px;
   font-weight: 400;
-  color: var(--text-secondary);
   padding: var(--space-4) 0;
-}
-
-.site-nav .nav-sub a:hover {
-  color: var(--text);
-}
-
-.site-nav .nav-sub a[aria-current] {
-  color: var(--accent);
 }
 
 /* Main column */
@@ -1388,6 +1402,10 @@ figcaption {
     border: 0;
   }
 
+  html:not(.js) .site-nav a::before {
+    content: none;
+  }
+
   html:not(.js) .site-nav a {
     font-family: var(--font-sans);
     font-size: 16px;
@@ -1551,12 +1569,28 @@ figcaption {
     top: 0;
   }
 
+  /* Same fonts as the drawer, scaled down for a column that is always on
+     screen: 22px links (h3 size, below the 29px h2), 16px types. */
+  .site-nav a {
+    font-size: 22px;
+    padding: var(--space-8) 0;
+  }
+
+  .site-nav .nav-sub {
+    margin: calc(-1 * var(--space-4)) 0 var(--space-8) var(--space-16);
+  }
+
+  .site-nav .nav-sub a {
+    font-size: 16px;
+  }
+
   .site-header-inner {
     display: block;
     max-width: none;
     margin: 0;
-    /* 16px less than main's top padding, so "About" lines up with the h1 */
-    padding: calc(var(--space-96) - var(--space-16)) 0 var(--space-32);
+    /* 8px less than main's top padding, so the top of "About" lines up with
+       the top of the h1 (or the breadcrumb on inner pages) */
+    padding: calc(var(--space-96) - var(--space-8)) 0 var(--space-32);
   }
 
   .page-frame {

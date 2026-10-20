@@ -105,6 +105,8 @@ rule, award pills.
 | Subsection (h3)         | 22px                      | Newsreader 500        |
 | Body                    | 18px, line-height 1.65    | Nunito 400            |
 | Meta / caption          | 15px                      | Nunito 400            |
+| Nav link (side/drawer)  | 22px / 30px               | Newsreader 500        |
+| Nav project type        | 16px / 18px               | Nunito 400            |
 
 Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px small, 10px
 cards and images, pills fully rounded.
@@ -117,15 +119,20 @@ cards and images, pills fully rounded.
   No horizontal page scroll, ever.
 - **Nav** (no logo, no site name): About · Projects · Arts · Blog, with the
   project types (Work · Personal · Hackathons, from `_data/categories.yml`)
-  indented under Projects. One look everywhere, the one Mami liked in the
-  phone drawer: Newsreader 30px links with a hairline under each, the types
-  in Nunito 18px `--text-secondary`, the current section and type in the
-  accent with `aria-current`. The Arts link only appears once `_arts/` has a
-  piece. About is current on both `/` and `/bio/`.
-- **1040px and up**: the nav is a sticky column on the left (80px from the
-  top, so "About" lines up with the h1; `main` has 96px top padding). Pure
-  CSS, works with JS off.
-- **Below 1040px**: a burger at the top right. It morphs into an × and slides
+  indented under Projects. The look Mami liked in the phone drawer:
+  Newsreader links with a hairline between items (none after the last), the
+  types in Nunito, indented. All links are `--text-secondary`; hover and the
+  current page go to `--text`, and the current page also gets a 6px accent
+  dot hanging in the margin, so it isn't marked by colour alone
+  (`aria-current` for screen readers). Only the most specific item gets the
+  dot: on a project page it's on the type and Projects just brightens
+  (`:has()`). The Arts link only appears once `_arts/` has a piece. About is
+  current on both `/` and `/bio/`.
+- **1040px and up**: the nav is a sticky column on the left, 88px from the
+  top so "About" lines up with the h1 (`main` has 96px top padding). Links
+  are 22px and types 16px, below the 29px h2, so the page leads and the nav
+  stays quiet. Pure CSS, works with JS off.
+- **Below 1040px**: a burger at the top right (drawer links 30px, types 18px). It morphs into an × and slides
   the nav in from the right as a drawer (360ms,
   `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
