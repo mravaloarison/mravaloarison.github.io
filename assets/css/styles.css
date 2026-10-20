@@ -787,33 +787,51 @@ main iframe {
   border-color: var(--text-secondary);
 }
 
-/* Short | Long switch under the name (About) */
+/* Bio row under the name: "Bio" label, Short | Long tabs on the right */
 
-.bio-switch {
-  display: inline-flex;
-  gap: var(--space-4);
+.bio-tabs {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-16);
   margin: 0 0 var(--space-24);
-  padding: var(--space-4);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 15px;
+  border-bottom: 1px solid var(--border);
 }
 
-.bio-switch a {
-  padding: var(--space-4) var(--space-16);
-  border-radius: 999px;
+.bio-tabs-label {
+  margin: 0;
+  padding-bottom: var(--space-8);
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.bio-tabs-nav {
+  display: flex;
+  gap: var(--space-24);
+}
+
+.bio-tabs-nav a {
+  padding-bottom: var(--space-8);
+  font-size: 16px;
   color: var(--text-secondary);
   text-decoration: none;
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
 }
 
-.bio-switch a:hover {
+.bio-tabs-nav a:hover {
   color: var(--text);
 }
 
-.bio-switch a[aria-current] {
-  background: var(--surface);
+.bio-tabs-nav a[aria-current] {
   color: var(--text);
-  font-weight: 600;
+  border-bottom-color: var(--text);
+}
+
+.bio-lead {
+  margin: 0 0 var(--space-32);
+  font-size: 20px;
+  line-height: 1.6;
 }
 
 /* Profile links (About) */

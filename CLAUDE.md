@@ -213,21 +213,21 @@ the "Looking for" box, the Bio (Markdown), and every resume section
 site email and `%drawing%` becomes the Arts link once art exists. Edit
 content there, never in the layout files.
 
-About is split in two:
+Both About pages use the same format: the name as the h1, then a "Bio" row
+with **Short | Long** tabs on the right (`bio-tabs.html`, a hairline under the
+row, the current tab underlined). No eyebrow, no abstract. Only the content
+under the tabs differs:
 
-- **Short About (`/`, `index.md`)**, in this order: the name, a Short | Long
-  switch (`bio-switch.html`, two plain links to `/` and `/bio/`), the headline
-  as the abstract, the profile links (email, GitHub, LinkedIn,
-  Devpost, Resume), the "Looking for" callout (off
-  while `looking_for:` is empty), then **Projects** (the two most recent
+- **Short (`/`, `index.md`)**: the headline as a lead paragraph, the profile
+  links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
+  (off while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects") and **Blog** (the two most
   recent posts, with "See all blog posts").
-- **Full bio (`/bio/`, `bio.md`)**: the name and the same Short | Long switch
-  (no abstract), then the **Bio** h2 (Markdown from
-  `about.yml`), the personal photo grid, then Experience, Education,
-  Awards, Certificates, Languages and Interests. The hackathon award lists
-  every project with an `award` in its front matter. Existing copy is good —
-  keep its voice, don't corporate-ize it.
+- **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`), the
+  personal photo grid, then Experience, Education, Awards, Certificates,
+  Languages and Interests. The hackathon award lists every project with an
+  `award` in its front matter. Existing copy is good — keep its voice, don't
+  corporate-ize it.
 
 `featured: true` in the front matter is still unused.
 ### Projects

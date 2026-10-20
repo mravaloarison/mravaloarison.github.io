@@ -13,9 +13,11 @@ seo:
 {%- endcomment %}
 
 
-{% include page-header.html eyebrow="About" title="Maminiaina Ravaloarison" abstract=site.data.about.headline %}
+{% include page-header.html title="Maminiaina Ravaloarison" %}
 
-{% include bio-switch.html current="short" %}
+{% include bio-tabs.html current="short" %}
+
+<p class="bio-lead">{{ site.data.about.headline }}</p>
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>

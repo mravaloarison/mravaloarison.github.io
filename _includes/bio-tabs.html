@@ -1,0 +1,12 @@
+{%- comment -%}
+  "Bio" row under the name, with Short and Long tabs on the right. Both are
+  plain links (not a script), so they work with JavaScript off. Pass
+  current="short" or current="long"; the page you're on gets aria-current.
+{%- endcomment -%}
+<div class="bio-tabs">
+  <p class="bio-tabs-label">Bio</p>
+  <nav class="bio-tabs-nav" aria-label="Bio length">
+    <a href="{{ '/' | relative_url }}"{% if include.current == "short" %} aria-current="page"{% endif %}>Short</a>
+    <a href="{{ '/bio/' | relative_url }}"{% if include.current == "long" %} aria-current="page"{% endif %}>Long</a>
+  </nav>
+</div>
