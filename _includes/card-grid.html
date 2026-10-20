@@ -1,3 +1,7 @@
+{%- comment -%}
+  Project cards: image, title, the one-line award (award projects only), and
+  the description. No tech stack here; it's on each project page.
+{%- endcomment -%}
 <div class="card-grid">
   {% for item in include.items %}
   <a class="card" href="{{ item.url | relative_url }}">
@@ -6,18 +10,9 @@
       {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
     </div>
     {% endif %}
-    <div class="card-body">
-      <h3>{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
-      {% include award.html item=item %}
-      <p class="card-description">{{ item.description }}</p>
-      {% if item.tech %}
-      <ul class="card-tech" aria-label="Built with">
-        {%- for t in item.tech %}
-        <li>{% include tech-icon.html name=t px=22 %}<span>{{ t }}</span></li>
-        {%- endfor %}
-      </ul>
-      {% endif %}
-    </div>
+    <h3 class="card-title">{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
+    {% include award.html item=item size="card" %}
+    <p class="card-description">{{ item.description }}</p>
   </a>
   {% endfor %}
 </div>

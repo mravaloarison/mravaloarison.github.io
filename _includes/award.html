@@ -1,12 +1,21 @@
 {%- comment -%}
   A hackathon award as one unit: the trophy and the award, then the
   university, the event and the year on the line below. The university
-  comes first because it's the name people recognise. Used under the title
-  on project cards, and as a box under the abstract on project pages.
-  Params: item (a project), size="large" for the project page.
+  comes first because it's the name people recognise. Used as a box under
+  the abstract on project pages (size="large").
+  On project cards (size="card") it is a single line, so cards in a row stay
+  aligned: 🏆 university · year. The card description already names the
+  award, and screen readers still hear it.
+  Params: item (a project), size ("large" | "card").
 {%- endcomment -%}
 {%- assign a = include.item -%}
-{%- if a.award -%}
+{%- if a.award and include.size == "card" -%}
+{%- assign card_where = a.organization | default: a.event %}
+<p class="award-card">
+  <span class="award-icon" aria-hidden="true">🏆</span>
+  <span class="award-card-text"><span class="sr-only">Won {{ a.award }} at </span><span class="award-card-school">{{ card_where }}</span>{% if a.date %}<span class="award-card-year"> · {{ a.date | date: "%Y" }}</span>{% endif %}</span>
+</p>
+{%- elsif a.award -%}
 {%- assign where = "" -%}
 {%- if a.organization -%}{%- assign where = where | append: a.organization | append: "|" -%}{%- endif -%}
 {%- if a.event -%}{%- assign where = where | append: a.event | append: "|" -%}{%- endif -%}

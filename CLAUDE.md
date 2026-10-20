@@ -146,8 +146,12 @@ cards and images, pills fully rounded.
   the copyright line.
 - Post lists are quiet rows: serif title on the left, date on the right,
   hairline between rows (`post-list.html`).
-- Project cards: image first (rounded, hairline border), serif title, one
-  line of description. No boxes around cards, no shadows. On hover the
+- Project cards: image first (rounded, hairline border), serif title, then
+  on award projects one line "🏆 university · year", then the description.
+  No tech stack on cards — it's on each project page. Cards in a row line up
+  part by part (CSS subgrid: image, title, award, description rows), so an
+  award line never knocks a neighbour's description out of line; the award
+  line never wraps. No boxes around cards, no shadows. On hover the
   card never moves (no lift); the cover image zooms to 1.04 inside its
   frame (`overflow: hidden`, 300ms) and the title turns accent.
 
@@ -172,16 +176,18 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards. Projects with an `award` show
-  `award.html` under the title (nothing on the cover image). Tech shows as
-  22px icon + name, wrapping (plain text, not links — the whole card is
-  already a link), plus the "In progress" pill on ongoing projects
+- `card-grid.html` — project cards: image, title (plus the "In progress"
+  pill on ongoing projects), `award.html size="card"` on award projects,
+  description. Nothing on the cover image, no tech row.
 - `award.html` — a hackathon award as one unit: 🏆 hanging on the left, the
   award in bold `--text`, then **university · event · year** in
   `--text-secondary` (university first: it's the name people recognise).
   Lines only break between parts, never inside a name. `size="large"` on
   project pages puts it in a callout-style box (`--surface`, 3px accent
-  rule). No foil, nothing over the image, no animation.
+  rule). `size="card"` is a single line, "🏆 university · year" (all six
+  fit a 303px card; ellipsis is only a safety net), with the award name in
+  `sr-only` text — the card descriptions already name the award. No foil,
+  nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts

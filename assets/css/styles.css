@@ -530,31 +530,7 @@ main:focus {
   vertical-align: 1px;
 }
 
-/* Card tech row: icons only, names in alt text and tooltips */
-.card-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8) var(--space-16);
-  list-style: none;
-  margin: var(--space-8) 0 0;
-  padding: 0;
-}
-
-.card-tech li {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  line-height: 1.3;
-  color: var(--text-secondary);
-}
-
-.card-tech .tech-icon {
-  width: 22px;
-  height: 22px;
-}
-
-.card h3 .pill {
+.card-title .pill {
   font-family: var(--font-sans);
   font-weight: 400;
 }
@@ -1054,13 +1030,65 @@ main iframe {
   color: var(--accent);
 }
 
-.card-body {
-  padding-top: var(--space-12);
+.card-title {
+  font-size: 21px;
+  margin: var(--space-12) 0 var(--space-4);
 }
 
-.card-body h3 {
-  font-size: 21px;
-  margin: 0 0 var(--space-4);
+/* One-line award on cards: 🏆 university · year */
+.award-card {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  margin: 0 0 var(--space-8);
+  font-size: 15px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+.award-card .award-icon {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.award-card-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.award-card-school {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.award-card-year {
+  color: var(--text-secondary);
+}
+
+/* Cards in a row line up part by part (image, title, award, description)
+   with subgrid, so an award line never pushes one card's description below
+   its neighbour's. Browsers without subgrid just stack each card. */
+@supports (grid-template-rows: subgrid) {
+  .card-grid {
+    row-gap: 0;
+    margin-bottom: var(--space-16);
+  }
+
+  .card {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: start;
+    /* the space between rows of cards */
+    padding-bottom: var(--space-32);
+  }
+
+  .card-media { grid-row: 1; }
+  .card-title { grid-row: 2; }
+  .award-card { grid-row: 3; }
+  .card-description { grid-row: 4; }
 }
 
 .card-description {
