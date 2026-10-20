@@ -1,0 +1,25 @@
+{%- comment -%}
+  A hackathon award as one unit: the trophy and the award, then the
+  university, the event and the year on the line below. The university
+  comes first because it's the name people recognise. Used under the title
+  on project cards, and as a box under the abstract on project pages.
+  Params: item (a project), size="large" for the project page.
+{%- endcomment -%}
+{%- assign a = include.item -%}
+{%- if a.award -%}
+{%- assign where = "" -%}
+{%- if a.organization -%}{%- assign where = where | append: a.organization | append: "|" -%}{%- endif -%}
+{%- if a.event -%}{%- assign where = where | append: a.event | append: "|" -%}{%- endif -%}
+{%- if a.date -%}{%- assign award_year = a.date | date: "%Y" -%}{%- assign where = where | append: award_year -%}{%- endif -%}
+{%- assign where_parts = where | split: "|" %}
+<div class="award{% if include.size == 'large' %} award-large{% endif %}">
+  <span class="award-icon" aria-hidden="true">🏆</span>
+  <p class="award-text">
+    <span class="award-name"><span class="sr-only">Winner: </span>{{ a.award }}</span>
+    {%- if where_parts.size > 0 %}
+    {%- comment -%} each part stays whole, so lines only break between them; the space is an output tag because Liquid drops whitespace-only blocks {%- endcomment %}
+    <span class="award-where">{% for part in where_parts %}<span class="award-part">{{ part }}{% unless forloop.last %} ·{% endunless %}</span>{% unless forloop.last %}{{ " " }}{% endunless %}{% endfor %}</span>
+    {%- endif %}
+  </p>
+</div>
+{%- endif -%}

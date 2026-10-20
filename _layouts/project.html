@@ -16,15 +16,17 @@ layout: default
 {% if page.category == "Hackathon" %}{% assign eyebrow_label = "Hackathons" %}{% endif %}
 {% include page-header.html eyebrow=eyebrow_label title=page.title abstract=page.description %}
 
-{% include metadata-row.html tech=page.tech award=page.award status=page.status %}
+{% include award.html item=page size="large" %}
 
-{% if page.event or page.organization %}
+{% include metadata-row.html tech=page.tech status=page.status %}
+
+{% unless page.award %}{% if page.event or page.organization %}
 <p class="meta">
   {%- if page.event -%}{{ page.event }}{%- endif -%}
   {%- if page.event and page.organization %} · {% endif -%}
   {%- if page.organization -%}{{ page.organization }}{%- endif -%}
 </p>
-{% endif %}
+{% endif %}{% endunless %}
 
 {% assign body_parts = content | split: '<h2 id="what-i-built">' %}
 

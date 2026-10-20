@@ -66,13 +66,22 @@ permalink: /bio/
     <ul class="win-list">
       {% for p in wins %}
       <li>
-        <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
-        <span class="meta">{{ p.award }}{% if p.event %} · {{ p.event }}{% elsif p.organization %} · {{ p.organization }}{% endif %}</span>
+        <a class="win-row" href="{{ p.url | relative_url }}">
+          <span class="award-icon" aria-hidden="true">🏆</span>
+          <span class="win-main">
+            <span class="win-award">{{ p.award }}</span>
+            <span class="win-project">{{ p.title }}{% if p.event %} · {{ p.event }}{% endif %}</span>
+          </span>
+          <span class="win-side">
+            <span class="win-school">{{ p.organization }}</span>
+            <span class="win-year">{{ p.date | date: "%Y" }}</span>
+          </span>
+        </a>
       </li>
       {% endfor %}
     </ul>
     {% endif %}
-    {% if award.url %}<a href="{{ award.url }}" target="_blank" rel="noopener">View: {{ award.title }}</a>{% endif %}
+    {% if award.url %}<p class="win-more"><a href="{{ award.url }}" target="_blank" rel="noopener">{% if award.url contains "devpost.com" %}All {{ award.title | downcase }} on Devpost{% else %}{{ award.title }}{% endif %}</a></p>{% endif %}
   </li>
   {% endfor %}
 </ul>

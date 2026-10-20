@@ -90,8 +90,8 @@ Mami's request; don't bring it back unless asked.
 
 All text pairs are at least 4.5:1 (accent: 11.2:1 on `--bg`, 4.7:1
 on `--surface`). Links are ink-colored with a soft accent underline that
-turns fully accent on hover. Use the accent sparingly: links, the callout
-rule, award pills.
+turns fully accent on hover. Use the accent sparingly: links, the callout and
+award-box rule, the current-page dot in the nav.
 
 ### Type
 
@@ -162,8 +162,8 @@ cards and images, pills fully rounded.
   page's eyebrow/h1/intro by hand in Markdown.
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
-- `metadata-row.html` — "In progress" (when `status: ongoing`) and award
-  pills (the award pill starts with 🏆), then the tech stack as a boxless row: 24px icon + name, each
+- `metadata-row.html` — the "In progress" pill (when `status: ongoing`),
+  then the tech stack as a boxless row: 24px icon + name, each
   linking to the tech's official site (new tab, `rel="noopener"`, since the
   reader is mid-article). Tech without a `url` renders unlinked.
 - `tech-icon.html` — one tech icon (`px` sets the size; not `size`, which
@@ -172,17 +172,16 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards. Projects with an `award` get a festive
-  gold-foil band across the whole bottom of the cover image (no border, no
-  inset from the edges): 🏆, the award in bold, then "event ·
-  organization" (the university), dark text (8:1+). Ten confetti pieces
-  (`.confetti i`, in the markup) fall through the band on a loop at
-  different speeds; under reduced motion they rest, scattered. On card
-  hover a shine sweeps across and the trophy wiggles;
-  it doesn't zoom with the image. The award pill on project pages uses the
-  same gold foil. Tech shows as 22px icon + name, wrapping
-  (plain text, not links — the whole card is already a link),
-  plus the "In progress" pill on ongoing projects
+- `card-grid.html` — project cards. Projects with an `award` show
+  `award.html` under the title (nothing on the cover image). Tech shows as
+  22px icon + name, wrapping (plain text, not links — the whole card is
+  already a link), plus the "In progress" pill on ongoing projects
+- `award.html` — a hackathon award as one unit: 🏆 hanging on the left, the
+  award in bold `--text`, then **university · event · year** in
+  `--text-secondary` (university first: it's the name people recognise).
+  Lines only break between parts, never inside a name. `size="large"` on
+  project pages puts it in a callout-style box (`--surface`, 3px accent
+  rule). No foil, nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
@@ -242,7 +241,9 @@ the content under the tabs differs:
 - **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`, in
   `.bio-text`), the personal photo grid, then Experience, Education, Awards,
   Certificates, Languages and Interests. The hackathon award lists every project with an
-  `award` in its front matter. Existing copy is good — keep its voice, don't
+  `award` as rows like the post list (🏆, award and project on the left,
+  university and year on the right; each row links to the project), then
+  "All 12 hackathon wins on Devpost". Existing copy is good — keep its voice, don't
   corporate-ize it.
 
 `featured: true` in the front matter is still unused.
@@ -263,7 +264,8 @@ under each heading, then "See all N … projects" to the category page when
 there are more. Each category page shows all of its own.
 
 Detail page order: breadcrumb → eyebrow (category) → title → abstract →
-metadata row (tech stack) + award badges + host university → Overview →
+award box (award, university, event, year) → metadata row (tech stack) →
+Overview →
 screenshots → "What I built" → outbound links (live demo, GitHub, Devpost) →
 See Also → prev/next.
 
@@ -516,6 +518,10 @@ done.
 
 ## Things that have already gone wrong
 
+- **A gold-foil award band with looping confetti** sat over the bottom of
+  each hackathon card's screenshot until October 2026. It hid the image,
+  moved forever (WCAG 2.2.2), outshouted the project titles, and split the
+  award from its university on project pages. Replaced by `award.html`.
 - **Pages jumped sideways between each other** (October 2026): with a mouse
   or "always show scroll bars", short pages that don't scroll (`/blog/`,
   `/projects/category/work/`) had no scrollbar, so the centred layout sat

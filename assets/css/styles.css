@@ -559,15 +559,6 @@ main:focus {
   font-weight: 400;
 }
 
-/* Award pill on project pages: the same gold foil as the card badge */
-.pill-award {
-  color: #2b1d00;
-  font-weight: 700;
-  border-color: rgb(255 255 255 / 0.5);
-  background: linear-gradient(135deg, #fff1b8 0%, #f8d35e 38%, #eab53a 70%, #f7d774 100%);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.7);
-}
-
 .pill-tag:hover {
   color: var(--text);
   border-color: var(--border-strong);
@@ -831,24 +822,96 @@ main iframe {
   margin-bottom: var(--space-4);
 }
 
-/* Award-winning projects listed under the hackathon award */
+/* Hackathon wins on the full bio: one row per win, like the post list.
+   Trophy, then the award and the project; the university and the year on
+   the right. The whole row links to the project. */
 
 .win-list {
   list-style: none;
-  margin: var(--space-12) 0;
+  margin: var(--space-16) 0 var(--space-12);
   padding: 0;
 }
 
-.win-list li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 var(--space-8);
-  padding: var(--space-4) 0;
+.win-list li + li {
+  border-top: 1px solid var(--border);
 }
 
-.win-list .meta {
-  margin: 0;
+.win-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: var(--space-12);
+  align-items: start;
+  padding: var(--space-12) 0;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.win-row .award-icon {
+  font-size: 17px;
+  line-height: 26px;
+}
+
+.win-main,
+.win-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.win-side {
+  align-items: flex-end;
+  text-align: right;
+  padding-left: var(--space-12);
+}
+
+.win-award {
+  font-weight: 700;
+  line-height: 26px;
+  transition: color var(--transition);
+}
+
+.win-school {
+  line-height: 26px;
+}
+
+.win-project,
+.win-year {
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
+}
+
+.win-row:hover .win-award {
+  color: var(--accent);
+}
+
+.entry-list .win-more {
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .win-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .win-side {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+    align-items: baseline;
+    text-align: left;
+    padding-left: 0;
+  }
+
+  .win-school {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--text-secondary);
+  }
+
+  .win-year::before {
+    content: "· ";
+  }
 }
 
 /* Callout (Note / Tip / Looking for) */
@@ -924,140 +987,67 @@ main iframe {
   transform: scale(1.04);
 }
 
-/* Hackathon award: a gold-foil band across the whole bottom of the cover
-   image, with confetti drifting down through it. On hover a shine sweeps
-   across and the trophy wiggles. The band sits on
-   screenshots). */
-.card-award {
-  --gold-foil: linear-gradient(135deg, #fff1b8 0%, #f8d35e 38%, #eab53a 70%, #f7d774 100%);
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
+/* Hackathon award (award.html): one unit everywhere. The trophy hangs on
+   the left; the award in bold, then university · event · year, muted.
+   Nothing sits on the screenshot and nothing moves on its own. */
+.award {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-8);
+  align-items: start;
+  margin: var(--space-4) 0 var(--space-8);
+}
+
+.award-icon {
+  font-family: var(--font-emoji);
+  font-size: 17px;
+  line-height: 23px;
+}
+
+.award-text {
   margin: 0;
-  padding: 10px var(--space-16);
-  overflow: hidden;
-  isolation: isolate;
-  background: var(--gold-foil);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.65);
-  color: #2b1d00;
-  font-size: 14px;
-  line-height: 1.3;
 }
 
-/* Confetti: ten small pieces, each falling through the band at its own
-   speed, sway and color, looping. */
-.confetti {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.confetti i {
-  position: absolute;
-  top: -10px;
-  width: 4px;
-  height: 7px;
-  border-radius: 1px;
-  background: #e2557a;
-  opacity: 0.85;
-}
-
-.confetti i:nth-child(1)  { left: 6%;  background: #e2557a; }
-.confetti i:nth-child(2)  { left: 15%; background: #2f9e8f; width: 5px; height: 5px; border-radius: 50%; }
-.confetti i:nth-child(3)  { left: 26%; background: #ffffff; }
-.confetti i:nth-child(4)  { left: 37%; background: #6c63d9; }
-.confetti i:nth-child(5)  { left: 48%; background: #e2557a; width: 5px; height: 5px; border-radius: 50%; }
-.confetti i:nth-child(6)  { left: 58%; background: #2f9e8f; }
-.confetti i:nth-child(7)  { left: 68%; background: #ffffff; width: 4px; height: 4px; border-radius: 50%; }
-.confetti i:nth-child(8)  { left: 77%; background: #6c63d9; }
-.confetti i:nth-child(9)  { left: 87%; background: #e2557a; }
-.confetti i:nth-child(10) { left: 95%; background: #2f9e8f; width: 5px; height: 5px; border-radius: 50%; }
-
-/* Without motion, the pieces just rest scattered in the band */
-@media (prefers-reduced-motion: reduce) {
-  .confetti i:nth-child(odd) { top: 6px; }
-  .confetti i:nth-child(even) { top: auto; bottom: 6px; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .confetti i {
-    animation: confetti-fall 3.2s linear infinite;
-  }
-
-  .confetti i:nth-child(1)  { animation-duration: 3.1s; animation-delay: -0.2s; }
-  .confetti i:nth-child(2)  { animation-duration: 3.8s; animation-delay: -1.9s; }
-  .confetti i:nth-child(3)  { animation-duration: 2.7s; animation-delay: -1.1s; }
-  .confetti i:nth-child(4)  { animation-duration: 3.5s; animation-delay: -2.6s; }
-  .confetti i:nth-child(5)  { animation-duration: 4.1s; animation-delay: -0.7s; }
-  .confetti i:nth-child(6)  { animation-duration: 2.9s; animation-delay: -2.2s; }
-  .confetti i:nth-child(7)  { animation-duration: 3.6s; animation-delay: -1.4s; }
-  .confetti i:nth-child(8)  { animation-duration: 3.0s; animation-delay: -0.4s; }
-  .confetti i:nth-child(9)  { animation-duration: 3.9s; animation-delay: -3.0s; }
-  .confetti i:nth-child(10) { animation-duration: 3.3s; animation-delay: -1.6s; }
-}
-
-@keyframes confetti-fall {
-  0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(4px, 20px) rotate(90deg); }
-  50%  { transform: translate(-3px, 40px) rotate(180deg); }
-  75%  { transform: translate(3px, 60px) rotate(270deg); }
-  100% { transform: translate(0, 80px) rotate(360deg); }
-}
-
-/* shine that sweeps across on hover */
-.card-award::after {
-  content: "";
-  position: absolute;
-  inset: -20% auto -20% 0;
-  width: 40%;
-  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.75), transparent);
-  transform: translateX(-160%) skewX(-18deg);
-  pointer-events: none;
-}
-
-.card-award .award-emoji {
-  font-size: 20px;
-  filter: drop-shadow(0 1px 1px rgb(120 80 0 / 0.35));
-}
-
-.card-award strong {
+.award-name {
   display: block;
-  font-weight: 800;
-  letter-spacing: 0.01em;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 23px;
+  color: var(--text);
 }
 
-.card-award-where {
+.award-where {
   display: block;
-  font-size: 13px;
-  color: #4a3500;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .card:hover .card-award::after,
-  .card:focus-visible .card-award::after {
-    animation: award-shine 900ms ease-out;
-  }
-
-  .card:hover .card-award .award-emoji,
-  .card:focus-visible .card-award .award-emoji {
-    animation: trophy-wiggle 700ms ease-in-out;
-  }
+.award-part {
+  white-space: nowrap;
 }
 
-@keyframes award-shine {
-  to { transform: translateX(380%) skewX(-18deg); }
+/* On a project page it gets its own box, in the callout style */
+.award-large {
+  column-gap: var(--space-16);
+  align-items: center;
+  margin: 0 0 var(--space-24);
+  padding: var(--space-16) var(--space-24) var(--space-16) var(--space-16);
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
 }
 
-@keyframes trophy-wiggle {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-12deg) scale(1.08); }
-  50% { transform: rotate(9deg) scale(1.08); }
-  75% { transform: rotate(-5deg); }
+.award-large .award-icon {
+  font-size: 28px;
+  line-height: 1;
 }
+
+.award-large .award-name {
+  font-size: 18px;
+  line-height: 26px;
+}
+
 
 .card:hover h3,
 .card:focus-visible h3 {
@@ -1071,18 +1061,6 @@ main iframe {
 .card-body h3 {
   font-size: 21px;
   margin: 0 0 var(--space-4);
-}
-
-.award-emoji {
-  flex: none;
-  font-family: var(--font-emoji);
-  font-size: 18px;
-  line-height: 1;
-}
-
-.pill-award .award-emoji {
-  font-size: 14px;
-  margin-right: 4px;
 }
 
 .card-description {
