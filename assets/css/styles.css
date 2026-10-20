@@ -1035,8 +1035,8 @@ main iframe {
   color: var(--accent);
 }
 
-/* The → after a project or post title (arrow-title.html): says "this is a
-   link", follows the title colour, nudges right on hover */
+/* The ↗ after a project or post title (arrow-title.html): says "this is a
+   link", follows the title colour, nudges up and right on hover */
 .title-end {
   white-space: nowrap;
 }
@@ -1059,7 +1059,7 @@ main iframe {
 .card:focus-visible .link-arrow,
 .post-row:hover .link-arrow,
 .post-row:focus-visible .link-arrow {
-  transform: translateX(3px);
+  transform: translate(2px, -2px);
 }
 
 .card-title {
@@ -1067,15 +1067,13 @@ main iframe {
   margin: var(--space-12) 0 var(--space-4);
 }
 
-/* One-line award on cards: 🏆 university · year */
+/* Award in project lists: 🏆 and the award title, then university · year */
 .award-card {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-8);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-8);
+  align-items: start;
   margin: 0 0 var(--space-8);
-  font-size: 15px;
-  line-height: 22px;
-  white-space: nowrap;
 }
 
 .award-card .award-icon {
@@ -1084,18 +1082,27 @@ main iframe {
 }
 
 .award-card-text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0;
 }
 
-.award-card-school {
-  font-weight: 600;
+.award-card-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
   color: var(--text);
 }
 
-.award-card-year {
+.award-card-where {
+  display: block;
+  font-size: 15px;
+  line-height: 22px;
   color: var(--text-secondary);
+}
+
+.award-card-school,
+.award-card-year {
+  white-space: nowrap;
 }
 
 .card-description {

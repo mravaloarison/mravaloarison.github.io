@@ -145,19 +145,20 @@ things, cards and images (Mami wanted them a little squarer than the old
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
-- Post lists are quiet rows: serif title (with a small → after it, see
+- Post lists are quiet rows: serif title (with a small ↗ after it, see
   `arrow-title.html`) on the left, date on the right, hairline between rows
   (`post-list.html`).
 - Project lists (`card-grid.html`) are one project per row, like
   brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
   6px radius, hairline border) on the left; on the right the serif title with
-  a → after it, the one-line award on award projects ("🏆 university ·
-  year"), and the description; a hairline between rows, like the post list.
+  a ↗ after it, the award on award projects (🏆 and the award title, then
+  "university · year" under it), and the description; a hairline between
+  rows, like the post list.
   On phones each project stacks (image, then the text) with 32px between —
   Mami likes the phone version as it is. No tech stack in lists; it's on each
   project page. No boxes, no shadows. On hover the row never moves; the
   thumbnail zooms to 1.04 inside its frame (`overflow: hidden`, 300ms), the
-  title turns accent and the arrow nudges right.
+  title turns accent and the arrow nudges up and right.
 
 ### Components in `_includes/`
 
@@ -184,20 +185,20 @@ things, cards and images (Mami wanted them a little squarer than the old
   (via `arrow-title.html`, plus the "In progress" pill on ongoing projects),
   `award.html size="card"` on award projects, and the description. Rows from
   601px, stacked on phones. Nothing on the thumbnail, no tech row.
-- `arrow-title.html` — a list title followed by a small → (inline SVG,
-  `currentColor`) that says "this is a link". Used for project and post
-  titles in lists. The last word and the arrow are wrapped together
-  (`.title-end`, `nowrap`) so the arrow never wraps alone. → rather than ↗,
-  because ↗ usually means "opens another site".
+- `arrow-title.html` — a list title followed by a small ↗ (inline SVG,
+  `currentColor`; Mami picked ↗, like brittanychiang.com) that says "this is
+  a link". Used for project and post titles in lists. The last word and the
+  arrow are wrapped together (`.title-end`, `nowrap`) so the arrow never
+  wraps alone.
 - `award.html` — a hackathon award as one unit: 🏆 hanging on the left, the
   award in bold `--text`, then **university · event · year** in
   `--text-secondary` (university first: it's the name people recognise).
   Lines only break between parts, never inside a name. `size="large"` on
   project pages puts it in a callout-style box (`--surface`, 3px accent
-  rule). `size="card"` is a single line, "🏆 university · year" (fits every
-  row and phone width; ellipsis is only a safety net), with the award name in
-  `sr-only` text — the card descriptions already name the award. No foil,
-  nothing over the image, no animation.
+  rule). `size="card"` (project lists) is two short lines: 🏆 and the award
+  title in bold, then "university · year", muted. Each line fits on one line
+  for all six awards, even at phone width. No foil, nothing over the image,
+  no animation.
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
