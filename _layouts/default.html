@@ -28,7 +28,6 @@
       </button>
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
-          <li><a href="{{ '/' | relative_url }}"{% if section == "about" %} aria-current="{% if page.url == '/' %}page{% else %}true{% endif %}"{% endif %}>About</a></li>
           <li class="has-sub">
             <a href="{{ '/projects/' | relative_url }}"{% if section == "projects" %} aria-current="{% if page.url == '/projects/' %}page{% else %}true{% endif %}"{% endif %}>Projects<span class="nav-chevron" aria-hidden="true"></span></a>
             <ul class="nav-sub" aria-label="Project types">

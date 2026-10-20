@@ -112,8 +112,9 @@ cards and images, pills fully rounded.
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
 - Header: the logo on the left (the M mark, drawn in CSS colours in the
-  accent yellow, linking to About). The nav links (About · Projects · Arts ·
-  Blog) on the right, so the nav sits at the same spot on every page. The
+  accent yellow). The logo is the only link to About; there is no "About"
+  nav link (removed October 2026 at Mami's request). The nav links
+  (Projects · Arts · Blog) on the right, so the nav sits at the same spot on every page. The
   current section's link is bold and carries `aria-current`. The Arts link
   only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
