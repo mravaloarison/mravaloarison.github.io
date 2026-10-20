@@ -71,7 +71,7 @@ module PortfolioSEO
     # Images that appear on an index-type page: the cards it lists, plus About photos.
     def page_images(page)
       url = page.url
-      photos = url == "/" ? PortfolioSEO.photos(@site).map { |p| p["src"] } : []
+      photos = url == "/bio/" ? PortfolioSEO.photos(@site).map { |p| p["src"] } : []
       featured = url == "/" ? PortfolioSEO.projects(@site).select { |d| d.data["featured"] }.map { |d| d.data["image"] } : []
       listed =
         case url

@@ -110,23 +110,24 @@ cards and images, pills fully rounded.
 
 - One centered column, `--measure` 680px of text width, 24px side padding
   (16px under 600px). No horizontal page scroll, ever.
-- Header: no site name or logo. The nav links (About · Projects · Arts ·
-  Blog) on the left, spanning the same centered 680px column on every page,
-  so it never moves between pages. The current section's link is bold and
-  carries `aria-current`. The Arts link only appears once `_arts/` has a piece.
+- Header: the logo on the left (the M mark, drawn in CSS colours in the
+  accent yellow, linking to About). The nav links (About · Projects · Arts ·
+  Blog) on the right, so the nav sits at the same spot on every page. The
+  current section's link is bold and carries `aria-current`. The Arts link
+  only appears once `_arts/` has a piece.
 - **Projects dropdown**: above 600px, hovering or focusing "Projects" opens
   a small menu of every project type (from `_data/categories.yml`; labels
   only, no counts or emoji), CSS only (`:hover` / `:focus-within`).
   "Projects" itself stays a link to `/projects/`. In the phone drawer the
   types sit indented under Projects.
-- Phones (≤600px): burger on the left. The burger morphs into an × and slides
-  the links in from the left as a drawer (360ms,
+- Phones (≤600px): logo on the left, burger on the right. The burger morphs
+  into an × and slides the links in from the right as a drawer (360ms,
   `cubic-bezier(0.32, 0.72, 0, 1)`), links fading in one after another, with
   a dim overlay behind. Escape, the overlay, or the × closes it; focus stays
   inside while open. This only applies when `html.js` is set by the head
   script — with JS off the links stay inline on the left, wrapping if needed.
 - **Photo grid** (`photo-grid.html`): personal photos, leerob.com style, at
-  the end of the About Bio. Listed in `_data/photos.yml`, files in
+  the end of the full bio (`/bio/`). Listed in `_data/photos.yml`, files in
   `assets/images/photos/`, run through `optimize-images.py`. First photo
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
@@ -203,26 +204,30 @@ detail pages.
 /blog/:year/:month/:day/:slug/      Post
 ```
 
-### About (`/`)
+### About (`/`) and full bio (`/bio/`)
 
 **All About text lives in `_data/about.yml`** — the headline under the name,
 the "Looking for" box, the Bio (Markdown), and every resume section
 (experience, education, awards, certificates, languages, interests).
-`index.md` is layout only. In the YAML, `%email%` becomes the site email
-and `%drawing%` becomes the Arts link once art exists. Edit content there,
-never in `index.md`.
+`index.md` and `bio.md` are layout only. In the YAML, `%email%` becomes the
+site email and `%drawing%` becomes the Arts link once art exists. Edit
+content there, never in the layout files.
 
-A long-form page, not a landing page. Structure it as:
-Bio (the h2 is "Bio", not "Overview"; "About" eyebrow above the h1) → Topics: Experience, Education, Awards, Certificates,
-Languages, Interests. The headline under the name says what Mami builds
-and that Mami is looking for a master's program and scholarships. The
-"Looking for" callout is off (`looking_for:` empty in `about.yml`; filling
-it in brings the box back between the profile links and the Bio). The
-hackathon award lists every project with an `award` in its front matter. There
-is no "Latest work" section (removed October 2026; `featured: true` is still
-in MyTime's and DogDuckGo's front matter but nothing reads it). Existing copy is good — keep
-its voice, don't corporate-ize it.
+About is split in two:
 
+- **Short About (`/`, `index.md`)**, in this order: the headline as the
+  abstract under the name, the profile links (email, GitHub, LinkedIn,
+  Devpost, Resume, and a "Full bio" link), the "Looking for" callout (off
+  while `looking_for:` is empty), then **Projects** (the two most recent
+  projects by date, with "See all N projects") and **Blog** (the two most
+  recent posts, with "See all blog posts").
+- **Full bio (`/bio/`, `bio.md`)**: the **Bio** h2 (Markdown from
+  `about.yml`), the personal photo grid, then Experience, Education,
+  Awards, Certificates, Languages and Interests. The hackathon award lists
+  every project with an `award` in its front matter. Existing copy is good —
+  keep its voice, don't corporate-ize it.
+
+`featured: true` in the front matter is still unused.
 ### Projects
 
 Thirteen items, grouped **Work (2) · Personal (5) · Hackathons (6)**. Each
