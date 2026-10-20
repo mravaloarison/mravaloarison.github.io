@@ -238,7 +238,8 @@ strong {
   margin: 0 0 var(--space-12);
 }
 
-.abstract {
+.abstract,
+.bio-text {
   font-family: var(--font-serif);
   font-size: 22px;
   line-height: 1.5;
@@ -787,36 +788,40 @@ main iframe {
   border-color: var(--text-secondary);
 }
 
-/* Bio row under the name: "Bio" label, Short | Long tabs on the right */
+/* Bio row under the name, like leerob.com: "Bio" on the left, Short | Long
+   on the right, one hairline under the row, the current tab underlined
+   right on top of it. */
 
 .bio-tabs {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-16);
-  margin: 0 0 var(--space-24);
+  margin: var(--space-32) 0 var(--space-24);
   border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.4;
 }
 
 .bio-tabs-label {
   margin: 0;
-  padding-bottom: var(--space-8);
-  font-size: 16px;
+  padding-bottom: var(--space-12);
   color: var(--text-secondary);
 }
 
 .bio-tabs-nav {
   display: flex;
-  gap: var(--space-24);
+  gap: var(--space-16);
 }
 
 .bio-tabs-nav a {
-  padding-bottom: var(--space-8);
-  font-size: 16px;
+  display: block;
+  padding-bottom: var(--space-12);
+  margin-bottom: -1px;
+  border-bottom: 1px solid transparent;
   color: var(--text-secondary);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  margin-bottom: -1px;
+  transition: color var(--transition), border-color var(--transition);
 }
 
 .bio-tabs-nav a:hover {
@@ -828,10 +833,17 @@ main iframe {
   border-bottom-color: var(--text);
 }
 
-.bio-lead {
-  margin: 0 0 var(--space-32);
-  font-size: 20px;
-  line-height: 1.6;
+/* Bio text under the tabs, short and long (font is set with .abstract above) */
+.bio-text {
+  margin-bottom: var(--space-32);
+}
+
+.bio-text p {
+  margin: 0 0 var(--space-24);
+}
+
+.bio-text p:last-child {
+  margin-bottom: 0;
 }
 
 /* Profile links (About) */
@@ -1400,7 +1412,8 @@ figcaption {
     margin-top: var(--space-48);
   }
 
-  .abstract {
+  .abstract,
+  .bio-text {
     font-size: 20px;
   }
 

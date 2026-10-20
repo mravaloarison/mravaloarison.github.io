@@ -98,6 +98,7 @@ rule, award pills.
 | Eyebrow                 | 14px, uppercase, 0.06em   | Nunito 600            |
 | Page title (h1)         | clamp(36px, 6vw, 48px)    | Newsreader 500        |
 | Abstract under h1       | 22px                      | Newsreader            |
+| Bio text (short + long) | 22px, as the abstract     | Newsreader            |
 | Section (h2)            | 29px                      | Newsreader 500        |
 | Subsection (h3)         | 22px                      | Newsreader 500        |
 | Body                    | 18px, line-height 1.65    | Nunito 400            |
@@ -213,23 +214,28 @@ the "Looking for" box, the Bio (Markdown), and every resume section
 site email and `%drawing%` becomes the Arts link once art exists. Edit
 content there, never in the layout files.
 
-Both About pages use the same format: the name as the h1, then a "Bio" row
-with **Short | Long** tabs on the right (`bio-tabs.html`, a hairline under the
-row, the current tab underlined). No eyebrow, no abstract. Only the content
-under the tabs differs:
+Both About pages use the same format, modelled on leerob.com's Default | Long
+bio: the name as the h1, then a "Bio" row (`bio-tabs.html`): "Bio" on the
+left and **Short | Long** on the right, 15px Nunito in `--text-secondary`,
+one hairline under the row, the current tab in `--text` with a 1px underline
+sitting on the hairline. No eyebrow, no abstract. The bio text under the row
+is `.bio-text` on both pages, which shares its font with `.abstract`
+(Newsreader 22px, `--text-secondary`; Mami wants this serif for both). Only
+the content under the tabs differs:
 
-- **Short (`/`, `index.md`)**: the headline as a lead paragraph, the profile
+- **Short (`/`, `index.md`)**: the headline (in `.bio-text`), the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects") and **Blog** (the two most
   recent posts, with "See all blog posts").
-- **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`), the
-  personal photo grid, then Experience, Education, Awards, Certificates,
-  Languages and Interests. The hackathon award lists every project with an
+- **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`, in
+  `.bio-text`), the personal photo grid, then Experience, Education, Awards,
+  Certificates, Languages and Interests. The hackathon award lists every project with an
   `award` in its front matter. Existing copy is good — keep its voice, don't
   corporate-ize it.
 
 `featured: true` in the front matter is still unused.
+
 ### Projects
 
 Thirteen items, grouped **Work (2) · Personal (5) · Hackathons (6)**. Each
@@ -499,6 +505,11 @@ done.
 
 ## Things that have already gone wrong
 
+- **Stale CSS after a deploy** (October 2026): GitHub Pages lets browsers
+  cache assets for 10 minutes and a normal reload keeps them, so new markup
+  showed up with the old stylesheet and looked broken. The stylesheet and
+  script links carry `?v={{ site.time | date: '%s' }}` so every build gets a
+  new URL. Keep it.
 - **A light theme existed** until October 2026, with a day/night toggle in the
   header and `sessionStorage` to carry the choice. Mami asked for dark only;
   the toggle, light tokens and their script were all removed.

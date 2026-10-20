@@ -17,7 +17,7 @@ seo:
 
 {% include bio-tabs.html current="short" %}
 
-<p class="bio-lead">{{ site.data.about.headline }}</p>
+<div class="bio-text"><p>{{ site.data.about.headline }}</p></div>
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>

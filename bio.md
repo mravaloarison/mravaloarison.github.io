@@ -16,7 +16,9 @@ permalink: /bio/
 {% include bio-tabs.html current="long" %}
 
 {% capture drawing_link %}{% if site.arts.size > 0 %}[drawing]({{ '/arts/' | relative_url }}){% else %}drawing{% endif %}{% endcapture %}
+<div class="bio-text">
 {{ site.data.about.bio | replace: "%email%", site.author.email | replace: "%drawing%", drawing_link | markdownify }}
+</div>
 
 {% include photo-grid.html %}
 
