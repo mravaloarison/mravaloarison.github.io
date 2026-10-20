@@ -179,7 +179,7 @@ module PortfolioSEO
         next unless a["show_wins"]
 
         PortfolioSEO.project_awards(@site).each do |d|
-          out << "  - #{d.data['award']} for [#{d.data['title']}](#{u(d.url)}) at #{[d.data['event'], d.data['organization']].compact.join(', ')}\n"
+          out << "  - #{PortfolioSEO.award_text(d.data)}, for [#{d.data['title']}](#{u(d.url)})\n"
         end
       end
       out << "\n### Certificates\n\n"
@@ -203,13 +203,13 @@ module PortfolioSEO
             out << "### #{x['title']} (#{c['name']} project)\n\n"
             out << "- Page: #{u(d.url)}\n"
             out << "- Status: in progress\n" if x["status"] == "ongoing"
-            out << "- Award: #{x['award']}#{x['event'] ? " at #{x['event']}" : ''}#{x['organization'] ? ", #{x['organization']}" : ''}\n" if x["award"]
+            out << "- Award: #{PortfolioSEO.award_text(x)}\n" if x["award"]
             out << "- Built with: #{Array(x['tech']).join(', ')}\n" if x["tech"]
             (x["links"] || {}).each { |k, v| out << "- #{k.capitalize}: #{v}\n" if v && !v.empty? }
             out << "- Screenshot: #{u(x['image'])} — #{x['image_alt']}\n" if x["image"]
             out << "\n#{x['description']}\n\n#{clean(d.content)}\n\n"
           else
-            award = x["award"] ? " Won #{x['award']}#{x['event'] ? " at #{x['event']}" : ''}." : ""
+            award = x["award"] ? " Won #{PortfolioSEO.award_text(x)}." : ""
             status = x["status"] == "ongoing" ? " (in progress)" : ""
             out << "- [#{x['title']}](#{u(d.url)})#{status}: #{x['description']}#{award} Built with #{Array(x['tech']).join(', ')}.\n"
           end

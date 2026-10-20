@@ -416,7 +416,16 @@ GitHub Actions — `.github/workflows/pages.yml`, Pages source "GitHub Actions")
   then skips itself), `/llms.txt` and `/llms-full.txt` (everything on the
   site as plain Markdown for AI assistants, built from the raw content).
 - `content_check.rb` — the build-time check from linking rule 8.
-- `seo_helpers.rb` — shared helpers.
+- `seo_helpers.rb` — shared helpers, including `award_text`, the one wording
+  for a hackathon award wherever search engines and AI assistants look:
+  "Best Use of Knot API at HackPrinceton (Princeton University, 2025)" —
+  always with the university and the year. JSON-LD (`award` on the project
+  and on the Person) and `llms.txt` / `llms-full.txt` all use it.
+- `seo_award_description.rb` — on award projects, the meta, Open Graph and
+  Twitter descriptions start with "Won <award_text>." and then the project's
+  description, so Google's snippet shows the award, university and year
+  even though the page abstract (Mami's wording) doesn't repeat them. Other
+  pages keep jekyll-seo-tag's normal description.
 
 All of it is generated from existing content, so new projects, posts, art
 and photos are picked up with no extra work. Facts that aren't visible on the
@@ -524,6 +533,11 @@ done.
 
 ## Things that have already gone wrong
 
+- **A colon in front matter broke a page silently** (October 2026): a
+  `description:` containing ": " is invalid YAML, and Jekyll only warns
+  ("YAML Exception") and publishes the page without its front matter (no
+  layout, no permalink). Avoid ": " in unquoted values or quote them, and
+  check the build output for "YAML Exception".
 - **A gold-foil award band with looping confetti** sat over the bottom of
   each hackathon card's screenshot until October 2026. It hid the image,
   moved forever (WCAG 2.2.2), outshouted the project titles, and split the

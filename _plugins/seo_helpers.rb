@@ -102,6 +102,35 @@ module PortfolioSEO
     projects(site).select { |d| d.data["award"] }.sort_by { |d| d.data["date"].to_s }.reverse
   end
 
+  # One wording for a hackathon award everywhere search engines and AI
+  # assistants look (meta description, JSON-LD, llms.txt), always with the
+  # university and the year:
+  #   "Best Use of Knot API at HackPrinceton (Princeton University, 2025)"
+  # `data` is a project's front matter (a Hash or a Liquid drop).
+  def award_text(data)
+    award = data["award"].to_s.strip
+    return nil if award.empty?
+
+    date = data["date"]
+    year = date.respond_to?(:year) ? date.year.to_s : date.to_s[0, 4]
+    detail = [data["organization"], year].map { |s| s.to_s.strip }.reject(&:empty?).join(", ")
+    event = data["event"].to_s.strip
+    text = award.dup
+    text << " at #{event}" unless event.empty?
+    text << " (#{detail})" unless detail.empty?
+    text
+  end
+
+  # Search snippet for an award project: the award first, so it survives
+  # Google's ~155-character cut, then the project's own description. The page
+  # itself still shows only the description, as Mami wrote it.
+  def seo_description(data)
+    award = award_text(data)
+    return nil unless award
+
+    "Won #{award}. #{data['description']}".strip
+  end
+
   # Empty Arts pages carry noindex (see head.html), so keep them out of the sitemap too.
   def empty_arts_page?(site, page)
     return false unless page.url.start_with?("/arts/")

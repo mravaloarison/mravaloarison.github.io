@@ -104,8 +104,7 @@ module PortfolioSEO
     def awards(site, about)
       list = Array(about["awards"]).map { |a| "#{a['title']} (#{a['awarder']}, #{a['date']})" }
       list + PortfolioSEO.project_awards(site).map do |d|
-        where = [d.data["event"], d.data["organization"]].compact.join(", ")
-        "#{d.data['award']} — #{d.data['title']}#{where.empty? ? '' : " (#{where})"}"
+        "#{PortfolioSEO.award_text(d.data)}, for #{d.data['title']}"
       end
     end
 
@@ -163,7 +162,7 @@ module PortfolioSEO
         "genre" => page["category"] == "Hackathon" ? "Hackathon project" : "#{page['category']} project",
         "keywords" => Array(page["tech"]).join(", "),
         "image" => PortfolioSEO.image_object(site, page["image"], page["image_alt"]),
-        "award" => page["award"] && [page["award"], page["event"], page["organization"]].compact.join(" — "),
+        "award" => PortfolioSEO.award_text(page),
         "creativeWorkStatus" => page["status"] == "ongoing" ? "In progress" : nil,
         "sameAs" => links.values.compact.reject(&:empty?),
         "isPartOf" => { "@id" => "#{PortfolioSEO.abs(site, '/projects/')}#webpage" },
@@ -172,6 +171,8 @@ module PortfolioSEO
         work["contentLocation"] = { "@type" => "Place", "name" => [page["event"], page["organization"]].compact.join(", ") }
       end
       wp = webpage(site, page, url, "ItemPage")
+      # same description as the meta tag: award, university and year first
+      wp["description"] = PortfolioSEO.seo_description(page) || page["description"]
       wp["mainEntity"] = { "@id" => work["@id"] }
       wp["primaryImageOfPage"] = work["image"]
       [wp, work.reject { |_, v| v.nil? || (v.respond_to?(:empty?) && v.empty?) }]

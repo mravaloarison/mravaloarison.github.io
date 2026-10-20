@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Full bio
-description: The full bio of Maminiaina "Mami" Ravaloarison, a Software Engineer from Madagascar in New York. Experience, education, hackathon awards, and interests.
+description: Full bio of Maminiaina "Mami" Ravaloarison, with experience, education, and hackathon wins at Princeton, Yale, Penn, RPI, Rutgers and Stony Brook.
 permalink: /bio/
 ---
 {%- comment -%}
