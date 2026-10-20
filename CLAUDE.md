@@ -108,8 +108,9 @@ award-box rule, the current-page dot in the nav.
 | Nav link (side/drawer)  | 22px / 30px               | Newsreader 500        |
 | Nav project type        | 16px / 18px               | Nunito 400            |
 
-Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px small, 10px
-cards and images, pills fully rounded.
+Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px for small
+things, cards and images (Mami wanted them a little squarer than the old
+10px), pills fully rounded.
 
 ### Layout
 
@@ -144,16 +145,19 @@ cards and images, pills fully rounded.
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
-- Post lists are quiet rows: serif title on the left, date on the right,
-  hairline between rows (`post-list.html`).
-- Project cards: image first (rounded, hairline border), serif title, then
-  on award projects one line "🏆 university · year", then the description.
-  No tech stack on cards — it's on each project page. Cards in a row line up
-  part by part (CSS subgrid: image, title, award, description rows), so an
-  award line never knocks a neighbour's description out of line; the award
-  line never wraps. No boxes around cards, no shadows. On hover the
-  card never moves (no lift); the cover image zooms to 1.04 inside its
-  frame (`overflow: hidden`, 300ms) and the title turns accent.
+- Post lists are quiet rows: serif title (with a small → after it, see
+  `arrow-title.html`) on the left, date on the right, hairline between rows
+  (`post-list.html`).
+- Project lists (`card-grid.html`) are one project per row, like
+  brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
+  6px radius, hairline border) on the left; on the right the serif title with
+  a → after it, the one-line award on award projects ("🏆 university ·
+  year"), and the description; a hairline between rows, like the post list.
+  On phones each project stacks (image, then the text) with 32px between —
+  Mami likes the phone version as it is. No tech stack in lists; it's on each
+  project page. No boxes, no shadows. On hover the row never moves; the
+  thumbnail zooms to 1.04 inside its frame (`overflow: hidden`, 300ms), the
+  title turns accent and the arrow nudges right.
 
 ### Components in `_includes/`
 
@@ -176,16 +180,22 @@ cards and images, pills fully rounded.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — project cards: image, title (plus the "In progress"
-  pill on ongoing projects), `award.html size="card"` on award projects,
-  description. Nothing on the cover image, no tech row.
+- `card-grid.html` — the project list: per project a thumbnail, the title
+  (via `arrow-title.html`, plus the "In progress" pill on ongoing projects),
+  `award.html size="card"` on award projects, and the description. Rows from
+  601px, stacked on phones. Nothing on the thumbnail, no tech row.
+- `arrow-title.html` — a list title followed by a small → (inline SVG,
+  `currentColor`) that says "this is a link". Used for project and post
+  titles in lists. The last word and the arrow are wrapped together
+  (`.title-end`, `nowrap`) so the arrow never wraps alone. → rather than ↗,
+  because ↗ usually means "opens another site".
 - `award.html` — a hackathon award as one unit: 🏆 hanging on the left, the
   award in bold `--text`, then **university · event · year** in
   `--text-secondary` (university first: it's the name people recognise).
   Lines only break between parts, never inside a name. `size="large"` on
   project pages puts it in a callout-style box (`--surface`, 3px accent
-  rule). `size="card"` is a single line, "🏆 university · year" (all six
-  fit a 303px card; ellipsis is only a safety net), with the award name in
+  rule). `size="card"` is a single line, "🏆 university · year" (fits every
+  row and phone width; ellipsis is only a safety net), with the award name in
   `sr-only` text — the card descriptions already name the award. No foil,
   nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below)

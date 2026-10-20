@@ -80,10 +80,11 @@
   --space-96: 96px;
 
   --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-md: 6px;
 
   --measure: 680px;
   --nav-width: 160px;
+  --thumb-width: 200px;
   /* Gap left above a heading when jumping to it with an #anchor link */
   --jump-offset: 40px;
 
@@ -922,18 +923,22 @@ main iframe {
   content: " →";
 }
 
-/* Card grid: image first, title and one line under it */
+/* Project list: one project per row. From 601px the thumbnail sits on the
+   left with the title, the award line and the description beside it, and a
+   hairline between rows, like the post list. On phones each project stacks:
+   image, then the text under it. */
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--space-32) var(--space-24);
   margin: var(--space-24) 0 var(--space-48);
 }
 
 .card {
   display: block;
   text-decoration: none;
+}
+
+.card + .card {
+  margin-top: var(--space-32);
 }
 
 /* Cover image: the card and its frame stay still; on hover the image zooms
@@ -1030,6 +1035,33 @@ main iframe {
   color: var(--accent);
 }
 
+/* The → after a project or post title (arrow-title.html): says "this is a
+   link", follows the title colour, nudges right on hover */
+.title-end {
+  white-space: nowrap;
+}
+
+.link-arrow {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.3em;
+  vertical-align: 0.02em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--transition);
+}
+
+.card:hover .link-arrow,
+.card:focus-visible .link-arrow,
+.post-row:hover .link-arrow,
+.post-row:focus-visible .link-arrow {
+  transform: translateX(3px);
+}
+
 .card-title {
   font-size: 21px;
   margin: var(--space-12) 0 var(--space-4);
@@ -1066,36 +1098,54 @@ main iframe {
   color: var(--text-secondary);
 }
 
-/* Cards in a row line up part by part (image, title, award, description)
-   with subgrid, so an award line never pushes one card's description below
-   its neighbour's. Browsers without subgrid just stack each card. */
-@supports (grid-template-rows: subgrid) {
-  .card-grid {
-    row-gap: 0;
-    margin-bottom: var(--space-16);
-  }
-
-  .card {
-    display: grid;
-    grid-row: span 4;
-    grid-template-rows: subgrid;
-    row-gap: 0;
-    align-content: start;
-    /* the space between rows of cards */
-    padding-bottom: var(--space-32);
-  }
-
-  .card-media { grid-row: 1; }
-  .card-title { grid-row: 2; }
-  .award-card { grid-row: 3; }
-  .card-description { grid-row: 4; }
-}
-
 .card-description {
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-secondary);
   margin: 0 0 var(--space-4);
+}
+
+@media (min-width: 601px) {
+  .card {
+    display: grid;
+    grid-template-columns: var(--thumb-width) minmax(0, 1fr);
+    /* any spare height from a tall thumbnail goes under the description */
+    grid-template-rows: auto auto 1fr;
+    column-gap: var(--space-24);
+    padding: var(--space-24) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .card:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card + .card {
+    margin-top: 0;
+  }
+
+  .card-media {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: start;
+  }
+
+  .card-title {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  .award-card {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .card-description {
+    grid-column: 2;
+    grid-row: 3;
+    margin-bottom: 0;
+  }
 }
 
 .card .meta {

@@ -1,16 +1,17 @@
 {%- comment -%}
-  Project cards: image, title, the one-line award (award projects only), and
-  the description. No tech stack here; it's on each project page.
+  Project list: one row per project (thumbnail, then title, the one-line award
+  on award projects, and the description beside it; stacked on phones). No
+  tech stack here; it's on each project page.
 {%- endcomment -%}
 <div class="card-grid">
   {% for item in include.items %}
   <a class="card" href="{{ item.url | relative_url }}">
     {% if item.image %}
     <div class="card-media">
-      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 400px" %}
+      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 200px" %}
     </div>
     {% endif %}
-    <h3 class="card-title">{{ item.title }}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
+    <h3 class="card-title">{% include arrow-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
     {% include award.html item=item size="card" %}
     <p class="card-description">{{ item.description }}</p>
   </a>
