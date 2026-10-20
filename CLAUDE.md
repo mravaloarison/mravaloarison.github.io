@@ -58,11 +58,18 @@ what's used is shipped:
   abstract under each page title. Weight 500 for headings.
 - **Nunito 400/600/700** (`--font-sans`) — body, nav, labels, meta, UI.
   Code stays monospace.
-- **Noto Color Emoji** (`--font-emoji`) — subset to 🏆 (hackathon awards), 2.9 KB, `noto-color-emoji-theme.woff2`.
-  Adding an emoji means re-fetching the subset from Google Fonts with
-  `text=` set to all of them and updating `unicode-range`.
 
 Newsreader latin and Nunito latin are preloaded from the head include.
+
+**Emoji are images, not a font** (an emoji font failed on iPhone, see
+"Things that have already gone wrong"). The two the site uses, 🔗 after list
+titles and 🏆 on awards, are Google's Noto Emoji artwork as SVGs in
+`assets/emoji/` (`link.svg`, `trophy.svg`), copied unchanged from
+github.com/googlefonts/noto-emoji (`2D/svg/`, Apache 2.0, with `LICENSE`
+beside them — keep it). To add one, copy `2D/svg/emoji_u<codepoint>.svg` in
+under a plain name, list it at the top of `LICENSE`, and use it as an
+`<img>` with `width`, `height` and `alt=""` (the text beside it carries the
+meaning).
 
 **Nothing is italic** — not the abstract, not blockquotes, not Markdown
 `*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No
@@ -145,20 +152,20 @@ things, cards and images (Mami wanted them a little squarer than the old
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
-- Post lists are quiet rows: serif title (with a small ↗ after it, see
-  `arrow-title.html`) on the left, date on the right, hairline between rows
+- Post lists are quiet rows: serif title (with Google's 🔗 after it, see
+  `link-title.html`) on the left, date on the right, hairline between rows
   (`post-list.html`).
 - Project lists (`card-grid.html`) are one project per row, like
   brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
   6px radius, hairline border) on the left; on the right the serif title with
-  a ↗ after it, the award on award projects (🏆 and the award title, then
-  "university · year" under it), and the description; a hairline between
-  rows, like the post list.
+  a 🔗 after it, the award on award projects (the trophy, as tall as the two
+  lines beside it: the award title, then "university · year"), and the
+  description; a hairline between rows, like the post list.
   On phones each project stacks (image, then the text) with 32px between —
   Mami likes the phone version as it is. No tech stack in lists; it's on each
   project page. No boxes, no shadows. On hover the row never moves; the
   thumbnail zooms to 1.04 inside its frame (`overflow: hidden`, 300ms), the
-  title turns accent and the arrow nudges up and right.
+  title turns accent and the 🔗 nudges up and right.
 
 ### Components in `_includes/`
 
@@ -182,23 +189,30 @@ things, cards and images (Mami wanted them a little squarer than the old
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
 - `card-grid.html` — the project list: per project a thumbnail, the title
-  (via `arrow-title.html`, plus the "In progress" pill on ongoing projects),
+  (via `link-title.html`, plus the "In progress" pill on ongoing projects),
   `award.html size="card"` on award projects, and the description. Rows from
   601px, stacked on phones. Nothing on the thumbnail, no tech row.
-- `arrow-title.html` — a list title followed by a small ↗ (inline SVG,
-  `currentColor`; Mami picked ↗, like brittanychiang.com) that says "this is
-  a link". Used for project and post titles in lists. The last word and the
-  arrow are wrapped together (`.title-end`, `nowrap`) so the arrow never
-  wraps alone.
-- `award.html` — a hackathon award as one unit: 🏆 hanging on the left, the
-  award in bold `--text`, then **university · event · year** in
-  `--text-secondary` (university first: it's the name people recognise).
-  Lines only break between parts, never inside a name. `size="large"` on
-  project pages puts it in a callout-style box (`--surface`, 3px accent
-  rule). `size="card"` (project lists) is two short lines: 🏆 and the award
-  title in bold, then "university · year", muted. Each line fits on one line
-  for all six awards, even at phone width. No foil, nothing over the image,
-  no animation.
+- `link-title.html` — a list title followed by Google's 🔗
+  (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
+  project and post titles in lists. Mami asked for the link emoji in October
+  2026 (it was a ↗ before, like brittanychiang.com). The last word and the
+  emoji are wrapped together (`.title-end`, `nowrap`) so the emoji never
+  wraps alone. On hover it nudges 2px up and right.
+- `award.html` — a hackathon award as one unit: Google's 🏆
+  (`assets/emoji/trophy.svg`) on the left, as tall as the two lines beside
+  it (Mami wants the cup to cover both), then the award in bold `--text`
+  with **university · event · year** in `--text-secondary` under it
+  (university first: it's the name people recognise). Lines only break
+  between parts, never inside a name, unless one name alone is wider than
+  the line (a long university on a small phone): then it wraps instead of
+  running off the page (`.award-part` is `inline-block`). Wrapped award
+  names and lines are balanced (`text-wrap: balance`), so no "Add-" / "On"
+  or lone year. `size="large"` on project pages puts it in a callout-style
+  box (`--surface`, 3px accent rule) with a 48px trophy (a 26px and a 22px
+  line). `size="card"` (project lists) is two 22px lines beside a 44px
+  trophy: the award title in bold, then "university · year", muted. Where a
+  long title wraps (narrow rows, phones) the trophy stays centred on the
+  block. No foil, nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
@@ -258,8 +272,9 @@ the content under the tabs differs:
 - **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`, in
   `.bio-text`), the personal photo grid, then Experience, Education, Awards,
   Certificates, Languages and Interests. The hackathon award lists every project with an
-  `award` as rows like the post list (🏆, award and project on the left,
-  university and year on the right; each row links to the project), then
+  `award` as rows like the post list (a 48px trophy covering the award and
+  project lines on the left, university and year on the right; each row
+  links to the project), then
   "All 12 hackathon wins on Devpost". Existing copy is good — keep its voice, don't
   corporate-ize it.
 
@@ -525,7 +540,8 @@ in the About page's `mainEntity` is the likely reason a test in October
 
 - `width` and `height` on every `<img>` to prevent layout shift.
 - `loading="lazy"` on everything below the fold; the hero image on a detail
-  page loads eagerly.
+  page loads eagerly. So do the emoji in `assets/emoji/`: one tiny file
+  repeated down a list, read as part of the text, so it shouldn't pop in.
 - Meaningful `alt` on every image. For artwork, describe the piece.
 - How it works here: put the original in `assets/images/` (Arts in
   `assets/images/arts/`), then run `python3 scripts/optimize-images.py`
@@ -563,6 +579,12 @@ in the About page's `mainEntity` is the likely reason a test in October
   each hackathon card's screenshot until October 2026. It hid the image,
   moved forever (WCAG 2.2.2), outshouted the project titles, and split the
   award from its university on project pages. Replaced by `award.html`.
+- **The trophy emoji font didn't show on iPhones** (October 2026): the 🏆
+  came from a 2.9 KB Noto Color Emoji subset, but that font is COLRv1, which
+  Safari and every iOS browser (all WebKit) can't read, so they showed
+  Apple's trophy instead. Google's own emoji artwork as SVG images
+  (`assets/emoji/`) looks the same everywhere. Don't go back to an emoji
+  font.
 - **Pages jumped sideways between each other** (October 2026): with a mouse
   or "always show scroll bars", short pages that don't scroll (`/blog/`,
   `/projects/category/work/`) had no scrollbar, so the centred layout sat

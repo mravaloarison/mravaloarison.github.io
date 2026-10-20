@@ -11,7 +11,7 @@
       {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) calc(100vw - 32px), 200px" %}
     </div>
     {% endif %}
-    <h3 class="card-title">{% include arrow-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
+    <h3 class="card-title">{% include link-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
     {% include award.html item=item size="card" %}
     <p class="card-description">{{ item.description }}</p>
   </a>

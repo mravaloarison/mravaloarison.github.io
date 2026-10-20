@@ -6,7 +6,7 @@
   {% for post in include.posts %}
   <li>
     <a class="post-row" href="{{ post.url | relative_url }}">
-      <span class="post-title">{% include arrow-title.html text=post.title %}</span>
+      <span class="post-title">{% include link-title.html text=post.title %}</span>
       <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
     </a>
     {% if include.descriptions and post.description %}<p class="post-description">{{ post.description }}</p>{% endif %}

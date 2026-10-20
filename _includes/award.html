@@ -1,21 +1,25 @@
 {%- comment -%}
-  A hackathon award as one unit: the trophy and the award, then the
-  university, the event and the year on the line below. The university
-  comes first because it's the name people recognise. Used as a box under
-  the abstract on project pages (size="large").
-  In project lists (size="card") it is two short lines: 🏆 and the award
-  title, then university · year (each project has its own row, so the
-  extra line can't knock anything out of line).
+  A hackathon award as one unit: the trophy, then the award on the first
+  line and the university, the event and the year on the line below. The
+  university comes first because it's the name people recognise. The
+  trophy is Google's 🏆 (Noto Emoji artwork, assets/emoji/trophy.svg) and
+  is as tall as the two lines beside it. alt="" because the award text
+  says it all.
+  On project pages (size="large") it's a box under the abstract. In
+  project lists (size="card") it's two short lines: the award title, then
+  university · year (each project has its own row, so the extra line can't
+  knock anything out of line).
   Params: item (a project), size ("large" | "card").
 {%- endcomment -%}
 {%- assign a = include.item -%}
+{%- assign trophy_src = '/assets/emoji/trophy.svg' | relative_url -%}
 {%- if a.award and include.size == "card" -%}
 {%- assign card_where = a.organization | default: a.event %}
 <div class="award-card">
-  <span class="award-icon" aria-hidden="true">🏆</span>
+  <img class="award-icon" src="{{ trophy_src }}" width="44" height="44" alt="">
   <p class="award-card-text">
     <span class="award-card-name"><span class="sr-only">Winner: </span>{{ a.award }}</span>
-    <span class="award-card-where"><span class="award-card-school">{{ card_where }}</span>{% if a.date %}<span class="award-card-year"> · {{ a.date | date: "%Y" }}</span>{% endif %}</span>
+    <span class="award-card-where"><span class="award-card-school">{{ card_where }}{% if a.date %} ·{% endif %}</span>{% if a.date %} <span class="award-card-year">{{ a.date | date: "%Y" }}</span>{% endif %}</span>
   </p>
 </div>
 {%- elsif a.award -%}
@@ -25,7 +29,7 @@
 {%- if a.date -%}{%- assign award_year = a.date | date: "%Y" -%}{%- assign where = where | append: award_year -%}{%- endif -%}
 {%- assign where_parts = where | split: "|" %}
 <div class="award{% if include.size == 'large' %} award-large{% endif %}">
-  <span class="award-icon" aria-hidden="true">🏆</span>
+  <img class="award-icon" src="{{ trophy_src }}" width="48" height="48" alt="">
   <p class="award-text">
     <span class="award-name"><span class="sr-only">Winner: </span>{{ a.award }}</span>
     {%- if where_parts.size > 0 %}

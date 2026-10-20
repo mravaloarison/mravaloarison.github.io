@@ -1,0 +1,13 @@
+{%- comment -%}
+  A list title followed by Google's 🔗 (Noto Emoji artwork,
+  assets/emoji/link.svg), which marks the row as a link (project lists and
+  post lists). The last word and the emoji are kept together, so the emoji
+  never wraps onto a line by itself. On hover it nudges up and right.
+  alt="" because it's decoration: the title is the link text.
+  Param: text (the title).
+{%- endcomment -%}
+{%- assign words = include.text | split: " " -%}
+{%- assign last_word = words | last -%}
+{%- assign lead_count = words | size | minus: 1 -%}
+{%- if lead_count > 0 -%}{{ words | slice: 0, lead_count | join: " " }} {% endif -%}
+<span class="title-end">{{ last_word }}<img class="link-emoji" src="{{ '/assets/emoji/link.svg' | relative_url }}" width="17" height="17" alt=""></span>

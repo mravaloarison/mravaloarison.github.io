@@ -1,7 +1,9 @@
 /* Fonts — self-hosted from Google Fonts / Fontsource, all SIL OFL.
    Newsreader (variable weight) for headings and the name,
-   Nunito (variable weight) for everything else,
-   Noto Color Emoji subset to the trophy on award pills. */
+   Nunito (variable weight) for everything else.
+   The two emoji (🔗 on list titles, 🏆 on awards) are Google's Noto Emoji
+   artwork as SVG images in assets/emoji/ (Apache 2.0, licence beside
+   them), not a font: iPhones can't show the Noto emoji font. */
 
 @font-face {
   font-family: "Newsreader";
@@ -39,16 +41,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* COLRv1 subset; browsers without COLRv1 skip it and use their own emoji */
-@font-face {
-  font-family: "Noto Color Emoji";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("../fonts/noto-color-emoji-theme.woff2") format("woff2") tech(color-COLRv1);
-  unicode-range: U+1F3C6;
-}
-
 /* Tokens */
 
 :root {
@@ -65,8 +57,6 @@
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
-  --font-emoji: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
-    sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --space-4: 4px;
@@ -823,9 +813,9 @@ main iframe {
   text-decoration: none;
 }
 
+/* the trophy is as tall as the award and project lines beside it */
 .win-row .award-icon {
-  font-size: 17px;
-  line-height: 26px;
+  align-self: center;
 }
 
 .win-main,
@@ -843,6 +833,8 @@ main iframe {
 .win-award {
   font-weight: 700;
   line-height: 26px;
+  /* if a long award wraps on a phone, two even lines, never "Add-" / "On" */
+  text-wrap: balance;
   transition: color var(--transition);
 }
 
@@ -968,21 +960,24 @@ main iframe {
   transform: scale(1.04);
 }
 
-/* Hackathon award (award.html): one unit everywhere. The trophy hangs on
-   the left; the award in bold, then university · event · year, muted.
-   Nothing sits on the screenshot and nothing moves on its own. */
+/* Hackathon award (award.html): one unit everywhere. The trophy (Google's
+   🏆 as an image) sits on the left, as tall as the two lines beside it:
+   the award in bold, then university · event · year, muted. Nothing sits
+   on the screenshot and nothing moves on its own. */
 .award {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-8);
-  align-items: start;
+  column-gap: var(--space-12);
+  align-items: center;
   margin: var(--space-4) 0 var(--space-8);
 }
 
+/* 48px = the 26px award line + the 22px line under it (bio and project
+   pages); project lists use 44px for their two 22px lines */
 .award-icon {
-  font-family: var(--font-emoji);
-  font-size: 17px;
-  line-height: 23px;
+  display: block;
+  width: 48px;
+  height: 48px;
 }
 
 .award-text {
@@ -995,6 +990,7 @@ main iframe {
   font-weight: 700;
   line-height: 23px;
   color: var(--text);
+  text-wrap: balance;
 }
 
 .award-where {
@@ -1002,10 +998,17 @@ main iframe {
   font-size: 15px;
   line-height: 22px;
   color: var(--text-secondary);
+  /* on a phone: "Princeton University ·" / "HackPrinceton · 2025", not the
+     year alone on the second line */
+  text-wrap: balance;
 }
 
+/* Each part is one unit: when the line is full the next part moves down
+   whole, so lines break between parts. A part only breaks inside when it
+   alone is wider than the line (a long university on a small phone),
+   rather than running off the page. */
 .award-part {
-  white-space: nowrap;
+  display: inline-block;
 }
 
 /* On a project page it gets its own box, in the callout style */
@@ -1019,11 +1022,6 @@ main iframe {
   border-radius: var(--radius-sm);
 }
 
-.award-large .award-icon {
-  font-size: 28px;
-  line-height: 1;
-}
-
 .award-large .award-name {
   font-size: 18px;
   line-height: 26px;
@@ -1035,30 +1033,25 @@ main iframe {
   color: var(--accent);
 }
 
-/* The ↗ after a project or post title (arrow-title.html): says "this is a
-   link", follows the title colour, nudges up and right on hover */
+/* Google's 🔗 after a project or post title (link-title.html): says "this
+   is a link" and nudges up and right on hover */
 .title-end {
   white-space: nowrap;
 }
 
-.link-arrow {
+.link-emoji {
   display: inline-block;
-  width: 0.7em;
-  height: 0.7em;
+  width: 0.8em;
+  height: 0.8em;
   margin-left: 0.3em;
-  vertical-align: 0.02em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  vertical-align: -0.07em;
   transition: transform var(--transition);
 }
 
-.card:hover .link-arrow,
-.card:focus-visible .link-arrow,
-.post-row:hover .link-arrow,
-.post-row:focus-visible .link-arrow {
+.card:hover .link-emoji,
+.card:focus-visible .link-emoji,
+.post-row:hover .link-emoji,
+.post-row:focus-visible .link-emoji {
   transform: translate(2px, -2px);
 }
 
@@ -1067,18 +1060,20 @@ main iframe {
   margin: var(--space-12) 0 var(--space-4);
 }
 
-/* Award in project lists: 🏆 and the award title, then university · year */
+/* Award in project lists: the trophy beside two lines, the award title,
+   then university · year. If the title wraps on a narrow phone, the
+   trophy stays centred on the block. */
 .award-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-8);
-  align-items: start;
+  column-gap: var(--space-12);
+  align-items: center;
   margin: 0 0 var(--space-8);
 }
 
 .award-card .award-icon {
-  font-size: 15px;
-  line-height: 22px;
+  width: 44px;
+  height: 44px;
 }
 
 .award-card-text {
@@ -1091,6 +1086,7 @@ main iframe {
   font-weight: 700;
   line-height: 22px;
   color: var(--text);
+  text-wrap: balance;
 }
 
 .award-card-where {
@@ -1100,9 +1096,10 @@ main iframe {
   color: var(--text-secondary);
 }
 
+/* like .award-part: the year moves down whole if the line is full */
 .award-card-school,
 .award-card-year {
-  white-space: nowrap;
+  display: inline-block;
 }
 
 .card-description {

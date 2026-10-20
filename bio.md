@@ -67,7 +67,7 @@ permalink: /bio/
       {% for p in wins %}
       <li>
         <a class="win-row" href="{{ p.url | relative_url }}">
-          <span class="award-icon" aria-hidden="true">🏆</span>
+          <img class="award-icon" src="{{ '/assets/emoji/trophy.svg' | relative_url }}" width="48" height="48" alt="">
           <span class="win-main">
             <span class="win-award">{{ p.award }}</span>
             <span class="win-project">{{ p.title }}{% if p.event %} · {{ p.event }}{% endif %}</span>
