@@ -25,7 +25,7 @@ profile:
   given_name: Maminiaina
   family_name: Ravaloarison
   also_known_as: [Mami Ravaloarison, Mami, mravaloarison]
-  one_liner: Malagasy software engineer and data analyst in New York, Monroe University graduate and 12-time hackathon winner.
+  one_liner: Malagasy software engineer and data analyst in New York, Monroe University graduate and 12-time hackathon winner who also plays bass and draws.
   job_titles: [Software Engineer, Junior Data Analyst]
   works_for:
     name: Monroe University
@@ -34,24 +34,32 @@ profile:
   home_location: New York, USA
   from_country: Madagascar
   # Extra topics you know, on top of every technology listed on your projects.
-  knows_about: [Software Engineering, iOS Development, Web Development, Data Analysis, Power BI, Hackathons, Drawing]
+  knows_about: [Software Engineering, iOS Development, Web Development, Data Analysis, Power BI, Hackathons, Drawing, Digital Art, Procreate, Music, Bass Guitar]
 
 # The "Looking for" box. Delete the text (leave `looking_for:` empty) to hide it.
 looking_for:
 
 # The Bio section.
 bio: |
-  My name is Maminiaina Ravaloarison, though I go by Mami — I'm a Software Engineer from Madagascar. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"} and graduated in June 2025 with a Bachelor of Science and a minor in Mathematics.
+  I know the full name is really long, but I go by Mami. I'm from Madagascar and speak Malagasy, French and English. I came to the United States in 2021 to study Computer Information Systems at [Monroe University](https://www.monroeu.edu/){:target="_blank" rel="noopener"}, graduated in June 2025 with a minor in math, and have stayed in New York since.
 
-  Currently, I work as a Junior Data Analyst in New York City. My tasks are very broad, and I learn a lot from them. At work, I recreate legacy dashboards in Power BI, build and maintain SharePoint sites for my department, and was recently assigned to redesign my old university's library website using [SpringShare's LibGuides](https://www.springshare.com/libguides/){:target="_blank" rel="noopener"} platform as a side project.
+  These days I'm a Junior Data Analyst in Monroe's Office of Academic Records, Assessment, and Planning. Every semester I go through more than 100 Power BI dashboards and bring them up to date, so the university can follow student performance, retention and graduation. I built my department's SharePoint site, I'm now updating another department's, and I'm redesigning the library's website on [LibGuides](https://www.springshare.com/libguides/){:target="_blank" rel="noopener"}. The work is broad, and I learn a lot from it.
 
-  I chose Software Engineer because building software makes me feel like I am a magician doing a bunch of tricks behind the scenes, and then my users go "wow." I think it is fun, and I also believe that right now is a very exciting time to be a developer because of AI. It reduces a lot of development time and makes it easy to build things much faster.
+  Outside work, I build iOS apps and small games. Right now I'm building [MyTime](/projects/mytime/), a SwiftUI time tracker for iPhone, iPad and Apple Watch with hand-drawn task icons and Siri to start and stop timers. I'm also making [DogDuckGo](/projects/dogduckgo/), a typing game on a watercolor pond where dogs disguised as ducks swim at you. Before those, I made games you control with your hands or your nose.
 
-  As an international student, I could only work on campus, so I started going to hackathons instead to get more exposure building software, working with different teams and under deadlines, experimenting with many APIs, SDKs, and new frameworks.
+  I use AI to move faster, but I still edit the code and refine things myself. Coding is much more of a puzzle for me now, where I piece things together, figure out the best structure and choose the best stack. I love that this lets me focus more on my art, and on the features and setup.
 
-  At one point I was honestly obsessed with hackathons, because during my academic years I won 12 of them across different U.S. Eastern universities like [Yale](https://www.yale.edu/){:target="_blank" rel="noopener"}, [Princeton](https://www.princeton.edu/){:target="_blank" rel="noopener"}, [Stony Brook](https://www.stonybrook.edu/){:target="_blank" rel="noopener"}, and more.
+  As an international student I could only work on campus, first as a resident assistant and then as an IT peer tutor. So hackathons became how I got more exposure: to teamwork, since I changed teams at every single one; to new APIs from so many sponsors; and to working against a deadline on every project. I got a little obsessed, and I've won 12 of them at schools like Yale, Princeton, Stony Brook, Rutgers, RPI and Penn, about $4,000 in prizes.
 
-  Outside of tech, I used to hate reading and writing, but I recently started pushing myself to do both more often. I also try to consistently cook healthy meals and go to the gym, though I'm still working on making those habits stick. Other things I love: dogs, piano, guitar and bass, chess, video games, %drawing% (lately in Procreate), the beach, the sun, and Malibu.
+  Besides work, music is also a big part of me, and so is drawing. I started on piano as a kid, then stopped for a long time. When I was about 14 I switched to guitar, because it sounded fun, and I think back then I was also just learning to impress girls. I never took a lesson; I learned from YouTube videos and live performances. I got good at guitar, but after a while I got a little bored. Then I started to love playing walking bass lines on acoustic guitar, and then the bass in general, even though I hadn't tried one yet. So I'd go to Guitar Center at least twice a week to play whatever bass they had in the store, and I ended up buying one. That's when I really fell in love with it. A year after getting it I was playing gigs, and now I play regularly for the English Ministry services at NYPC.
+
+  As for %drawing%, it goes back to a Mickey Mouse (or maybe a Donald Duck) my mum drew on paper when I was a kid. I was blown away and wanted to recreate drawings like that, so I started drawing, and I kept at it for a long time without ever taking it seriously. It was just fun. People told me my drawings were good, but I was never satisfied; I always thought everyone else drew so much better.
+
+  Then I stopped for about five years. When I picked it up again, it was on paper first: birds, dogs, pandas. Later, at a friend's house, I tried Procreate on an iPad and wanted to be really good at it right away, but right now I still feel terrible about my drawings on it. That's when I decided to take every drawing more seriously and put them into the software I build. DogDuckGo is the first product of that. However bad my drawings still are, I feel like I've found my voice, and I want to keep it a big part of what I create, now and in the future.
+
+  I used to hate reading and writing, and now I'm pushing myself to do both (the [blog](/blog/) here is part of that). I'm trying to cook healthy, though I'm still working on making that habit stick. These days I take care of my body less at the gym and more with walking, running, push-ups, abs and bodyweight squats. I also love dogs, chess, video games, the beach, the sun and Malibu.
+
+  As for what's next, it's either more school or work where what I build does some good and makes a real change in the world, rather than just being about me and my drawings. For now, I'm looking for a master's program and scholarships.
 
 # ─── Resume sections below the Bio, in page order ───────────────────────
 # Each item starts with "- ". Copy an existing item to add a new one.

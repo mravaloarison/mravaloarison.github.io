@@ -102,6 +102,8 @@ module PortfolioSEO
       t = text.to_s.dup
       t.gsub!(%r{<iframe[^>]*src="https://www\.youtube\.com/embed/([\w-]+)[^"]*"[^>]*>\s*</iframe>}m) { "Video demo: https://youtu.be/#{Regexp.last_match(1)}" }
       t.gsub!(%r{<a [^>]*href="([^"]+)"[^>]*>(.*?)</a>}m) { "[#{Regexp.last_match(2)}](#{Regexp.last_match(1)})" }
+      # site links like (/projects/mytime/) become full URLs, so they still work read outside the site
+      t.gsub!(%r{\]\((/[^)\s]*)\)}) { "](#{u(Regexp.last_match(1))})" }
       t.gsub!(/\{%.*?%\}/m, "")
       t.gsub!(/\{\{.*?\}\}/m, "")
       t.gsub!(/\{:[^}]*\}/, "")

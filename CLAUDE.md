@@ -284,6 +284,22 @@ the content under the tabs differs:
   "All 12 hackathon wins on Devpost". Existing copy is good — keep its voice, don't
   corporate-ize it.
 
+  The Bio text was rewritten with Mami in October 2026, in this order: the
+  name line ("I know the full name is really long, but I go by Mami"),
+  Madagascar and Monroe, the analyst job, the apps and games and how AI fits
+  in, hackathons, then "Besides work, music is also a big part of me, and so
+  is drawing" leading into a music paragraph (piano, guitar, bass, NYPC) and
+  two drawing paragraphs (Mami's mum's Mickey Mouse, Procreate, DogDuckGo as
+  the first product of putting the drawings into the software), everything
+  else, and what's next (more school or work that does some good) last.
+  Mami wants music and drawing to read as much a part of the bio as the
+  career and technical skills. Headings (Code / Music / Drawing) were tried
+  and Mami preferred plain paragraphs with that transition. The bio
+  links MyTime, DogDuckGo and the blog internally; `%drawing%` in the
+  drawing paragraph turns into the Arts link once art exists. Music and
+  drawing are also in `profile.knows_about` and `one_liner`, so search
+  engines and AI assistants see them too.
+
 `featured: true` in the front matter is still unused.
 
 ### Projects
