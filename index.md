@@ -13,7 +13,7 @@ seo:
 {%- endcomment %}
 
 
-{% include page-header.html title="Maminiaina Ravaloarison" stacked=true %}
+{% include page-header.html title="Maminiaina Ravaloarison" %}
 
 {% include bio-tabs.html current="short" %}
 
