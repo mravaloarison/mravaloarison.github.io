@@ -178,7 +178,11 @@ things, cards and images (Mami wanted them a little squarer than the old
 - `page-header.html` — eyebrow, h1, serif abstract. Every page opens with
   it — About, section indexes, category/medium/tag/year pages, and detail
   pages — so titles and intros are the same size everywhere. Never write a
-  page's eyebrow/h1/intro by hand in Markdown.
+  page's eyebrow/h1/intro by hand in Markdown. `stacked=true` (only the name
+  on `/` and `/bio/`) gives the h1 `width: min-content` up to 600px, so on
+  every phone the name is two lines, "Maminiaina" / "Ravaloarison". Mami
+  asked for this: on a Pro Max (428–440px) the name otherwise just fits on
+  one line, unlike on smaller iPhones.
 - `post-list.html` — title/date rows; `descriptions=true` adds a line under each
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — the "In progress" pill (when `status: ongoing`),

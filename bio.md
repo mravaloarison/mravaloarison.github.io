@@ -11,7 +11,7 @@ permalink: /bio/
 {%- endcomment %}
 
 
-{% include page-header.html title="Maminiaina Ravaloarison" %}
+{% include page-header.html title="Maminiaina Ravaloarison" stacked=true %}
 
 {% include bio-tabs.html current="long" %}
 

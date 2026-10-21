@@ -193,6 +193,17 @@ h1 {
   margin: 0 0 var(--space-16);
 }
 
+/* The name on both About pages (page-header.html stacked=true). On phones
+   the first and last name always get a line each: smaller iPhones wrap it
+   anyway, and a Pro Max (428–440px), where it would just fit on one line,
+   now shows the same two-line name. min-content = as wide as the longest
+   word, so every space becomes a line break. */
+@media (max-width: 600px) {
+  .title-stacked {
+    width: min-content;
+  }
+}
+
 h2 {
   font-size: 29px;
   letter-spacing: -0.01em;

@@ -1,3 +1,10 @@
+{%- comment -%}
+  Eyebrow, h1 and serif abstract at the top of every page.
+  Params: title, eyebrow, abstract (all optional but title), and
+  stacked=true for the name on the About pages: on phones its words sit on
+  their own lines ("Maminiaina" / "Ravaloarison"), even on a Pro Max where
+  the name would just fit on one line.
+{%- endcomment -%}
 {% if include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
-<h1>{{ include.title }}</h1>
+<h1{% if include.stacked %} class="title-stacked"{% endif %}>{{ include.title }}</h1>
 {% if include.abstract %}<p class="abstract">{{ include.abstract }}</p>{% endif %}
