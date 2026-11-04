@@ -292,16 +292,19 @@
   var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
 
   // First visit in a tab (html.intro, set before first paint in head.html):
-  // the dog plays its hello clip in the middle, "Hellouu" types out under it,
-  // and as it untypes the dog glides into its place as the logo while the
-  // page fades in. Any tap, key or scroll ends it at once.
+  // the dog plays its hello clip in the middle while three pencil dots draw
+  // themselves under it, then the dog glides into its place as the logo and
+  // the page's blocks rise in one after another, the way iOS brings in a
+  // screen. Any tap, key or scroll ends it at once.
   function initIntro() {
     var root = document.documentElement;
     if (!root.classList.contains("intro")) return;
-    var target = document.querySelector(".site-logo img, .viewer-logo img");
-    var word = "Hellouu";
+    var SVG = "http://www.w3.org/2000/svg";
+    var target = document.querySelector(".site-logo img");
     var timers = [];
+    var reveals = [];
     var done = false;
+    var INPUTS = ["pointerdown", "keydown", "wheel", "touchstart"];
 
     function el(tag, cls) {
       var e = document.createElement(tag);
@@ -332,35 +335,112 @@
       source.type = f[1];
       video.appendChild(source);
     });
-    var hello = el("p", "intro-hello");
-    var text = el("span", "intro-text");
-    var caret = el("span", "intro-caret");
+
+    // Three dots, each a tight pencil spiral that scribbles itself in, a bit
+    // different from the others; the filter roughens the edges and leaves
+    // paper showing through, like pencil.
+    var dots = document.createElementNS(SVG, "svg");
+    dots.setAttribute("class", "intro-dots");
+    dots.setAttribute("viewBox", "0 0 132 44");
+    dots.innerHTML = '<defs><filter id="intro-pencil" x="-30%" y="-30%" width="160%" height="160%">' +
+      '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="rough"/>' +
+      '<feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="11" result="g"/>' +
+      '<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.05" result="grain"/>' +
+      '<feComposite in="rough" in2="grain" operator="in"/></filter></defs>';
+    var ink = document.createElementNS(SVG, "g");
+    ink.setAttribute("filter", "url(#intro-pencil)");
+    dots.appendChild(ink);
+    var spirals = [22, 66, 110].map(function (cx, k) {
+      var d = "";
+      var steps = 72;
+      var turns = 2.6;
+      for (var i = 0; i <= steps; i++) {
+        var t = i / steps;
+        var ang = k * 1.7 + t * turns * 2 * Math.PI;
+        var r = 0.8 + t * 8.2 + Math.sin(ang * 3 + k) * 0.5;
+        d += (i ? " L " : "M ") + (cx + Math.cos(ang) * r * 1.06).toFixed(2) + " " + (22 + Math.sin(ang) * r * 0.94).toFixed(2);
+      }
+      var path = document.createElementNS(SVG, "path");
+      path.setAttribute("d", d);
+      path.setAttribute("class", "intro-dot");
+      path.style.setProperty("--i", k);
+      ink.appendChild(path);
+      return path;
+    });
+
     layer.setAttribute("aria-hidden", "true");
     stage.setAttribute("aria-hidden", "true");
     dog.appendChild(still);
     dog.appendChild(video);
-    hello.appendChild(text);
-    hello.appendChild(caret);
     stage.appendChild(dog);
-    stage.appendChild(hello);
+    stage.appendChild(dots);
     document.body.appendChild(layer);
     document.body.appendChild(stage);
     root.classList.add("intro-running");
     root.classList.remove("intro"); // this layer takes over from the first-paint cover
 
+    var glided = false;
+    var clipOver = false;
+    var dotsDrawn = false;
     video.addEventListener("playing", function () {
-      video.classList.add("is-playing");
+      if (!glided) video.classList.add("is-playing");
+    });
+    video.addEventListener("ended", function () {
+      clipOver = true;
+      if (dotsDrawn) glide();
     });
     var playing = video.play();
     if (playing && playing.catch) playing.catch(function () {}); // no autoplay: the still logo stays
 
+    // draw the dots one after another
+    spirals.forEach(function (path, k) {
+      var length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+      if (path.animate) {
+        path.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], {
+          duration: 260,
+          delay: 420 + k * 150,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          fill: "forwards"
+        });
+      } else {
+        path.style.strokeDashoffset = 0;
+      }
+    });
+    later(1000, function () { dots.classList.add("is-waving"); });
+
+    // The page's blocks rise in, top to bottom, a little apart: a soft fade,
+    // a short rise and a hint of blur that clears (only what's on screen).
+    function reveal() {
+      var vh = window.innerHeight;
+      var vw = window.innerWidth;
+      var items = [];
+      Array.prototype.forEach.call(document.querySelectorAll(".menu-button, .site-nav > ul > li, main > *, .site-footer"), function (node) {
+        var r = node.getBoundingClientRect();
+        if (!r.width || !r.height || r.bottom < 0 || r.top > vh || r.left >= vw || r.right <= 0) return;
+        items.push({ node: node, top: r.top, left: r.left });
+      });
+      items.sort(function (a, b) { return (a.top - b.top) || (a.left - b.left); });
+      items.forEach(function (item, i) {
+        if (!item.node.animate) return;
+        reveals.push(item.node.animate([
+          { opacity: 0, transform: "translateY(16px) scale(0.985)", filter: "blur(4px)" },
+          { opacity: 1, transform: "none", filter: "blur(0)" }
+        ], { duration: 700, delay: Math.min(i * 55, 440), easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }));
+      });
+      later(1500, stopListening);
+    }
+
+    function stopListening() {
+      INPUTS.forEach(function (type) { window.removeEventListener(type, skip); });
+    }
+
+    // take the intro's layers away and give the logo back
     function finish() {
       if (done) return;
       done = true;
-      timers.forEach(window.clearTimeout);
-      ["pointerdown", "keydown", "wheel", "touchstart"].forEach(function (type) {
-        window.removeEventListener(type, skip);
-      });
       root.classList.remove("intro-running");
       video.pause();
       layer.remove();
@@ -368,24 +448,35 @@
     }
 
     function skip() {
+      reveals.forEach(function (anim) { anim.finish(); }); // the page as it is, now
+      timers.forEach(window.clearTimeout);
+      timers = [];
+      stopListening();
+      glided = true; // a late "ended" can't start the glide now
       if (done) return;
       layer.classList.add("is-skipping");
       stage.classList.add("is-skipping");
-      timers.forEach(window.clearTimeout);
-      timers = [];
-      later(170, finish);
+      window.setTimeout(finish, 170);
     }
-    ["pointerdown", "keydown", "wheel", "touchstart"].forEach(function (type) {
+    INPUTS.forEach(function (type) {
       window.addEventListener(type, skip, { passive: true });
     });
 
+    // the dog is all but there: the page comes in under it
+    function uncover() {
+      reveal(); // hides the blocks first, so the cover can go in the same frame
+      layer.remove();
+    }
+
     function glide() {
+      if (glided || done) return;
+      glided = true;
       video.classList.remove("is-playing"); // the clip ends on the still's pose
       video.pause();
+      dots.classList.add("is-leaving");
       var from = dog.getBoundingClientRect();
       var to = target ? target.getBoundingClientRect() : null;
       var onScreen = to && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
-      layer.classList.add("is-leaving");
       if (onScreen && dog.animate) {
         var move = "translate(" + (to.left - from.left) + "px, " + (to.top - from.top) + "px) scale(" + to.width / from.width + ")";
         dog.animate([{ transform: "none" }, { transform: move }], {
@@ -396,24 +487,18 @@
       } else {
         dog.classList.add("is-fading");
       }
-      later(680, finish);
+      later(430, uncover);
+      later(680, finish); // landed: the real logo takes over
     }
 
-    // type, hold, then untype while the dog goes to its place
-    var start = 380, perLetter = 95, hold = 650, perDelete = 32;
-    word.split("").forEach(function (_, i) {
-      later(start + (i + 1) * perLetter, function () { text.textContent = word.slice(0, i + 1); });
+    // The dog moves once the dots are drawn and its hello is over (the clip
+    // ends on the logo at rest), straight away if the clip isn't playing,
+    // and by 2.6 s whatever happens.
+    later(1500, function () {
+      dotsDrawn = true;
+      if (clipOver || !video.classList.contains("is-playing")) glide();
     });
-    var untype = start + word.length * perLetter + hold;
-    for (var n = 1; n <= word.length; n++) {
-      (function (n) {
-        later(untype + n * perDelete, function () {
-          text.textContent = word.slice(0, word.length - n);
-          if (n === word.length) hello.classList.add("is-gone"); // the caret goes with the last letter
-        });
-      })(n);
-    }
-    later(untype, glide);
+    later(2600, glide);
   }
 
   initIntro();

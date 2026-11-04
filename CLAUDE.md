@@ -108,17 +108,26 @@ side), and the address in Nunito with an accent underline. Edit `CARD_NAME`
 
 **Intro** (Mami's request, November 2026): the first page someone opens
 in a tab starts with the dog in the middle of the screen playing its hello
-clip (a nod, an ear flick, a glint on the sunglasses), "Hellouu" typing
-out under it, and, as it untypes, the dog gliding into its place as the
-logo while the page fades in (about 2.5 s). The inline `<head>` script
-decides it before the first paint (`html.intro`, which covers the page;
-`sessionStorage` `intro-seen` so it plays once per tab) and skips it when
-the device asks for reduced motion or storage is off; `initIntro` in
-`main.js` runs it. Any tap, key, scroll or wheel ends it at once; if the
-script never runs, the cover lifts itself after 3 s. Search engines and
-no-JS visitors never see it. The clip is framed as the logo square plus
-12.5% on each side on `--bg`, and starts and ends on the logo at rest, so
-the still (`logo-512.webp`) takes over invisibly for the glide.
+clip (a nod, an ear flick, a glint on the sunglasses) while three pencil
+dots draw themselves under it one after another, in `--text` (an inline
+SVG from `main.js`: each dot a small scribbled spiral, roughened and
+grained by an SVG filter so it reads as pencil, then a gentle wave). When
+the clip ends the dots fade, the dog glides into its place as the logo,
+and just as it gets there the page comes in the way iOS brings in a
+screen: the blocks on screen (the nav items or the burger, each child of
+`main`, the footer) rise 16px into place one after another, top to bottom,
+fading in from a light blur (700ms each, 55ms apart, no bounce). About 3 s
+in all. The inline `<head>` script decides it before the first paint
+(`html.intro`, which covers the page; `sessionStorage` `intro-seen` so it
+plays once per tab) and skips it when the device asks for reduced motion,
+storage is off, or the first page is a piece of art (a shared link shows
+the picture at once; the tab then counts as seen); `initIntro` in
+`main.js` runs it. Any tap, key, scroll or wheel ends it at once, the
+page shown as it is; if the script never runs, the cover lifts itself
+after 3 s. Search engines and no-JS visitors never see it. The clip is
+framed as the logo square plus 12.5% on each side on `--bg`, and starts
+and ends on the logo at rest, so the still (`logo-512.webp`) takes over
+invisibly for the glide (which waits for the clip to end, 2.6 s at most).
 
 **Nothing is italic** — not the abstract, not blockquotes, not Markdown
 `*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No
@@ -304,11 +313,10 @@ things, cards and images (Mami wanted them a little squarer than the old
   play mark to each thumbnail
 - `art-group-items.html` — looks up one Arts subcategory and its pieces
   (sets `group` and `group_items`); `art-group-page.html` — the page for one
-- `viewer-dialog.html`, `viewer-logo.html`, `viewer-icon.html`,
-  `viewer-attrs.html` — the picture viewer (see Arts; the dialog is on every
-  page, in `default.html`, because the logo opens in it too; the logo in
-  its bar is just the mark, not a link); `viewer-attrs.html` writes the
-  data-* a piece needs; `_layouts/art.html` is the same view as a page
+- `viewer-dialog.html`, `viewer-icon.html`, `viewer-attrs.html` — the
+  picture viewer (see Arts; the dialog is on every page, in `default.html`,
+  because the logo opens in it too); `viewer-attrs.html` writes the data-*
+  a piece needs; `_layouts/art.html` is the same view as a page
 - `animation-media.html` — one animation, large: the MP4 player, the GIF, or
   the still frame (see Animations)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
@@ -459,7 +467,7 @@ photo grid. (Mami tried uncropped shapes and went back to squares.)
 **The viewer** (Mami's request, November 2026: "like when you look at a
 picture on Instagram or Facebook"): clicking a picture opens it full screen
 over the gallery (`viewer-dialog.html`, a `<dialog>`, run by `main.js`).
-Close and the logo top left, an info button top right (shows when it was
+Close top left, an info button top right (shows when it was
 made: "Created July 18, 2026", plus the piece's note if it has one), ‹ ›
 at the sides that wrap around the pieces in that gallery, the arrow keys
 and swiping too, the name under the picture; Escape, ×, Back or a tap on
@@ -816,7 +824,12 @@ in the About page's `mainEntity` is the likely reason a test in October
   when the nav moved to the side. In November 2026 the M was replaced
   everywhere it was left (tab icon, iPhone icon, share image) by the dog,
   see "Logo". Later that month Mami asked for the dog on every page, so it's
-  back, at the top of the nav column and opposite the burger.
+  back, at the top of the nav column and opposite the burger. It also sat
+  beside the × in the picture viewer for a while; Mami found it unneeded
+  there, so the viewer's bar is just × and ⓘ.
+- **"Hellouu" typed under the dog in the intro** (November 2026) didn't
+  work the way Mami pictured it; three drawn pencil dots replaced it the
+  same month (see Intro). Don't bring typed text back to the intro.
 - **The sidebar design was dropped** (October 2026) for the single-column
   layout above (the later wide-screen side nav is the site nav only). The View Transitions API was tried twice for its slide
   animation and failed both times; if page-to-page motion ever comes back,

@@ -2,7 +2,7 @@
 ---
 {%- comment -%}
   One piece of art, full screen, like a photo viewer (Mami's request,
-  November 2026): close (back to its subcategory) and the logo top left,
+  November 2026): close (back to its subcategory) top left,
   info (when it was made, plus the note if there is one) top right, ‹ › to
   the pieces before and after it in that subcategory, the title under the
   picture. The galleries open the same view in place (viewer-dialog.html
@@ -26,7 +26,6 @@
     <div class="viewer-bar">
       <div class="viewer-bar-start">
         <a class="viewer-btn viewer-close" href="{{ group_url | relative_url }}"><span class="sr-only">Close, back to {{ group.label }}</span>{% include viewer-icon.html name="close" %}</a>
-        {% include viewer-logo.html %}
       </div>
       <div class="viewer-bar-end">
         <details class="viewer-details">

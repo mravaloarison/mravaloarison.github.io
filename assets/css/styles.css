@@ -1337,11 +1337,12 @@ main iframe {
 }
 
 /* First-visit intro (Mami's request, November 2026): the dog plays its
-   hello clip in the middle of the screen, "Hellouu" types out under it, and
-   as it untypes the dog glides into its place as the logo while the page
-   fades in. Once per tab, skipped with reduced motion, any tap, key or
-   scroll ends it. html.intro covers the page from the first paint until
-   main.js takes over; if the script never runs, the cover lifts itself. */
+   hello clip in the middle of the screen while three pencil dots draw
+   themselves under it, then it glides into its place as the logo and the
+   page's blocks rise in one after another (main.js). Once per tab, skipped
+   with reduced motion, any tap, key or scroll ends it. html.intro covers
+   the page from the first paint until main.js takes over; if the script
+   never runs, the cover lifts itself. */
 
 html.intro::after {
   content: "";
@@ -1359,8 +1360,7 @@ html.intro::after {
   }
 }
 
-.intro-running .site-logo,
-.intro-running .viewer-logo {
+.intro-running .site-logo {
   visibility: hidden;
 }
 
@@ -1369,7 +1369,6 @@ html.intro::after {
   inset: 0;
   z-index: 900;
   background: var(--bg);
-  transition: opacity 400ms ease 220ms;
 }
 
 .intro-stage {
@@ -1384,7 +1383,6 @@ html.intro::after {
   pointer-events: none;
 }
 
-.intro-layer.is-leaving,
 .intro-layer.is-skipping,
 .intro-stage.is-skipping {
   opacity: 0;
@@ -1437,48 +1435,49 @@ html.intro::after {
   opacity: 1;
 }
 
-.intro-hello {
-  margin: 0;
-  min-height: 1.3em;
-  font-family: var(--font-serif);
-  font-size: 40px;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text);
-  white-space: nowrap;
+/* Three pencil dots under the dog (spirals that scribble themselves in,
+   drawn by main.js), then a gentle wave until the dog moves */
+.intro-dots {
+  display: block;
+  width: 99px;
+  height: 33px;
+  overflow: visible;
+  transition: opacity 220ms ease, transform 220ms ease;
 }
 
-.intro-caret {
-  display: inline-block;
-  width: 2px;
-  height: 0.9em;
-  margin-left: 3px;
-  vertical-align: -0.1em;
-  background: var(--accent);
-  animation: intro-caret 900ms steps(1) infinite;
+.intro-dot {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.intro-hello.is-gone {
+.intro-dots.is-waving .intro-dot {
+  animation: intro-wave 1100ms ease-in-out infinite;
+  animation-delay: calc(var(--i) * 140ms);
+}
+
+.intro-dots.is-leaving {
   opacity: 0;
-  transition: opacity 120ms ease;
+  transform: translateY(6px);
 }
 
-@keyframes intro-caret {
-  50% {
-    opacity: 0;
+@keyframes intro-wave {
+  0%, 60%, 100% {
+    transform: translateY(0);
   }
-}
-
-@media (max-width: 600px) {
-  .intro-hello {
-    font-size: 32px;
+  30% {
+    transform: translateY(-4px);
   }
 }
 
 /* Picture viewer (Arts): one piece at a time, full screen, like a photo
    viewer. The same look is a <dialog> over a gallery (main.js) and each
-   piece's own page (_layouts/art.html). Close and the logo top left, info
-   top right, ‹ › at the sides, the name under the picture. */
+   piece's own page (_layouts/art.html). Close top left, info top right,
+   ‹ › at the sides, the name under the picture. */
 
 .viewer {
   --viewer-bg: #0e0d0c;
@@ -1543,17 +1542,6 @@ dialog.viewer::backdrop {
 
 .viewer-bar-end {
   position: relative;
-}
-
-.viewer-logo {
-  display: block;
-  border-radius: var(--radius-md);
-}
-
-.viewer-logo img {
-  display: block;
-  width: 40px;
-  height: 40px;
 }
 
 .viewer-btn {

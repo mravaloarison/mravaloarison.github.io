@@ -3,13 +3,17 @@
     /* The "js" class lets the phone layout swap the wrapped links for the
        burger menu only when the script that opens it can run. "intro": the
        first page in a tab plays the hello intro (main.js), decided here so
-       it covers the page from the first paint. Not with reduced motion. */
+       it covers the page from the first paint. Not with reduced motion, and
+       not when that first page is a piece of art (a shared link shows the
+       picture at once, and the viewer has no logo for the dog to land on). */
     (function (r) {
       r.classList.add('js');
       try {
-        if (!sessionStorage.getItem('intro-seen') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (!sessionStorage.getItem('intro-seen')) {
           sessionStorage.setItem('intro-seen', '1');
-          r.classList.add('intro');
+          if (!r.classList.contains('viewer-root') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            r.classList.add('intro');
+          }
         }
       } catch (e) {}
     })(document.documentElement);
