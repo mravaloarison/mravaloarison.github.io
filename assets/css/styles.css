@@ -1253,14 +1253,13 @@ main iframe {
   font-size: 14px;
 }
 
-/* Gallery grid (Arts, Animations): two columns at every width, each piece
-   shown whole at its own shape (no square crop), so the drawings get room */
+/* Gallery grid (Arts): two columns at every width, square pictures all the
+   same size, square corners, the name under each, like a photo grid */
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-32) var(--space-24);
-  align-items: start;
+  gap: var(--space-24) var(--space-12);
   margin: var(--space-24) 0 var(--space-48);
 }
 
@@ -1270,9 +1269,11 @@ main iframe {
 }
 
 .gallery-item img {
+  display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   transition: opacity var(--transition);
 }
 
@@ -1317,6 +1318,275 @@ main iframe {
 
 .gallery-item:hover .gallery-title {
   color: var(--text);
+}
+
+/* Picture viewer (Arts): one piece at a time, full screen, like a photo
+   viewer. The same look is a <dialog> over a gallery (main.js) and each
+   piece's own page (_layouts/art.html). Close and the logo top left, info
+   top right, ‹ › at the sides, the name under the picture. */
+
+.viewer {
+  --viewer-bg: #0e0d0c;
+  --viewer-chrome: 140px;            /* the bar, the name and the gaps */
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--viewer-bg);
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+dialog.viewer:not([open]) {
+  display: none;
+}
+
+dialog.viewer::backdrop {
+  background: #0e0d0c;
+}
+
+/* while the viewer is open over a page: no scrolling underneath, and the
+   scrollbar's reserved strip (scrollbar-gutter) goes dark with it */
+.viewer-open {
+  overflow: hidden;
+  background: #0e0d0c;
+}
+
+.viewer-root {
+  scrollbar-gutter: auto;
+  overflow: hidden;
+}
+
+.viewer-body {
+  margin: 0;
+  background: #0e0d0c;
+}
+
+.viewer-bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+}
+
+.viewer-bar-start,
+.viewer-bar-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.viewer-bar-end {
+  position: relative;
+}
+
+.viewer-logo {
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+.viewer-logo img {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.viewer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(237 232 224 / 0.08);
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+  list-style: none;
+  transition: background var(--transition);
+}
+
+.viewer-btn::-webkit-details-marker {
+  display: none;
+}
+
+.viewer-btn:hover,
+.viewer-details[open] > .viewer-btn,
+.viewer-btn[aria-expanded="true"] {
+  background: rgb(237 232 224 / 0.18);
+}
+
+.viewer-btn:focus-visible {
+  border-radius: 50%;
+}
+
+.viewer-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.viewer-icon-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* The info panel drops down under its button */
+.viewer-details {
+  position: relative;
+}
+
+.viewer-info {
+  position: absolute;
+  top: calc(100% + var(--space-8));
+  right: 0;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 32px));
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: var(--space-12) var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.viewer-info[hidden] {
+  display: none;
+}
+
+.viewer-info p {
+  margin: 0;
+}
+
+.viewer-info p + p {
+  margin-top: var(--space-8);
+}
+
+.viewer-info time {
+  color: var(--text);
+}
+
+.viewer-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0 72px var(--space-24);
+  touch-action: pan-y pinch-zoom;
+}
+
+.viewer-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+.viewer-figure picture {
+  display: contents;
+}
+
+.viewer-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1200px);
+  max-height: calc(100vh - var(--viewer-chrome));
+  max-height: calc(100dvh - var(--viewer-chrome));
+  object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
+  animation: viewer-in 180ms ease;
+}
+
+@keyframes viewer-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.viewer-title {
+  margin: var(--space-12) 0 0;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.viewer-prev,
+.viewer-next {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  margin-top: -22px;
+}
+
+.viewer-prev {
+  left: var(--space-16);
+}
+
+.viewer-next {
+  right: var(--space-16);
+}
+
+.viewer-prev[hidden],
+.viewer-next[hidden] {
+  display: none;
+}
+
+/* Phones: the picture gets the whole width, the arrows sit over its edges */
+@media (max-width: 600px) {
+  .viewer {
+    --viewer-chrome: 132px;
+  }
+
+  .viewer-stage {
+    padding: 0 0 var(--space-16);
+  }
+
+  .viewer-prev,
+  .viewer-next {
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    background: rgb(14 13 12 / 0.55);
+  }
+
+  .viewer-prev {
+    left: var(--space-8);
+  }
+
+  .viewer-next {
+    right: var(--space-8);
+  }
+
+  .viewer-title {
+    font-size: 18px;
+    padding-inline: var(--space-16);
+  }
 }
 
 /* Figures */

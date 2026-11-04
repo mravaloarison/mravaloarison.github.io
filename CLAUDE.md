@@ -26,7 +26,8 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the phone menu). The one exception is the tiny inline snippet in `<head>`
+  (the phone menu, the menu dropdowns, the Arts picture viewer). The one
+  exception is the tiny inline snippet in `<head>`
   that adds the `js` class before first paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
@@ -152,18 +153,22 @@ things, cards and images (Mami wanted them a little squarer than the old
   opposite the burger (44px); from 1040px it's at the top of the nav column
   (56px), its top lined up with the h1 or breadcrumb, with the links below
   it. No site name next to it.
-- **Nav**: About · Projects · Arts · Animations · Blog, with the
-  project types (Work · Personal · Hackathons, from `_data/categories.yml`)
-  indented under Projects. The look Mami liked in the phone drawer:
+- **Nav**: About · Projects · Arts · Blog, with the project types (Work ·
+  Personal · Hackathons) indented under Projects and the Arts subcategories
+  (Hand drawn · Procreate · Animated) under Arts, both from
+  `_data/categories.yml`. Each of those two groups folds into a dropdown
+  (Mami's request, November 2026): a chevron button beside the link,
+  closed by default and open on the pages inside the group (a project, a
+  type page, an Arts subcategory or piece); while a group is closed, the
+  dot for a page inside it sits on the group's link. Without JS the
+  chevrons are hidden and every item is listed. The look Mami liked in the phone drawer:
   Newsreader links with a hairline between items (none after the last), the
   types in Nunito, indented. All links are `--text-secondary`; hover and the
   current page go to `--text`, and the current page also gets a 6px accent
   dot hanging in the margin, so it isn't marked by colour alone
   (`aria-current` for screen readers). Only the most specific item gets the
   dot: on a project page it's on the type and Projects just brightens
-  (`:has()`). The Arts link only appears once `_arts/` has a piece, and
-  Animations once `_animations/` has one. About is
-  current on both `/` and `/bio/`.
+  (`:has()`). About is current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left, starting 96px
   from the top (like `main`) with the logo, so the logo lines up with the
   h1, and the links below it. Links
@@ -256,9 +261,14 @@ things, cards and images (Mami wanted them a little squarer than the old
 - `figure.html` — image plus caption, used heavily on Arts
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
-- `gallery-grid.html` — the two-column gallery used on Arts and Animations,
-  each piece whole at its own shape (no square crop);
-  `play=true` (Animations) adds a small round play mark to each thumbnail
+- `gallery-grid.html` — the Arts gallery: two columns, same-size squares,
+  square corners, the name under each; `viewer=<subcategory>` adds the
+  data the picture viewer reads, `play=true` (Animated) adds a small round
+  play mark to each thumbnail
+- `art-group-items.html` — looks up one Arts subcategory and its pieces
+  (sets `group` and `group_items`); `art-group-page.html` — the page for one
+- `viewer-dialog.html`, `viewer-logo.html`, `viewer-icon.html` — the Arts
+  picture viewer (see Arts); `_layouts/art.html` is the same view as a page
 - `animation-media.html` — one animation, large: the MP4 player, the GIF, or
   the still frame (see Animations)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
@@ -272,8 +282,8 @@ interactive element.
 
 ## Site architecture
 
-Five top-level sections. Every one has an index and per-item detail pages,
-and all but Animations have category pages too.
+Four top-level sections. Every one has an index and per-item detail pages,
+and category pages (Arts calls them subcategories).
 
 ```
 /                                   About me
@@ -281,10 +291,9 @@ and all but Animations have category pages too.
 /projects/category/:category/       Work · Personal · Hackathons
 /projects/:slug/                    Project detail
 /arts/                              Arts index
-/arts/medium/:medium/               Procreate · Traditional · Sketchbook
-/arts/:slug/                        Art detail
-/animations/                        Animations index
-/animations/:slug/                  Animation detail
+/arts/:subcategory/                 Hand drawn · Procreate · Animated
+/arts/:slug/                        Art piece (the full-screen viewer)
+/arts/animated/:slug/               Animation detail
 /blog/                              Blog & Journal index
 /blog/tag/:tag/                     Tag pages
 /blog/:year/:month/:day/:slug/      Post
@@ -363,10 +372,26 @@ See Also → prev/next.
 
 ### Arts
 
-New section. Mami draws, and recently started digital work in Procreate.
-Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
+Mami draws, and recently started digital work in Procreate and animating.
+Three subcategories (November 2026, at Mami's request), in this order in the
+menu and on `/arts/`, defined in `_data/categories.yml` under `arts`:
 
-The first six pieces went up in November 2026, all under Traditional
+- **Hand drawn** (`/arts/hand-drawn/`): pencil on paper, art with
+  `medium: Hand drawn`. Its page opens with Mami's story: "I started drawing
+  with just a pencil, not as a professional or anything like that. I just
+  loved doing it." (Was "Traditional" until November 2026.)
+- **Procreate** (`/arts/procreate/`): art with `medium: Procreate`.
+- **Animated** (`/arts/animated/`): the `animations` collection (see
+  Animations).
+
+Each subcategory page (`arts/<slug>/index.md`, all built by
+`art-group-page.html`) shows its gallery, or a "Working on it" note while it's
+empty; an empty one is `noindex` and out of the sitemap and switches on by
+itself with its first piece. `/arts/` shows each subcategory under its h2
+(up to four pieces, then "See all N …"), or "Working on it." The old
+`/arts/medium/*` and `/animations/` URLs redirect (`redirect_from`).
+
+The first six pieces went up in November 2026, all under Hand drawn
 (pencil on paper; Mami calls these the "raw" ones): Mulan and Shang (fan
 art of Disney's Mulan), Panda, Kestrel, Chickadee, Sparrow on a branch and
 Two dogs (a sketchbook page). They're photos Mami first posted on Instagram
@@ -379,26 +404,42 @@ Chickadee are Instagram's 1080 px copies, so they're smaller than the
 others. Panda and Two dogs are hidden for now at Mami's request
 (`published: false` at the top of their files; delete that line to bring
 one back), so the site shows the three birds and Mulan and Shang. Procreate
-pieces are coming. A medium with no pieces (Procreate and Sketchbook for
-now) stays off the Arts index, out of the sitemap and `noindex` on its own
-page, and switches on by itself with its first piece. To add a piece, copy
-`_arts/_TEMPLATE.md` (ignored by Jekyll because of the underscore) and
-follow the steps in it.
+pieces are coming. To add a piece, copy `_arts/_TEMPLATE.md` (ignored by
+Jekyll because of the underscore) and follow the steps in it.
 
-Index is a two-column gallery at every width, each piece shown whole at its
-own shape, not cropped square (Mami asked for this in November 2026 so the
-drawings get room; it was four square crops a row before). Detail page shows the
-full piece large, then medium, tools, date, and a short note about the piece.
-Art is image-heavy — this is where performance and alt text matter most. See
-the image rules below; do not skip them here.
+**Galleries** (`gallery-grid.html`): two columns at every width, square
+pictures all the same size, square corners, the name under each, like a
+photo grid. (Mami tried uncropped shapes and went back to squares.)
+
+**The viewer** (Mami's request, November 2026: "like when you look at a
+picture on Instagram or Facebook"): clicking a picture opens it full screen
+over the gallery (`viewer-dialog.html`, a `<dialog>`, run by `main.js`).
+Close and the logo top left, an info button top right (shows when it was
+made: "Created July 18, 2026", plus the piece's note if it has one), ‹ ›
+at the sides that wrap around the pieces in that gallery, the arrow keys
+and swiping too, the name under the picture; Escape, ×, Back or a tap on
+the dark space around it close it. No date, medium or tools on view
+otherwise. While it's open the address is the piece's own URL, so Back
+closes it and a reload or a shared link opens that piece's page, which is
+the same view built server-side (`_layouts/art.html`: links for ‹ › and ×, a
+`<details>` for info, its title as the page's one h1, no site header or
+footer). Without JS the thumbnails link to those pages, so nothing depends
+on the script. Art pages have no breadcrumb trail on view (its JSON-LD is
+still written, `breadcrumb.html json_only=true`) and no See Also: the
+arrows are their prev/next (an exception to linking rules 4 and 5, at
+Mami's request). Art is image-heavy — this is where performance and alt
+text matter most. See the image rules below; do not skip them here.
 
 ### Animations
 
-Added in November 2026, at Mami's request, for drawings that move. Built and
-waiting for the first one: until `_animations/` has an item, the nav link
-stays hidden, `/animations/` shows a short "Coming soon" note with `noindex`,
-and nothing about it is in the sitemap or `llms.txt`. It all switches on by
-itself with the first one; copy `_animations/_TEMPLATE.md` and follow it.
+Added in November 2026, at Mami's request, for drawings that move, and
+moved under Arts as **Animated** the same month (`/arts/animated/`; pieces
+at `/arts/animated/:slug/`). Waiting for the first one: until
+`_animations/` has an item, `/arts/animated/` shows "Working on it" with
+`noindex`, and nothing about it is in the sitemap or `llms.txt`. It all
+switches on by itself with the first one; copy `_animations/_TEMPLATE.md`
+and follow it. The picture viewer doesn't play videos yet, so Animated's
+thumbnails link to each animation's page.
 
 Each one is an MP4 video (`video:`) or a GIF (`gif:`), plus a still frame
 (`image:`, required: the thumbnail, the share image and the poster) that
@@ -412,10 +453,10 @@ Playback: a video never starts by itself. It has controls, loops, and is
 muted unless `sound: true`, so nothing moves without the reader asking
 (WCAG 2.2.2, and see the confetti band below). A GIF plays by itself, so a
 device asking for reduced motion gets the still frame instead (`<picture>`
-with a `prefers-reduced-motion` source). The index is the Arts gallery grid
-with a play mark on each thumbnail. Detail page: breadcrumb → eyebrow
-("Animation") → title → abstract → the animation → Format / Tools / Date →
-note → See Also ("Watch: …") → prev/next.
+with a `prefers-reduced-motion` source). The Animated page is the Arts
+gallery grid with a play mark on each thumbnail. Detail page: breadcrumb
+(Arts / Animated / title) → eyebrow ("Animation") → title → abstract → the
+animation → Format / Tools / Date → note → See Also ("Watch: …") → prev/next.
 
 ### Blog / Journal
 
@@ -471,7 +512,7 @@ status: # optional; "ongoing" shows an In progress pill
 ```yaml
 title:
 description:
-medium: # Procreate | Traditional | Sketchbook — drives the medium page and breadcrumb
+medium: # Procreate | Hand drawn — its Arts subcategory (page, gallery, ‹ ›)
 date:
 image:
 image_alt: # required — describe the artwork, not "drawing"
@@ -516,13 +557,15 @@ linkable. Enforce all of these:
    (section index → item, or section index → category page → item). This
    is the guarantee that nothing is orphaned.
 3. **Category, medium, and tag pages are real pages**, generated at build
-   time — `/projects/category/hackathons/`, `/arts/medium/procreate/`,
+   time — `/projects/category/hackathons/`, `/arts/hand-drawn/`,
    `/blog/tag/technology/`, and the section index links to each of them. The
    old site linked these to `#`, which meant search engines saw zero of them.
 4. **`see-also.html` renders on every detail page and is never empty.** Use
    `related` when set; otherwise fall back to same category/tag, then to most
-   recent in the collection.
-5. **Prev/next** sibling links at the bottom of every detail page.
+   recent in the collection. (Exception: art pieces, which are the
+   full-screen viewer; see Arts.)
+5. **Prev/next** sibling links at the bottom of every detail page (on art
+   pieces they're the viewer's ‹ › arrows, named "Previous: …" / "Next: …").
 6. **Descriptive anchor text.** Use the post or project title. Never "read
    more", "click here", "view", or a bare URL.
 7. Outbound links to GitHub/Devpost/demos open in the same tab unless the
@@ -625,7 +668,7 @@ Emit per page type:
 - Animation detail → `VideoObject` (`contentUrl`, `thumbnailUrl`,
   `uploadDate`) for a video, or `VisualArtwork` with `artform: Animation`
   for a GIF.
-- Category, medium, and tag pages, and the Animations index → `CollectionPage`.
+- Category, Arts subcategory and tag pages → `CollectionPage`.
 - Every page below root → `BreadcrumbList`.
 
 Validate output against Google's Rich Results Test before considering a page
@@ -642,7 +685,7 @@ in the About page's `mainEntity` is the likely reason a test in October
 ### Crawlability
 
 - `sitemap.xml` generated and referenced from `robots.txt`, including every
-  category, medium, and tag page.
+  category, Arts subcategory (once it has a piece) and tag page.
 - `robots.txt` at root, allowing everything, pointing at the sitemap.
 - RSS feed at `/feed.xml` for the blog, `/feed/projects.xml` for projects.
 - `robots.txt` names the AI crawlers (GPTBot, ClaudeBot, PerplexityBot,

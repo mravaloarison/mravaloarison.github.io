@@ -1,0 +1,7 @@
+{%- comment -%} Line icons for the picture viewer. Param: name (close | info | prev | next). {%- endcomment -%}
+{%- case include.name -%}
+{%- when "close" -%}<svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+{%- when "info" -%}<svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle class="viewer-icon-dot" cx="12" cy="7.6" r="1.1"/></svg>
+{%- when "prev" -%}<svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>
+{%- when "next" -%}<svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+{%- endcase -%}

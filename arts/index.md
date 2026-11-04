@@ -26,3 +26,5 @@ description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digi
 {% endif %}
 {% endif %}
 {% endfor %}
+
+{% include viewer-dialog.html %}

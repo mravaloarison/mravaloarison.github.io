@@ -1,0 +1,26 @@
+{%- comment -%}
+  The picture viewer that opens over an Arts gallery (main.js fills it in
+  from the gallery's data-* attributes). Each piece's own page shows the
+  same view (_layouts/art.html), so links, reloads and no-JS all work.
+{%- endcomment -%}
+<dialog class="viewer" id="viewer" aria-label="Picture viewer">
+  <div class="viewer-bar">
+    <div class="viewer-bar-start">
+      <button type="button" class="viewer-btn" data-viewer-close><span class="sr-only">Close</span>{% include viewer-icon.html name="close" %}</button>
+      {% include viewer-logo.html %}
+    </div>
+    <div class="viewer-bar-end">
+      <button type="button" class="viewer-btn" data-viewer-info aria-expanded="false" aria-controls="viewer-info"><span class="sr-only">Info</span>{% include viewer-icon.html name="info" %}</button>
+      <div class="viewer-info" id="viewer-info" hidden>
+        <p>Created <time></time></p>
+      </div>
+    </div>
+  </div>
+  <div class="viewer-stage" data-viewer-stage>
+    <figure class="viewer-figure">
+      <figcaption class="viewer-title"></figcaption>
+    </figure>
+  </div>
+  <button type="button" class="viewer-btn viewer-prev" data-viewer-prev><span class="sr-only">Previous</span>{% include viewer-icon.html name="prev" %}</button>
+  <button type="button" class="viewer-btn viewer-next" data-viewer-next><span class="sr-only">Next</span>{% include viewer-icon.html name="next" %}</button>
+</dialog>

@@ -1,3 +1,5 @@
+{%- comment -%} json_only=true writes just the BreadcrumbList (the art viewer has no visible trail). {%- endcomment -%}
+{%- unless include.json_only %}
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     {% if include.section_title %}
@@ -9,6 +11,7 @@
     <li aria-current="page">{{ include.current }}</li>
   </ol>
 </nav>
+{%- endunless %}
 
 {%- comment -%}
   Trail starts at the section (Projects, Blog, Arts), not at "/": the site

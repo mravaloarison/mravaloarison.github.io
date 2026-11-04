@@ -1,11 +1,16 @@
 {%- comment -%}
-  Two-column gallery for Arts and Animations, each piece shown whole.
-  Params: items, and play=true (Animations) for a small play mark on each
-  thumbnail.
+  Two-column gallery for Arts: square pictures, all the same size, the name
+  under each. Params: items; viewer=<group> (Hand drawn, Procreate) so a
+  click opens the picture viewer, which steps through the items sharing
+  that group; play=true (Animated) for a small play mark on each thumbnail.
 {%- endcomment -%}
 <div class="gallery-grid">
   {% for item in include.items %}
-  <a class="gallery-item" href="{{ item.url | relative_url }}">
+  {%- if include.viewer -%}
+    {%- assign vpic = site.data.image_dimensions[item.image] -%}
+    {%- capture vsrcset -%}{% for v in vpic.webp %}{{ v.src | relative_url }} {{ v.w }}w{% unless forloop.last %}, {% endunless %}{% endfor %}{%- endcapture -%}
+  {%- endif %}
+  <a class="gallery-item" href="{{ item.url | relative_url }}"{% if include.viewer %} data-viewer="{{ include.viewer }}" data-title="{{ item.title | escape }}" data-date="{{ item.date | date: '%B %-d, %Y' }}" data-datetime="{{ item.date | date: '%Y-%m-%d' }}" data-src="{{ item.image | relative_url }}" data-srcset="{{ vsrcset | strip }}" data-width="{{ vpic.width }}" data-height="{{ vpic.height }}" data-alt="{{ item.image_alt | escape }}"{% endif %}>
     <span class="gallery-media">
       {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 50vw, 340px" %}
       {%- if include.play %}<span class="gallery-play" aria-hidden="true"></span>{% endif %}

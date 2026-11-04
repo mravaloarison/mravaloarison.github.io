@@ -1,40 +1,55 @@
 ---
-layout: default
 ---
-{% assign mediums = site.data.categories.arts %}
-{% assign medium_label = page.medium %}
-{% assign medium_url = "/arts/" %}
-{% for m in mediums %}
-  {% if m.name == page.medium %}
-    {% assign medium_label = m.label %}
-    {% assign medium_url = "/arts/" | append: m.slug | append: "/" %}
-  {% endif %}
-{% endfor %}
-{% include breadcrumb.html section_title="Arts" section_url="/arts/" category_title=medium_label category_url=medium_url current=page.title %}
-
-{% include page-header.html eyebrow=medium_label title=page.title abstract=page.description %}
-
-{% include figure.html src=page.image alt=page.image_alt loading="eager" sizes="(max-width: 1023px) calc(100vw - 32px), 800px" class="art-figure" %}
-
-<dl class="art-details">
-  <div>
-    <dt>Medium</dt>
-    <dd><a href="{{ medium_url | relative_url }}">{{ medium_label }}</a></dd>
-  </div>
-  {% if page.tools and page.tools.size > 0 %}
-  <div>
-    <dt>Tools</dt>
-    <dd>{{ page.tools | join: ", " }}</dd>
-  </div>
-  {% endif %}
-  <div>
-    <dt>Date</dt>
-    <dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd>
-  </div>
-</dl>
-
-{{ content }}
-
-{% include see-also.html collection=site.arts %}
-
-{% include prev-next.html %}
+{%- comment -%}
+  One piece of art, full screen, like a photo viewer (Mami's request,
+  November 2026): close (back to its subcategory) and the logo top left,
+  info (when it was made, plus the note if there is one) top right, ‹ › to
+  the pieces before and after it in that subcategory, the title under the
+  picture. The galleries open the same view in place (viewer-dialog.html
+  and main.js); this page is what a shared link, a reload or no JS shows.
+{%- endcomment -%}
+{%- assign group = site.data.categories.arts | where: "name", page.medium | first -%}
+{%- include art-group-items.html slug=group.slug -%}
+{%- assign group_url = "/arts/" | append: group.slug | append: "/" -%}
+{%- assign n = group_items.size -%}
+{%- assign here = 0 -%}
+{%- for it in group_items -%}{%- if it.url == page.url -%}{%- assign here = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+{%- assign prev_i = here | plus: n | minus: 1 | modulo: n -%}
+{%- assign next_i = here | plus: 1 | modulo: n -%}
+{%- assign prev = group_items[prev_i] -%}
+{%- assign next = group_items[next_i] -%}
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}" class="viewer-root">
+{% include head.html %}
+<body class="viewer-body">
+  <main id="main" class="viewer viewer-page">
+    <div class="viewer-bar">
+      <div class="viewer-bar-start">
+        <a class="viewer-btn viewer-close" href="{{ group_url | relative_url }}"><span class="sr-only">Close, back to {{ group.label }}</span>{% include viewer-icon.html name="close" %}</a>
+        {% include viewer-logo.html %}
+      </div>
+      <div class="viewer-bar-end">
+        <details class="viewer-details">
+          <summary class="viewer-btn"><span class="sr-only">Info</span>{% include viewer-icon.html name="info" %}</summary>
+          <div class="viewer-info">
+            <p>Created <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+            {{ content }}
+          </div>
+        </details>
+      </div>
+    </div>
+    <div class="viewer-stage">
+      <figure class="viewer-figure">
+        {% include picture.html src=page.image alt=page.image_alt loading="eager" sizes="100vw" class="viewer-img" %}
+        <figcaption><h1 class="viewer-title">{{ page.title }}</h1></figcaption>
+      </figure>
+    </div>
+    {%- if n > 1 %}
+    <a class="viewer-btn viewer-prev" href="{{ prev.url | relative_url }}" rel="prev"><span class="sr-only">Previous: {{ prev.title }}</span>{% include viewer-icon.html name="prev" %}</a>
+    <a class="viewer-btn viewer-next" href="{{ next.url | relative_url }}" rel="next"><span class="sr-only">Next: {{ next.title }}</span>{% include viewer-icon.html name="next" %}</a>
+    {%- endif %}
+  </main>
+  {% include breadcrumb.html section_title="Arts" section_url="/arts/" category_title=group.label category_url=group_url current=page.title json_only=true %}
+  <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+</body>
+</html>
