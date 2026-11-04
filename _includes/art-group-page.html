@@ -13,7 +13,6 @@
 {% include gallery-grid.html items=group_items play=true %}
 {% else %}
 {% include gallery-grid.html items=group_items viewer=group.slug %}
-{% include viewer-dialog.html %}
 {% endif %}
 {% else %}
 {% include callout.html label="Working on it" text=page.working_on_it %}

@@ -133,10 +133,24 @@
     var img = null;
     var pushed = false;
 
+    // Everything that opens in the viewer carries data-viewer="<group>": the
+    // gallery thumbnails, the pieces a sample gallery doesn't show (hidden
+    // spans with data-href), and the logo. ‹ › step through one group.
     function itemsIn(group) {
-      return Array.prototype.slice.call(document.querySelectorAll(".gallery-item[data-viewer]")).filter(function (a) {
+      return Array.prototype.slice.call(document.querySelectorAll("[data-viewer]")).filter(function (a) {
         return a.getAttribute("data-viewer") === group;
       });
+    }
+
+    // The address while a piece is open: its own page. Things without a page
+    // of their own (the logo) keep the current address.
+    function urlOf(a) {
+      if (a.hasAttribute("data-viewer-keep-url")) return window.location.href;
+      return a.getAttribute("data-href") || a.getAttribute("href");
+    }
+
+    function keyOf(a) {
+      return a.getAttribute("data-viewer") + " " + (a.getAttribute("data-href") || a.getAttribute("href"));
     }
 
     function picture(a) {
@@ -167,7 +181,7 @@
       time.textContent = a.getAttribute("data-date");
       time.setAttribute("datetime", a.getAttribute("data-datetime"));
       document.title = a.getAttribute("data-title") + " · " + siteTitle;
-      if (pushed) window.history.replaceState({ viewer: a.getAttribute("href") }, "", a.href);
+      if (pushed) window.history.replaceState({ viewer: keyOf(a) }, "", urlOf(a));
       prevButton.hidden = nextButton.hidden = n < 2;
       if (n > 1) {
         picture(list[(index + 1) % n]); // start loading the neighbours
@@ -179,7 +193,7 @@
       list = itemsIn(a.getAttribute("data-viewer"));
       info.hidden = true;
       infoButton.setAttribute("aria-expanded", "false");
-      if (!fromHistory) window.history.pushState({ viewer: a.getAttribute("href") }, "", a.href);
+      if (!fromHistory) window.history.pushState({ viewer: keyOf(a) }, "", urlOf(a));
       pushed = true;
       dialog.showModal();
       root.classList.add("viewer-open");
@@ -208,11 +222,12 @@
       }
       closingFromHistory = false;
       var current = list[index];
-      if (current) current.focus();
+      if (current && current.offsetParent !== null) current.focus();
+      else if (list[0] && list[0].offsetParent !== null) list[0].focus(); // a hidden piece: back to its gallery
     });
 
     document.addEventListener("click", function (e) {
-      var a = e.target.closest ? e.target.closest(".gallery-item[data-viewer]") : null;
+      var a = e.target.closest ? e.target.closest("a[data-viewer]") : null;
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       open(a, false);
@@ -244,8 +259,10 @@
         close(true);
       } else if (e.state && e.state.viewer) {
         // Forward again, onto a picture that was open: open it again.
-        var a = document.querySelector('.gallery-item[data-viewer][href="' + e.state.viewer + '"]');
-        if (a) open(a, true);
+        var match = Array.prototype.filter.call(document.querySelectorAll("[data-viewer]"), function (x) {
+          return keyOf(x) === e.state.viewer;
+        })[0];
+        if (match) open(match, true);
       }
     });
   }
@@ -260,6 +277,7 @@
     var close = page.querySelector(".viewer-close");
     document.addEventListener("keydown", function (e) {
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+      if (document.querySelector("dialog[open]")) return;
       if (e.key === "ArrowLeft" && prev) prev.click();
       else if (e.key === "ArrowRight" && next) next.click();
       else if (e.key === "Escape" && close) close.click();

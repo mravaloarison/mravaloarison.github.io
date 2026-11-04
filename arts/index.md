@@ -4,7 +4,7 @@ title: Arts
 description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digital pieces from Procreate, and animations."
 ---
 
-{% include page-header.html eyebrow="Arts" title="Arts" abstract="I love drawing, and I recently started doing digital work in Procreate. This is where those pieces live." %}
+{% include page-header.html eyebrow="Arts" title="Arts" abstract="I love drawing, and I recently started doing digital work in Procreate. I just really wanted them to be out here because they are also part of my work." %}
 
 {% for g in site.data.categories.arts %}
 {% include art-group-items.html slug=g.slug %}
@@ -15,16 +15,13 @@ description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digi
 {% if group_items.size == 0 %}
 <p class="meta">Working on it.</p>
 {% else %}
-{% assign shown = group_items | slice: 0, 4 %}
+{%- comment -%} Two samples per subcategory; its own page has the rest. {%- endcomment -%}
 {% if group.collection == "animations" %}
-{% include gallery-grid.html items=shown play=true %}
+{% include gallery-grid.html items=group_items limit=2 play=true %}
 {% else %}
-{% include gallery-grid.html items=shown viewer=group.slug %}
+{% include gallery-grid.html items=group_items limit=2 viewer=group.slug %}
 {% endif %}
-{% if group_items.size > 4 %}
-<p class="see-more"><a href="{{ group_url | relative_url }}">See all {{ group_items.size }} {{ group.items_label }}</a></p>
-{% endif %}
+<p class="see-more"><a href="{{ group_url | relative_url }}">View all {{ group_items.size }} {{ group.items_label }}</a></p>
 {% endif %}
 {% endfor %}
 
-{% include viewer-dialog.html %}

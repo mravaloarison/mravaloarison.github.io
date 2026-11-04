@@ -1,0 +1,7 @@
+{%- comment -%}
+  The data-* attributes the picture viewer (main.js) reads for one piece.
+  Params: item, viewer (the gallery's group). Starts with a space.
+{%- endcomment -%}
+{%- assign vpic = site.data.image_dimensions[include.item.image] -%}
+{%- capture vsrcset -%}{% for v in vpic.webp %}{{ v.src | relative_url }} {{ v.w }}w{% unless forloop.last %}, {% endunless %}{% endfor %}{%- endcapture -%}
+{{ " " }}data-viewer="{{ include.viewer }}" data-title="{{ include.item.title | escape }}" data-date="{{ include.item.date | date: '%B %-d, %Y' }}" data-datetime="{{ include.item.date | date: '%Y-%m-%d' }}" data-src="{{ include.item.image | relative_url }}" data-srcset="{{ vsrcset | strip }}" data-width="{{ vpic.width }}" data-height="{{ vpic.height }}" data-alt="{{ include.item.image_alt | escape }}"

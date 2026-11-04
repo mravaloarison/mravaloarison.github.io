@@ -24,6 +24,8 @@ _brand/ isn't published, but the repo is), then the script writes:
                                  every page (shown at 44-56 px, so 3x sharp)
   assets/brand/logo-512.webp     512 px, transparent: the logo in the first-visit
                                  intro, before it glides into place
+  assets/brand/logo-1024.webp    1024 px, transparent: the logo when someone
+                                 clicks it and it opens big in the viewer
 
 Not made here: assets/brand/dog-intro.mp4 (and .webm, for browsers without
 H.264), the intro's hello clip (a nod, an
@@ -152,9 +154,11 @@ def main():
     page.save(PAGE_LOGO.with_suffix(".webp"), "WEBP", quality=88, method=6)
     page.save(PAGE_LOGO.with_suffix(".png"), optimize=True)
     fit(logo, 512).save(PAGE_LOGO.parent / "logo-512.webp", "WEBP", quality=88, method=6)
+    fit(logo, 1024).save(PAGE_LOGO.parent / "logo-1024.webp", "WEBP", quality=86, method=6)
 
     for f in ("favicon.ico", "icon-192.png", "apple-touch-icon.png", "assets/social/og-default.png",
-              "assets/brand/logo.webp", "assets/brand/logo.png", "assets/brand/logo-512.webp"):
+              "assets/brand/logo.webp", "assets/brand/logo.png", "assets/brand/logo-512.webp",
+              "assets/brand/logo-1024.webp"):
         print(f"wrote {f} ({(ROOT / f).stat().st_size // 1024 or 1} KB)")
 
 

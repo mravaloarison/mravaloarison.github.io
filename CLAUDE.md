@@ -176,8 +176,11 @@ things, cards and images (Mami wanted them a little squarer than the old
   (16px under 600px). From 1040px the nav sits in a `--nav-width` (160px)
   column to its left with a 32px gap, and the two are centered together.
   No horizontal page scroll, ever.
-- **Logo** on every page (`.site-logo`, a link to `/`, alt "Maminiaina
-  Ravaloarison"; it tilts 6° on hover): below 1040px it sits at the top left,
+- **Logo** on every page (`.site-logo`; it tilts 6° on hover). Clicking it
+  opens it big in the picture viewer, titled "Logo", info "Created November
+  2026", no arrows, the address unchanged (Mami's request, November 2026:
+  not a link to About). Without JS it links to the big image
+  (`logo-1024.webp`). Below 1040px it sits at the top left,
   opposite the burger (44px); from 1040px it's at the top of the nav column
   (56px), its top lined up with the h1 or breadcrumb, with the links below
   it. No site name next to it.
@@ -301,8 +304,11 @@ things, cards and images (Mami wanted them a little squarer than the old
   play mark to each thumbnail
 - `art-group-items.html` — looks up one Arts subcategory and its pieces
   (sets `group` and `group_items`); `art-group-page.html` — the page for one
-- `viewer-dialog.html`, `viewer-logo.html`, `viewer-icon.html` — the Arts
-  picture viewer (see Arts); `_layouts/art.html` is the same view as a page
+- `viewer-dialog.html`, `viewer-logo.html`, `viewer-icon.html`,
+  `viewer-attrs.html` — the picture viewer (see Arts; the dialog is on every
+  page, in `default.html`, because the logo opens in it too; the logo in
+  its bar is just the mark, not a link); `viewer-attrs.html` writes the
+  data-* a piece needs; `_layouts/art.html` is the same view as a page
 - `animation-media.html` — one animation, large: the MP4 player, the GIF, or
   the still frame (see Animations)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
@@ -421,8 +427,13 @@ menu and on `/arts/`, defined in `_data/categories.yml` under `arts`:
 Each subcategory page (`arts/<slug>/index.md`, all built by
 `art-group-page.html`) shows its gallery, or a "Working on it" note while it's
 empty; an empty one is `noindex` and out of the sitemap and switches on by
-itself with its first piece. `/arts/` shows each subcategory under its h2
-(up to four pieces, then "See all N …"), or "Working on it." The old
+itself with its first piece. `/arts/` opens with "I love drawing, and I
+recently started doing digital work in Procreate. I just really wanted them
+to be out here because they are also part of my work." (Mami's words), then
+each subcategory under its h2 with two samples and "View all N …" to its
+page (Mami's request: samples, not everything), or "Working on it." The
+viewer there still steps through the whole subcategory (the pieces past the
+samples are hidden `data-viewer` entries). The old
 `/arts/medium/*` and `/animations/` URLs redirect (`redirect_from`).
 
 The first six pieces went up in November 2026, all under Hand drawn

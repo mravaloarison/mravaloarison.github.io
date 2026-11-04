@@ -16,7 +16,11 @@
 
   <header class="site-header">
     <div class="site-header-inner">
-      <a class="site-logo" href="{{ '/' | relative_url }}">
+      {%- comment -%}
+        The logo opens big in the picture viewer (Mami's request), not the
+        About page. Without JS the link shows the big image itself.
+      {%- endcomment %}
+      <a class="site-logo" href="{{ '/assets/brand/logo-1024.webp' | relative_url }}" aria-label="View the logo larger" data-viewer="logo" data-viewer-keep-url data-title="Logo" data-date="November 2026" data-datetime="2026-11" data-src="{{ '/assets/brand/logo-1024.webp' | relative_url }}" data-srcset="{{ '/assets/brand/logo-512.webp' | relative_url }} 512w, {{ '/assets/brand/logo-1024.webp' | relative_url }} 1024w" data-width="1024" data-height="1024" data-alt="Mami's logo, drawn in Procreate: a yellow Labrador's head in profile, in sunglasses, with a brown collar and a yellow paw-print tag">
         <picture>
           <source type="image/webp" srcset="{{ '/assets/brand/logo.webp' | relative_url }}">
           <img src="{{ '/assets/brand/logo.png' | relative_url }}" width="56" height="56" alt="Maminiaina Ravaloarison">
@@ -73,6 +77,8 @@
   </div>
 
   {% include footer.html %}
+
+  {% include viewer-dialog.html %}
 
   <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
