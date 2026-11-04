@@ -103,3 +103,35 @@
       w: 800
     - src: /assets/images/SlayTheInterview-1600w.webp
       w: 1600
+/assets/images/arts/mulan-and-shang.jpg:
+  width: 3042
+  height: 3060
+  webp:
+    - src: /assets/images/arts/mulan-and-shang-800w.webp
+      w: 800
+    - src: /assets/images/arts/mulan-and-shang-1600w.webp
+      w: 1600
+/assets/images/arts/panda.jpg:
+  width: 1932
+  height: 2576
+  webp:
+    - src: /assets/images/arts/panda-800w.webp
+      w: 800
+    - src: /assets/images/arts/panda-1600w.webp
+      w: 1600
+/assets/images/arts/sparrow.jpg:
+  width: 1932
+  height: 2576
+  webp:
+    - src: /assets/images/arts/sparrow-800w.webp
+      w: 800
+    - src: /assets/images/arts/sparrow-1600w.webp
+      w: 1600
+/assets/images/arts/two-dogs.jpg:
+  width: 1932
+  height: 2576
+  webp:
+    - src: /assets/images/arts/two-dogs-800w.webp
+      w: 800
+    - src: /assets/images/arts/two-dogs-1600w.webp
+      w: 1600

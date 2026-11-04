@@ -1,0 +1,9 @@
+---
+title: Panda
+description: "A pencil drawing of a giant panda looking straight out, its round white face framed by dark eye patches, round ears and softly shaded black fur."
+medium: Traditional
+date: 2026-07-18
+image: /assets/images/arts/panda.jpg
+image_alt: "Pencil drawing of a giant panda facing forward, with dark eye patches, round black ears and softly shaded fur around its white face."
+tools: [Pencil, Paper]
+---

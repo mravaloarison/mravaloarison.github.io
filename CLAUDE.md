@@ -347,11 +347,16 @@ See Also → prev/next.
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
 
-Built and waiting for the first piece. Until `_arts/` has at least one item,
-the Arts nav link and the "drawing" link in the About bio stay hidden, and
-the Arts pages render a short note with `noindex`. All of that switches on by
-itself when the first piece is added — copy `_arts/_TEMPLATE.md` (ignored by
-Jekyll because of the underscore) and follow the steps in it.
+The first four pieces went up in November 2026, all under Traditional
+(pencil on paper; Mami calls these the "raw" ones): Mulan and Shang (fan
+art of Disney's Mulan), Panda, Sparrow on a branch and Two dogs (a
+sketchbook page). They're phone photos Mami first posted on Instagram
+(@mamisdrawing), and each `date` is the day it was posted there. Procreate
+pieces are coming. A medium with no pieces (Procreate and Sketchbook for
+now) stays off the Arts index, out of the sitemap and `noindex` on its own
+page, and switches on by itself with its first piece. To add a piece, copy
+`_arts/_TEMPLATE.md` (ignored by Jekyll because of the underscore) and
+follow the steps in it.
 
 Index is a gallery grid, denser than the projects grid. Detail page shows the
 full piece large, then medium, tools, date, and a short note about the piece.
