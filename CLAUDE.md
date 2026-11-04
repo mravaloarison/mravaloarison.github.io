@@ -357,11 +357,17 @@ See Also → prev/next.
 New section. Mami draws, and recently started digital work in Procreate.
 Grouped by medium: **Procreate**, **Traditional**, **Sketchbook**.
 
-The first four pieces went up in November 2026, all under Traditional
+The first six pieces went up in November 2026, all under Traditional
 (pencil on paper; Mami calls these the "raw" ones): Mulan and Shang (fan
-art of Disney's Mulan), Panda, Sparrow on a branch and Two dogs (a
-sketchbook page). They're phone photos Mami first posted on Instagram
-(@mamisdrawing), and each `date` is the day it was posted there. Procreate
+art of Disney's Mulan), Panda, Kestrel, Chickadee, Sparrow on a branch and
+Two dogs (a sketchbook page). They're photos Mami first posted on Instagram
+(@mamisdrawing), which has six posts so far, all of them here, and each
+`date` is the day it was posted there, in New York time (the kestrel,
+chickadee and panda all went up on July 18, 2026). A post's time is in its
+link: read the first 11 characters after `/p/` as a base64url number, shift
+it right 23 bits and add 1314220021721 to get Unix milliseconds. Kestrel and
+Chickadee are Instagram's 1080 px copies, so they're smaller than the
+others. Procreate
 pieces are coming. A medium with no pieces (Procreate and Sketchbook for
 now) stays off the Arts index, out of the sitemap and `noindex` on its own
 page, and switches on by itself with its first piece. To add a piece, copy
