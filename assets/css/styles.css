@@ -1188,12 +1188,14 @@ main iframe {
   font-size: 14px;
 }
 
-/* Gallery grid (Arts): dense square crops */
+/* Gallery grid (Arts, Animations): two columns at every width, each piece
+   shown whole at its own shape (no square crop), so the drawings get room */
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--space-12);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-32) var(--space-24);
+  align-items: start;
   margin: var(--space-24) 0 var(--space-48);
 }
 
@@ -1205,8 +1207,6 @@ main iframe {
 .gallery-item img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
   border-radius: var(--radius-md);
   transition: opacity var(--transition);
 }
@@ -1475,6 +1475,10 @@ figcaption {
   .abstract,
   .bio-text {
     font-size: 20px;
+  }
+
+  .gallery-grid {
+    gap: var(--space-24) var(--space-12);
   }
 
   .photo-grid {

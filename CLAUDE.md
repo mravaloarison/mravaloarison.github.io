@@ -256,7 +256,8 @@ things, cards and images (Mami wanted them a little squarer than the old
 - `figure.html` — image plus caption, used heavily on Arts
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
-- `gallery-grid.html` — the dense square grid used on Arts and Animations;
+- `gallery-grid.html` — the two-column gallery used on Arts and Animations,
+  each piece whole at its own shape (no square crop);
   `play=true` (Animations) adds a small round play mark to each thumbnail
 - `animation-media.html` — one animation, large: the MP4 player, the GIF, or
   the still frame (see Animations)
@@ -375,14 +376,18 @@ chickadee and panda all went up on July 18, 2026). A post's time is in its
 link: read the first 11 characters after `/p/` as a base64url number, shift
 it right 23 bits and add 1314220021721 to get Unix milliseconds. Kestrel and
 Chickadee are Instagram's 1080 px copies, so they're smaller than the
-others. Procreate
+others. Panda and Two dogs are hidden for now at Mami's request
+(`published: false` at the top of their files; delete that line to bring
+one back), so the site shows the three birds and Mulan and Shang. Procreate
 pieces are coming. A medium with no pieces (Procreate and Sketchbook for
 now) stays off the Arts index, out of the sitemap and `noindex` on its own
 page, and switches on by itself with its first piece. To add a piece, copy
 `_arts/_TEMPLATE.md` (ignored by Jekyll because of the underscore) and
 follow the steps in it.
 
-Index is a gallery grid, denser than the projects grid. Detail page shows the
+Index is a two-column gallery at every width, each piece shown whole at its
+own shape, not cropped square (Mami asked for this in November 2026 so the
+drawings get room; it was four square crops a row before). Detail page shows the
 full piece large, then medium, tools, date, and a short note about the piece.
 Art is image-heavy — this is where performance and alt text matter most. See
 the image rules below; do not skip them here.

@@ -1,4 +1,6 @@
 ---
+# Hidden for now at Mami's request (November 2026); delete this line to show it again.
+published: false
 title: Two dogs
 description: "One sketchbook page, two dogs in pencil. A Labrador's face up top looking straight out, and a fluffy dog below, smiling with its tail up."
 medium: Traditional
