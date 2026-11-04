@@ -29,18 +29,29 @@
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <ul>
           <li><a href="{{ '/' | relative_url }}"{% if section == "about" %} aria-current="{% if page.url == '/' %}page{% else %}true{% endif %}"{% endif %}>About</a></li>
-          <li>
-            <a href="{{ '/projects/' | relative_url }}"{% if section == "projects" %} aria-current="{% if page.url == '/projects/' %}page{% else %}true{% endif %}"{% endif %}>Projects</a>
-            <ul class="nav-sub" aria-label="Project types">
+          {%- comment -%} Projects and Arts fold their types into a dropdown (JS on), open on the pages inside a type {%- endcomment -%}
+          {%- assign projects_open = false -%}
+          {%- if page.collection == "projects" or page.url contains "/projects/category/" -%}{%- assign projects_open = true -%}{%- endif -%}
+          {%- assign arts_open = false -%}
+          {%- if page.collection == "arts" or page.collection == "animations" or page.art_group -%}{%- assign arts_open = true -%}{%- endif %}
+          <li class="nav-group{% if projects_open %} is-open{% endif %}">
+            <div class="nav-row">
+              <a href="{{ '/projects/' | relative_url }}"{% if section == "projects" %} aria-current="{% if page.url == '/projects/' %}page{% else %}true{% endif %}"{% endif %}>Projects</a>
+              <button type="button" class="nav-toggle" aria-expanded="{{ projects_open }}" aria-controls="nav-sub-projects"><span class="sr-only">Project types</span></button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-projects" aria-label="Project types">
               {%- for cat in site.data.categories.projects %}
               {%- assign cat_url = "/projects/category/" | append: cat.slug | append: "/" %}
               <li><a href="{{ cat_url | relative_url }}"{% if page.url == cat_url %} aria-current="page"{% elsif page.collection == "projects" and page.category == cat.name %} aria-current="true"{% endif %}>{{ cat.label }}</a></li>
               {%- endfor %}
             </ul>
           </li>
-          <li>
-            <a href="{{ '/arts/' | relative_url }}"{% if section == "arts" %} aria-current="{% if page.url == '/arts/' %}page{% else %}true{% endif %}"{% endif %}>Arts</a>
-            <ul class="nav-sub" aria-label="Art types">
+          <li class="nav-group{% if arts_open %} is-open{% endif %}">
+            <div class="nav-row">
+              <a href="{{ '/arts/' | relative_url }}"{% if section == "arts" %} aria-current="{% if page.url == '/arts/' %}page{% else %}true{% endif %}"{% endif %}>Arts</a>
+              <button type="button" class="nav-toggle" aria-expanded="{{ arts_open }}" aria-controls="nav-sub-arts"><span class="sr-only">Art types</span></button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-arts" aria-label="Art types">
               {%- for g in site.data.categories.arts %}
               {%- assign g_url = "/arts/" | append: g.slug | append: "/" %}
               <li><a href="{{ g_url | relative_url }}"{% if page.url == g_url %} aria-current="page"{% elsif page.collection == "arts" and page.medium == g.name %} aria-current="true"{% elsif page.collection == "animations" and g.collection == "animations" %} aria-current="true"{% endif %}>{{ g.label }}</a></li>

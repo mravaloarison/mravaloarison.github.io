@@ -12,8 +12,12 @@
 
     var phone = window.matchMedia("(max-width: 1039px)");
 
+    // Links and dropdown toggles that can take focus right now (a closed
+    // dropdown's links are hidden).
     function links() {
-      return Array.prototype.slice.call(nav.querySelectorAll("a[href]"));
+      return Array.prototype.slice.call(nav.querySelectorAll("a[href], button")).filter(function (el) {
+        return el.getClientRects().length > 0;
+      });
     }
 
     function isOpen() {
@@ -66,5 +70,20 @@
     });
   }
 
+  // Projects and Arts: a toggle folds their types away. Without JS the
+  // toggles are hidden and every type is listed.
+  function initNavGroups() {
+    var toggles = document.querySelectorAll(".nav-toggle");
+    Array.prototype.forEach.call(toggles, function (toggle) {
+      toggle.addEventListener("click", function () {
+        var group = toggle.closest(".nav-group");
+        var open = !group.classList.contains("is-open");
+        group.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  }
+
   initMenu();
+  initNavGroups();
 })();

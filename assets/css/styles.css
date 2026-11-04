@@ -423,8 +423,73 @@ main,
   background: var(--accent);
 }
 
-.site-nav li:has(> .nav-sub a[aria-current]) > a::before {
+.site-nav li:has(> .nav-sub a[aria-current]) > .nav-row > a::before {
   content: none;
+}
+
+/* Projects and Arts: the link, then a small toggle that folds their types
+   away (JS on). Closed by default, open on the pages inside a type. While
+   a group is closed, the dot for a page inside it sits on the group. */
+.nav-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.nav-row > a {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.js .nav-toggle {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: -10px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.js .nav-toggle:hover {
+  color: var(--text);
+}
+
+/* a chevron: down when closed, up when open */
+.js .nav-toggle::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--transition), margin var(--transition);
+}
+
+.js .nav-group.is-open > .nav-row > .nav-toggle::before {
+  margin-top: 5px;
+  transform: rotate(-135deg);
+}
+
+.js .nav-group:not(.is-open) > .nav-sub {
+  display: none;
+}
+
+.js .site-nav .nav-group:not(.is-open) > .nav-row > a[aria-current]::before {
+  content: "";
 }
 
 .site-nav .nav-sub {
@@ -1718,6 +1783,12 @@ figcaption {
 
   .site-nav .nav-sub a {
     font-size: 16px;
+  }
+
+  .js .nav-toggle {
+    width: 32px;
+    height: 32px;
+    margin-right: -8px;
   }
 
   .site-header-inner {
