@@ -79,9 +79,10 @@ module PortfolioSEO
         when %r{\A/projects/category/([^/]+)/\z}
           cat = Array(@site.data.dig("categories", "projects")).find { |c| c["slug"] == Regexp.last_match(1) }
           cat ? PortfolioSEO.projects(@site).select { |d| d.data["category"] == cat["name"] }.map { |d| d.data["image"] } : []
-        when "/arts/" then PortfolioSEO.arts(@site).map { |d| d.data["image"] }
-        when %r{\A/arts/medium/} then PortfolioSEO.arts(@site).select { |d| d.data["medium"] == page.data["medium_name"] }.map { |d| d.data["image"] }
-        when "/animations/" then PortfolioSEO.animations(@site).map { |d| d.data["image"] }
+        when "/arts/" then (PortfolioSEO.arts(@site) + PortfolioSEO.animations(@site)).map { |d| d.data["image"] }
+        when %r{\A/arts/([^/]+)/\z}
+          group = PortfolioSEO.art_group_by_slug(@site, Regexp.last_match(1))
+          group ? PortfolioSEO.art_group_items(@site, group).map { |d| d.data["image"] } : []
         else []
         end
       (photos + featured + listed).compact
@@ -155,8 +156,12 @@ module PortfolioSEO
       out << "- [About Mami Ravaloarison](#{u('/')}): bio, experience, education, awards, certificates, languages and interests\n"
       out << "- [Projects](#{u('/projects/')}): #{PortfolioSEO.projects(@site).size} projects — work, personal and hackathon\n"
       out << "- [Blog](#{u('/blog/')}): #{PortfolioSEO.posts(@site).size} posts\n"
-      out << "- [Arts](#{u('/arts/')}): drawings and digital art\n" unless PortfolioSEO.arts(@site).empty?
-      out << "- [Animations](#{u('/animations/')}): animations made from Mami's drawings\n" unless PortfolioSEO.animations(@site).empty?
+      out << "- [Arts](#{u('/arts/')}): Mami's art, in three parts: hand drawn, Procreate and animated\n" unless PortfolioSEO.arts(@site).empty? && PortfolioSEO.animations(@site).empty?
+      PortfolioSEO.art_groups(@site).each do |g|
+        next if PortfolioSEO.art_group_items(@site, g).empty?
+
+        out << "  - [#{g['label']}](#{u("/arts/#{g['slug']}/")})\n"
+      end
       out << "- [Full text of this site](#{u('/llms-full.txt')}): everything below in full, in one file\n" unless full
       out << "\n"
 

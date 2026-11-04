@@ -1,0 +1,19 @@
+{%- comment -%}
+  The page for one Arts subcategory (/arts/<slug>/): its gallery, or a
+  "Working on it" note while it's empty. The page sets art_group, abstract
+  and working_on_it in its front matter.
+{%- endcomment -%}
+{% include art-group-items.html slug=page.art_group %}
+{% include breadcrumb.html section_title="Arts" section_url="/arts/" current=group.label %}
+
+{% include page-header.html eyebrow="Arts" title=group.label abstract=page.abstract %}
+
+{% if group_items.size > 0 %}
+{% if group.collection == "animations" %}
+{% include gallery-grid.html items=group_items play=true %}
+{% else %}
+{% include gallery-grid.html items=group_items viewer=group.slug %}
+{% endif %}
+{% else %}
+{% include callout.html label="Working on it" text=page.working_on_it %}
+{% endif %}

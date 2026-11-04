@@ -7,7 +7,7 @@ layout: default
 {% for m in mediums %}
   {% if m.name == page.medium %}
     {% assign medium_label = m.label %}
-    {% assign medium_url = "/arts/medium/" | append: m.slug | append: "/" %}
+    {% assign medium_url = "/arts/" | append: m.slug | append: "/" %}
   {% endif %}
 {% endfor %}
 {% include breadcrumb.html section_title="Arts" section_url="/arts/" category_title=medium_label category_url=medium_url current=page.title %}

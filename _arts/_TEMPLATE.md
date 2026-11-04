@@ -5,11 +5,12 @@
 #    (Files starting with "_" are ignored by Jekyll, which is why this one never shows up.)
 # 3. Fill in the fields below, then run:  python3 scripts/optimize-images.py
 #    That writes the WebP versions and the image's width/height.
-# The Arts link in the top nav, the gallery, and the "drawing" link in the About bio
-# all switch on automatically once the first piece exists.
+# The piece shows up by itself in its subcategory (Hand drawn or Procreate:
+# /arts/hand-drawn/ or /arts/procreate/) and on /arts/. A subcategory with no
+# pieces shows "Working on it" until its first one.
 title: Morning light over the bay
 description: One or two sentences about the piece, 120–160 characters, written so it reads well as a search result snippet.
-medium: Procreate # Procreate | Traditional | Sketchbook
+medium: Procreate # Procreate | Hand drawn
 date: 2026-10-13
 image: /assets/images/arts/morning-light.png
 image_alt: Describe what the artwork shows, e.g. "Pastel sunrise over a calm bay with two small sailboats"

@@ -1,0 +1,11 @@
+{%- comment -%}
+  Looks up one Arts subcategory from _data/categories.yml and its pieces,
+  newest first. Param: slug (hand-drawn | procreate | animated).
+  Sets `group` and `group_items` for the template that includes it.
+{%- endcomment -%}
+{%- assign group = site.data.categories.arts | where: "slug", include.slug | first -%}
+{%- if group.collection == "animations" -%}
+  {%- assign group_items = site.animations | sort: "date" | reverse -%}
+{%- else -%}
+  {%- assign group_items = site.arts | where: "medium", group.name | sort: "date" | reverse -%}
+{%- endif -%}

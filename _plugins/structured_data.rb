@@ -205,8 +205,8 @@ module PortfolioSEO
         "mainEntityOfPage" => "#{PortfolioSEO.abs(site, url)}#webpage",
         "creator" => PortfolioSEO.person_ref(site),
         "author" => PortfolioSEO.person_ref(site),
-        "artMedium" => page["medium"] == "Procreate" ? "Digital painting (Procreate)" : page["medium"],
-        "artform" => page["medium"] == "Sketchbook" ? "Sketch" : "Drawing",
+        "artMedium" => art_medium(page),
+        "artform" => "Drawing",
         "dateCreated" => PortfolioSEO.date_iso(page["date"]),
         "keywords" => Array(page["tools"]).join(", "),
         "image" => PortfolioSEO.image_object(site, page["image"], page["image_alt"]),
@@ -215,6 +215,13 @@ module PortfolioSEO
       wp["mainEntity"] = { "@id" => art["@id"] }
       wp["primaryImageOfPage"] = art["image"]
       [wp, art.reject { |_, v| v.nil? || (v.respond_to?(:empty?) && v.empty?) }]
+    end
+
+    def art_medium(page)
+      return "Digital painting (Procreate)" if page["medium"] == "Procreate"
+      return "Pencil on paper" if Array(page["tools"]).any? { |t| t.to_s.casecmp?("pencil") }
+
+      page["medium"]
     end
 
     # A video is a VideoObject (Google needs name, thumbnailUrl and
@@ -294,10 +301,10 @@ module PortfolioSEO
         PortfolioSEO.posts(site).select { |d| d.date.year.to_s == year }
       when %r{\A/blog/tag/[^/]+/\z}
         PortfolioSEO.posts(site).select { |d| Array(d.data["tags"]).include?(page["tag"]) }
-      when "/arts/" then PortfolioSEO.arts(site)
-      when "/animations/" then PortfolioSEO.animations(site)
-      when %r{\A/arts/medium/[^/]+/\z}
-        PortfolioSEO.arts(site).select { |d| d.data["medium"] == page["medium_name"] }
+      when "/arts/" then PortfolioSEO.arts(site) + PortfolioSEO.animations(site)
+      when %r{\A/arts/([^/]+)/\z}
+        group = PortfolioSEO.art_group_by_slug(site, Regexp.last_match(1))
+        group && PortfolioSEO.art_group_items(site, group).sort_by { |d| d.data["date"].to_s }.reverse
       end
     end
 

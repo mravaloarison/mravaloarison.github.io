@@ -1,22 +1,28 @@
 ---
 layout: default
 title: Arts
-description: Drawings by Maminiaina Ravaloarison, from digital pieces made in Procreate to traditional work and sketchbook pages.
+description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digital pieces from Procreate, and animations."
 ---
 
 {% include page-header.html eyebrow="Arts" title="Arts" abstract="I love drawing, and I recently started doing digital work in Procreate. This is where those pieces live." %}
 
-{% assign mediums = site.data.categories.arts %}
-{% if site.arts.size == 0 %}
-{% include callout.html label="Coming soon" text="No pieces are up yet. The first ones are on the way." %}
+{% for g in site.data.categories.arts %}
+{% include art-group-items.html slug=g.slug %}
+{% assign group_url = "/arts/" | append: group.slug | append: "/" %}
+
+## <a href="{{ group_url | relative_url }}">{{ group.label }}</a>
+
+{% if group_items.size == 0 %}
+<p class="meta">Working on it.</p>
 {% else %}
-{% for m in mediums %}
-{% assign items = site.arts | where: "medium", m.name | sort: "date" | reverse %}
-{% if items.size > 0 %}
-
-## <a href="{{ '/arts/medium/' | append: m.slug | append: '/' | relative_url }}">{{ m.label }}</a>
-
-{% include gallery-grid.html items=items %}
+{% assign shown = group_items | slice: 0, 4 %}
+{% if group.collection == "animations" %}
+{% include gallery-grid.html items=shown play=true %}
+{% else %}
+{% include gallery-grid.html items=shown viewer=group.slug %}
+{% endif %}
+{% if group_items.size > 4 %}
+<p class="see-more"><a href="{{ group_url | relative_url }}">See all {{ group_items.size }} {{ group.items_label }}</a></p>
+{% endif %}
 {% endif %}
 {% endfor %}
-{% endif %}

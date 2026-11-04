@@ -100,6 +100,23 @@ module PortfolioSEO
     site.collections["animations"]&.docs || []
   end
 
+  # Arts' subcategories (Hand drawn, Procreate, Animated) from _data/categories.yml.
+  def art_groups(site)
+    Array(site.data.dig("categories", "arts")).select { |g| g.is_a?(Hash) && g["slug"] }
+  end
+
+  # The pieces in one subcategory: animations for Animated, otherwise the art
+  # whose `medium` is the subcategory's name.
+  def art_group_items(site, group)
+    return animations(site) if group["collection"] == "animations"
+
+    arts(site).select { |d| d.data["medium"] == group["name"] }
+  end
+
+  def art_group_by_slug(site, slug)
+    art_groups(site).find { |g| g["slug"] == slug }
+  end
+
   def posts(site)
     site.posts.docs.sort_by(&:date).reverse
   end
@@ -147,21 +164,16 @@ module PortfolioSEO
     "Won #{award}. #{data['description']}".strip
   end
 
-  # Empty Arts pages carry noindex (see head.html), so keep them out of the sitemap too.
-  # An index or medium page with nothing on it yet (no animations, or no art
-  # in that medium): kept out of the sitemap, and noindex in head.html.
+  # An Arts page with nothing on it yet (a subcategory with no pieces, or /arts/
+  # with no art at all): noindex in head.html, and kept out of the sitemap.
   def empty_arts_page?(site, page)
-    if page.url.start_with?("/animations/")
-      return false if page.respond_to?(:collection) && page.collection&.label == "animations"
-
-      return animations(site).empty?
-    end
     return false unless page.url.start_with?("/arts/")
-    return false if page.respond_to?(:collection) && page.collection&.label == "arts"
+    return false if page.respond_to?(:collection) && %w(arts animations).include?(page.collection&.label)
 
-    medium = page.data["medium_name"]
-    items = arts(site)
-    items = items.select { |d| d.data["medium"] == medium } if medium
-    items.empty?
+    group = page.data["art_group"] && art_group_by_slug(site, page.data["art_group"])
+    return art_group_items(site, group).empty? if group
+    return arts(site).empty? && animations(site).empty? if page.url == "/arts/"
+
+    false
   end
 end

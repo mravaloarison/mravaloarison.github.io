@@ -10,12 +10,21 @@ projects:
     label: Hackathons
 
 arts:
+  # Arts' three subcategories, in the order they appear in the menu and on /arts/.
+  # Hand drawn and Procreate hold the `arts` collection (by its `medium`);
+  # Animated holds the `animations` collection. Each has a page at /arts/<slug>/.
+  - name: Hand drawn
+    slug: hand-drawn
+    label: Hand drawn
+    collection: arts
+    items_label: hand-drawn pieces
   - name: Procreate
     slug: procreate
     label: Procreate
-  - name: Traditional
-    slug: traditional
-    label: Traditional
-  - name: Sketchbook
-    slug: sketchbook
-    label: Sketchbook
+    collection: arts
+    items_label: Procreate pieces
+  - name: Animated
+    slug: animated
+    label: Animated
+    collection: animations
+    items_label: animations

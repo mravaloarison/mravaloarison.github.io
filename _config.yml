@@ -43,7 +43,7 @@ collections:
     sort_by: date
   animations:
     output: true
-    permalink: /animations/:name/
+    permalink: /arts/animated/:name/
     sort_by: date
 
 defaults:

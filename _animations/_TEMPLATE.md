@@ -6,11 +6,11 @@
 # 3. Save one still frame as a PNG or JPG in /assets/images/animations/<slug>.png.
 #    It's the thumbnail, the share image, and what shows before the video plays.
 # 4. Copy this file to _animations/<slug>.md (no leading underscore); the slug
-#    becomes /animations/<slug>/. Fill in the fields below, then run
+#    becomes /arts/animated/<slug>/. Fill in the fields below, then run
 #      python3 scripts/optimize-images.py
 #    which makes the still frame's WebP versions and records its size.
-# The Animations link in the nav and the /animations/ page switch on by
-# themselves with the first one.
+# The Animated page in Arts (/arts/animated/) shows "Working on it" until
+# the first one is here, then switches on by itself.
 title: The dog and the duck
 description: One or two sentences about the animation, 120–160 characters, written so it reads well as a search result snippet.
 date: 2026-11-04
