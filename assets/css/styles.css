@@ -353,6 +353,31 @@ main,
   display: none;
 }
 
+/* The logo, Mami's dog, on every page: opposite the burger below 1040px,
+   at the top of the nav column from 1040px. It tilts a little on hover. */
+.site-logo {
+  display: block;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+}
+
+.site-logo picture,
+.site-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.site-logo img {
+  transition: transform var(--transition);
+}
+
+.site-logo:hover img {
+  transform: rotate(-6deg);
+}
+
 .site-nav ul {
   list-style: none;
   margin: 0;
@@ -1695,9 +1720,15 @@ figcaption {
     display: block;
     max-width: none;
     margin: 0;
-    /* 8px less than main's top padding, so the top of "About" lines up with
+    /* the same as main's top padding, so the top of the logo lines up with
        the top of the h1 (or the breadcrumb on inner pages) */
-    padding: calc(var(--space-96) - var(--space-8)) 0 var(--space-32);
+    padding: var(--space-96) 0 var(--space-32);
+  }
+
+  .site-logo {
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-24);
   }
 
   .page-frame {

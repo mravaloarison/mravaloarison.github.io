@@ -18,6 +18,12 @@
 
   <header class="site-header">
     <div class="site-header-inner">
+      <a class="site-logo" href="{{ '/' | relative_url }}">
+        <picture>
+          <source type="image/webp" srcset="{{ '/assets/brand/logo.webp' | relative_url }}">
+          <img src="{{ '/assets/brand/logo.png' | relative_url }}" width="56" height="56" alt="Maminiaina Ravaloarison">
+        </picture>
+      </a>
       <button type="button" class="menu-button" id="menu-button" aria-expanded="false" aria-controls="site-nav">
         <span class="sr-only">Menu</span>
         <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>

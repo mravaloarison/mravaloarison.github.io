@@ -75,15 +75,17 @@ meaning).
 Labrador's head in profile, in sunglasses, with a brown collar and a yellow
 paw-print tag (Mami loves the tag), textured like crayon, with a cream
 sticker-style edge that keeps it readable on dark browser tabs. It's the
-browser-tab icon, the iPhone home-screen icon and the corner of the share
-image, and isn't shown on the pages. It replaced a placeholder Claude drew
+browser-tab icon, the iPhone home-screen icon, the corner of the share
+image, and, since November 2026 at Mami's request, on every page (see Nav).
+It replaced a placeholder Claude drew
 the same day from a reference Mami liked. Source: `_brand/logo.png`
 (2048×2048, transparent background; `_brand/` isn't published).
 `python3 scripts/make-icons.py [new-drawing.png]` saves a new drawing to
 `_brand/logo.png` without its metadata and writes `favicon.ico`
 (16/32/48), `icon-192.png`, `apple-touch-icon.png` (180, on warm paper,
-since iOS needs it opaque) and the logo into
-`assets/social/og-default.png`. A new version: a 2048×2048 px square
+since iOS needs it opaque), the logo into
+`assets/social/og-default.png`, and `assets/brand/logo.webp` / `.png`
+(168 px, the on-page logo). A new version: a 2048×2048 px square
 canvas, transparent background (background layer hidden), exported as
 PNG, with bold shapes and thick outlines, because it's mostly seen 16–32 px
 wide. There's no SVG favicon on purpose, so a PNG drawing drops in with no
@@ -145,7 +147,12 @@ things, cards and images (Mami wanted them a little squarer than the old
   (16px under 600px). From 1040px the nav sits in a `--nav-width` (160px)
   column to its left with a 32px gap, and the two are centered together.
   No horizontal page scroll, ever.
-- **Nav** (no logo, no site name): About · Projects · Arts · Animations · Blog, with the
+- **Logo** on every page (`.site-logo`, a link to `/`, alt "Maminiaina
+  Ravaloarison"; it tilts 6° on hover): below 1040px it sits at the top left,
+  opposite the burger (44px); from 1040px it's at the top of the nav column
+  (56px), its top lined up with the h1 or breadcrumb, with the links below
+  it. No site name next to it.
+- **Nav**: About · Projects · Arts · Animations · Blog, with the
   project types (Work · Personal · Hackathons, from `_data/categories.yml`)
   indented under Projects. The look Mami liked in the phone drawer:
   Newsreader links with a hairline between items (none after the last), the
@@ -157,8 +164,9 @@ things, cards and images (Mami wanted them a little squarer than the old
   (`:has()`). The Arts link only appears once `_arts/` has a piece, and
   Animations once `_animations/` has one. About is
   current on both `/` and `/bio/`.
-- **1040px and up**: the nav is a sticky column on the left, 88px from the
-  top so "About" lines up with the h1 (`main` has 96px top padding). Links
+- **1040px and up**: the nav is a sticky column on the left, starting 96px
+  from the top (like `main`) with the logo, so the logo lines up with the
+  h1, and the links below it. Links
   are 22px and types 16px, below the 29px h2, so the page leads and the nav
   stays quiet. Pure CSS, works with JS off.
 - **Below 1040px**: a burger at the top right (drawer links 30px, types 18px). It morphs into an × and slides
@@ -713,7 +721,8 @@ in the About page's `mainEntity` is the likely reason a test in October
 - **A logo in the header** (the M mark) was tried in October 2026 and removed
   when the nav moved to the side. In November 2026 the M was replaced
   everywhere it was left (tab icon, iPhone icon, share image) by the dog,
-  see "Logo". It stays off the pages.
+  see "Logo". Later that month Mami asked for the dog on every page, so it's
+  back, at the top of the nav column and opposite the burger.
 - **The sidebar design was dropped** (October 2026) for the single-column
   layout above (the later wide-screen side nav is the site nav only). The View Transitions API was tried twice for its slide
   animation and failed both times; if page-to-page motion ever comes back,

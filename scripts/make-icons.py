@@ -19,6 +19,8 @@ _brand/ isn't published, but the repo is), then the script writes:
                                  iOS needs it opaque and rounds the corners)
   assets/social/og-default.png   the logo in the share image's top-left
                                  corner, where the old "M" was
+  assets/brand/logo.webp, .png   168 px, transparent: the logo at the top of
+                                 every page (shown at 44-56 px, so 3x sharp)
 """
 import sys
 from pathlib import Path
@@ -34,6 +36,8 @@ PAPER = (247, 242, 234)        # warm paper behind the iPhone icon
 OG = ROOT / "assets" / "social" / "og-default.png"
 OG_BOX = (93, 72, 88)          # left, top, size of the logo in the share image
 OG_OLD_MARK = (96, 80, 168, 152)  # the old 72 px "M" tile, painted over first
+PAGE_LOGO = ROOT / "assets" / "brand" / "logo"   # .webp and .png
+PAGE_LOGO_SIZE = 168
 
 
 def fit(img, size):
@@ -74,7 +78,13 @@ def main():
     og.alpha_composite(fit(logo, size), (left, top))
     og.convert("RGB").save(OG, optimize=True)
 
-    for f in ("favicon.ico", "icon-192.png", "apple-touch-icon.png", "assets/social/og-default.png"):
+    PAGE_LOGO.parent.mkdir(parents=True, exist_ok=True)
+    page = fit(logo, PAGE_LOGO_SIZE)
+    page.save(PAGE_LOGO.with_suffix(".webp"), "WEBP", quality=88, method=6)
+    page.save(PAGE_LOGO.with_suffix(".png"), optimize=True)
+
+    for f in ("favicon.ico", "icon-192.png", "apple-touch-icon.png", "assets/social/og-default.png",
+              "assets/brand/logo.webp", "assets/brand/logo.png"):
         print(f"wrote {f} ({(ROOT / f).stat().st_size // 1024 or 1} KB)")
 
 
