@@ -1320,6 +1320,145 @@ main iframe {
   color: var(--text);
 }
 
+/* First-visit intro (Mami's request, November 2026): the dog plays its
+   hello clip in the middle of the screen, "Hellouu" types out under it, and
+   as it untypes the dog glides into its place as the logo while the page
+   fades in. Once per tab, skipped with reduced motion, any tap, key or
+   scroll ends it. html.intro covers the page from the first paint until
+   main.js takes over; if the script never runs, the cover lifts itself. */
+
+html.intro::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--bg);
+  animation: intro-failsafe 300ms ease 3s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.intro-running .site-logo,
+.intro-running .viewer-logo {
+  visibility: hidden;
+}
+
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--bg);
+  transition: opacity 400ms ease 220ms;
+}
+
+.intro-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 901;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-24);
+  pointer-events: none;
+}
+
+.intro-layer.is-leaving,
+.intro-layer.is-skipping,
+.intro-stage.is-skipping {
+  opacity: 0;
+}
+
+.intro-layer.is-skipping,
+.intro-stage.is-skipping {
+  transition: opacity 160ms ease;
+}
+
+.intro-dog {
+  position: relative;
+  width: min(46vw, 220px);
+  aspect-ratio: 1;
+  transform-origin: 0 0;
+  animation: intro-dog-in 420ms ease both;
+}
+
+.intro-dog.is-fading {
+  transition: opacity 300ms ease;
+  opacity: 0;
+}
+
+@keyframes intro-dog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.intro-still {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The clip is the logo square plus 12.5% on each side, on the page colour;
+   its edges fade out so it melts into the screen */
+.intro-video {
+  position: absolute;
+  inset: -12.5%;
+  width: 125%;
+  height: 125%;
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
+}
+
+.intro-video.is-playing {
+  opacity: 1;
+}
+
+.intro-hello {
+  margin: 0;
+  min-height: 1.3em;
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.intro-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 3px;
+  vertical-align: -0.1em;
+  background: var(--accent);
+  animation: intro-caret 900ms steps(1) infinite;
+}
+
+.intro-hello.is-gone {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+@keyframes intro-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-hello {
+    font-size: 32px;
+  }
+}
+
 /* Picture viewer (Arts): one piece at a time, full screen, like a photo
    viewer. The same look is a <dialog> over a gallery (main.js) and each
    piece's own page (_layouts/art.html). Close and the logo top left, info

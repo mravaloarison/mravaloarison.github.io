@@ -1,8 +1,18 @@
 <head>
   <script>
     /* The "js" class lets the phone layout swap the wrapped links for the
-       burger menu only when the script that opens it can run. */
-    document.documentElement.classList.add('js');
+       burger menu only when the script that opens it can run. "intro": the
+       first page in a tab plays the hello intro (main.js), decided here so
+       it covers the page from the first paint. Not with reduced motion. */
+    (function (r) {
+      r.classList.add('js');
+      try {
+        if (!sessionStorage.getItem('intro-seen') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          sessionStorage.setItem('intro-seen', '1');
+          r.classList.add('intro');
+        }
+      } catch (e) {}
+    })(document.documentElement);
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

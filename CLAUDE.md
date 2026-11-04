@@ -26,9 +26,10 @@ form is still indexable.
 - **Hand-written CSS** in one stylesheet, organized with custom properties.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
-  (the phone menu, the menu dropdowns, the Arts picture viewer). The one
-  exception is the tiny inline snippet in `<head>`
-  that adds the `js` class before first paint. All content renders
+  (the phone menu, the menu dropdowns, the Arts picture viewer, the
+  first-visit intro). The one exception is the tiny inline snippet in
+  `<head>` that adds the `js` class (and `intro`, see Intro) before first
+  paint. All content renders
   server-side at build time — never fetch or render content client-side.
 - No jQuery. No build step beyond Jekyll itself.
 - Components live in `_includes/` as Liquid partials. Filenames kebab-case.
@@ -84,13 +85,40 @@ the same day from a reference Mami liked. Source: `_brand/logo.png`
 `python3 scripts/make-icons.py [new-drawing.png]` saves a new drawing to
 `_brand/logo.png` without its metadata and writes `favicon.ico`
 (16/32/48), `icon-192.png`, `apple-touch-icon.png` (180, on warm paper,
-since iOS needs it opaque), the logo into
-`assets/social/og-default.png`, and `assets/brand/logo.webp` / `.png`
-(168 px, the on-page logo). A new version: a 2048×2048 px square
+since iOS needs it opaque), `assets/brand/logo.webp` / `.png` (168 px,
+the on-page logo), `assets/brand/logo-512.webp` (the intro's still) and
+the share card `assets/social/og-default.png`. The intro's hello clip
+(`assets/brand/dog-intro.mp4` / `.webm`) isn't made by the script: after a
+new drawing, re-render it or delete it (the intro then shows the still
+logo). A new version: a 2048×2048 px square
 canvas, transparent background (background layer hidden), exported as
 PNG, with bold shapes and thick outlines, because it's mostly seen 16–32 px
 wide. There's no SVG favicon on purpose, so a PNG drawing drops in with no
 other change.
+
+**Share card** (`og-default.png`, 1200×630, the image link previews show
+for About, Blog and every page without its own): since November 2026 it's
+drawn by `make-icons.py` in the site's look, because Mami found the old
+card's font too far from the site's: dark `--bg`, the logo top left, a
+PORTFOLIO eyebrow in Nunito, the full name in Newsreader 500, then
+`CARD_LINE` in Newsreader (Mami's points: software engineer and data
+analyst, iOS developer, 12 hackathon wins, draws and plays bass on the
+side), and the address in Nunito with an accent underline. Edit `CARD_NAME`
+/ `CARD_LINE` in the script and run it to change the card.
+
+**Intro** (Mami's request, November 2026): the first page someone opens
+in a tab starts with the dog in the middle of the screen playing its hello
+clip (a nod, an ear flick, a glint on the sunglasses), "Hellouu" typing
+out under it, and, as it untypes, the dog gliding into its place as the
+logo while the page fades in (about 2.5 s). The inline `<head>` script
+decides it before the first paint (`html.intro`, which covers the page;
+`sessionStorage` `intro-seen` so it plays once per tab) and skips it when
+the device asks for reduced motion or storage is off; `initIntro` in
+`main.js` runs it. Any tap, key, scroll or wheel ends it at once; if the
+script never runs, the cover lifts itself after 3 s. Search engines and
+no-JS visitors never see it. The clip is framed as the logo square plus
+12.5% on each side on `--bg`, and starts and ends on the logo at rest, so
+the still (`logo-512.webp`) takes over invisibly for the glide.
 
 **Nothing is italic** — not the abstract, not blockquotes, not Markdown
 `*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No
@@ -721,9 +749,10 @@ in the About page's `mainEntity` is the likely reason a test in October
 - Skip-to-content link as the first focusable element.
 - Text contrast at least 4.5:1. Check `--text-secondary`.
 - The site must be fully usable with JavaScript disabled — JS enhances, never
-  delivers, content or navigation state. The only JS is the phone menu
-  (deferred), plus a tiny inline head script that adds the `js` class before
-  first paint.
+  delivers, content or navigation state. The only JS is `main.js`
+  (deferred: the phone menu, the menu dropdowns, the Arts picture viewer,
+  the intro), plus a tiny inline head script that adds the `js` class (and
+  decides the intro) before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
 

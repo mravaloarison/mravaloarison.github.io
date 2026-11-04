@@ -270,6 +270,135 @@
     }
   }
 
+  // The assets folder, from this script's own address (assets/js/main.js).
+  var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
+
+  // First visit in a tab (html.intro, set before first paint in head.html):
+  // the dog plays its hello clip in the middle, "Hellouu" types out under it,
+  // and as it untypes the dog glides into its place as the logo while the
+  // page fades in. Any tap, key or scroll ends it at once.
+  function initIntro() {
+    var root = document.documentElement;
+    if (!root.classList.contains("intro")) return;
+    var target = document.querySelector(".site-logo img, .viewer-logo img");
+    var word = "Hellouu";
+    var timers = [];
+    var done = false;
+
+    function el(tag, cls) {
+      var e = document.createElement(tag);
+      e.className = cls;
+      return e;
+    }
+    function later(ms, fn) {
+      timers.push(window.setTimeout(fn, ms));
+    }
+
+    var layer = el("div", "intro-layer");
+    var stage = el("div", "intro-stage");
+    var dog = el("div", "intro-dog");
+    var still = el("img", "intro-still");
+    still.alt = "";
+    still.width = still.height = 512;
+    still.src = ASSETS + "brand/logo-512.webp";
+    var video = el("video", "intro-video");
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.preload = "auto";
+    [["mp4", "video/mp4"], ["webm", "video/webm"]].forEach(function (f) {
+      var source = document.createElement("source");
+      source.src = ASSETS + "brand/dog-intro." + f[0];
+      source.type = f[1];
+      video.appendChild(source);
+    });
+    var hello = el("p", "intro-hello");
+    var text = el("span", "intro-text");
+    var caret = el("span", "intro-caret");
+    layer.setAttribute("aria-hidden", "true");
+    stage.setAttribute("aria-hidden", "true");
+    dog.appendChild(still);
+    dog.appendChild(video);
+    hello.appendChild(text);
+    hello.appendChild(caret);
+    stage.appendChild(dog);
+    stage.appendChild(hello);
+    document.body.appendChild(layer);
+    document.body.appendChild(stage);
+    root.classList.add("intro-running");
+    root.classList.remove("intro"); // this layer takes over from the first-paint cover
+
+    video.addEventListener("playing", function () {
+      video.classList.add("is-playing");
+    });
+    var playing = video.play();
+    if (playing && playing.catch) playing.catch(function () {}); // no autoplay: the still logo stays
+
+    function finish() {
+      if (done) return;
+      done = true;
+      timers.forEach(window.clearTimeout);
+      ["pointerdown", "keydown", "wheel", "touchstart"].forEach(function (type) {
+        window.removeEventListener(type, skip);
+      });
+      root.classList.remove("intro-running");
+      video.pause();
+      layer.remove();
+      stage.remove();
+    }
+
+    function skip() {
+      if (done) return;
+      layer.classList.add("is-skipping");
+      stage.classList.add("is-skipping");
+      timers.forEach(window.clearTimeout);
+      timers = [];
+      later(170, finish);
+    }
+    ["pointerdown", "keydown", "wheel", "touchstart"].forEach(function (type) {
+      window.addEventListener(type, skip, { passive: true });
+    });
+
+    function glide() {
+      video.classList.remove("is-playing"); // the clip ends on the still's pose
+      video.pause();
+      var from = dog.getBoundingClientRect();
+      var to = target ? target.getBoundingClientRect() : null;
+      var onScreen = to && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
+      layer.classList.add("is-leaving");
+      if (onScreen && dog.animate) {
+        var move = "translate(" + (to.left - from.left) + "px, " + (to.top - from.top) + "px) scale(" + to.width / from.width + ")";
+        dog.animate([{ transform: "none" }, { transform: move }], {
+          duration: 650,
+          easing: "cubic-bezier(0.32, 0.72, 0, 1)",
+          fill: "forwards"
+        });
+      } else {
+        dog.classList.add("is-fading");
+      }
+      later(680, finish);
+    }
+
+    // type, hold, then untype while the dog goes to its place
+    var start = 380, perLetter = 95, hold = 650, perDelete = 32;
+    word.split("").forEach(function (_, i) {
+      later(start + (i + 1) * perLetter, function () { text.textContent = word.slice(0, i + 1); });
+    });
+    var untype = start + word.length * perLetter + hold;
+    for (var n = 1; n <= word.length; n++) {
+      (function (n) {
+        later(untype + n * perDelete, function () {
+          text.textContent = word.slice(0, word.length - n);
+          if (n === word.length) hello.classList.add("is-gone"); // the caret goes with the last letter
+        });
+      })(n);
+    }
+    later(untype, glide);
+  }
+
+  initIntro();
   initMenu();
   initNavGroups();
   initViewerDialog();
