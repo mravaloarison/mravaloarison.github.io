@@ -1,0 +1,32 @@
+{%- comment -%}
+  One animation, large, on its own page. Param: item.
+  - `video` (MP4): a player with controls that loops. It doesn't start by
+    itself (moving content needs a way to stop it, and some people turn
+    motion off), and it's muted unless the item sets `sound: true`. The
+    still frame (`image`, its largest WebP when there is one) shows until
+    you press play.
+  - `gif`: plays by itself, so anyone whose device asks for reduced motion
+    gets the still frame instead.
+  - neither: just the still frame.
+  width/height come from the still frame's recorded size, so nothing jumps
+  while it loads.
+{%- endcomment -%}
+{%- assign a = include.item -%}
+{%- assign dims = site.data.image_dimensions[a.image] -%}
+{%- assign poster = a.image -%}
+{%- if dims and dims.webp.size > 0 -%}{%- assign biggest = dims.webp | last -%}{%- assign poster = biggest.src | default: a.image -%}{%- endif -%}
+<figure class="art-figure animation-figure">
+{%- if a.video %}
+  <video controls loop playsinline{% unless a.sound %} muted{% endunless %} preload="metadata" poster="{{ poster | relative_url }}"{% if dims %} width="{{ dims.width }}" height="{{ dims.height }}"{% endif %} aria-label="{{ a.image_alt | escape }}">
+    <source src="{{ a.video | relative_url }}" type="video/mp4">
+    <a href="{{ a.video | relative_url }}">Download {{ a.title }} (MP4)</a>
+  </video>
+{%- elsif a.gif %}
+  <picture>
+    <source srcset="{{ poster | relative_url }}" media="(prefers-reduced-motion: reduce)">
+    <img src="{{ a.gif | relative_url }}" alt="{{ a.image_alt | escape }}"{% if dims %} width="{{ dims.width }}" height="{{ dims.height }}"{% endif %} decoding="async">
+  </picture>
+{%- else %}
+  {% include picture.html src=a.image alt=a.image_alt loading="eager" sizes="(max-width: 1023px) calc(100vw - 32px), 800px" %}
+{%- endif %}
+</figure>

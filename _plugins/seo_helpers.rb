@@ -96,6 +96,10 @@ module PortfolioSEO
     site.collections["arts"]&.docs || []
   end
 
+  def animations(site)
+    site.collections["animations"]&.docs || []
+  end
+
   def posts(site)
     site.posts.docs.sort_by(&:date).reverse
   end
@@ -144,7 +148,14 @@ module PortfolioSEO
   end
 
   # Empty Arts pages carry noindex (see head.html), so keep them out of the sitemap too.
+  # An index or medium page with nothing on it yet (no animations, or no art
+  # in that medium): kept out of the sitemap, and noindex in head.html.
   def empty_arts_page?(site, page)
+    if page.url.start_with?("/animations/")
+      return false if page.respond_to?(:collection) && page.collection&.label == "animations"
+
+      return animations(site).empty?
+    end
     return false unless page.url.start_with?("/arts/")
     return false if page.respond_to?(:collection) && page.collection&.label == "arts"
 

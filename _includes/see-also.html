@@ -37,7 +37,7 @@
   <p class="eyebrow">See Also</p>
   <ul>
     {% for item in related_items %}
-    <li><a href="{{ item.url | relative_url }}">Read: {{ item.title }}</a></li>
+    <li><a href="{{ item.url | relative_url }}">{{ include.verb | default: "Read" }}: {{ item.title }}</a></li>
     {% endfor %}
   </ul>
 </section>

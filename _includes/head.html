@@ -14,7 +14,7 @@
   <link rel="icon" href="{{ '/icon-192.png' | relative_url }}" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
   {%- comment -%}
-    Robots: empty Arts pages and the 404 stay out of search; everything else
+    Robots: empty Arts and Animations pages and the 404 stay out of search; everything else
     is indexable, with large image previews and full-length snippets allowed.
   {%- endcomment -%}
   {%- assign robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" -%}
@@ -26,6 +26,9 @@
       {%- assign arts_items = site.arts -%}
     {%- endif -%}
     {%- if arts_items.size == 0 -%}{%- assign robots = "noindex" -%}{%- endif -%}
+  {%- endif -%}
+  {%- if page.url contains '/animations/' and page.collection != "animations" and site.animations.size == 0 -%}
+    {%- assign robots = "noindex" -%}
   {%- endif %}
   <meta name="robots" content="{{ robots }}">
 

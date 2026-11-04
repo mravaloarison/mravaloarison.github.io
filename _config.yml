@@ -41,6 +41,10 @@ collections:
     output: true
     permalink: /arts/:name/
     sort_by: date
+  animations:
+    output: true
+    permalink: /animations/:name/
+    sort_by: date
 
 defaults:
   # Social preview image for pages without their own (About, Blog, posts, category pages).
@@ -59,6 +63,11 @@ defaults:
       type: arts
     values:
       layout: art
+  - scope:
+      path: ""
+      type: animations
+    values:
+      layout: animation
   - scope:
       path: ""
       type: posts

@@ -47,7 +47,7 @@ module PortfolioSEO
 
         entries << [p.url, @site.time, page_images(p)]
       end
-      (PortfolioSEO.projects(@site) + PortfolioSEO.arts(@site) + PortfolioSEO.posts(@site)).each do |d|
+      (PortfolioSEO.projects(@site) + PortfolioSEO.arts(@site) + PortfolioSEO.animations(@site) + PortfolioSEO.posts(@site)).each do |d|
         next if d.data["sitemap"] == false
 
         lastmod = d.data["last_modified_at"] || d.data["date"] || @site.time
@@ -81,6 +81,7 @@ module PortfolioSEO
           cat ? PortfolioSEO.projects(@site).select { |d| d.data["category"] == cat["name"] }.map { |d| d.data["image"] } : []
         when "/arts/" then PortfolioSEO.arts(@site).map { |d| d.data["image"] }
         when %r{\A/arts/medium/} then PortfolioSEO.arts(@site).select { |d| d.data["medium"] == page.data["medium_name"] }.map { |d| d.data["image"] }
+        when "/animations/" then PortfolioSEO.animations(@site).map { |d| d.data["image"] }
         else []
         end
       (photos + featured + listed).compact
@@ -155,6 +156,7 @@ module PortfolioSEO
       out << "- [Projects](#{u('/projects/')}): #{PortfolioSEO.projects(@site).size} projects — work, personal and hackathon\n"
       out << "- [Blog](#{u('/blog/')}): #{PortfolioSEO.posts(@site).size} posts\n"
       out << "- [Arts](#{u('/arts/')}): drawings and digital art\n" unless PortfolioSEO.arts(@site).empty?
+      out << "- [Animations](#{u('/animations/')}): animations made from Mami's drawings\n" unless PortfolioSEO.animations(@site).empty?
       out << "- [Full text of this site](#{u('/llms-full.txt')}): everything below in full, in one file\n" unless full
       out << "\n"
 
@@ -162,6 +164,7 @@ module PortfolioSEO
       out << projects_section(full)
       out << posts_section(full)
       out << arts_section(full)
+      out << animations_section(full)
       out << photos_section if full
       out
     end
@@ -251,6 +254,25 @@ module PortfolioSEO
           out << "- Tools: #{Array(x['tools']).join(', ')}\n- Date: #{date(x['date'])}\n\n#{x['description']}\n\n#{clean(d.content)}\n\n"
         else
           out << "- [#{x['title']}](#{u(d.url)}) (#{x['medium']}): #{x['description']}\n"
+        end
+      end
+      out << "\n" unless full
+      out
+    end
+
+    def animations_section(full)
+      docs = PortfolioSEO.animations(@site).sort_by { |d| d.data["date"].to_s }.reverse
+      return "" if docs.empty?
+
+      out = +"## Animations\n\n"
+      docs.each do |d|
+        x = d.data
+        media = x["video"] ? "Video: #{u(x['video'])}" : x["gif"] ? "GIF: #{u(x['gif'])}" : nil
+        if full
+          out << "### #{x['title']}\n\n- Page: #{u(d.url)}\n#{media ? "- #{media}\n" : ''}- Still frame: #{u(x['image'])} — #{x['image_alt']}\n"
+          out << "- Tools: #{Array(x['tools']).join(', ')}\n- Date: #{date(x['date'])}\n\n#{x['description']}\n\n#{clean(d.content)}\n\n"
+        else
+          out << "- [#{x['title']}](#{u(d.url)}): #{x['description']}\n"
         end
       end
       out << "\n" unless full

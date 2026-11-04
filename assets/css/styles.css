@@ -1190,6 +1190,34 @@ main iframe {
   opacity: 0.85;
 }
 
+.gallery-media {
+  position: relative;
+  display: block;
+}
+
+/* Animations: a small round play mark in the thumbnail's corner */
+.gallery-play {
+  position: absolute;
+  right: var(--space-8);
+  bottom: var(--space-8);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(23 21 19 / 0.72);
+  box-shadow: 0 0 0 1px rgb(237 232 224 / 0.25);
+}
+
+.gallery-play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -3px;
+  border-style: solid;
+  border-width: 6px 0 6px 10px;
+  border-color: transparent transparent transparent var(--text);
+}
+
 .gallery-title {
   display: block;
   font-size: 15px;
@@ -1213,6 +1241,14 @@ main iframe {
   width: 100%;
   height: auto;
   border-radius: var(--radius-md);
+}
+
+.animation-figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: var(--surface);
 }
 
 figcaption {

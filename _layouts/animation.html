@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{% include breadcrumb.html section_title="Animations" section_url="/animations/" current=page.title %}
+
+{% include page-header.html eyebrow="Animation" title=page.title abstract=page.description %}
+
+{% include animation-media.html item=page %}
+
+<dl class="art-details">
+  <div>
+    <dt>Format</dt>
+    <dd>{% if page.video %}Video{% elsif page.gif %}GIF{% else %}Still{% endif %}</dd>
+  </div>
+  {% if page.tools and page.tools.size > 0 %}
+  <div>
+    <dt>Tools</dt>
+    <dd>{{ page.tools | join: ", " }}</dd>
+  </div>
+  {% endif %}
+  <div>
+    <dt>Date</dt>
+    <dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd>
+  </div>
+</dl>
+
+{{ content }}
+
+{% include see-also.html collection=site.animations verb="Watch" %}
+
+{% include prev-next.html %}

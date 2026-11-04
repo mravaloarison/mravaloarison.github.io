@@ -1,8 +1,14 @@
-{%- comment -%} Dense square gallery for Arts. Param: items {%- endcomment -%}
+{%- comment -%}
+  Dense square gallery for Arts and Animations. Params: items, and
+  play=true (Animations) for a small play mark on each thumbnail.
+{%- endcomment -%}
 <div class="gallery-grid">
   {% for item in include.items %}
   <a class="gallery-item" href="{{ item.url | relative_url }}">
-    {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 50vw, 220px" %}
+    <span class="gallery-media">
+      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 50vw, 220px" %}
+      {%- if include.play %}<span class="gallery-play" aria-hidden="true"></span>{% endif %}
+    </span>
     <span class="gallery-title">{{ item.title }}</span>
   </a>
   {% endfor %}

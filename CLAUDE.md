@@ -143,7 +143,7 @@ things, cards and images (Mami wanted them a little squarer than the old
   (16px under 600px). From 1040px the nav sits in a `--nav-width` (160px)
   column to its left with a 32px gap, and the two are centered together.
   No horizontal page scroll, ever.
-- **Nav** (no logo, no site name): About · Projects · Arts · Blog, with the
+- **Nav** (no logo, no site name): About · Projects · Arts · Animations · Blog, with the
   project types (Work · Personal · Hackathons, from `_data/categories.yml`)
   indented under Projects. The look Mami liked in the phone drawer:
   Newsreader links with a hairline between items (none after the last), the
@@ -152,7 +152,8 @@ things, cards and images (Mami wanted them a little squarer than the old
   dot hanging in the margin, so it isn't marked by colour alone
   (`aria-current` for screen readers). Only the most specific item gets the
   dot: on a project page it's on the type and Projects just brightens
-  (`:has()`). The Arts link only appears once `_arts/` has a piece. About is
+  (`:has()`). The Arts link only appears once `_arts/` has a piece, and
+  Animations once `_animations/` has one. About is
   current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left, 88px from the
   top so "About" lines up with the h1 (`main` has 96px top padding). Links
@@ -238,12 +239,17 @@ things, cards and images (Mami wanted them a little squarer than the old
   square: the award title in bold, then "university · year", muted. Where a
   long title wraps (narrow rows, phones) the square stays centred on the
   block. No foil, nothing over the image, no animation.
-- `see-also.html` — trailing block of related links (details below)
+- `see-also.html` — trailing block of related links (details below);
+  `verb=` sets the word before each title ("Read" by default, "Watch" on
+  animations)
 - `callout.html` — Note / Tip / Looking for aside with a left accent rule
 - `figure.html` — image plus caption, used heavily on Arts
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
-- `gallery-grid.html` — the dense square grid used on Arts
+- `gallery-grid.html` — the dense square grid used on Arts and Animations;
+  `play=true` (Animations) adds a small round play mark to each thumbnail
+- `animation-media.html` — one animation, large: the MP4 player, the GIF, or
+  the still frame (see Animations)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
 - `prev-next.html` — sibling navigation within a collection
 
@@ -255,8 +261,8 @@ interactive element.
 
 ## Site architecture
 
-Four top-level sections. Every one has an index, category pages, and per-item
-detail pages.
+Five top-level sections. Every one has an index and per-item detail pages,
+and all but Animations have category pages too.
 
 ```
 /                                   About me
@@ -266,6 +272,8 @@ detail pages.
 /arts/                              Arts index
 /arts/medium/:medium/               Procreate · Traditional · Sketchbook
 /arts/:slug/                        Art detail
+/animations/                        Animations index
+/animations/:slug/                  Animation detail
 /blog/                              Blog & Journal index
 /blog/tag/:tag/                     Tag pages
 /blog/:year/:month/:day/:slug/      Post
@@ -363,6 +371,31 @@ full piece large, then medium, tools, date, and a short note about the piece.
 Art is image-heavy — this is where performance and alt text matter most. See
 the image rules below; do not skip them here.
 
+### Animations
+
+Added in November 2026, at Mami's request, for drawings that move. Built and
+waiting for the first one: until `_animations/` has an item, the nav link
+stays hidden, `/animations/` shows a short "Coming soon" note with `noindex`,
+and nothing about it is in the sitemap or `llms.txt`. It all switches on by
+itself with the first one; copy `_animations/_TEMPLATE.md` and follow it.
+
+Each one is an MP4 video (`video:`) or a GIF (`gif:`), plus a still frame
+(`image:`, required: the thumbnail, the share image and the poster) that
+goes through `optimize-images.py` like any image. Videos live in
+`assets/animations/`, still frames in `assets/images/animations/`. Prefer
+MP4 (H.264, which is what Procreate exports): in a test the same 2-second
+loop was 44 KB as an MP4 and 882 KB as a GIF at half the size. Mami wasn't
+sure yet which format the animations would be, so both work.
+
+Playback: a video never starts by itself. It has controls, loops, and is
+muted unless `sound: true`, so nothing moves without the reader asking
+(WCAG 2.2.2, and see the confetti band below). A GIF plays by itself, so a
+device asking for reduced motion gets the still frame instead (`<picture>`
+with a `prefers-reduced-motion` source). The index is the Arts gallery grid
+with a play mark on each thumbnail. Detail page: breadcrumb → eyebrow
+("Animation") → title → abstract → the animation → Format / Tools / Date →
+note → See Also ("Watch: …") → prev/next.
+
 ### Blog / Journal
 
 Reverse-chronological. Two posts exist. Tags: `first-post`, `life`,
@@ -422,6 +455,20 @@ date:
 image:
 image_alt: # required — describe the artwork, not "drawing"
 tools: [] # e.g. [Procreate, iPad, Apple Pencil]
+```
+
+### Front matter — `_animations/*.md`
+
+```yaml
+title:
+description:
+date:
+video: # /assets/animations/<slug>.mp4, or instead:
+gif: # /assets/animations/<slug>.gif
+image: # the still frame, /assets/images/animations/<slug>.png (required)
+image_alt: # required; describe what happens in it
+tools: []
+sound: # optional; true leaves the video's sound on
 ```
 
 ### Front matter — `_posts/*.md`
@@ -487,7 +534,8 @@ GitHub Actions — `.github/workflows/pages.yml`, Pages source "GitHub Actions")
   every screenshot, artwork and About photo; replaces jekyll-sitemap's, which
   then skips itself), `/llms.txt` and `/llms-full.txt` (everything on the
   site as plain Markdown for AI assistants, built from the raw content).
-- `content_check.rb` — the build-time check from linking rule 8.
+- `content_check.rb` — the build-time check from linking rule 8 (animations
+  also need a `video` or a `gif`).
 - `seo_helpers.rb` — shared helpers, including `award_text`, the one wording
   for a hackathon award wherever search engines and AI assistants look:
   "Best Use of Knot API at HackPrinceton (Princeton University, 2025)" —
@@ -553,7 +601,10 @@ Emit per page type:
 - Post → `BlogPosting` with `headline`, `datePublished`, `dateModified`,
   `author`, `image`, `wordCount`.
 - Art detail → `VisualArtwork` with `artMedium`, `creator`, `dateCreated`.
-- Category, medium, and tag pages → `CollectionPage`.
+- Animation detail → `VideoObject` (`contentUrl`, `thumbnailUrl`,
+  `uploadDate`) for a video, or `VisualArtwork` with `artform: Animation`
+  for a GIF.
+- Category, medium, and tag pages, and the Animations index → `CollectionPage`.
 - Every page below root → `BreadcrumbList`.
 
 Validate output against Google's Rich Results Test before considering a page

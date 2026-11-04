@@ -30,6 +30,12 @@ Jekyll::Hooks.register :site, :post_read do |site|
       problems << "#{doc.relative_path}: medium must be one of #{mediums.join(', ')}"
     end
   end
+  (site.collections["animations"]&.docs || []).each do |doc|
+    check.call(doc, %w(title description image image_alt))
+    if doc.data["video"].to_s.strip.empty? && doc.data["gif"].to_s.strip.empty?
+      problems << "#{doc.relative_path}: needs `video` (an MP4) or `gif`"
+    end
+  end
   site.posts.docs.each { |doc| check.call(doc, %w(title description)) }
   photos = site.data["photos"].is_a?(Array) ? site.data["photos"] : []
   photos.each_with_index do |p, i|

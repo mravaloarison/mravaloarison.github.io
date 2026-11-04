@@ -135,6 +135,8 @@ module PortfolioSEO
         project_nodes(site, page, url)
       elsif collection == "arts"
         art_nodes(site, page, url)
+      elsif collection == "animations"
+        animation_nodes(site, page, url)
       elsif collection == "posts"
         post_nodes(site, page, url)
       elsif (items = listed_items(site, page, url))
@@ -215,6 +217,45 @@ module PortfolioSEO
       [wp, art.reject { |_, v| v.nil? || (v.respond_to?(:empty?) && v.empty?) }]
     end
 
+    # A video is a VideoObject (Google needs name, thumbnailUrl and
+    # uploadDate); a GIF is a VisualArtwork whose artform is Animation.
+    def animation_nodes(site, page, url)
+      id = "#{PortfolioSEO.abs(site, url)}#item"
+      image = PortfolioSEO.image_object(site, page["image"], page["image_alt"])
+      common = {
+        "@id" => id,
+        "name" => page["title"],
+        "description" => page["description"],
+        "url" => PortfolioSEO.abs(site, url),
+        "mainEntityOfPage" => "#{PortfolioSEO.abs(site, url)}#webpage",
+        "creator" => PortfolioSEO.person_ref(site),
+        "author" => PortfolioSEO.person_ref(site),
+        "keywords" => Array(page["tools"]).join(", "),
+      }
+      node =
+        if page["video"]
+          common.merge(
+            "@type" => "VideoObject",
+            "contentUrl" => PortfolioSEO.abs(site, page["video"]),
+            "encodingFormat" => "video/mp4",
+            "thumbnailUrl" => PortfolioSEO.abs(site, page["image"]),
+            "uploadDate" => PortfolioSEO.date_iso(page["date"]),
+            "image" => image,
+          )
+        else
+          common.merge(
+            "@type" => "VisualArtwork",
+            "artform" => "Animation",
+            "dateCreated" => PortfolioSEO.date_iso(page["date"]),
+            "image" => page["gif"] ? PortfolioSEO.image_object(site, page["gif"], page["image_alt"]) : image,
+          )
+        end
+      wp = webpage(site, page, url, "ItemPage")
+      wp["mainEntity"] = { "@id" => id }
+      wp["primaryImageOfPage"] = image
+      [wp, node.reject { |_, v| v.nil? || (v.respond_to?(:empty?) && v.empty?) }]
+    end
+
     def post_nodes(site, page, url)
       text = page["content"].to_s.gsub(/<[^>]+>/, " ")
       post = {
@@ -254,6 +295,7 @@ module PortfolioSEO
       when %r{\A/blog/tag/[^/]+/\z}
         PortfolioSEO.posts(site).select { |d| Array(d.data["tags"]).include?(page["tag"]) }
       when "/arts/" then PortfolioSEO.arts(site)
+      when "/animations/" then PortfolioSEO.animations(site)
       when %r{\A/arts/medium/[^/]+/\z}
         PortfolioSEO.arts(site).select { |d| d.data["medium"] == page["medium_name"] }
       end
