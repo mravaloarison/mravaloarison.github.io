@@ -71,21 +71,23 @@ under a plain name, list it at the top of `LICENSE`, and use it as an
 `<img>` with `width`, `height` and `alt=""` (the text beside it carries the
 meaning).
 
-**Logo**: a yellow Labrador's head in profile, in sunglasses, with a red
-collar and a yellow paw-print tag (Mami loves the tag). It's the browser-tab
-icon, the iPhone home-screen icon and the corner of the share image, and
-isn't shown on the pages. The current one is a placeholder Claude drew in
-November 2026 from a reference Mami liked; Mami will replace it with a
-Procreate drawing. Source: `_brand/logo.png` (2048×2048, transparent
-background; `_brand/` isn't published), with the placeholder's vector in
-`_brand/logo.svg`. `python3 scripts/make-icons.py [new-drawing.png]` copies
-a new drawing to `_brand/logo.png` and writes `favicon.ico` (16/32/48),
-`icon-192.png`, `apple-touch-icon.png` (180, on warm paper, since iOS needs
-it opaque) and the logo into `assets/social/og-default.png`. For Mami's
-drawing: a 2048×2048 px square canvas, transparent background (background
-layer hidden), exported as PNG, with bold shapes and thick outlines, because
-it's mostly seen 16–32 px wide. There's no SVG favicon on purpose, so a PNG
-drawing can replace the placeholder with no other change.
+**Logo**: Mami's own Procreate drawing (November 2026) of a yellow
+Labrador's head in profile, in sunglasses, with a brown collar and a yellow
+paw-print tag (Mami loves the tag), textured like crayon, with a cream
+sticker-style edge that keeps it readable on dark browser tabs. It's the
+browser-tab icon, the iPhone home-screen icon and the corner of the share
+image, and isn't shown on the pages. It replaced a placeholder Claude drew
+the same day from a reference Mami liked. Source: `_brand/logo.png`
+(2048×2048, transparent background; `_brand/` isn't published).
+`python3 scripts/make-icons.py [new-drawing.png]` saves a new drawing to
+`_brand/logo.png` without its metadata and writes `favicon.ico`
+(16/32/48), `icon-192.png`, `apple-touch-icon.png` (180, on warm paper,
+since iOS needs it opaque) and the logo into
+`assets/social/og-default.png`. A new version: a 2048×2048 px square
+canvas, transparent background (background layer hidden), exported as
+PNG, with bold shapes and thick outlines, because it's mostly seen 16–32 px
+wide. There's no SVG favicon on purpose, so a PNG drawing drops in with no
+other change.
 
 **Nothing is italic** — not the abstract, not blockquotes, not Markdown
 `*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No

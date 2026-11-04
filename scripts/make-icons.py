@@ -8,9 +8,9 @@ Needs Pillow (python3 -m pip install pillow). Not part of the Jekyll build.
 
 The drawing: a square PNG with a transparent background, ideally 2048×2048
 (at least 1024×1024). It's mostly seen 16–32 px wide in a browser tab, so
-bold shapes and thick outlines read best. A new drawing is copied to
-_brand/logo.png (the source everything is made from; _brand/ isn't
-published), then the script writes:
+bold shapes and thick outlines read best. A new drawing is saved to
+_brand/logo.png without its metadata (the source everything is made from;
+_brand/ isn't published, but the repo is), then the script writes:
 
   favicon.ico                    16, 32 and 48 px, transparent (browser tabs)
   icon-192.png                   192 px, transparent (sharper tabs, and the
@@ -20,7 +20,6 @@ published), then the script writes:
   assets/social/og-default.png   the logo in the share image's top-left
                                  corner, where the old "M" was
 """
-import shutil
 import sys
 from pathlib import Path
 
@@ -45,8 +44,13 @@ def main():
     if len(sys.argv) > 1:
         new = Path(sys.argv[1]).expanduser().resolve()
         if new != SOURCE:
-            shutil.copyfile(new, SOURCE)
-            print(f"copied {new} -> {SOURCE.relative_to(ROOT)}")
+            # Keep the pixels and colour profile only: Procreate and phones add
+            # metadata (titles, devices, sometimes a location) the repo doesn't need.
+            with Image.open(new) as drawing:
+                icc = drawing.info.get("icc_profile")
+                extra = {"icc_profile": icc} if icc else {}
+                drawing.convert("RGBA").save(SOURCE, optimize=True, **extra)
+            print(f"saved {new.name} -> {SOURCE.relative_to(ROOT)} (metadata removed)")
 
     logo = Image.open(SOURCE).convert("RGBA")
     w, h = logo.size
