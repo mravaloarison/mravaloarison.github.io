@@ -1,15 +1,20 @@
 {%- comment -%}
-  Simple list of posts: title on the left, date on the right.
-  Params: posts (required), descriptions (true to show each post's description)
+  List of posts: one box per post, title on the left, date on the right.
+  Params: posts (required), descriptions (true to show each post's description
+  under its title, inside the same link)
 {%- endcomment -%}
 <ul class="post-list">
   {% for post in include.posts %}
   <li>
     <a class="post-row" href="{{ post.url | relative_url }}">
-      <span class="post-title">{% include link-title.html text=post.title %}</span>
-      <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      <span class="post-row-main">
+        <span class="post-title">{% include link-title.html text=post.title %}</span>
+        <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      </span>
+      {%- if include.descriptions and post.description %}
+      <span class="post-description">{{ post.description }}</span>
+      {%- endif %}
     </a>
-    {% if include.descriptions and post.description %}<p class="post-description">{{ post.description }}</p>{% endif %}
   </li>
   {% endfor %}
 </ul>

@@ -215,20 +215,26 @@ things, cards and images (Mami wanted them a little squarer than the old
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
 - Post lists are quiet rows: serif title (with Google's 🔗 after it, see
-  `link-title.html`) on the left, date on the right, hairline between rows
-  (`post-list.html`).
+  `link-title.html`) on the left, date on the right, the description under
+  it, all one link (`post-list.html`). Since November 2026 (Mami's request)
+  post and project rows have no lines between them: each row is a box with
+  the same padding on every side (`--row-pad`: 12px on phones, 16px for
+  posts and 24px for projects from 601px), bled into the gutter with
+  negative margins so the text stays in line with the page, and on hover
+  (or keyboard focus) the box fills with `--surface` so it's obvious.
 - Project lists (`card-grid.html`) are one project per row, like
   brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
   6px radius, hairline border) on the left; on the right the serif title with
   a 🔗 after it, the award on award projects (the trophy in a soft yellow
   square as tall as the two lines beside it: the award title, then
-  "university · year"), and the description; a hairline between rows, like
-  the post list.
-  On phones each project stacks (image, then the text) with 32px between —
+  "university · year"), and the description. Each project is a padded box
+  like the post rows (no lines between them, see above).
+  On phones each project stacks (image, then the text) —
   Mami likes the phone version as it is. No tech stack in lists; it's on each
-  project page. No boxes, no shadows. On hover the row never moves; the
-  thumbnail zooms to 1.04 inside its frame (`overflow: hidden`, 300ms), the
-  title turns accent and the 🔗 nudges up and right.
+  project page. No borders, no shadows. On hover the row never moves; its
+  box fills with `--surface`, the thumbnail zooms to 1.04 inside its frame
+  (`overflow: hidden`, 300ms), the title turns accent and the 🔗 nudges up
+  and right.
 
 ### Components in `_includes/`
 

@@ -623,7 +623,30 @@ main:focus {
   border-color: var(--border-strong);
 }
 
-/* Post list: one quiet row per post, title left, date right */
+/* Post and project lists: no lines between rows. Each row is a box with the
+   same padding on every side, bleeding into the gutter so its text stays in
+   line with the page, and it lights up a little on hover (Mami's request,
+   November 2026). --row-pad is the padding and the bleed. */
+
+.post-row,
+.card {
+  --row-pad: var(--space-12);
+  display: block;
+  margin-inline: calc(-1 * var(--row-pad));
+  padding: var(--row-pad);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color var(--transition);
+}
+
+.post-row:hover,
+.post-row:focus-visible,
+.card:hover,
+.card:focus-visible {
+  background: var(--surface);
+}
+
+/* Post list: one box per post, title left, date right, description under */
 
 .post-list {
   list-style: none;
@@ -631,21 +654,15 @@ main:focus {
   padding: 0;
 }
 
-.post-list li {
-  padding: var(--space-16) 0;
-  border-bottom: 1px solid var(--border);
+.post-list li + li {
+  margin-top: var(--space-4);
 }
 
-.post-list li:first-child {
-  border-top: 1px solid var(--border);
-}
-
-.post-row {
+.post-row-main {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-16);
-  text-decoration: none;
 }
 
 .post-title {
@@ -667,6 +684,7 @@ main:focus {
 }
 
 .post-description {
+  display: block;
   font-size: 16px;
   color: var(--text-secondary);
   margin: var(--space-4) 0 0;
@@ -1007,22 +1025,17 @@ main iframe {
   content: " →";
 }
 
-/* Project list: one project per row. From 601px the thumbnail sits on the
-   left with the title, the award line and the description beside it, and a
-   hairline between rows, like the post list. On phones each project stacks:
-   image, then the text under it. */
+/* Project list: one project per box (see the post list above for the box).
+   From 601px the thumbnail sits on the left with the title, the award line
+   and the description beside it. On phones each project stacks: image, then
+   the text under it. */
 
 .card-grid {
   margin: var(--space-24) 0 var(--space-48);
 }
 
-.card {
-  display: block;
-  text-decoration: none;
-}
-
 .card + .card {
-  margin-top: var(--space-32);
+  margin-top: var(--space-12);
 }
 
 /* Cover image: the card and its frame stay still; on hover the image zooms
@@ -1213,16 +1226,19 @@ main iframe {
     /* any spare height from a tall thumbnail goes under the description */
     grid-template-rows: auto auto 1fr;
     column-gap: var(--space-24);
-    padding: var(--space-24) 0;
-    border-top: 1px solid var(--border);
   }
 
-  .card:last-child {
-    border-bottom: 1px solid var(--border);
+  .post-row,
+  .card {
+    --row-pad: var(--space-16);
+  }
+
+  .card {
+    --row-pad: var(--space-24);
   }
 
   .card + .card {
-    margin-top: 0;
+    margin-top: var(--space-4);
   }
 
   .card-media {
@@ -1980,7 +1996,7 @@ figcaption {
     grid-row: span 1;
   }
 
-  .post-row {
+  .post-row-main {
     flex-direction: column;
     gap: var(--space-4);
   }
