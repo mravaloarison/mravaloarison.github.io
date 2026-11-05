@@ -5,7 +5,8 @@
        first page in a tab plays the hello intro (main.js), decided here so
        it covers the page from the first paint. Not with reduced motion, and
        not when that first page is a piece of art (a shared link shows the
-       picture at once, and the viewer has no logo for the dog to land on). */
+       picture at once, and the viewer has no logo for the dog to land on).
+       The intro's pictures start loading right away. */
     (function (r) {
       r.classList.add('js');
       try {
@@ -13,6 +14,13 @@
           sessionStorage.setItem('intro-seen', '1');
           if (!r.classList.contains('viewer-root') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
             r.classList.add('intro');
+            [{{ '/assets/brand/logo-512.webp' | relative_url | jsonify }}{% if site.data.logo_animation.strips %}, {{ site.data.logo_animation.strips[0].src | relative_url | jsonify }}{% endif %}].forEach(function (href) {
+              var l = document.createElement('link');
+              l.rel = 'preload';
+              l.as = 'image';
+              l.href = href;
+              document.head.appendChild(l);
+            });
           }
         }
       } catch (e) {}

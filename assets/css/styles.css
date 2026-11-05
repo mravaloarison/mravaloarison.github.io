@@ -356,6 +356,7 @@ main,
 /* The logo, Mami's dog, on every page: opposite the burger below 1040px,
    at the top of the nav column from 1040px. It tilts a little on hover. */
 .site-logo {
+  position: relative;
   display: block;
   flex: none;
   width: 44px;
@@ -371,12 +372,24 @@ main,
   height: 100%;
 }
 
-.site-logo img {
+.site-logo img,
+.site-logo .logo-anim {
   transition: transform var(--transition);
 }
 
-.site-logo:hover img {
+.site-logo:hover img,
+.site-logo:hover .logo-anim {
   transform: rotate(-6deg);
+}
+
+/* Mami's logo animation (main.js): its frames side by side in one image,
+   stepped through once over the still logo, which hides underneath */
+.logo-anim {
+  position: absolute;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  pointer-events: none;
 }
 
 .site-nav ul {
@@ -1350,9 +1363,9 @@ main iframe {
   pointer-events: none;
 }
 
-/* First-visit intro (Mami's request, November 2026): the dog plays its
-   hello clip in the middle of the screen, then glides into its place as the
-   logo and the page's blocks rise in one after another (main.js). Once per
+/* First-visit intro (Mami's request, November 2026): the dog plays Mami's
+   logo animation in the middle of the screen, then glides into its place as
+   the logo and the page's blocks rise in one after another (main.js). Once per
    tab, skipped with reduced motion, any tap, key or scroll ends it.
    html.intro covers the page from the first paint until main.js takes
    over; if the script never runs, the cover lifts itself. */
@@ -1429,22 +1442,6 @@ html.intro::after {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-/* The clip is the logo square plus 12.5% on each side, on the page colour;
-   its edges fade out so it melts into the screen */
-.intro-video {
-  position: absolute;
-  inset: -12.5%;
-  width: 125%;
-  height: 125%;
-  opacity: 0;
-  -webkit-mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 82%, transparent 100%);
-}
-
-.intro-video.is-playing {
-  opacity: 1;
 }
 
 /* Picture viewer (Arts): one piece at a time, full screen, like a photo
@@ -1639,6 +1636,7 @@ dialog.viewer::backdrop {
 }
 
 .viewer-figure {
+  position: relative;
   margin: 0;
   display: flex;
   flex-direction: column;

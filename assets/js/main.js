@@ -107,6 +107,111 @@
     });
   }
 
+  // Mami's logo animation (made from her Procreate export by
+  // scripts/make-logo-animation.py): its frames side by side in one image,
+  // stepped through once over the still logo. The layout puts the frame
+  // count, the length and the strips on the logo link.
+  var logoAnim = (function () {
+    var a = document.querySelector(".site-logo[data-anim-strips]");
+    if (!a) return null;
+    var strips = a.getAttribute("data-anim-strips").split(",").map(function (s) {
+      var p = s.trim().split(/\s+/);
+      return { src: p[0], size: Number(p[1]) || 0 };
+    }).filter(function (x) { return x.src; }).sort(function (x, y) { return x.size - y.size; });
+    var frames = Number(a.getAttribute("data-anim-frames"));
+    var duration = Number(a.getAttribute("data-anim-duration"));
+    if (!strips.length || !(frames > 1) || !(duration > 0)) return null;
+    return { frames: frames, duration: duration, strips: strips };
+  })();
+  var stripLoads = {};
+
+  // The smallest strip that's sharp for something this many CSS pixels wide.
+  function logoStrip(cssPx) {
+    var need = cssPx * (window.devicePixelRatio || 1) * 0.9;
+    for (var i = 0; i < logoAnim.strips.length; i++) {
+      if (logoAnim.strips[i].size >= need) return logoAnim.strips[i].src;
+    }
+    return logoAnim.strips[logoAnim.strips.length - 1].src;
+  }
+
+  function loadStrip(src) {
+    if (!stripLoads[src]) {
+      stripLoads[src] = new Promise(function (resolve, reject) {
+        var im = new Image();
+        im.onload = function () {
+          if (im.decode) im.decode().then(resolve, resolve);
+          else resolve();
+        };
+        im.onerror = reject;
+        im.src = src;
+      });
+    }
+    return stripLoads[src];
+  }
+
+  // Play it once over `still` (an image inside `host`, which is
+  // positioned): the still hides underneath and is back after the last
+  // frame. Returns a function that stops it early.
+  function playLogo(host, still, src, onEnd) {
+    var box = document.createElement("span");
+    box.className = "logo-anim";
+    box.setAttribute("aria-hidden", "true");
+    box.style.left = still.offsetLeft + "px";
+    box.style.top = still.offsetTop + "px";
+    box.style.width = still.offsetWidth + "px";
+    box.style.height = still.offsetHeight + "px";
+    box.style.backgroundImage = "url(" + src + ")";
+    box.style.backgroundSize = logoAnim.frames * 100 + "% 100%";
+    host.appendChild(box);
+    var anim = null;
+    try {
+      anim = box.animate([{ backgroundPosition: "0% 0%" }, { backgroundPosition: "100% 0%" }], {
+        duration: logoAnim.duration,
+        easing: "steps(" + logoAnim.frames + ", jump-none)",
+        fill: "forwards"
+      });
+    } catch (e) {} // a browser without stepped easing: no animation
+    var stopped = false;
+    function stop() {
+      if (stopped) return;
+      stopped = true;
+      if (anim) anim.cancel();
+      still.style.visibility = "";
+      if (box.parentNode) box.parentNode.removeChild(box);
+    }
+    if (!anim) {
+      stop();
+      if (onEnd) onEnd();
+      return stop;
+    }
+    still.style.visibility = "hidden";
+    anim.onfinish = function () {
+      if (stopped) return;
+      stop();
+      if (onEnd) onEnd();
+    };
+    return stop;
+  }
+
+  // A reload (Mami's request): the logo plays the animation again where it
+  // sits, once its strip is in. Not on the first visit (that's the intro),
+  // nor with reduced motion.
+  function initLogoReload() {
+    if (!logoAnim || document.documentElement.classList.contains("intro-running")) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var perf = window.performance;
+    var nav = perf && perf.getEntriesByType ? perf.getEntriesByType("navigation")[0] : null;
+    var reloaded = nav ? nav.type === "reload" : !!(perf && perf.navigation && perf.navigation.type === 1);
+    if (!reloaded) return;
+    var link = document.querySelector(".site-logo");
+    var still = link && link.querySelector("img");
+    if (!still || !still.offsetWidth) return;
+    var src = logoStrip(still.offsetWidth);
+    loadStrip(src).then(function () {
+      window.setTimeout(function () { playLogo(link, still, src); }, 350);
+    }, function () {});
+  }
+
   // Arts galleries: a picture opens full screen over the gallery, like a
   // photo viewer, with ‹ › (or the arrow keys, or a swipe) to the others in
   // that gallery, close, and an info button for when it was made. The
@@ -129,6 +234,7 @@
     var infoButton = dialog.querySelector("[data-viewer-info]");
     var prevButton = dialog.querySelector("[data-viewer-prev]");
     var nextButton = dialog.querySelector("[data-viewer-next]");
+    var replayButton = dialog.querySelector("[data-viewer-replay]");
     var chrome = [dialog.querySelector(".viewer-bar"), prevButton, nextButton, caption];
     var pageTitle = document.title;
     var siteTitle = pageTitle.split(" · ").pop();
@@ -147,6 +253,7 @@
     var ghost = null;     // the picture flying between the page and the viewer
     var lifted = null;    // the square (or the logo) hidden while its picture is up
     var pressed = null;   // a picture fetched early, on the press that opens it
+    var stopLogo = null;  // the logo animation playing in the viewer
 
     // Everything that opens in the viewer carries data-viewer="<group>": the
     // gallery thumbnails, the pieces a sample gallery doesn't show (hidden
@@ -199,6 +306,31 @@
       el.style.maxWidth = el.style.maxHeight = "none";
       el.style.width = Math.round(w * scale) + "px";
       el.style.height = Math.round(h * scale) + "px";
+    }
+
+    // Something with an animation of its own: the logo.
+    function animated(a) {
+      return !!(logoAnim && a && a.hasAttribute("data-anim-strips"));
+    }
+
+    function stopAnimation() {
+      if (stopLogo) {
+        stopLogo();
+        stopLogo = null;
+      }
+    }
+
+    // The logo plays its animation over the big picture: once after the
+    // zoom, and again with the replay button.
+    function replay() {
+      if (!img || closing || !animated(list[index])) return;
+      var shown = img;
+      var src = logoStrip(img.offsetWidth);
+      loadStrip(src).then(function () {
+        if (img !== shown || !dialog.open || closing || img.classList.contains("is-waiting")) return;
+        stopAnimation();
+        stopLogo = playLogo(figure, img, src, function () { stopLogo = null; });
+      }, function () {});
     }
 
     function zoomable() {
@@ -338,6 +470,7 @@
         function swap() {
           shown.classList.remove("is-waiting");
           if (ghost === flying) dropGhost();
+          if (img === shown && animated(a)) window.setTimeout(replay, 150); // the logo says hello
         }
         if (shown.decode) shown.decode().then(swap, swap);
         else swap();
@@ -383,6 +516,7 @@
     function show(i) {
       settle(); // an opening still under way ends first
       dropGhost();
+      stopAnimation();
       var n = list.length;
       index = ((i % n) + n) % n;
       var a = list[index];
@@ -391,6 +525,8 @@
       else figure.insertBefore(next, caption);
       img = next;
       fit(img, a);
+      replayButton.hidden = !animated(a);
+      if (animated(a)) loadStrip(logoStrip(parseFloat(img.style.width) || 512)).catch(function () {});
       caption.textContent = a.getAttribute("data-title");
       time.textContent = a.getAttribute("data-date");
       time.setAttribute("datetime", a.getAttribute("data-datetime"));
@@ -429,6 +565,7 @@
       closing = true;
       closingFromHistory = fromHistory;
       settle();
+      stopAnimation();
       if (zoomable()) zoomOut();
       else finishClose();
     }
@@ -436,6 +573,7 @@
     // However it closes (the × button, Escape, Back), put the page back.
     dialog.addEventListener("close", function () {
       settle();
+      stopAnimation();
       land();
       dropGhost();
       closing = false;
@@ -481,6 +619,7 @@
     });
     prevButton.addEventListener("click", function () { step(-1); });
     nextButton.addEventListener("click", function () { step(1); });
+    replayButton.addEventListener("click", replay);
     infoButton.addEventListener("click", function () {
       var opening = info.hidden;
       info.hidden = !opening;
@@ -538,13 +677,19 @@
   var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
 
   // First visit in a tab (html.intro, set before first paint in head.html):
-  // the dog plays its hello clip in the middle of the screen, then glides
-  // into its place as the logo and the page's blocks rise in one after
-  // another, the way iOS brings in a screen. Any tap, key or scroll ends it
-  // at once.
+  // the dog appears in the middle of the screen and plays Mami's logo
+  // animation (a glint on the sunglasses, an ear flick), then glides into
+  // its place as the logo and the page's blocks rise in one after another,
+  // the way iOS brings in a screen. Any tap, key or scroll ends it at once.
   function initIntro() {
     var root = document.documentElement;
     if (!root.classList.contains("intro")) return;
+    // on a connection so slow the page's own cover has already lifted
+    // (styles.css, after 3 s), the page is showing: no intro over it now
+    if (window.performance && performance.now() > 2500) {
+      root.classList.remove("intro");
+      return;
+    }
     var target = document.querySelector(".site-logo img");
     var timers = [];
     var reveals = [];
@@ -567,24 +712,9 @@
     still.alt = "";
     still.width = still.height = 512;
     still.src = ASSETS + "brand/logo-512.webp";
-    var video = el("video", "intro-video");
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.setAttribute("muted", "");
-    video.setAttribute("playsinline", "");
-    video.preload = "auto";
-    [["mp4", "video/mp4"], ["webm", "video/webm"]].forEach(function (f) {
-      var source = document.createElement("source");
-      source.src = ASSETS + "brand/dog-intro." + f[0];
-      source.type = f[1];
-      video.appendChild(source);
-    });
-
     layer.setAttribute("aria-hidden", "true");
     stage.setAttribute("aria-hidden", "true");
     dog.appendChild(still);
-    dog.appendChild(video);
     stage.appendChild(dog);
     document.body.appendChild(layer);
     document.body.appendChild(stage);
@@ -592,17 +722,24 @@
     root.classList.remove("intro"); // this layer takes over from the first-paint cover
 
     var glided = false;
-    var clipOver = false;
-    var held = false;
-    video.addEventListener("playing", function () {
-      if (!glided) video.classList.add("is-playing");
-    });
-    video.addEventListener("ended", function () {
-      clipOver = true;
-      if (held) glide();
-    });
-    var playing = video.play();
-    if (playing && playing.catch) playing.catch(function () {}); // no autoplay: the still logo stays
+    var started = false;
+    var shown = false;
+    var ready = false;
+    var src = logoAnim ? logoStrip(dog.offsetWidth || 220) : null;
+
+    // the animation, once the dog is in and its frames have arrived; the
+    // dog moves off a moment after its last frame
+    function hello() {
+      if (started || glided || done) return;
+      started = true;
+      playLogo(dog, still, src, function () { later(300, glide); });
+    }
+    if (src) {
+      loadStrip(src).then(function () {
+        ready = true;
+        if (shown) hello();
+      }, function () {});
+    }
 
     // The page's blocks rise in, top to bottom, a little apart: a soft fade,
     // a short rise and a hint of blur that clears (only what's on screen).
@@ -635,7 +772,6 @@
       if (done) return;
       done = true;
       root.classList.remove("intro-running");
-      video.pause();
       layer.remove();
       stage.remove();
     }
@@ -645,7 +781,7 @@
       timers.forEach(window.clearTimeout);
       timers = [];
       stopListening();
-      glided = true; // a late "ended" can't start the glide now
+      glided = true; // a late strip can't start the animation now
       if (done) return;
       layer.classList.add("is-skipping");
       stage.classList.add("is-skipping");
@@ -664,8 +800,6 @@
     function glide() {
       if (glided || done) return;
       glided = true;
-      video.classList.remove("is-playing"); // the clip ends on the still's pose
-      video.pause();
       var from = dog.getBoundingClientRect();
       var to = target ? target.getBoundingClientRect() : null;
       var onScreen = to && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
@@ -683,17 +817,21 @@
       later(680, finish); // landed: the real logo takes over
     }
 
-    // The dog moves once its hello is over (the clip ends on the logo at
-    // rest); if the clip isn't playing, after a moment on the still logo;
-    // by 2.6 s whatever happens.
-    later(1200, function () {
-      held = true;
-      if (clipOver || !video.classList.contains("is-playing")) glide();
+    // The dog is in after its fade; the animation starts then (or as soon as
+    // its frames arrive). Without them by 1.5 s it just moves on, still; by
+    // 3 s it moves whatever happens.
+    later(560, function () {
+      shown = true;
+      if (ready) hello();
     });
-    later(2600, glide);
+    later(1500, function () {
+      if (!started) glide();
+    });
+    later(3000, glide);
   }
 
   initIntro();
+  initLogoReload();
   initMenu();
   initNavGroups();
   initViewerDialog();

@@ -27,12 +27,12 @@ _brand/ isn't published, but the repo is), then the script writes:
   assets/brand/logo-1024.webp    1024 px, transparent: the logo when someone
                                  clicks it and it opens big in the viewer
 
-Not made here: assets/brand/dog-intro.mp4 (and .webm, for browsers without
-H.264), the intro's hello clip (a nod, an
-ear flick, a glint), rendered from the logo frame by frame. It starts and ends
-on the logo at rest, framed as the logo square plus 12.5% on each side, on the
-site's --bg. After a new drawing, re-render it (or delete it: the intro then
-just shows the still logo).
+Not made here: Mami's logo animation (assets/brand/logo-anim-*.webp, from
+her Procreate export, by scripts/make-logo-animation.py). It's drawn on the
+same canvas as the logo and starts on it at rest, so after a new drawing it
+needs a new export to match (or delete those strips and
+_data/logo_animation.yml: the intro then shows the still logo, and the
+reload and replay animations are off).
 """
 import sys
 from pathlib import Path

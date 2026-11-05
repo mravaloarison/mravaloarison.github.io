@@ -1,0 +1,8 @@
+# Written by scripts/make-logo-animation.py from Mami's animation; don't edit by hand.
+frames: 10
+duration: 717   # ms, the whole animation once
+strips:
+  - size: 512
+    src: /assets/brand/logo-anim-512.webp
+  - size: 1024
+    src: /assets/brand/logo-anim-1024.webp

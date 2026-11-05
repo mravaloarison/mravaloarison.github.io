@@ -18,9 +18,14 @@
     <div class="site-header-inner">
       {%- comment -%}
         The logo opens big in the picture viewer (Mami's request), not the
-        About page. Without JS the link shows the big image itself.
+        About page. Without JS the link shows the big image itself. Mami's
+        logo animation (_data/logo_animation.yml, by
+        scripts/make-logo-animation.py) rides along for main.js: the intro,
+        a reload and the viewer's replay button play it.
       {%- endcomment %}
-      <a class="site-logo" href="{{ '/assets/brand/logo-1024.webp' | relative_url }}" aria-label="View the logo larger" data-viewer="logo" data-viewer-keep-url data-title="Logo" data-date="November 2026" data-datetime="2026-11" data-src="{{ '/assets/brand/logo-1024.webp' | relative_url }}" data-srcset="{{ '/assets/brand/logo-512.webp' | relative_url }} 512w, {{ '/assets/brand/logo-1024.webp' | relative_url }} 1024w" data-width="1024" data-height="1024" data-alt="Mami's logo, drawn in Procreate: a yellow Labrador's head in profile, in sunglasses, with a brown collar and a yellow paw-print tag">
+      {%- assign logo_anim = site.data.logo_animation -%}
+      {%- capture logo_anim_attrs -%}{% if logo_anim and logo_anim.strips %} data-anim-frames="{{ logo_anim.frames }}" data-anim-duration="{{ logo_anim.duration }}" data-anim-strips="{% for s in logo_anim.strips %}{{ s.src | relative_url }} {{ s.size }}{% unless forloop.last %}, {% endunless %}{% endfor %}"{% endif %}{%- endcapture %}
+      <a class="site-logo" href="{{ '/assets/brand/logo-1024.webp' | relative_url }}" aria-label="View the logo larger" data-viewer="logo" data-viewer-keep-url data-title="Logo" data-date="November 2026" data-datetime="2026-11" data-src="{{ '/assets/brand/logo-1024.webp' | relative_url }}" data-srcset="{{ '/assets/brand/logo-512.webp' | relative_url }} 512w, {{ '/assets/brand/logo-1024.webp' | relative_url }} 1024w" data-width="1024" data-height="1024" data-alt="Mami's logo, drawn in Procreate: a yellow Labrador's head in profile, in sunglasses, with a brown collar and a yellow paw-print tag"{{ logo_anim_attrs }}>
         <picture>
           <source type="image/webp" srcset="{{ '/assets/brand/logo.webp' | relative_url }}">
           <img src="{{ '/assets/brand/logo.png' | relative_url }}" width="56" height="56" alt="Maminiaina Ravaloarison">

@@ -86,15 +86,38 @@ the same day from a reference Mami liked. Source: `_brand/logo.png`
 `_brand/logo.png` without its metadata and writes `favicon.ico`
 (16/32/48), `icon-192.png`, `apple-touch-icon.png` (180, on warm paper,
 since iOS needs it opaque), `assets/brand/logo.webp` / `.png` (168 px,
-the on-page logo), `assets/brand/logo-512.webp` (the intro's still) and
-the share card `assets/social/og-default.png`. The intro's hello clip
-(`assets/brand/dog-intro.mp4` / `.webm`) isn't made by the script: after a
-new drawing, re-render it or delete it (the intro then shows the still
-logo). A new version: a 2048×2048 px square
+the on-page logo), `assets/brand/logo-512.webp` (the intro's still),
+`assets/brand/logo-1024.webp` (the logo big in the viewer) and the share
+card `assets/social/og-default.png`. The logo animation (below) isn't made
+by that script: a new drawing needs a new animation to match (or delete the
+strips and `_data/logo_animation.yml`, and the still logo is used
+everywhere). A new version: a 2048×2048 px square
 canvas, transparent background (background layer hidden), exported as
 PNG, with bold shapes and thick outlines, because it's mostly seen 16–32 px
 wide. There's no SVG favicon on purpose, so a PNG drawing drops in with no
 other change.
+
+**Logo animation** (Mami's own, drawn in Procreate, November 2026): 10
+frames at 14 fps, 0.72 s: a glint sweeps across the sunglasses, then the
+ear flicks; it starts on the logo at rest and its last frame leads back
+into it. It replaced a hello clip Claude had rendered from the logo. Mami's
+export is kept as `_brand/logo-animation.mp4`; `python3
+scripts/make-logo-animation.py [new-export]` (Pillow, plus ffmpeg for an
+MP4) lines the frames up with `_brand/logo.png` (this export sat 53 px
+higher on its canvas), cuts the dog out of the MP4's black background with
+the logo's own outline (so anything animated has to stay inside the sticker
+edge; Procreate's Animated PNG with the background hidden avoids that), and
+writes the frames side by side as `assets/brand/logo-anim-512.webp`
+(~170 KB) and `logo-anim-1024.webp` (~570 KB), plus
+`_data/logo_animation.yml` (frames, length, strips). The layout puts that on
+the logo link (`data-anim-*`) and `main.js` steps through the strip with a
+`steps()` animation over the still (`.logo-anim`), picking the smallest
+strip that's sharp at the size shown. It plays in three places, all at
+Mami's request: the first-visit intro (see Intro); **on a reload**, the
+logo plays it once where it sits (not on ordinary page-to-page clicks, not
+with reduced motion); and **in the viewer**: when the logo opens big it
+plays once right after the zoom, and a replay button (↻, left of ⓘ, only
+for the logo) plays it again, reduced motion or not.
 
 **Share card** (`og-default.png`, 1200×630, the image link previews show
 for About, Blog and every page without its own): since November 2026 it's
@@ -107,24 +130,25 @@ side), and the address in Nunito with an accent underline. Edit `CARD_NAME`
 / `CARD_LINE` in the script and run it to change the card.
 
 **Intro** (Mami's request, November 2026): the first page someone opens
-in a tab starts with the dog in the middle of the screen playing its hello
-clip (a nod, an ear flick, a glint on the sunglasses), just the dog, nothing
-under it. When the clip ends the dog glides into its place as the logo,
-and just as it gets there the page comes in the way iOS brings in a
+in a tab starts with the dog in the middle of the screen, just the dog,
+nothing under it: it fades in, plays Mami's logo animation (above) about
+0.56 s in, and a beat after its last frame glides into its place as the
+logo; just as it gets there the page comes in the way iOS brings in a
 screen: the blocks on screen (the nav items or the burger, each child of
 `main`, the footer) rise 16px into place one after another, top to bottom,
 fading in from a light blur (700ms each, 55ms apart, no bounce). About 3 s
 in all. The inline `<head>` script decides it before the first paint
 (`html.intro`, which covers the page; `sessionStorage` `intro-seen` so it
-plays once per tab) and skips it when the device asks for reduced motion,
-storage is off, or the first page is a piece of art (a shared link shows
-the picture at once; the tab then counts as seen); `initIntro` in
-`main.js` runs it. Any tap, key, scroll or wheel ends it at once, the
-page shown as it is; if the script never runs, the cover lifts itself
-after 3 s. Search engines and no-JS visitors never see it. The clip is
-framed as the logo square plus 12.5% on each side on `--bg`, and starts
-and ends on the logo at rest, so the still (`logo-512.webp`) takes over
-invisibly for the glide (which waits for the clip to end, 2.6 s at most).
+plays once per tab) and starts loading the still and the 512 strip right
+away; it skips the intro when the device asks for reduced motion, storage
+is off, or the first page is a piece of art (a shared link shows the
+picture at once; the tab then counts as seen); `initIntro` in `main.js`
+runs it. If the strip hasn't arrived by 1.5 s the still dog just glides;
+it glides by 3 s whatever happens; and if `main.js` itself only runs after
+2.5 s (a very slow connection, the cover already lifted) there's no intro.
+Any tap, key, scroll or wheel ends it at once, the page shown as it is; if
+the script never runs, the cover lifts itself after 3 s. Search engines
+and no-JS visitors never see it.
 
 **Nothing is italic** — not the abstract, not blockquotes, not Markdown
 `*emphasis*` (`em`, `i`, `cite` are reset to `font-style: normal`). No
@@ -312,8 +336,9 @@ things, cards and images (Mami wanted them a little squarer than the old
   (sets `group` and `group_items`); `art-group-page.html` — the page for one
 - `viewer-dialog.html`, `viewer-icon.html`, `viewer-attrs.html` — the
   picture viewer (see Arts; the dialog is on every page, in `default.html`,
-  because the logo opens in it too); `viewer-attrs.html` writes the data-*
-  a piece needs; `_layouts/art.html` is the same view as a page
+  because the logo opens in it too, with its replay button, see Logo
+  animation); `viewer-attrs.html` writes the data-* a piece needs;
+  `_layouts/art.html` is the same view as a page
 - `animation-media.html` — one animation, large: the MP4 player, the GIF, or
   the still frame (see Animations)
 - `photo-grid.html` — personal photos from `_data/photos.yml`
