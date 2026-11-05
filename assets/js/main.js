@@ -753,9 +753,9 @@
 
   // Content coming in (Mami's request, November 2026). styles.css brings in
   // what's on screen when a page opens, on its own; this holds back what's
-  // further down (.reveal-wait: hidden, a little below or to the right of
-  // its place) and lets each piece in with the same animation once it's
-  // nearly on screen, a beat apart when several arrive together. Keep
+  // further down (.reveal-wait: hidden, a little below its place) and lets
+  // each piece fade up into place once it's nearly on screen, a beat apart
+  // when several arrive together. Keep
   // REVEAL in step with the selectors in styles.css ("Content coming in").
   var REVEAL = [
     "main:not(.viewer) > h1 ~ :not(.abstract, script, [hidden], .card-grid, .post-list, .entry-list, .gallery-grid, .bio-text)",

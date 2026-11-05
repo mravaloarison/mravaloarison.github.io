@@ -365,16 +365,15 @@ interactive element. The exceptions are the intro, the viewer's zoom and
 content coming in (below), all at Mami's request.
 
 **Content coming in** (Mami's request, November 2026: "content should
-appear as user scroll, for instance those projects, can slide from right
-to current position but very smooth, same for all contents"): everything
-after a page's title comes in as it's seen. Rows in a list (projects,
-posts, the resume entries on `/bio/`) slide in from the right
-(`--reveal-slide`, 64px); everything else after the h1 (headings, text,
-pictures, gallery squares, the bio's paragraphs) rises in
-(`--reveal-rise`, 28px); the footer only fades (moving it would make the
-page taller for a moment). 1.1s, `cubic-bezier(0.25, 1, 0.5, 1)`, fading
-in from nothing. The title block (breadcrumb, eyebrow, h1, abstract) and
-the nav stay put, so a page's title is there at once. What's on screen
+appear as user scroll ... very smooth, same for all contents"): everything
+after a page's title comes in as it's seen, and all of it the same way:
+fading in while rising 28px into place (`--reveal-rise`), 1.1s,
+`cubic-bezier(0.25, 1, 0.5, 1)`. That's headings, text, project and post
+rows, pictures, gallery squares, the bio's paragraphs, the resume entries
+and the footer. Rows sliding in from the right were tried first; Mami
+wanted every piece to come up from below instead, so keep one motion. The
+title block (breadcrumb, eyebrow, h1, abstract) and the nav stay put, so a
+page's title is there at once. What's on screen
 when a page opens comes in with CSS alone (`reveal-*` keyframes, a beat
 apart by place after the h1 and within a list); `initReveal` in `main.js`
 holds back what's further down (`.reveal-wait`, hidden) and lets each piece
@@ -383,10 +382,15 @@ in with the same animation once it's 6% into the screen, up to six a beat
 `main.js`; keep them the same. Without JS everything comes in on load;
 with reduced motion, in print, or in a browser without `:is()` nothing
 moves. Keyboard focus and the viewer closing onto a square that hasn't come
-in yet show it at once (`settleReveal`). Rows sliding in must never make the
-page scroll sideways: `html` and `body` have `overflow-x: clip` (clip, not
-hidden, so `body` isn't a scroll box and the side nav stays sticky), which
-is also why the drawer's scroll lock is on `html.menu-open`, not `body`.
+in yet show it at once (`settleReveal`). Content coming in must never
+change the page's size: `body` has `overflow: clip` (so the footer, still
+28px low while it comes in, is cut inside its own bottom padding instead of
+making the page longer for a moment, and nothing can scroll sideways) and
+`html` has `overflow-x: clip`, which keeps `body`'s value its own; without
+it `body`'s clip would pass to the page's scrolling and the page couldn't
+scroll at all. Clip, not hidden, so `body` isn't a scroll box and the side
+nav stays sticky. It's also why the drawer's scroll lock is on
+`html.menu-open`, not `body`.
 
 ---
 
