@@ -79,7 +79,7 @@
 
   --measure: 680px;
   --nav-width: 160px;
-  --thumb-width: 200px;
+  --thumb-width: 80px; /* project list thumbnails; 96px from 601px */
   /* Gap left above a heading when jumping to it with an #anchor link */
   --jump-offset: 40px;
 
@@ -1057,13 +1057,25 @@ main iframe {
   content: " →";
 }
 
-/* Project list: one project per box (see the post list above for the box).
-   From 601px the thumbnail sits on the left with the title, the award line
-   and the description beside it. On phones each project stacks: image, then
-   the text under it. */
+/* Project list: one project per box (see the post list above for the box)
+   with a small thumbnail on the left (Mami's request, November 2026: "really
+   small for the previews"; the screenshot at its real size is on the
+   project's own page; it was 200px, and the full width of a phone, stacked
+   over the text). From 601px the thumbnail is 96px wide with the title,
+   the award line and the description beside it; on phones it's 80px wide
+   beside the title, with the award and the description under them at full
+   width (see the phone rules below). */
 
 .card-grid {
   margin: var(--space-24) 0 var(--space-48);
+}
+
+.card {
+  display: grid;
+  grid-template-columns: var(--thumb-width) minmax(0, 1fr);
+  /* any spare height from the thumbnail goes under the description */
+  grid-template-rows: auto auto 1fr;
+  column-gap: var(--space-12);
 }
 
 .card + .card {
@@ -1076,6 +1088,10 @@ main iframe {
 .card-media {
   position: relative;
   overflow: hidden;
+  grid-column: 1;
+  grid-row: 1 / 4;
+  align-self: start;
+  margin-top: 3px; /* level with the title's capitals */
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
 }
@@ -1197,14 +1213,18 @@ main iframe {
 }
 
 .card-title {
+  grid-column: 2;
+  grid-row: 1;
   font-size: 21px;
-  margin: var(--space-12) 0 var(--space-4);
+  margin: 0 0 var(--space-4);
 }
 
 /* Award in project lists: the trophy's square beside two lines, the award
    title, then university · year. If the title wraps on a narrow phone,
    the square stays centred on the block. */
 .award-card {
+  grid-column: 2;
+  grid-row: 2;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: var(--space-12);
@@ -1245,21 +1265,15 @@ main iframe {
 }
 
 .card-description {
+  grid-column: 2;
+  grid-row: 3;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-secondary);
-  margin: 0 0 var(--space-4);
+  margin: 0;
 }
 
 @media (min-width: 601px) {
-  .card {
-    display: grid;
-    grid-template-columns: var(--thumb-width) minmax(0, 1fr);
-    /* any spare height from a tall thumbnail goes under the description */
-    grid-template-rows: auto auto 1fr;
-    column-gap: var(--space-24);
-  }
-
   .post-row,
   .card {
     --row-pad: var(--space-16);
@@ -1267,33 +1281,46 @@ main iframe {
 
   .card {
     --row-pad: var(--space-24);
+    --thumb-width: 96px;
+    column-gap: var(--space-16);
   }
 
   .card + .card {
     margin-top: var(--space-4);
   }
+}
 
-  .card-media {
-    grid-column: 1;
-    grid-row: 1 / 4;
-    align-self: start;
+/* Phones: the thumbnail sits beside the title only, and the award and the
+   description run the full width under them, as they did before the
+   thumbnails shrank (beside a thumbnail they'd be squeezed into a narrow
+   column, the award's university and year breaking onto lines of their
+   own). Rows are only made for what's there, so a project without an
+   award has no empty gap. */
+@media (max-width: 600px) {
+  .card {
+    grid-template-rows: none;
+    row-gap: var(--space-12);
   }
 
-  .card-title {
-    grid-column: 2;
+  .card-media {
     grid-row: 1;
+    align-self: center;
     margin-top: 0;
   }
 
-  .award-card {
-    grid-column: 2;
-    grid-row: 2;
+  .card-title {
+    align-self: center;
+    margin: 0;
   }
 
+  .award-card,
   .card-description {
-    grid-column: 2;
-    grid-row: 3;
-    margin-bottom: 0;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .award-card {
+    margin: 0;
   }
 }
 

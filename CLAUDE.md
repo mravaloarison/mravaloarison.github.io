@@ -262,14 +262,19 @@ and the status dot in the "In progress" tag.
   negative margins so the text stays in line with the page, and on hover
   (or keyboard focus) the box fills with `--surface` so it's obvious.
 - Project lists (`card-grid.html`) are one project per row, like
-  brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
-  square corners, hairline border) on the left; on the right the serif title with
-  a 🔗 after it, the award on award projects (the trophy in a soft yellow
-  square as tall as the two lines beside it: the award title, then
-  "university · year"), and the description. Each project is a padded box
-  like the post rows (no lines between them, see above).
-  On phones each project stacks (image, then the text) —
-  Mami likes the phone version as it is. No tech stack in lists; it's on each
+  brittanychiang.com, with a small thumbnail (Mami's request, November
+  2026: "really small for the previews", the screenshot at its real size is
+  for the project's own page; it was 200px, and on phones the full width,
+  stacked over the text). From 601px: a 96px thumbnail (`--thumb-width`,
+  16:10, square corners, hairline border) on the left, level with the
+  title; on the right the serif title with a 🔗 after it, the award on award
+  projects (the trophy in a soft yellow square as tall as the two lines
+  beside it: the award title, then "university · year"), and the
+  description. On phones an 80px thumbnail sits beside the title only, and
+  the award and the description run the full width under them (in a column
+  beside the thumbnail the award's university and year broke onto lines of
+  their own). Each project is a padded box like the post rows (no lines
+  between them, see above). No tech stack in lists; it's on each
   project page. No borders, no shadows. On hover the row never moves; its
   box fills with `--surface`, the thumbnail zooms to 1.04 inside its frame
   (`overflow: hidden`, 300ms), the title turns accent and the 🔗 nudges up
@@ -301,10 +306,12 @@ and the status dot in the "In progress" tag.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — the project list: per project a thumbnail, the title
-  (via `link-title.html`, plus the "In progress" pill on ongoing projects),
-  `award.html size="card"` on award projects, and the description. Rows from
-  601px, stacked on phones. Nothing on the thumbnail, no tech row.
+- `card-grid.html` — the project list: per project a small thumbnail, the
+  title (via `link-title.html`, plus the "In progress" pill on ongoing
+  projects), `award.html size="card"` on award projects, and the
+  description. From 601px the text sits beside the 96px thumbnail; on phones
+  the 80px thumbnail sits beside the title and the rest runs full width
+  under them. Nothing on the thumbnail, no tech row.
 - `link-title.html` — a list title followed by Google's 🔗
   (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
   project and post titles in lists. Mami asked for the link emoji in October
