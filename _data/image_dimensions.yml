@@ -103,6 +103,24 @@
       w: 800
     - src: /assets/images/SlayTheInterview-1600w.webp
       w: 1600
+/assets/images/animations/duck-happy.png:
+  width: 512
+  height: 640
+  webp:
+    - src: /assets/images/animations/duck-happy-512w.webp
+      w: 512
+/assets/images/animations/duck-idle.png:
+  width: 512
+  height: 640
+  webp:
+    - src: /assets/images/animations/duck-idle-512w.webp
+      w: 512
+/assets/images/animations/duck-scared.png:
+  width: 512
+  height: 640
+  webp:
+    - src: /assets/images/animations/duck-scared-512w.webp
+      w: 512
 /assets/images/arts/chickadee.jpg:
   width: 1080
   height: 1350

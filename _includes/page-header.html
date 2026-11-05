@@ -10,4 +10,4 @@
 </div>
 {% elsif include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
 <h1>{{ include.title }}</h1>
-{% if include.abstract %}<p class="abstract">{{ include.abstract }}</p>{% endif %}
+{% if include.abstract %}<p class="abstract">{{ include.abstract | smartify }}</p>{% endif %}

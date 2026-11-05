@@ -673,6 +673,83 @@
     }
   }
 
+  // Animations (Arts → Animated): short silent loops that play by
+  // themselves while they're on screen, like GIFs, and rest when they
+  // scroll away (Mami's request). With reduced motion they stay on their
+  // still frame; the big one on an animation's page has a button to pause
+  // or play it (moving things need a way to stop them). Without JS: the
+  // gallery shows still frames and the page a plain player.
+  function initLoops() {
+    var videos = Array.prototype.slice.call(document.querySelectorAll("video[data-loop]"));
+    if (!videos.length) return;
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var loops = videos.map(function (v) {
+      var loop = {
+        video: v,
+        wanted: !still,   // playing whenever it's on screen
+        seen: false,
+        toggle: v.parentNode.querySelector("[data-loop-toggle]"),
+        item: v.closest ? v.closest(".gallery-item") : null
+      };
+      v.muted = true;
+      v.removeAttribute("controls");
+      if (loop.toggle) {
+        loop.toggle.hidden = false;
+        loop.toggle.addEventListener("click", function () {
+          loop.wanted = !loop.wanted;
+          sync(loop);
+        });
+      }
+      v.addEventListener("playing", function () { show(loop); });
+      v.addEventListener("pause", function () { show(loop); });
+      show(loop);
+      return loop;
+    });
+
+    function show(loop) {
+      var playing = !loop.video.paused;
+      if (loop.item) loop.item.classList.toggle("is-playing", playing);
+      if (loop.toggle) {
+        loop.toggle.classList.toggle("is-paused", !loop.wanted);
+        var label = loop.toggle.querySelector("[data-loop-label]");
+        if (label) label.textContent = loop.wanted ? "Pause the animation" : "Play the animation";
+      }
+    }
+
+    function sync(loop) {
+      var v = loop.video;
+      if (loop.wanted && loop.seen) {
+        if (v.paused) {
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {}); // no autoplay here: the still frame stays
+        }
+      } else if (!v.paused) {
+        v.pause();
+      }
+      show(loop);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          loops.forEach(function (loop) {
+            if (loop.video === entry.target) {
+              loop.seen = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+              sync(loop);
+            }
+          });
+        });
+      }, { threshold: [0, 0.2] });
+      videos.forEach(function (v) { io.observe(v); });
+    } else {
+      loops.forEach(function (loop) {
+        loop.seen = true;
+        sync(loop);
+      });
+    }
+  }
+
   // The assets folder, from this script's own address (assets/js/main.js).
   var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
 
@@ -836,4 +913,5 @@
   initNavGroups();
   initViewerDialog();
   initViewerPage();
+  initLoops();
 })();

@@ -1303,16 +1303,19 @@ main iframe {
   -webkit-tap-highlight-color: transparent; /* the zoom is the feedback */
 }
 
-.gallery-item img {
+.gallery-item img,
+.gallery-video {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  background: #000;
   transition: opacity var(--transition);
 }
 
-.gallery-item:hover img {
+.gallery-item:hover img,
+.gallery-item:hover .gallery-video {
   opacity: 0.85;
 }
 
@@ -1331,6 +1334,14 @@ main iframe {
   border-radius: 50%;
   background: rgb(23 21 19 / 0.72);
   box-shadow: 0 0 0 1px rgb(237 232 224 / 0.25);
+}
+
+.gallery-play {
+  transition: opacity var(--transition);
+}
+
+.gallery-item.is-playing .gallery-play {
+  opacity: 0;              /* it's moving already */
 }
 
 .gallery-play::after {
@@ -1744,12 +1755,67 @@ dialog.viewer::backdrop {
   border-radius: var(--radius-md);
 }
 
+/* An animation on its own page: shown at its own size at most, the pause
+   button over its bottom corner (a circle, like the viewer's buttons) */
+.anim-frame {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+}
+
 .animation-figure video {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 80vh;
   border-radius: var(--radius-md);
-  background: var(--surface);
+  background: #000;
+}
+
+.anim-toggle {
+  position: absolute;
+  right: var(--space-12);
+  bottom: var(--space-12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(14 13 12 / 0.6);
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.anim-toggle:hover {
+  background: rgb(14 13 12 / 0.85);
+}
+
+.anim-toggle[hidden] {
+  display: none;
+}
+
+.anim-toggle:focus-visible {
+  border-radius: 50%;
+}
+
+.anim-toggle-pause,
+.anim-toggle.is-paused .anim-toggle-play {
+  display: inline-flex;
+}
+
+.anim-toggle-play,
+.anim-toggle.is-paused .anim-toggle-pause {
+  display: none;
+}
+
+.viewer-icon-fill {
+  fill: currentColor;
+  stroke: none;
 }
 
 figcaption {

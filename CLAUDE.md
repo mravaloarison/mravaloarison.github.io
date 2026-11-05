@@ -393,11 +393,14 @@ switch is modelled on leerob.com's Default | Long bio. The text under the
 name shares its font with `.abstract` (Newsreader 22px, `--text-secondary`;
 Mami wants this serif for both):
 
-- **Short (`/`, `index.md`)**: the headline as the abstract, the same line
-  as the share card's (`headline` in `about.yml` and `CARD_LINE` in
-  `make-icons.py`; change both together): "Software engineer and data
-  analyst in New York. iOS developer, 12 hackathon wins, and I draw and play
-  bass on the side." Then the profile
+- **Short (`/`, `index.md`)**: the headline as the abstract: the share
+  card's line (`CARD_LINE` in `make-icons.py`) plus where Mami's from and
+  what Mami's looking for now (Mami's request, November 2026): "Software
+  engineer and data analyst from Madagascar, based in New York. iOS
+  developer, 12 hackathon wins, and I draw and play bass on the side. Right
+  now I'm looking for master's programs with scholarships." The card keeps
+  the shorter line (it has room for three lines). Abstracts go through
+  `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects") and **Blog** (the two most
@@ -557,12 +560,15 @@ text matter most. See the image rules below; do not skip them here.
 
 Added in November 2026, at Mami's request, for drawings that move, and
 moved under Arts as **Animated** the same month (`/arts/animated/`; pieces
-at `/arts/animated/:slug/`). Waiting for the first one: until
-`_animations/` has an item, `/arts/animated/` shows "Working on it" with
-`noindex`, and nothing about it is in the sitemap or `llms.txt`. It all
-switches on by itself with the first one; copy `_animations/_TEMPLATE.md`
-and follow it. The picture viewer doesn't play videos yet, so Animated's
-thumbnails link to each animation's page.
+at `/arts/animated/:slug/`). The first three went up on November 5, 2026:
+**Idle duck, Happy duck and Scared duck**, the duck you play in DogDuckGo,
+each a 10-frame Procreate loop (512×640 on black, about a second, 8 or 11
+fps), in that `order` (1–3); their `date` is the day Mami exported them.
+Before that the page said "Working on it" (`noindex`, out of the sitemap
+and `llms.txt`), which comes back by itself if they're ever all gone. To
+add one, copy `_animations/_TEMPLATE.md` and follow it. The picture viewer
+doesn't play videos yet, so Animated's thumbnails link to each animation's
+page.
 
 Each one is an MP4 video (`video:`) or a GIF (`gif:`), plus a still frame
 (`image:`, required: the thumbnail, the share image and the poster) that
@@ -572,12 +578,22 @@ MP4 (H.264, which is what Procreate exports): in a test the same 2-second
 loop was 44 KB as an MP4 and 882 KB as a GIF at half the size. Mami wasn't
 sure yet which format the animations would be, so both work.
 
-Playback: a video never starts by itself. It has controls, loops, and is
-muted unless `sound: true`, so nothing moves without the reader asking
-(WCAG 2.2.2, and see the confetti band below). A GIF plays by itself, so a
-device asking for reduced motion gets the still frame instead (`<picture>`
-with a `prefers-reduced-motion` source). The Animated page is the Arts
-gallery grid with a play mark on each thumbnail. Detail page: breadcrumb
+Playback (Mami's request, November 2026: "those videos should loop over
+and over"): a silent video loops by itself, like a GIF, but only while it's
+on screen (`initLoops` in `main.js`, an IntersectionObserver; at least 20%
+in view). That goes for the squares on the Animated page and the samples
+on `/arts/` (each square is the video itself, `object-fit: cover`, the
+play mark fading out while it moves) and the big one on its page, which
+shows at its own size at most and has a round pause/play button over its
+bottom corner (WCAG 2.2.2: moving things need a way to stop). With reduced
+motion they all stay on the still frame (the page's button plays it on
+request); with JS off the squares are still frames and the page has a
+plain player with controls. A video with `sound: true` keeps the old
+behaviour: controls, and it waits for play. The MP4 comes first, and a
+`.webm` of the same name next to it is offered too (for browsers without
+H.264; the ducks have one). A GIF plays by itself, so a device asking for
+reduced motion gets the still frame instead (`<picture>` with a
+`prefers-reduced-motion` source). Detail page: breadcrumb
 (Arts / Animated / title) → eyebrow ("Animation") → title → abstract → the
 animation → Format / Tools / Date → note → See Also ("Watch: …") → prev/next.
 
