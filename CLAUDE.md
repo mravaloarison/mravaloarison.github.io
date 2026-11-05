@@ -8,7 +8,9 @@ before making changes and follow it over your own defaults.
 
 - **Full name:** Maminiaina Ravaloarison
 - **Display name:** Maminiaina Ravaloarison (goes by Mami)
-- **Role:** Software Engineer (currently Junior Data Analyst, Monroe University)
+- **Role:** Product Engineer (Mami's title since November 2026, in place of
+  "software engineer and data analyst"; the day job is still Junior Data
+  Analyst at Monroe University, under Experience and in the bio)
 - **Based:** New York, USA. From Madagascar.
 - **Links:** github.com/mravaloarison · linkedin.com/in/mravaloarison · devpost.com/mrava
 - **Email:** mravaloarison@gmail.com
@@ -124,9 +126,9 @@ for About, Blog and every page without its own): since November 2026 it's
 drawn by `make-icons.py` in the site's look, because Mami found the old
 card's font too far from the site's: dark `--bg`, the logo top left, a
 PORTFOLIO eyebrow in Nunito, the full name in Newsreader 500, then
-`CARD_LINE` in Newsreader (Mami's points: software engineer and data
-analyst, iOS developer, 12 hackathon wins, draws and plays bass on the
-side), and the address in Nunito with an accent underline. Edit `CARD_NAME`
+`CARD_LINE` in Newsreader (Mami's points: product engineer, iOS
+developer, 12 hackathon wins, draws and plays bass on the side), and the
+address in Nunito with an accent underline. Edit `CARD_NAME`
 / `CARD_LINE` in the script and run it to change the card.
 
 **Intro** (Mami's request, November 2026): the first page someone opens
@@ -395,10 +397,10 @@ Mami wants this serif for both):
 
 - **Short (`/`, `index.md`)**: the headline as the abstract: the share
   card's line (`CARD_LINE` in `make-icons.py`) plus where Mami's from and
-  what Mami's looking for now (Mami's request, November 2026): "Software
-  engineer and data analyst from Madagascar, based in New York. iOS
-  developer, 12 hackathon wins, and I draw and play bass on the side. Right
-  now I'm looking for master's programs with scholarships." The card keeps
+  what Mami's looking for now (Mami's request, November 2026): "Product
+  engineer from Madagascar, based in New York. iOS developer, 12 hackathon
+  wins, and I draw and play bass on the side. Right now I'm looking for
+  master's programs with scholarships." The card keeps
   the shorter line (it has room for three lines). Abstracts go through
   `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
@@ -720,7 +722,7 @@ linkable. Enforce all of these:
 ## SEO requirements
 
 The point of this site is that someone searching "Maminiaina Ravaloarison" or
-"Mami Ravaloarison software engineer" lands here, and that individual projects
+"Mami Ravaloarison product engineer" (or software engineer) lands here, and that individual projects
 and posts rank on their own.
 
 ### Plugins
@@ -760,9 +762,9 @@ country, extra topics) live under `profile:` in `_data/about.yml`.
 
 ```yaml
 title: Maminiaina Ravaloarison
-tagline: Software Engineer
+tagline: Product Engineer
 description: >-
-    Maminiaina "Mami" Ravaloarison — Software Engineer in New York.
+    Maminiaina "Mami" Ravaloarison — Product Engineer in New York.
     Projects, writing, and drawings.
 url: https://mravaloarison.github.io
 author:

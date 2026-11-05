@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Maminiaina "Mami" Ravaloarison — Software Engineer
-description: Maminiaina "Mami" Ravaloarison is a Software Engineer from Madagascar and 12-time hackathon winner, now a Junior Data Analyst in New York.
+title: Maminiaina "Mami" Ravaloarison — Product Engineer
+description: Maminiaina "Mami" Ravaloarison is a Product Engineer from Madagascar and 12-time hackathon winner, based in New York.
 homepage: true
 seo:
   type: Person

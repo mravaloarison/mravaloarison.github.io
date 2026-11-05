@@ -48,7 +48,7 @@ PAPER = (247, 242, 234)        # warm paper behind the iPhone icon
 OG = ROOT / "assets" / "social" / "og-default.png"
 FONTS = ROOT / "assets" / "fonts"
 CARD_NAME = "Maminiaina Ravaloarison"
-CARD_LINE = ("Software engineer and data analyst in New York. iOS developer, "
+CARD_LINE = ("Product engineer in New York. iOS developer, "
              "12 hackathon wins, and I draw and play bass on the side.")
 CARD_URL = "mravaloarison.github.io"
 # the site's colours (--bg, --text, --text-secondary, --accent)

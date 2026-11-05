@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Full bio
-description: Full bio of Maminiaina "Mami" Ravaloarison, a software engineer from Madagascar in New York who has won 12 hackathons, plays bass and draws.
+description: Full bio of Maminiaina "Mami" Ravaloarison, a product engineer from Madagascar in New York who has won 12 hackathons, plays bass and draws.
 permalink: /bio/
 ---
 {%- comment -%}
