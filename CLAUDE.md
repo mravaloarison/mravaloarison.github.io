@@ -204,7 +204,10 @@ Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. **No rounded corners**
 `--radius-sm` and `--radius-md` are 0, and the pills, tags, buttons, focus
 rings and inline code are square too. Only true circles stay round: the
 nav's current-page dot, the round buttons (burger, viewer), the play mark
-and the status dot in the "In progress" tag.
+and the status dot in the "In progress" tag. One exception, also Mami's
+request (November 2026: "just a little corner radius, enough to make it
+feel better, not too much"): the project list's small thumbnails have
+`--radius-thumb` (5px). Everything else stays square.
 
 ### Layout
 
@@ -265,17 +268,17 @@ and the status dot in the "In progress" tag.
   brittanychiang.com, with a small thumbnail (Mami's request, November
   2026: "really small for the previews", the screenshot at its real size is
   for the project's own page; it was 200px, and on phones the full width,
-  stacked over the text). From 601px: a 96px thumbnail (`--thumb-width`,
-  16:10, square corners, hairline border) on the left, level with the
-  title; on the right the serif title with a 🔗 after it, the award on award
-  projects (the trophy in a soft yellow square as tall as the two lines
-  beside it: the award title, then "university · year"), and the
-  description. On phones an 80px thumbnail sits beside the title only, and
-  the award and the description run the full width under them (in a column
-  beside the thumbnail the award's university and year broke onto lines of
-  their own). Each project is a padded box like the post rows (no lines
-  between them, see above). No tech stack in lists; it's on each
-  project page. No borders, no shadows. On hover the row never moves; its
+  stacked over the text). At every width the thumbnail (`--thumb-width`:
+  80px on phones, 96px from 601px; 16:10, `--radius-thumb` corners,
+  hairline border) sits on the left, level with the title, and everything
+  else is in line with the title beside it (Mami's request: the
+  description stays aligned with the title on phones too): the serif title
+  with a 🔗 after it, the award on award projects (a small 🏆 before the
+  award in bold, then "university · year" muted under the award; Mami
+  found the trophy's yellow square next to a thumbnail messy, so lists
+  don't use it), and the description. Each project is a padded box like
+  the post rows (no lines between them, see above). No tech stack in
+  lists; it's on each project page. No borders, no shadows. On hover the row never moves; its
   box fills with `--surface`, the thumbnail zooms to 1.04 inside its frame
   (`overflow: hidden`, 300ms), the title turns accent and the 🔗 nudges up
   and right.
@@ -309,9 +312,8 @@ and the status dot in the "In progress" tag.
 - `card-grid.html` — the project list: per project a small thumbnail, the
   title (via `link-title.html`, plus the "In progress" pill on ongoing
   projects), `award.html size="card"` on award projects, and the
-  description. From 601px the text sits beside the 96px thumbnail; on phones
-  the 80px thumbnail sits beside the title and the rest runs full width
-  under them. Nothing on the thumbnail, no tech row.
+  description, all beside the thumbnail (80px on phones, 96px from 601px)
+  in line with the title. Nothing on the thumbnail, no tech row.
 - `link-title.html` — a list title followed by Google's 🔗
   (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
   project and post titles in lists. Mami asked for the link emoji in October
@@ -332,10 +334,13 @@ and the status dot in the "In progress" tag.
   names and lines are balanced (`text-wrap: balance`), so no "Add-" / "On"
   or lone year. `size="large"` on project pages puts it in a callout-style
   box (`--surface`, 3px accent rule) with a 48px square (a 26px and a 22px
-  line). `size="card"` (project lists) is two 22px lines beside a 44px
-  square: the award title in bold, then "university · year", muted. Where a
-  long title wraps (narrow rows, phones) the square stays centred on the
-  block. No foil, nothing over the image, no animation.
+  line). `size="card"` (project lists) is lighter, since it sits beside a
+  thumbnail (Mami found the 44px square there messy, November 2026): an
+  18px 🏆 with no square before the award in bold, then "university ·
+  year" muted under the award name (15px, 22px lines), both balanced when
+  they wrap, the year tied to the university's last word with no-break
+  spaces so it never sits alone. No foil, nothing over the image, no
+  animation.
 - `see-also.html` — trailing block of related links (details below);
   `verb=` sets the word before each title ("Read" by default, "Watch" on
   animations)

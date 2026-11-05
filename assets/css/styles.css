@@ -76,6 +76,9 @@
      (the nav's current-page dot, round buttons, the play mark). */
   --radius-sm: 0;
   --radius-md: 0;
+  /* the one exception: the project list's small thumbnails (Mami's request,
+     November 2026: "just a little corner radius ... not too much") */
+  --radius-thumb: 5px;
 
   --measure: 680px;
   --nav-width: 160px;
@@ -1058,13 +1061,13 @@ main iframe {
 }
 
 /* Project list: one project per box (see the post list above for the box)
-   with a small thumbnail on the left (Mami's request, November 2026: "really
-   small for the previews"; the screenshot at its real size is on the
-   project's own page; it was 200px, and the full width of a phone, stacked
-   over the text). From 601px the thumbnail is 96px wide with the title,
-   the award line and the description beside it; on phones it's 80px wide
-   beside the title, with the award and the description under them at full
-   width (see the phone rules below). */
+   with a small thumbnail on the left and everything else in line with the
+   title beside it, at every width (Mami's requests, November 2026: "really
+   small for the previews", then "just a little corner radius" and the
+   description "aligned with the title" on phones too). The thumbnail is
+   80px wide on phones and 96px from 601px, corners --radius-thumb; the
+   screenshot at its real size is on the project's own page. (It was 200px,
+   and the full width of a phone, stacked over the text.) */
 
 .card-grid {
   margin: var(--space-24) 0 var(--space-48);
@@ -1092,7 +1095,7 @@ main iframe {
   grid-row: 1 / 4;
   align-self: start;
   margin-top: 3px; /* level with the title's capitals */
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-thumb);
   border: 1px solid var(--border);
 }
 
@@ -1219,49 +1222,43 @@ main iframe {
   margin: 0 0 var(--space-4);
 }
 
-/* Award in project lists: the trophy's square beside two lines, the award
-   title, then university · year. If the title wraps on a narrow phone,
-   the square stays centred on the block. */
+/* Award in project lists (award.html size="card"): a small 🏆 before the
+   award in bold, and university · year muted under the award, all in line
+   with the title beside the thumbnail (Mami's request, November 2026: the
+   trophy's 44px square next to a thumbnail looked messy; the square stays
+   on project pages and the bio). Wrapped lines are balanced, and the year
+   is tied to the university's last word, so it never sits alone. */
 .award-card {
   grid-column: 2;
   grid-row: 2;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-12);
-  align-items: center;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--space-8);
   margin: 0 0 var(--space-8);
-}
-
-.award-card .award-icon {
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-}
-
-.award-card-text {
-  margin: 0;
-}
-
-.award-card-name {
-  display: block;
   font-size: 15px;
-  font-weight: 700;
   line-height: 22px;
-  color: var(--text);
+}
+
+.award-card-icon {
+  align-self: start;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px; /* centred on the first line */
+}
+
+.award-card-name,
+.award-card-where {
+  grid-column: 2;
   text-wrap: balance;
 }
 
-.award-card-where {
-  display: block;
-  font-size: 15px;
-  line-height: 22px;
-  color: var(--text-secondary);
+.award-card-name {
+  font-weight: 700;
+  color: var(--text);
 }
 
-/* like .award-part: the year moves down whole if the line is full */
-.award-card-school,
-.award-card-year {
-  display: inline-block;
+.award-card-where {
+  color: var(--text-secondary);
 }
 
 .card-description {
@@ -1290,39 +1287,6 @@ main iframe {
   }
 }
 
-/* Phones: the thumbnail sits beside the title only, and the award and the
-   description run the full width under them, as they did before the
-   thumbnails shrank (beside a thumbnail they'd be squeezed into a narrow
-   column, the award's university and year breaking onto lines of their
-   own). Rows are only made for what's there, so a project without an
-   award has no empty gap. */
-@media (max-width: 600px) {
-  .card {
-    grid-template-rows: none;
-    row-gap: var(--space-12);
-  }
-
-  .card-media {
-    grid-row: 1;
-    align-self: center;
-    margin-top: 0;
-  }
-
-  .card-title {
-    align-self: center;
-    margin: 0;
-  }
-
-  .award-card,
-  .card-description {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-
-  .award-card {
-    margin: 0;
-  }
-}
 
 .card .meta {
   font-size: 14px;
