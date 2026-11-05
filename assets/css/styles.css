@@ -84,6 +84,11 @@
   --jump-offset: 40px;
 
   --transition: 160ms ease;
+  /* Content coming in as it scrolls into view (see "Content coming in") */
+  --reveal-time: 1.1s;
+  --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --reveal-rise: 28px;
+  --reveal-slide: 64px;
 }
 
 /* Reset */
@@ -110,8 +115,17 @@ body {
   font-family: var(--font-sans);
   font-size: 18px;
   line-height: 1.65;
+  /* Nothing scrolls sideways: rows sliding in from the right are cut at the
+     screen's edge. "clip" (not "hidden") so body isn't a scroll box and the
+     side nav stays sticky; html clips too, which keeps body's value its own
+     (old browsers without clip fall back to hidden, as before). */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+}
+
+html {
+  overflow-x: clip;
 }
 
 button,
@@ -1382,6 +1396,86 @@ main iframe {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+/* Content coming in (Mami's request, November 2026: "content should
+   appear as user scroll ... slide from right to current position but very
+   smooth, same for all contents"). Rows in a list (projects, posts, the
+   resume's entries) slide in from the right; everything else after the
+   page title (headings, text, pictures, gallery squares) rises in; the
+   footer fades in. The title block (breadcrumb, eyebrow, h1, abstract) and
+   the nav stay put. What's on screen when a page opens comes in here, with
+   CSS alone, top to bottom a beat apart; main.js (initReveal) holds back
+   what's further down (.reveal-wait) and lets each piece in the same way
+   as it scrolls into view. Without JS everything simply comes in on load;
+   with reduced motion (or in print) nothing moves. Keep these selectors in
+   step with REVEAL in main.js. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-rise));
+  }
+}
+
+@keyframes reveal-slide {
+  from {
+    opacity: 0;
+    transform: translateX(var(--reveal-slide));
+  }
+}
+
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  /* the order things come in when a page opens: by place after the h1 */
+  main > h1 ~ * { --reveal-delay: 350ms; }
+  main > h1 + * { --reveal-delay: 0ms; }
+  main > h1 + * + * { --reveal-delay: 70ms; }
+  main > h1 + * + * + * { --reveal-delay: 140ms; }
+  main > h1 + * + * + * + * { --reveal-delay: 210ms; }
+  main > h1 + * + * + * + * + * { --reveal-delay: 280ms; }
+
+  /* and within a list or a gallery, one after another */
+  :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > :nth-child(2) { --reveal-step: 1; }
+  :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > :nth-child(3) { --reveal-step: 2; }
+  :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > :nth-child(4) { --reveal-step: 3; }
+  :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > :nth-child(n+5) { --reveal-step: 4; }
+
+  main:not(.viewer) > h1 ~ :not(.abstract, script, [hidden], .card-grid, .post-list, .entry-list, .gallery-grid, .bio-text),
+  main:not(.viewer) > h1 ~ :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > *,
+  .site-footer {
+    animation: reveal-rise var(--reveal-time) var(--reveal-ease) backwards;
+    animation-delay: calc(var(--reveal-delay, 0ms) + var(--reveal-step, 0) * 90ms);
+  }
+
+  main:not(.viewer) > h1 ~ :is(.card-grid, .post-list, .entry-list) > * {
+    animation-name: reveal-slide;
+  }
+
+  /* the footer only fades: moving it would make the page taller for a moment */
+  .site-footer {
+    --reveal-delay: 300ms;
+    animation-name: reveal-fade;
+  }
+
+  /* held back further down the page until it scrolls into view (main.js) */
+  .reveal-wait {
+    animation: none !important;
+    opacity: 0;
+    transform: translateY(var(--reveal-rise));
+  }
+
+  main > h1 ~ :is(.card-grid, .post-list, .entry-list) > .reveal-wait {
+    transform: translateX(var(--reveal-slide));
+  }
+
+  .site-footer.reveal-wait {
+    transform: none;
+  }
+}
+
 /* First-visit intro (Mami's request, November 2026): the dog plays Mami's
    logo animation in the middle of the screen, then glides into its place as
    the logo and the page's blocks rise in one after another (main.js). Once per
@@ -2235,7 +2329,9 @@ figcaption {
     pointer-events: auto;
   }
 
-  .menu-open body {
+  /* on html: body's own overflow no longer reaches the page's scrolling
+     (see body), so the lock goes on the root */
+  html.menu-open {
     overflow: hidden;
   }
 }

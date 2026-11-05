@@ -350,6 +350,7 @@
       if (!a || !a.getClientRects().length) return null;
       var t = a.querySelector("img");
       if (!t) return null;
+      settleReveal(a); // a square still held back or coming in: in its place now
       if (scrollTo && !onScreen(t) && a.classList.contains("gallery-item")) {
         root.style.scrollBehavior = "auto";
         a.scrollIntoView({ block: "center" });
@@ -750,6 +751,75 @@
     }
   }
 
+  // Content coming in (Mami's request, November 2026). styles.css brings in
+  // what's on screen when a page opens, on its own; this holds back what's
+  // further down (.reveal-wait: hidden, a little below or to the right of
+  // its place) and lets each piece in with the same animation once it's
+  // nearly on screen, a beat apart when several arrive together. Keep
+  // REVEAL in step with the selectors in styles.css ("Content coming in").
+  var REVEAL = [
+    "main:not(.viewer) > h1 ~ :not(.abstract, script, [hidden], .card-grid, .post-list, .entry-list, .gallery-grid, .bio-text)",
+    "main:not(.viewer) > h1 ~ :is(.card-grid, .post-list, .entry-list, .gallery-grid, .bio-text) > *",
+    ".site-footer"
+  ].join(", ");
+  var revealWatch = null;
+
+  // A piece in its place at once: shown if it's still held back, its
+  // animation run to the end if it's coming in (the viewer closing onto a
+  // square further down, keyboard focus landing inside one).
+  function settleReveal(el) {
+    if (!el) return;
+    if (el.classList.contains("reveal-wait")) {
+      if (revealWatch) revealWatch.unobserve(el);
+      el.style.animation = "none";
+      el.classList.remove("reveal-wait");
+    } else if (el.getAnimations) {
+      el.getAnimations().forEach(function (anim) {
+        if (/^reveal-/.test(anim.animationName || "")) anim.finish();
+      });
+    }
+  }
+
+  function initReveal() {
+    if (!("IntersectionObserver" in window)) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var pieces;
+    try {
+      pieces = document.querySelectorAll(REVEAL);
+    } catch (e) {
+      return; // a browser without :is() / :not() lists: styles.css skips it all too
+    }
+    var fold = window.innerHeight;
+    var held = Array.prototype.filter.call(pieces, function (el) {
+      return el.getBoundingClientRect().top > fold;
+    });
+    if (!held.length) return;
+    held.forEach(function (el) { el.classList.add("reveal-wait"); });
+
+    revealWatch = new IntersectionObserver(function (entries) {
+      var coming = entries.filter(function (entry) { return entry.isIntersecting; });
+      coming.sort(function (a, b) {
+        return (a.boundingClientRect.top - b.boundingClientRect.top) || (a.boundingClientRect.left - b.boundingClientRect.left);
+      });
+      coming.forEach(function (entry, i) {
+        var el = entry.target;
+        revealWatch.unobserve(el);
+        el.style.animationDelay = Math.min(i, 5) * 90 + "ms";
+        el.classList.remove("reveal-wait"); // its animation starts from the top
+        el.addEventListener("animationend", function done(e) {
+          if (e.target !== el) return;
+          el.removeEventListener("animationend", done);
+          el.style.animation = "none"; // done for good: nothing can start it again
+        });
+      });
+    }, { rootMargin: "0px 0px -6% 0px" });
+    held.forEach(function (el) { revealWatch.observe(el); });
+
+    document.addEventListener("focusin", function (e) {
+      if (e.target.closest) settleReveal(e.target.closest(".reveal-wait"));
+    });
+  }
+
   // The assets folder, from this script's own address (assets/js/main.js).
   var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
 
@@ -908,6 +978,7 @@
   }
 
   initIntro();
+  initReveal();
   initLogoReload();
   initMenu();
   initNavGroups();

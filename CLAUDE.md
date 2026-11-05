@@ -29,7 +29,7 @@ form is still indexable.
   No Tailwind, no Bootstrap, no CSS framework.
 - Vanilla JS only, `defer`ed, and only where a feature genuinely needs it
   (the phone menu, the menu dropdowns, the Arts picture viewer, the
-  first-visit intro). The one exception is the tiny inline snippet in
+  first-visit intro, content coming in as it scrolls into view). The one exception is the tiny inline snippet in
   `<head>` that adds the `js` class (and `intro`, see Intro) before first
   paint. All content renders
   server-side at build time — never fetch or render content client-side.
@@ -361,7 +361,32 @@ and the status dot in the "In progress" tag.
 
 Transitions are 150–200ms ease, color and small transforms only. Nothing
 bouncy. Honor `prefers-reduced-motion: reduce`. Visible focus rings on every
-interactive element.
+interactive element. The exceptions are the intro, the viewer's zoom and
+content coming in (below), all at Mami's request.
+
+**Content coming in** (Mami's request, November 2026: "content should
+appear as user scroll, for instance those projects, can slide from right
+to current position but very smooth, same for all contents"): everything
+after a page's title comes in as it's seen. Rows in a list (projects,
+posts, the resume entries on `/bio/`) slide in from the right
+(`--reveal-slide`, 64px); everything else after the h1 (headings, text,
+pictures, gallery squares, the bio's paragraphs) rises in
+(`--reveal-rise`, 28px); the footer only fades (moving it would make the
+page taller for a moment). 1.1s, `cubic-bezier(0.25, 1, 0.5, 1)`, fading
+in from nothing. The title block (breadcrumb, eyebrow, h1, abstract) and
+the nav stay put, so a page's title is there at once. What's on screen
+when a page opens comes in with CSS alone (`reveal-*` keyframes, a beat
+apart by place after the h1 and within a list); `initReveal` in `main.js`
+holds back what's further down (`.reveal-wait`, hidden) and lets each piece
+in with the same animation once it's 6% into the screen, up to six a beat
+(90ms) apart. The selectors are in both `styles.css` and `REVEAL` in
+`main.js`; keep them the same. Without JS everything comes in on load;
+with reduced motion, in print, or in a browser without `:is()` nothing
+moves. Keyboard focus and the viewer closing onto a square that hasn't come
+in yet show it at once (`settleReveal`). Rows sliding in must never make the
+page scroll sideways: `html` and `body` have `overflow-x: clip` (clip, not
+hidden, so `body` isn't a scroll box and the side nav stays sticky), which
+is also why the drawer's scroll lock is on `html.menu-open`, not `body`.
 
 ---
 
@@ -876,7 +901,7 @@ in the About page's `mainEntity` is the likely reason a test in October
 - The site must be fully usable with JavaScript disabled — JS enhances, never
   delivers, content or navigation state. The only JS is `main.js`
   (deferred: the phone menu, the menu dropdowns, the Arts picture viewer,
-  the intro), plus a tiny inline head script that adds the `js` class (and
+  the intro, holding content back until it scrolls into view), plus a tiny inline head script that adds the `js` class (and
   decides the intro) before first paint.
 - Target: no render-blocking requests beyond the single stylesheet, and a
   Lighthouse score of 95+ on all four categories.
