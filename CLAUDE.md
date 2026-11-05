@@ -196,9 +196,12 @@ the square behind the trophy.
 | Nav link (side/drawer)  | 22px / 30px               | Newsreader 500        |
 | Nav project type        | 16px / 18px               | Nunito 400            |
 
-Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. Radii: 6px for small
-things, cards and images (Mami wanted them a little squarer than the old
-10px), pills fully rounded.
+Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. **No rounded corners**
+(Mami's request, November 2026; it was 6px, and 10px before that):
+`--radius-sm` and `--radius-md` are 0, and the pills, tags, buttons, focus
+rings and inline code are square too. Only true circles stay round: the
+nav's current-page dot, the round buttons (burger, viewer), the play mark
+and the status dot in the "In progress" tag.
 
 ### Layout
 
@@ -257,7 +260,7 @@ things, cards and images (Mami wanted them a little squarer than the old
   (or keyboard focus) the box fills with `--surface` so it's obvious.
 - Project lists (`card-grid.html`) are one project per row, like
   brittanychiang.com. From 601px: a 200px thumbnail (`--thumb-width`, 16:10,
-  6px radius, hairline border) on the left; on the right the serif title with
+  square corners, hairline border) on the left; on the right the serif title with
   a 🔗 after it, the award on award projects (the trophy in a soft yellow
   square as tall as the two lines beside it: the award title, then
   "university · year"), and the description. Each project is a padded box
@@ -276,7 +279,9 @@ things, cards and images (Mami wanted them a little squarer than the old
   Projects / Hackathons / Better. Same in the BreadcrumbList JSON-LD.
 - `page-header.html` — eyebrow, h1, serif abstract. Every page opens with
   it — About, section indexes, category/medium/tag/year pages, and detail
-  pages — so titles and intros are the same size everywhere. Never write a
+  pages — so titles and intros are the same size everywhere. `tabs="short"`
+  / `"long"` (the About pages) puts `bio-tabs.html` (Short | Long) on the
+  eyebrow's row. Never write a
   page's eyebrow/h1/intro by hand in Markdown. The About name just wraps
   where it doesn't fit (two lines below about 428px, one line on a Pro
   Max). Forcing two lines on every phone was tried in October 2026 and
@@ -305,7 +310,7 @@ things, cards and images (Mami wanted them a little squarer than the old
   wraps alone. On hover it nudges 2px up and right.
 - `award.html` — a hackathon award as one unit: on the left, Google's 🏆
   (`assets/emoji/trophy.svg`) centred in a soft yellow square
-  (`--accent-tint`, 6px radius) as tall as the two lines beside it, the cup
+  (`--accent-tint`, square corners) as tall as the two lines beside it, the cup
   about half the square's height. Mami asked for the cup to cover both
   lines, then found a cup that big too much; the square covers the lines and
   keeps the cup small. Beside it the award in bold `--text`, with
@@ -378,22 +383,27 @@ the "Looking for" box, the Bio (Markdown), and every resume section
 site email and `%drawing%` becomes the Arts link once art exists. Edit
 content there, never in the layout files.
 
-Both About pages use the same format, modelled on leerob.com's Default | Long
-bio: the name as the h1, then a "Bio" row (`bio-tabs.html`): "Bio" on the
-left and **Short | Long** on the right, 15px Nunito in `--text-secondary`,
-one hairline under the row, the current tab in `--text` with a 1px underline
-sitting on the hairline. No eyebrow, no abstract. The bio text under the row
-is `.bio-text` on both pages, which shares its font with `.abstract`
-(Newsreader 22px, `--text-secondary`; Mami wants this serif for both). Only
-the content under the tabs differs:
+Both About pages open the same way, laid out like the share card (Mami's
+request, November 2026; it replaced a "Bio" row under the name with a
+hairline): a **PORTFOLIO** eyebrow on the left with **Short | Long** on the
+right of the same row (`page-header.html tabs=…`, `bio-tabs.html`: 15px
+Nunito, the current one in `--text` and underlined, the other muted, a
+`--border` bar between them), then the name as the h1. The Short | Long
+switch is modelled on leerob.com's Default | Long bio. The text under the
+name shares its font with `.abstract` (Newsreader 22px, `--text-secondary`;
+Mami wants this serif for both):
 
-- **Short (`/`, `index.md`)**: the headline (in `.bio-text`), the profile
+- **Short (`/`, `index.md`)**: the headline as the abstract, the same line
+  as the share card's (`headline` in `about.yml` and `CARD_LINE` in
+  `make-icons.py`; change both together): "Software engineer and data
+  analyst in New York. iOS developer, 12 hackathon wins, and I draw and play
+  bass on the side." Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects") and **Blog** (the two most
   recent posts, with "See all blog posts").
-- **Long (`/bio/`, `bio.md`)**: the Bio text (Markdown from `about.yml`, in
-  `.bio-text`), the personal photo grid, then Experience, Education, Awards,
+- **Long (`/bio/`, `bio.md`)**: the long Bio text (Markdown from `about.yml`,
+  in `.bio-text`), the personal photo grid, then Experience, Education, Awards,
   Certificates, Languages and Interests. The hackathon award lists every project with an
   `award` as rows like the post list (the trophy in its 48px square,
   covering the award and project lines, on the left; university and year on
@@ -484,8 +494,10 @@ photographed one at a time (so their `date` is that post's, August 11,
 2026, and Two dogs stays hidden), and German shepherd is new, not on
 Instagram; its `date` is the day it went up (November 4, 2026) until Mami
 gives the real one. Their titles are plain names, like the birds'; "Fluffy
-dog" because the breed isn't certain. The site shows seven: the three
-birds, the three dogs, then Mulan and Shang. Procreate pieces are coming.
+dog" because the breed isn't certain. The same evening Mami hid the three
+dogs again "for now" (`published: false`, like Panda and Two dogs), so the
+site shows the three birds, then Mulan and Shang; their `order` (4–6) is
+kept for when they come back. Procreate pieces are coming.
 To add a piece, copy `_arts/_TEMPLATE.md` (ignored by Jekyll because of the
 underscore) and follow the steps in it.
 

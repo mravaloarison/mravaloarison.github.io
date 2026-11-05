@@ -7,17 +7,14 @@ seo:
   type: Person
 ---
 {%- comment -%}
-  Short About. The headline, profile links, two latest projects and two
-  latest posts. The long bio (Bio, photos, experience, education, awards)
-  lives on /bio/. All the words are in _data/about.yml.
+  Short About, laid out like the share card: PORTFOLIO (with Short | Long),
+  the name, and the headline; then the profile links, two latest projects
+  and two latest posts. The long bio (Bio, photos, experience, education,
+  awards) lives on /bio/. All the words are in _data/about.yml.
 {%- endcomment %}
 
 
-{% include page-header.html title="Maminiaina Ravaloarison" %}
-
-{% include bio-tabs.html current="short" %}
-
-<div class="bio-text"><p>{{ site.data.about.headline }}</p></div>
+{% include page-header.html eyebrow="Portfolio" title="Maminiaina Ravaloarison" abstract=site.data.about.headline tabs="short" %}
 
 <div class="profile-links">
   <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>

@@ -1,4 +1,6 @@
 ---
+# Hidden for now at Mami's request (November 2026); delete this line to show it again.
+published: false
 title: Labrador
 description: "A pencil portrait of a Labrador's face looking straight out at you, its coat shaded dark, with gentle eyes, floppy ears and a broad nose."
 medium: Hand drawn

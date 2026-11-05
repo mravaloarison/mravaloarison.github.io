@@ -1,4 +1,6 @@
 ---
+# Hidden for now at Mami's request (November 2026); delete this line to show it again.
+published: false
 title: Fluffy dog
 description: "A pencil drawing of a fluffy dog trotting toward you, smiling with its tongue out and its feathery tail curled up high over its back."
 medium: Hand drawn

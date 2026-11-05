@@ -1,3 +1,13 @@
-{% if include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
+{%- comment -%}
+  Eyebrow, h1, serif abstract: how every page opens. tabs="short" or
+  tabs="long" (the About pages) puts the Short | Long switch on the
+  eyebrow's row, like the share card's PORTFOLIO line.
+{%- endcomment -%}
+{% if include.tabs %}
+<div class="eyebrow-row">
+  {% if include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
+  {% include bio-tabs.html current=include.tabs %}
+</div>
+{% elsif include.eyebrow %}<p class="eyebrow">{{ include.eyebrow }}</p>{% endif %}
 <h1>{{ include.title }}</h1>
 {% if include.abstract %}<p class="abstract">{{ include.abstract }}</p>{% endif %}

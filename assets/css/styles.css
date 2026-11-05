@@ -71,8 +71,11 @@
   --space-64: 64px;
   --space-96: 96px;
 
-  --radius-sm: 6px;
-  --radius-md: 6px;
+  /* No rounded corners anywhere (Mami's request, November 2026): boxes,
+     images, rows, pills and tags are square. Only true circles stay round
+     (the nav's current-page dot, round buttons, the play mark). */
+  --radius-sm: 0;
+  --radius-md: 0;
 
   --measure: 680px;
   --nav-width: 160px;
@@ -148,7 +151,6 @@ hr {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
 /* Links: ink-colored text with a soft accent underline, like a printed page */
@@ -250,7 +252,6 @@ code {
   font-size: 0.88em;
   background: var(--surface);
   padding: 0.1em 0.35em;
-  border-radius: 4px;
 }
 
 pre {
@@ -570,7 +571,7 @@ main:focus {
   line-height: 1.4;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 0;
   padding: 2px 10px;
   text-decoration: none;
 }
@@ -733,7 +734,7 @@ main:focus {
   font-size: 15px;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 0;
   padding: 2px 12px;
   text-decoration: none;
   transition: color var(--transition), border-color var(--transition);
@@ -791,7 +792,7 @@ main iframe {
   font-weight: 600;
   color: var(--text);
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
+  border-radius: 0;
   padding: var(--space-8) var(--space-16);
   text-decoration: none;
   transition: background var(--transition), border-color var(--transition);
@@ -802,52 +803,52 @@ main iframe {
   border-color: var(--text-secondary);
 }
 
-/* Bio row under the name, like leerob.com: "Bio" on the left, Short | Long
-   on the right, one hairline under the row, the current tab underlined
-   right on top of it. */
+/* About: the eyebrow row like the share card's, PORTFOLIO on the left and
+   Short | Long on the right, above the name. The page you're on is in
+   --text and underlined; the other is muted until hovered. */
+
+.eyebrow-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-16);
+  margin: 0 0 var(--space-12);
+}
+
+.eyebrow-row .eyebrow {
+  margin: 0;
+}
 
 .bio-tabs {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-16);
-  margin: var(--space-32) 0 var(--space-24);
-  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+  gap: var(--space-8);
   font-size: 15px;
   line-height: 1.4;
 }
 
-.bio-tabs-label {
-  margin: 0;
-  padding-bottom: var(--space-12);
-  color: var(--text-secondary);
-}
-
-.bio-tabs-nav {
-  display: flex;
-  gap: var(--space-16);
-}
-
-.bio-tabs-nav a {
-  display: block;
-  padding-bottom: var(--space-12);
-  margin-bottom: -1px;
-  border-bottom: 1px solid transparent;
+.bio-tabs a {
   color: var(--text-secondary);
   text-decoration: none;
-  transition: color var(--transition), border-color var(--transition);
+  transition: color var(--transition);
 }
 
-.bio-tabs-nav a:hover {
+.bio-tabs a:hover {
   color: var(--text);
 }
 
-.bio-tabs-nav a[aria-current] {
+.bio-tabs a[aria-current] {
   color: var(--text);
-  border-bottom-color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
 }
 
-/* Bio text under the tabs, short and long (font is set with .abstract above) */
+.bio-tabs-sep {
+  color: var(--border);
+}
+
+/* The long bio's text (font is set with .abstract above) */
 .bio-text {
   margin-bottom: var(--space-32);
 }

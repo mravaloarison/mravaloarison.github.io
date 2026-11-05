@@ -11,9 +11,7 @@ permalink: /bio/
 {%- endcomment %}
 
 
-{% include page-header.html title="Maminiaina Ravaloarison" %}
-
-{% include bio-tabs.html current="long" %}
+{% include page-header.html eyebrow="Portfolio" title="Maminiaina Ravaloarison" tabs="long" %}
 
 {% capture drawing_link %}{% if site.arts.size > 0 %}[drawing]({{ '/arts/' | relative_url }}){% else %}drawing{% endif %}{% endcapture %}
 <div class="bio-text">

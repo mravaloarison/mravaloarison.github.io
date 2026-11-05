@@ -1,4 +1,6 @@
 ---
+# Hidden for now at Mami's request (November 2026); delete this line to show it again.
+published: false
 title: German shepherd
 description: "A pencil drawing of a long-haired German shepherd tilting its head, tall ears up and mouth open in a smile, with a dark muzzle and a fluffy chest."
 medium: Hand drawn

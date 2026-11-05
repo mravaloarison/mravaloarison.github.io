@@ -12,9 +12,10 @@
 #   Arts page once you've posted art (plain "drawing" until then).
 # ─────────────────────────────────────────────────────────────────────────
 
-# The line under your name, at the top of the page.
+# The line under your name on the Short About page, the same as on the share
+# card (CARD_LINE in scripts/make-icons.py): change both together.
 headline: >-
-  Originally from Madagascar, I'm a recent graduate working as a data analyst at Monroe University. On the side, I build iOS apps and small, fun games that I've started animating with my own drawings, and I play bass. I've won 12 hackathons, and I'm now looking for a master's program and scholarships.
+  Software engineer and data analyst in New York. iOS developer, 12 hackathon wins, and I draw and play bass on the side.
 
 # Facts for search engines and AI assistants. Not shown on the page as-is:
 # they go into the hidden structured data (JSON-LD) and /llms.txt, which is
