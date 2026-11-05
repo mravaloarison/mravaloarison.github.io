@@ -113,6 +113,9 @@
   // address becomes the piece's own page while it's open, so Back closes it
   // and a reload or a shared link shows that page (the same view, built by
   // _layouts/art.html). Without JS the thumbnails just link to those pages.
+  // Opening, the picture grows out of its square to its full shape; closing,
+  // it shrinks back into its square (Mami's request, like a photo app). The
+  // logo opens the same way, from its corner.
   function initViewerDialog() {
     var root = document.documentElement;
     var dialog = document.getElementById("viewer");
@@ -126,12 +129,24 @@
     var infoButton = dialog.querySelector("[data-viewer-info]");
     var prevButton = dialog.querySelector("[data-viewer-prev]");
     var nextButton = dialog.querySelector("[data-viewer-next]");
+    var chrome = [dialog.querySelector(".viewer-bar"), prevButton, nextButton, caption];
     var pageTitle = document.title;
     var siteTitle = pageTitle.split(" · ").pop();
+    var reduceMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    var EASE = "cubic-bezier(0.32, 0.72, 0, 1)"; // the drawer's: quick out, soft landing
+    var SHADE = "rgb(14 13 12)";
+    var CLEAR = "rgb(14 13 12 / 0)";
+    var BIG = { transform: "translate(0px, 0px) scale(1) rotate(0deg)", clipPath: "inset(0px 0px)", opacity: 1 };
     var list = [];
     var index = 0;
     var img = null;
     var pushed = false;
+    var closing = false;
+    var closingFromHistory = false;
+    var zoom = null;      // the zoom under way: its animations and what ends it
+    var ghost = null;     // the picture flying between the page and the viewer
+    var lifted = null;    // the square (or the logo) hidden while its picture is up
+    var pressed = null;   // a picture fetched early, on the press that opens it
 
     // Everything that opens in the viewer carries data-viewer="<group>": the
     // gallery thumbnails, the pieces a sample gallery doesn't show (hidden
@@ -169,7 +184,205 @@
       return el;
     }
 
+    // As big as fits between the bar and the name, never bigger than the
+    // picture itself: what the CSS gives once it has loaded, set up front so
+    // the zoom knows where it lands and nothing moves when it arrives.
+    function fit(el, a) {
+      var w = Number(a.getAttribute("data-width"));
+      var h = Number(a.getAttribute("data-height"));
+      if (!w || !h) return;
+      var cs = window.getComputedStyle(stage);
+      var roomW = Math.min(1200, stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+      var roomH = window.innerHeight - (parseFloat(window.getComputedStyle(dialog).getPropertyValue("--viewer-chrome")) || 140);
+      var scale = Math.min(1, roomW / w, roomH / h);
+      if (!(scale > 0)) return;
+      el.style.maxWidth = el.style.maxHeight = "none";
+      el.style.width = Math.round(w * scale) + "px";
+      el.style.height = Math.round(h * scale) + "px";
+    }
+
+    function zoomable() {
+      return typeof dialog.animate === "function" && !(reduceMotion && reduceMotion.matches);
+    }
+
+    function onScreen(el) {
+      var r = el.getBoundingClientRect();
+      return r.width > 0 && r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
+    }
+
+    // The picture a piece sits as on the page: its gallery square, or the
+    // logo. None for a piece the page doesn't show, or one off screen; a
+    // gallery square further down is first scrolled into view when asked
+    // (behind the viewer, as a photo app does), so closing can land on it.
+    function thumbOf(a, scrollTo) {
+      if (!a || !a.getClientRects().length) return null;
+      var t = a.querySelector("img");
+      if (!t) return null;
+      if (scrollTo && !onScreen(t) && a.classList.contains("gallery-item")) {
+        root.style.scrollBehavior = "auto";
+        a.scrollIntoView({ block: "center" });
+        root.style.scrollBehavior = "";
+      }
+      return onScreen(t) ? t : null;
+    }
+
+    // Where a thumbnail is and how it looks right now (the logo may be
+    // mid-tilt, a hovered square a little faded).
+    function frameOf(t) {
+      var r = t.getBoundingClientRect();
+      var cs = window.getComputedStyle(t);
+      var angle = 0;
+      var m = /^matrix\(([^)]+)\)/.exec(cs.transform || "");
+      if (m) {
+        var v = m[1].split(",");
+        angle = Math.atan2(parseFloat(v[1]), parseFloat(v[0])) * 180 / Math.PI;
+      }
+      return {
+        cx: r.left + r.width / 2,
+        cy: r.top + r.height / 2,
+        w: t.offsetWidth || r.width,
+        h: t.offsetHeight || r.height,
+        angle: angle,
+        opacity: parseFloat(cs.opacity) || 1,
+        src: t.currentSrc || t.src
+      };
+    }
+
+    // The flying picture as it sits on the page: the whole picture scaled to
+    // cover the square (what object-fit: cover does there), cut to it.
+    function pageFrame(f, box) {
+      var s = Math.max(f.w / box.width, f.h / box.height);
+      var ix = Math.max(0, (box.width - f.w / s) / 2);
+      var iy = Math.max(0, (box.height - f.h / s) / 2);
+      return {
+        transform: "translate(" + (f.cx - box.left - box.width / 2) + "px, " + (f.cy - box.top - box.height / 2) + "px) scale(" + s + ") rotate(" + f.angle + "deg)",
+        clipPath: "inset(" + iy + "px " + ix + "px)",
+        opacity: f.opacity
+      };
+    }
+
+    function makeGhost(src, box) {
+      dropGhost();
+      ghost = document.createElement("img");
+      ghost.className = "viewer-ghost";
+      ghost.alt = "";
+      ghost.draggable = false;
+      ghost.src = src;
+      ghost.style.left = box.left + "px";
+      ghost.style.top = box.top + "px";
+      ghost.style.width = box.width + "px";
+      ghost.style.height = box.height + "px";
+      dialog.appendChild(ghost);
+    }
+
+    function dropGhost() {
+      if (ghost) {
+        ghost.parentNode.removeChild(ghost);
+        ghost = null;
+      }
+    }
+
+    function lift(a) {
+      land();
+      lifted = a;
+      a.style.visibility = "hidden";
+    }
+
+    function land() {
+      if (lifted) {
+        lifted.style.visibility = "";
+        lifted = null;
+      }
+    }
+
+    function run(anims, end) {
+      var z = { anims: anims, end: end };
+      zoom = z;
+      anims[0].onfinish = function () {
+        if (zoom === z) settle();
+      };
+    }
+
+    // Jump a zoom under way to its end, now.
+    function settle() {
+      if (!zoom) return;
+      var z = zoom;
+      zoom = null;
+      z.anims.forEach(function (x) { x.cancel(); });
+      z.end();
+    }
+
+    // Opening: the square grows into the picture, the dark coming up behind
+    // it and the buttons and name after. The flying picture is the one the
+    // gallery already shows; the sharp one takes its place once it's ready.
+    function zoomIn(a, f) {
+      var box = img.getBoundingClientRect();
+      if (!box.width || !box.height) {
+        root.classList.add("viewer-shaded");
+        return;
+      }
+      var early = pressed && pressed.a === a && pressed.el.complete && pressed.el.naturalWidth ? pressed.el.currentSrc : "";
+      makeGhost(early || f.src, box);
+      img.classList.add("is-waiting");
+      lift(a);
+      var shown = img;
+      var flying = ghost;
+      run([
+        ghost.animate([pageFrame(f, box), BIG], { duration: 420, easing: EASE }),
+        dialog.animate([{ backgroundColor: CLEAR }, { backgroundColor: SHADE }], { duration: 320, easing: "ease-out" })
+      ].concat(chrome.map(function (el) {
+        return el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, delay: 200, easing: "ease-out", fill: "backwards" });
+      })), function () {
+        land();
+        root.classList.add("viewer-shaded");
+        function swap() {
+          shown.classList.remove("is-waiting");
+          if (ghost === flying) dropGhost();
+        }
+        if (shown.decode) shown.decode().then(swap, swap);
+        else swap();
+      });
+    }
+
+    // Closing: the picture shrinks back into its square, the page coming
+    // back around it; a piece the page doesn't show just fades.
+    function zoomOut() {
+      var a = list[index];
+      var t = thumbOf(a, true);
+      var box = img ? img.getBoundingClientRect() : null;
+      root.classList.remove("viewer-shaded");
+      if (!t || !box || !box.width) {
+        run([dialog.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: "ease-out", fill: "forwards" })], finishClose);
+        return;
+      }
+      var f = frameOf(t);
+      var src = img.complete && img.naturalWidth ? img.currentSrc : (ghost ? ghost.src : f.src);
+      makeGhost(src, box);
+      img.classList.add("is-waiting");
+      lift(a);
+      var end = pageFrame(f, box);
+      end.opacity = 1;
+      run([
+        ghost.animate([BIG, end], { duration: 360, easing: EASE, fill: "forwards" }),
+        dialog.animate([{ backgroundColor: SHADE }, { backgroundColor: CLEAR }], { duration: 300, easing: "ease-out", fill: "forwards" })
+      ].concat(chrome.map(function (el) {
+        return el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, easing: "ease-out", fill: "forwards" });
+      })), function () {
+        finishClose();
+        var name = a.querySelector(".gallery-title");
+        if (name && name.animate) name.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, easing: "ease-out" });
+      });
+    }
+
+    function finishClose() {
+      land();
+      dropGhost();
+      dialog.close(); // the "close" event below tidies up
+    }
+
     function show(i) {
+      settle(); // an opening still under way ends first
+      dropGhost();
       var n = list.length;
       index = ((i % n) + n) % n;
       var a = list[index];
@@ -177,6 +390,7 @@
       if (img) figure.replaceChild(next, img);
       else figure.insertBefore(next, caption);
       img = next;
+      fit(img, a);
       caption.textContent = a.getAttribute("data-title");
       time.textContent = a.getAttribute("data-date");
       time.setAttribute("datetime", a.getAttribute("data-datetime"));
@@ -189,28 +403,43 @@
       }
     }
 
+    function step(by) {
+      if (!closing && list.length > 1) show(index + by);
+    }
+
     function open(a, fromHistory) {
+      if (dialog.open) return;
+      var t = zoomable() ? thumbOf(a, false) : null;
+      var f = t ? frameOf(t) : null; // measured before the viewer covers it
       list = itemsIn(a.getAttribute("data-viewer"));
       info.hidden = true;
       infoButton.setAttribute("aria-expanded", "false");
       if (!fromHistory) window.history.pushState({ viewer: keyOf(a) }, "", urlOf(a));
       pushed = true;
+      closing = false;
       dialog.showModal();
       root.classList.add("viewer-open");
       show(list.indexOf(a));
+      if (f) zoomIn(a, f);
+      else root.classList.add("viewer-shaded");
     }
 
-    var closingFromHistory = false;
-
     function close(fromHistory) {
-      if (!dialog.open) return;
+      if (!dialog.open || closing) return;
+      closing = true;
       closingFromHistory = fromHistory;
-      dialog.close(); // the "close" event below tidies up
+      settle();
+      if (zoomable()) zoomOut();
+      else finishClose();
     }
 
     // However it closes (the × button, Escape, Back), put the page back.
     dialog.addEventListener("close", function () {
-      root.classList.remove("viewer-open");
+      settle();
+      land();
+      dropGhost();
+      closing = false;
+      root.classList.remove("viewer-open", "viewer-shaded");
       document.title = pageTitle;
       if (img) {
         figure.removeChild(img);
@@ -226,6 +455,20 @@
       else if (list[0] && list[0].offsetParent !== null) list[0].focus(); // a hidden piece: back to its gallery
     });
 
+    // Escape: close the same way as × (if the browser lets the close wait).
+    dialog.addEventListener("cancel", function (e) {
+      if (!e.cancelable) return;
+      e.preventDefault();
+      close(false);
+    });
+
+    // Fetch a piece's picture on the press that opens it, so the zoom can
+    // often fly the sharp one.
+    document.addEventListener("pointerdown", function (e) {
+      var a = e.target.closest ? e.target.closest("a[data-viewer]") : null;
+      if (a && !dialog.open && e.button === 0) pressed = { a: a, el: picture(a) };
+    }, { passive: true });
+
     document.addEventListener("click", function (e) {
       var a = e.target.closest ? e.target.closest("a[data-viewer]") : null;
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -236,23 +479,26 @@
     dialog.querySelector("[data-viewer-close]").addEventListener("click", function () {
       close(false);
     });
-    prevButton.addEventListener("click", function () { show(index - 1); });
-    nextButton.addEventListener("click", function () { show(index + 1); });
+    prevButton.addEventListener("click", function () { step(-1); });
+    nextButton.addEventListener("click", function () { step(1); });
     infoButton.addEventListener("click", function () {
       var opening = info.hidden;
       info.hidden = !opening;
       infoButton.setAttribute("aria-expanded", opening ? "true" : "false");
     });
     dialog.addEventListener("keydown", function (e) {
-      if (list.length < 2) return;
-      if (e.key === "ArrowRight") { e.preventDefault(); show(index + 1); }
-      else if (e.key === "ArrowLeft") { e.preventDefault(); show(index - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     });
     // A tap on the dark space around the picture closes it, as in a photo viewer.
     stage.addEventListener("click", function (e) {
       if (e.target === stage && !stage.hasAttribute("data-swiped")) close(false);
     });
-    onSwipe(stage, function () { if (list.length > 1) show(index + 1); }, function () { if (list.length > 1) show(index - 1); });
+    onSwipe(stage, function () { step(1); }, function () { step(-1); });
+
+    window.addEventListener("resize", function () {
+      if (dialog.open && img && !zoom) fit(img, list[index]);
+    });
 
     window.addEventListener("popstate", function (e) {
       if (dialog.open) {
@@ -292,14 +538,13 @@
   var ASSETS = ((document.currentScript && document.currentScript.src) || "/assets/js/main.js").replace(/js\/main\.js.*$/, "");
 
   // First visit in a tab (html.intro, set before first paint in head.html):
-  // the dog plays its hello clip in the middle while three pencil dots draw
-  // themselves under it, then the dog glides into its place as the logo and
-  // the page's blocks rise in one after another, the way iOS brings in a
-  // screen. Any tap, key or scroll ends it at once.
+  // the dog plays its hello clip in the middle of the screen, then glides
+  // into its place as the logo and the page's blocks rise in one after
+  // another, the way iOS brings in a screen. Any tap, key or scroll ends it
+  // at once.
   function initIntro() {
     var root = document.documentElement;
     if (!root.classList.contains("intro")) return;
-    var SVG = "http://www.w3.org/2000/svg";
     var target = document.querySelector(".site-logo img");
     var timers = [];
     var reveals = [];
@@ -336,45 +581,11 @@
       video.appendChild(source);
     });
 
-    // Three dots, each a tight pencil spiral that scribbles itself in, a bit
-    // different from the others; the filter roughens the edges and leaves
-    // paper showing through, like pencil.
-    var dots = document.createElementNS(SVG, "svg");
-    dots.setAttribute("class", "intro-dots");
-    dots.setAttribute("viewBox", "0 0 132 44");
-    dots.innerHTML = '<defs><filter id="intro-pencil" x="-30%" y="-30%" width="160%" height="160%">' +
-      '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/>' +
-      '<feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="rough"/>' +
-      '<feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="11" result="g"/>' +
-      '<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.05" result="grain"/>' +
-      '<feComposite in="rough" in2="grain" operator="in"/></filter></defs>';
-    var ink = document.createElementNS(SVG, "g");
-    ink.setAttribute("filter", "url(#intro-pencil)");
-    dots.appendChild(ink);
-    var spirals = [22, 66, 110].map(function (cx, k) {
-      var d = "";
-      var steps = 72;
-      var turns = 2.6;
-      for (var i = 0; i <= steps; i++) {
-        var t = i / steps;
-        var ang = k * 1.7 + t * turns * 2 * Math.PI;
-        var r = 0.8 + t * 8.2 + Math.sin(ang * 3 + k) * 0.5;
-        d += (i ? " L " : "M ") + (cx + Math.cos(ang) * r * 1.06).toFixed(2) + " " + (22 + Math.sin(ang) * r * 0.94).toFixed(2);
-      }
-      var path = document.createElementNS(SVG, "path");
-      path.setAttribute("d", d);
-      path.setAttribute("class", "intro-dot");
-      path.style.setProperty("--i", k);
-      ink.appendChild(path);
-      return path;
-    });
-
     layer.setAttribute("aria-hidden", "true");
     stage.setAttribute("aria-hidden", "true");
     dog.appendChild(still);
     dog.appendChild(video);
     stage.appendChild(dog);
-    stage.appendChild(dots);
     document.body.appendChild(layer);
     document.body.appendChild(stage);
     root.classList.add("intro-running");
@@ -382,34 +593,16 @@
 
     var glided = false;
     var clipOver = false;
-    var dotsDrawn = false;
+    var held = false;
     video.addEventListener("playing", function () {
       if (!glided) video.classList.add("is-playing");
     });
     video.addEventListener("ended", function () {
       clipOver = true;
-      if (dotsDrawn) glide();
+      if (held) glide();
     });
     var playing = video.play();
     if (playing && playing.catch) playing.catch(function () {}); // no autoplay: the still logo stays
-
-    // draw the dots one after another
-    spirals.forEach(function (path, k) {
-      var length = path.getTotalLength();
-      path.style.strokeDasharray = length;
-      path.style.strokeDashoffset = length;
-      if (path.animate) {
-        path.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], {
-          duration: 260,
-          delay: 420 + k * 150,
-          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-          fill: "forwards"
-        });
-      } else {
-        path.style.strokeDashoffset = 0;
-      }
-    });
-    later(1000, function () { dots.classList.add("is-waving"); });
 
     // The page's blocks rise in, top to bottom, a little apart: a soft fade,
     // a short rise and a hint of blur that clears (only what's on screen).
@@ -473,7 +666,6 @@
       glided = true;
       video.classList.remove("is-playing"); // the clip ends on the still's pose
       video.pause();
-      dots.classList.add("is-leaving");
       var from = dog.getBoundingClientRect();
       var to = target ? target.getBoundingClientRect() : null;
       var onScreen = to && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
@@ -491,11 +683,11 @@
       later(680, finish); // landed: the real logo takes over
     }
 
-    // The dog moves once the dots are drawn and its hello is over (the clip
-    // ends on the logo at rest), straight away if the clip isn't playing,
-    // and by 2.6 s whatever happens.
-    later(1500, function () {
-      dotsDrawn = true;
+    // The dog moves once its hello is over (the clip ends on the logo at
+    // rest); if the clip isn't playing, after a moment on the still logo;
+    // by 2.6 s whatever happens.
+    later(1200, function () {
+      held = true;
       if (clipOver || !video.classList.contains("is-playing")) glide();
     });
     later(2600, glide);

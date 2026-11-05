@@ -105,12 +105,19 @@ module PortfolioSEO
     Array(site.data.dig("categories", "arts")).select { |g| g.is_a?(Hash) && g["slug"] }
   end
 
-  # The pieces in one subcategory: animations for Animated, otherwise the art
-  # whose `medium` is the subcategory's name.
+  # The pieces in one subcategory (animations for Animated, otherwise the art
+  # whose `medium` is the subcategory's name), in gallery order: the ones with
+  # an `order` first (1, 2, 3…), then the rest newest first — the same as
+  # _includes/art-group-items.html.
   def art_group_items(site, group)
-    return animations(site) if group["collection"] == "animations"
-
-    arts(site).select { |d| d.data["medium"] == group["name"] }
+    docs = if group["collection"] == "animations"
+             animations(site)
+           else
+             arts(site).select { |d| d.data["medium"] == group["name"] }
+           end
+    newest = docs.sort_by { |d| d.data["date"].to_s }.reverse
+    ordered, rest = newest.partition { |d| !d.data["order"].nil? }
+    ordered.each_with_index.sort_by { |d, i| [d.data["order"].to_f, i] }.map(&:first) + rest
   end
 
   def art_group_by_slug(site, slug)

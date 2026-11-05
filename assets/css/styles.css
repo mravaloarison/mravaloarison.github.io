@@ -361,6 +361,7 @@ main,
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .site-logo picture,
@@ -1270,18 +1271,22 @@ main iframe {
 }
 
 /* Gallery grid (Arts): two columns at every width, square pictures all the
-   same size, square corners, the name under each, like a photo grid */
+   same size, square corners, like a photo grid. Each name sits on the bottom
+   of its picture over a soft fading shadow (Mami's request, November 2026),
+   so it reads on light paper. */
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-24) var(--space-12);
+  gap: var(--space-12);
   margin: var(--space-24) 0 var(--space-48);
 }
 
 .gallery-item {
+  position: relative;
   display: block;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent; /* the zoom is the feedback */
 }
 
 .gallery-item img {
@@ -1302,11 +1307,11 @@ main iframe {
   display: block;
 }
 
-/* Animations: a small round play mark in the thumbnail's corner */
+/* Animations: a small round play mark in the thumbnail's top corner */
 .gallery-play {
   position: absolute;
+  top: var(--space-8);
   right: var(--space-8);
-  bottom: var(--space-8);
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1326,23 +1331,31 @@ main iframe {
 }
 
 .gallery-title {
-  display: block;
-  font-size: 15px;
-  color: var(--text-secondary);
-  margin-top: var(--space-8);
-}
-
-.gallery-item:hover .gallery-title {
+  position: absolute;
+  inset: auto 0 0;
+  padding: var(--space-48) var(--space-12) var(--space-12);
+  background: linear-gradient(to top,
+    rgb(14 13 12 / 0.78) 0%,
+    rgb(14 13 12 / 0.66) 28%,
+    rgb(14 13 12 / 0.42) 55%,
+    rgb(14 13 12 / 0.16) 80%,
+    rgb(14 13 12 / 0) 100%);
   color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.45);
+  text-wrap: balance;
+  pointer-events: none;
 }
 
 /* First-visit intro (Mami's request, November 2026): the dog plays its
-   hello clip in the middle of the screen while three pencil dots draw
-   themselves under it, then it glides into its place as the logo and the
-   page's blocks rise in one after another (main.js). Once per tab, skipped
-   with reduced motion, any tap, key or scroll ends it. html.intro covers
-   the page from the first paint until main.js takes over; if the script
-   never runs, the cover lifts itself. */
+   hello clip in the middle of the screen, then glides into its place as the
+   logo and the page's blocks rise in one after another (main.js). Once per
+   tab, skipped with reduced motion, any tap, key or scroll ends it.
+   html.intro covers the page from the first paint until main.js takes
+   over; if the script never runs, the cover lifts itself. */
 
 html.intro::after {
   content: "";
@@ -1379,7 +1392,6 @@ html.intro::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-24);
   pointer-events: none;
 }
 
@@ -1435,45 +1447,6 @@ html.intro::after {
   opacity: 1;
 }
 
-/* Three pencil dots under the dog (spirals that scribble themselves in,
-   drawn by main.js), then a gentle wave until the dog moves */
-.intro-dots {
-  display: block;
-  width: 99px;
-  height: 33px;
-  overflow: visible;
-  transition: opacity 220ms ease, transform 220ms ease;
-}
-
-.intro-dot {
-  fill: none;
-  stroke: var(--text);
-  stroke-width: 3.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.intro-dots.is-waving .intro-dot {
-  animation: intro-wave 1100ms ease-in-out infinite;
-  animation-delay: calc(var(--i) * 140ms);
-}
-
-.intro-dots.is-leaving {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-@keyframes intro-wave {
-  0%, 60%, 100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-4px);
-  }
-}
-
 /* Picture viewer (Arts): one piece at a time, full screen, like a photo
    viewer. The same look is a <dialog> over a gallery (main.js) and each
    piece's own page (_layouts/art.html). Close top left, info top right,
@@ -1502,15 +1475,39 @@ dialog.viewer:not([open]) {
   display: none;
 }
 
+/* the viewer's own background covers the screen (and fades in and out
+   with the zoom), so the backdrop stays clear */
 dialog.viewer::backdrop {
+  background: transparent;
+}
+
+/* while the viewer is open over a page: no scrolling underneath, and once
+   it's fully up the scrollbar's reserved strip (scrollbar-gutter) goes dark
+   with it */
+.viewer-open {
+  overflow: hidden;
+}
+
+.viewer-shaded {
   background: #0e0d0c;
 }
 
-/* while the viewer is open over a page: no scrolling underneath, and the
-   scrollbar's reserved strip (scrollbar-gutter) goes dark with it */
-.viewer-open {
-  overflow: hidden;
-  background: #0e0d0c;
+/* The picture flying between its square on the page and the viewer while
+   it opens and closes (main.js); the real one waits hidden underneath */
+.viewer-ghost {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  margin: 0;
+  max-width: none;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.viewer-img.is-waiting {
+  visibility: hidden;
 }
 
 .viewer-root {
@@ -1637,6 +1634,8 @@ dialog.viewer::backdrop {
   min-height: 0;
   padding: 0 72px var(--space-24);
   touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;                 /* a drag swipes; it never selects */
 }
 
 .viewer-figure {
@@ -1956,7 +1955,12 @@ figcaption {
   }
 
   .gallery-grid {
-    gap: var(--space-24) var(--space-12);
+    gap: var(--space-8);
+  }
+
+  .gallery-title {
+    padding: 40px var(--space-8) var(--space-8);
+    font-size: 15px;
   }
 
   .photo-grid {

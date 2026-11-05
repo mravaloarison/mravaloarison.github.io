@@ -108,11 +108,8 @@ side), and the address in Nunito with an accent underline. Edit `CARD_NAME`
 
 **Intro** (Mami's request, November 2026): the first page someone opens
 in a tab starts with the dog in the middle of the screen playing its hello
-clip (a nod, an ear flick, a glint on the sunglasses) while three pencil
-dots draw themselves under it one after another, in `--text` (an inline
-SVG from `main.js`: each dot a small scribbled spiral, roughened and
-grained by an SVG filter so it reads as pencil, then a gentle wave). When
-the clip ends the dots fade, the dog glides into its place as the logo,
+clip (a nod, an ear flick, a glint on the sunglasses), just the dog, nothing
+under it. When the clip ends the dog glides into its place as the logo,
 and just as it gets there the page comes in the way iOS brings in a
 screen: the blocks on screen (the nav items or the burger, each child of
 `main`, the footer) rise 16px into place one after another, top to bottom,
@@ -308,7 +305,7 @@ things, cards and images (Mami wanted them a little squarer than the old
 - `picture.html` — every content image goes through this: `<picture>` with the
   WebP variants from `_data/image_dimensions.yml`, original as fallback
 - `gallery-grid.html` — the Arts gallery: two columns, same-size squares,
-  square corners, the name under each; `viewer=<subcategory>` adds the
+  square corners, the name on each picture; `viewer=<subcategory>` adds the
   data the picture viewer reads, `play=true` (Animated) adds a small round
   play mark to each thumbnail
 - `art-group-items.html` — looks up one Arts subcategory and its pieces
@@ -456,18 +453,54 @@ it right 23 bits and add 1314220021721 to get Unix milliseconds. Kestrel and
 Chickadee are Instagram's 1080 px copies, so they're smaller than the
 others. Panda and Two dogs are hidden for now at Mami's request
 (`published: false` at the top of their files; delete that line to bring
-one back), so the site shows the three birds and Mulan and Shang. Procreate
-pieces are coming. To add a piece, copy `_arts/_TEMPLATE.md` (ignored by
-Jekyll because of the underscore) and follow the steps in it.
+one back). Later in November Mami added three dogs, from new photos:
+Fluffy dog and Labrador are the two drawings on the Two dogs page,
+photographed one at a time (so their `date` is that post's, August 11,
+2026, and Two dogs stays hidden), and German shepherd is new, not on
+Instagram; its `date` is the day it went up (November 4, 2026) until Mami
+gives the real one. Their titles are plain names, like the birds'; "Fluffy
+dog" because the breed isn't certain. The site shows seven: the three
+birds, the three dogs, then Mulan and Shang. Procreate pieces are coming.
+To add a piece, copy `_arts/_TEMPLATE.md` (ignored by Jekyll because of the
+underscore) and follow the steps in it.
+
+**Order** (Mami's request, November 2026: "the birds should remain the
+first to be seen, then the dogs, then Mulan"): `order:` in a piece's front
+matter (1 comes first; 2.5 fits between 2 and 3) sets its place in its
+gallery, on `/arts/`, in the viewer's ‹ › and in JSON-LD; pieces without
+one come after the numbered ones, newest first. Hand drawn is Kestrel 1,
+Chickadee 2, Sparrow 3, Fluffy dog 4, Labrador 5, German shepherd 6, Mulan
+and Shang 7. `art-group-items.html` (Liquid) and
+`PortfolioSEO.art_group_items` (Ruby) both apply it; keep them the same.
 
 **Galleries** (`gallery-grid.html`): two columns at every width, square
-pictures all the same size, square corners, the name under each, like a
-photo grid. (Mami tried uncropped shapes and went back to squares.)
+pictures all the same size, square corners, like a photo grid, 12px apart
+(8px on phones). (Mami tried uncropped shapes and went back to squares.)
+Each name sits on the bottom of its picture (Mami's request, November
+2026) in Newsreader 500, `--text`, 18px (15px on phones), over a soft
+fading shadow: a warm near-black gradient, 0.78 at the bottom to clear
+about 80px up, plus a light text shadow, so it reads on white paper. On
+Animated the play mark sits in the top corner, clear of the name.
 
 **The viewer** (Mami's request, November 2026: "like when you look at a
 picture on Instagram or Facebook"): clicking a picture opens it full screen
 over the gallery (`viewer-dialog.html`, a `<dialog>`, run by `main.js`).
-Close top left, an info button top right (shows when it was
+**Zoom** (Mami's request, November 2026: "it should get bigger … then
+the close it just gets smaller to go back to its position"): opening, the
+square grows into the picture, its crop opening out to the picture's full
+shape (a copy of the thumbnail flies: transform plus a `clip-path` inset,
+`.viewer-ghost`), while the dark comes up behind it and the buttons and
+name fade in; the sharp picture takes over once it's decoded (it starts
+loading on the press). Closing reverses it into the square of the piece
+on view, scrolled into view first (behind the viewer) if the arrows moved
+on to one further down; a piece the page doesn't show (past `/arts/`'s
+samples) just fades. 420ms open, 360ms close, the drawer's
+`cubic-bezier(0.32, 0.72, 0, 1)`, no bounce. The logo zooms from and back
+into its corner the same way. The picture's size is set from its known
+dimensions before it loads, so the zoom knows where it lands. Escape, ×,
+Back and a tap outside all close with the zoom; any arrow or close during
+an opening finishes it first. With reduced motion it opens and closes at
+once. Close top left, an info button top right (shows when it was
 made: "Created July 18, 2026", plus the piece's note if it has one), ‹ ›
 at the sides that wrap around the pieces in that gallery, the arrow keys
 and swiping too, the name under the picture; Escape, ×, Back or a tap on
@@ -566,6 +599,7 @@ status: # optional; "ongoing" shows an In progress pill
 title:
 description:
 medium: # Procreate | Hand drawn — its Arts subcategory (page, gallery, ‹ ›)
+order: # optional — its place in the gallery (1 first); unordered come after, newest first
 date:
 image:
 image_alt: # required — describe the artwork, not "drawing"
@@ -828,8 +862,9 @@ in the About page's `mainEntity` is the likely reason a test in October
   beside the × in the picture viewer for a while; Mami found it unneeded
   there, so the viewer's bar is just × and ⓘ.
 - **"Hellouu" typed under the dog in the intro** (November 2026) didn't
-  work the way Mami pictured it; three drawn pencil dots replaced it the
-  same month (see Intro). Don't bring typed text back to the intro.
+  work the way Mami pictured it; three drawn pencil dots replaced it, and
+  then Mami had those removed too the same day: "just the dog is enough".
+  Don't put anything under the dog in the intro unless asked.
 - **The sidebar design was dropped** (October 2026) for the single-column
   layout above (the later wide-screen side nav is the site nav only). The View Transitions API was tried twice for its slide
   animation and failed both times; if page-to-page motion ever comes back,

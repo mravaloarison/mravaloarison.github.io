@@ -11,6 +11,8 @@
 title: Morning light over the bay
 description: One or two sentences about the piece, 120–160 characters, written so it reads well as a search result snippet.
 medium: Procreate # Procreate | Hand drawn
+# order: 8   # optional: its place in its gallery (1 comes first; 2.5 fits between 2 and 3).
+#             Pieces without one come after the numbered ones, newest first.
 date: 2026-10-13
 image: /assets/images/arts/morning-light.png
 image_alt: Describe what the artwork shows, e.g. "Pastel sunrise over a calm bay with two small sailboats"

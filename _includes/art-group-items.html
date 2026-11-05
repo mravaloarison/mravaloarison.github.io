@@ -1,11 +1,16 @@
 {%- comment -%}
-  Looks up one Arts subcategory from _data/categories.yml and its pieces,
+  Looks up one Arts subcategory from _data/categories.yml and its pieces in
+  gallery order: the ones with an `order` first (1, 2, 3…), then the rest
   newest first. Param: slug (hand-drawn | procreate | animated).
   Sets `group` and `group_items` for the template that includes it.
+  PortfolioSEO.art_group_items (_plugins/seo_helpers.rb) keeps the same order.
 {%- endcomment -%}
 {%- assign group = site.data.categories.arts | where: "slug", include.slug | first -%}
 {%- if group.collection == "animations" -%}
-  {%- assign group_items = site.animations | sort: "date" | reverse -%}
+  {%- assign group_all = site.animations | sort: "date" | reverse -%}
 {%- else -%}
-  {%- assign group_items = site.arts | where: "medium", group.name | sort: "date" | reverse -%}
+  {%- assign group_all = site.arts | where: "medium", group.name | sort: "date" | reverse -%}
 {%- endif -%}
+{%- assign group_ordered = group_all | where_exp: "it", "it.order != nil" | sort: "order" -%}
+{%- assign group_rest = group_all | where_exp: "it", "it.order == nil" -%}
+{%- assign group_items = group_ordered | concat: group_rest -%}

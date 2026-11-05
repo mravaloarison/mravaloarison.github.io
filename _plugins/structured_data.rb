@@ -301,10 +301,10 @@ module PortfolioSEO
         PortfolioSEO.posts(site).select { |d| d.date.year.to_s == year }
       when %r{\A/blog/tag/[^/]+/\z}
         PortfolioSEO.posts(site).select { |d| Array(d.data["tags"]).include?(page["tag"]) }
-      when "/arts/" then PortfolioSEO.arts(site) + PortfolioSEO.animations(site)
+      when "/arts/" then PortfolioSEO.art_groups(site).flat_map { |g| PortfolioSEO.art_group_items(site, g) }
       when %r{\A/arts/([^/]+)/\z}
         group = PortfolioSEO.art_group_by_slug(site, Regexp.last_match(1))
-        group && PortfolioSEO.art_group_items(site, group).sort_by { |d| d.data["date"].to_s }.reverse
+        group && PortfolioSEO.art_group_items(site, group)
       end
     end
 
