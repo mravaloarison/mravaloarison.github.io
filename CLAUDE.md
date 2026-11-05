@@ -126,8 +126,9 @@ for About, Blog and every page without its own): since November 2026 it's
 drawn by `make-icons.py` in the site's look, because Mami found the old
 card's font too far from the site's: dark `--bg`, the logo top left, a
 PORTFOLIO eyebrow in Nunito, the full name in Newsreader 500, then
-`CARD_LINE` in Newsreader (Mami's points: product engineer, iOS
-developer, 12 hackathon wins, draws and plays bass on the side), and the
+`CARD_LINE` in Newsreader (Mami's points: product engineer, 12 hackathon
+wins, draws and plays bass on the side; "iOS developer" was taken out at
+Mami's request, November 2026, here and in the short line), and the
 address in Nunito with an accent underline. Edit `CARD_NAME`
 / `CARD_LINE` in the script and run it to change the card.
 
@@ -398,9 +399,9 @@ Mami wants this serif for both):
 - **Short (`/`, `index.md`)**: the headline as the abstract: the share
   card's line (`CARD_LINE` in `make-icons.py`) plus where Mami's from and
   what Mami's looking for now (Mami's request, November 2026): "Product
-  engineer from Madagascar, based in New York. iOS developer, 12 hackathon
-  wins, and I draw and play bass on the side. Right now I'm looking for
-  master's programs with scholarships." The card keeps
+  engineer from Madagascar, based in New York. 12 hackathon wins, and I
+  draw and play bass on the side. Right now I'm looking for master's
+  programs with scholarships." The card keeps
   the shorter line (it has room for three lines). Abstracts go through
   `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout

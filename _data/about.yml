@@ -16,7 +16,7 @@
 # (CARD_LINE in scripts/make-icons.py) plus where you're from and what
 # you're looking for right now.
 headline: >-
-  Product engineer from Madagascar, based in New York. iOS developer, 12 hackathon wins, and I draw and play bass on the side. Right now I'm looking for master's programs with scholarships.
+  Product engineer from Madagascar, based in New York. 12 hackathon wins, and I draw and play bass on the side. Right now I'm looking for master's programs with scholarships.
 
 # Facts for search engines and AI assistants. Not shown on the page as-is:
 # they go into the hidden structured data (JSON-LD) and /llms.txt, which is
