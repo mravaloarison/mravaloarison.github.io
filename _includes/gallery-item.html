@@ -1,0 +1,29 @@
+{%- comment -%}
+  One square in an Arts gallery (gallery-grid.html, art-picks.html): the
+  picture, cropped square, with its name on the bottom over a soft fading
+  shadow. Params: item; viewer=<group> (Hand drawn, Procreate) so a click
+  opens the picture viewer; play=true (Animated): the square is the
+  animation itself, looping while it's on screen (main.js; the still frame
+  with reduced motion or JS off), with a small play mark while it's still.
+{%- endcomment -%}
+<a class="gallery-item" href="{{ include.item.url | relative_url }}"{% if include.viewer %}{% include viewer-attrs.html item=include.item viewer=include.viewer %}{% endif %}>
+    <span class="gallery-media">
+      {%- if include.play and include.item.video %}
+      {%- assign vdims = site.data.image_dimensions[include.item.image] -%}
+      {%- assign vposter = include.item.image -%}
+      {%- if vdims and vdims.webp.size > 0 -%}{%- assign vfirst = vdims.webp | first -%}{%- assign vposter = vfirst.src -%}{%- endif -%}
+      {%- assign webm = include.item.video | replace: ".mp4", ".webm" -%}
+      {%- assign webm_file = site.static_files | where: "path", webm | first %}
+      <video class="gallery-video" muted loop playsinline preload="none" data-loop poster="{{ vposter | relative_url }}"{% if vdims %} width="{{ vdims.width }}" height="{{ vdims.height }}"{% endif %} aria-label="{{ include.item.image_alt | escape }}">
+        <source src="{{ include.item.video | relative_url }}" type="video/mp4">
+        {%- if webm_file and webm != include.item.video %}
+        <source src="{{ webm | relative_url }}" type="video/webm">
+        {%- endif %}
+      </video>
+      {%- else %}
+      {% include picture.html src=include.item.image alt=include.item.image_alt sizes="(max-width: 600px) 50vw, 340px" %}
+      {%- endif %}
+      {%- if include.play %}<span class="gallery-play" aria-hidden="true"></span>{% endif %}
+    </span>
+    <span class="gallery-title">{{ include.item.title }}</span>
+  </a>

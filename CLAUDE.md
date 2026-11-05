@@ -339,7 +339,14 @@ and the status dot in the "In progress" tag.
 - `gallery-grid.html` — the Arts gallery: two columns, same-size squares,
   square corners, the name on each picture; `viewer=<subcategory>` adds the
   data the picture viewer reads, `play=true` (Animated) adds a small round
-  play mark to each thumbnail
+  play mark to each thumbnail. Each square is `gallery-item.html`.
+- `art-picks.html` — the Short About's Arts row: the first piece of each
+  Arts subcategory (an empty one is skipped and appears by itself with its
+  first piece), two squares side by side now, three once Procreate has a
+  piece. A drawing opens in the viewer and steps through its whole
+  subcategory (hidden `data-viewer` entries, as on `/arts/`); an animation
+  loops in its square and links to its page. The section hides itself if
+  there's no art at all.
 - `art-group-items.html` — looks up one Arts subcategory and its pieces
   (sets `group` and `group_items`); `art-group-page.html` — the page for one
 - `viewer-dialog.html`, `viewer-icon.html`, `viewer-attrs.html` — the
@@ -406,8 +413,11 @@ Mami wants this serif for both):
   `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
-  projects by date, with "See all N projects") and **Blog** (the two most
-  recent posts, with "See all blog posts").
+  projects by date, with "See all N projects"), **Arts** (Mami's request,
+  November 2026: one piece from each Arts subcategory, the first in its
+  gallery order, side by side, with "See all art"; `art-picks.html`) and
+  **Blog** (the two most recent posts, with "See all blog posts"). The
+  sections follow the nav's order.
 - **Long (`/bio/`, `bio.md`)**: the long Bio text (Markdown from `about.yml`,
   in `.bio-text`), the personal photo grid, then Experience, Education, Awards,
   Certificates, Languages and Interests. The hackathon award lists every project with an
@@ -908,8 +918,10 @@ in the About page's `mainEntity` is the likely reason a test in October
   section index.
 - **A drawings column beside the About Bio was tried and removed** (October
   2026): stacked, then fixed, then a sideways carousel with placeholder
-  art. Mami didn't like it. Don't bring back art on the About page unless
-  asked.
+  art. Mami didn't like it. In November 2026 Mami asked for art on the
+  Short About after all, as one row in the page's flow (Arts, between
+  Projects and Blog, one piece per subcategory); keep it to that row and
+  don't put art beside the bio.
 - **A logo in the header** (the M mark) was tried in October 2026 and removed
   when the nav moved to the side. In November 2026 the M was replaced
   everywhere it was left (tab icon, iPhone icon, share image) by the dog,

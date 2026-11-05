@@ -1,0 +1,49 @@
+{%- comment -%}
+  The Short About's Arts row (Mami's request, November 2026): one piece
+  from each Arts subcategory, the first in its gallery order (Hand drawn,
+  Procreate, Animated; an empty one is skipped and shows up by itself with
+  its first piece), as gallery squares side by side. A drawing opens in the
+  picture viewer, which steps through its whole subcategory like the
+  samples on /arts/; an animation loops in its square and links to its
+  page. Sets `art_total`, every piece on view on /arts/.
+{%- endcomment -%}
+{%- assign art_total = 0 -%}
+{%- assign pick_count = 0 -%}
+{%- capture picks -%}
+{%- for g in site.data.categories.arts -%}
+  {%- include art-group-items.html slug=g.slug -%}
+  {%- assign art_total = art_total | plus: group_items.size -%}
+  {%- if group_items.size > 0 -%}
+    {%- assign pick_count = pick_count | plus: 1 -%}
+    {%- assign pick = group_items | first -%}
+    {%- if group.collection == "animations" %}
+  {% include gallery-item.html item=pick play=true %}
+    {%- else %}
+  {% include gallery-item.html item=pick viewer=group.slug %}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- capture rest -%}
+{%- for g in site.data.categories.arts -%}
+  {%- include art-group-items.html slug=g.slug -%}
+  {%- if group.collection != "animations" -%}
+    {%- for item in group_items offset: 1 %}
+  <span data-href="{{ item.url | relative_url }}"{% include viewer-attrs.html item=item viewer=group.slug %}></span>
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- if pick_count > 0 -%}
+{%- assign pick_cols = pick_count -%}
+{%- if pick_cols < 2 -%}{%- assign pick_cols = 2 -%}{%- endif %}
+<div class="gallery-grid art-picks art-picks-{{ pick_cols }}">
+  {{- picks }}
+</div>
+{%- assign rest = rest | strip -%}
+{%- if rest != "" %}
+<div hidden>
+  {{ rest }}
+</div>
+{%- endif -%}
+{%- endif -%}

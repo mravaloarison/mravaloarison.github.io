@@ -1375,6 +1375,13 @@ main iframe {
   pointer-events: none;
 }
 
+/* The Short About's Arts row (art-picks.html, Mami's request, November
+   2026): one square per Arts subcategory side by side, two columns while
+   Procreate is empty, three once it has a piece. */
+.art-picks-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 /* First-visit intro (Mami's request, November 2026): the dog plays Mami's
    logo animation in the middle of the screen, then glides into its place as
    the logo and the page's blocks rise in one after another (main.js). Once per
@@ -2026,6 +2033,11 @@ figcaption {
   .gallery-title {
     padding: 40px var(--space-8) var(--space-8);
     font-size: 15px;
+  }
+
+  .art-picks-3 .gallery-title {   /* squares a third of a phone wide */
+    padding: 28px 6px 6px;
+    font-size: 13px;
   }
 
   .photo-grid {

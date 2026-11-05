@@ -8,9 +8,10 @@ seo:
 ---
 {%- comment -%}
   Short About, laid out like the share card: PORTFOLIO (with Short | Long),
-  the name, and the headline; then the profile links, two latest projects
-  and two latest posts. The long bio (Bio, photos, experience, education,
-  awards) lives on /bio/. All the words are in _data/about.yml.
+  the name, and the headline; then the profile links, two latest projects,
+  one piece from each Arts subcategory and two latest posts. The long bio
+  (Bio, photos, experience, education, awards) lives on /bio/. All the
+  words are in _data/about.yml.
 {%- endcomment %}
 
 
@@ -39,6 +40,16 @@ seo:
 {% include card-grid.html items=latest_projects %}
 
 <p class="see-more"><a href="{{ '/projects/' | relative_url }}">See all {{ site.projects.size }} projects</a></p>
+
+{%- comment -%} One piece from each Arts subcategory (art-picks.html); the section hides itself while there's no art. {%- endcomment -%}
+{%- capture art_row %}{% include art-picks.html %}{% endcapture %}
+{%- if pick_count > 0 %}
+## <a href="{{ '/arts/' | relative_url }}">Arts</a>
+
+{{ art_row }}
+
+<p class="see-more"><a href="{{ '/arts/' | relative_url }}">See all art</a></p>
+{%- endif %}
 
 {%- assign latest_posts = site.posts | sort: "date" | reverse | slice: 0, 2 %}
 ## <a href="{{ '/blog/' | relative_url }}">Blog</a>
