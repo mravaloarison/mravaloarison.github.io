@@ -1,42 +1,49 @@
 {%- comment -%}
-  The Short About's Arts row (Mami's request, November 2026): one piece
-  from each Arts subcategory, the first in its gallery order (Hand drawn,
-  Procreate, Animated; an empty one is skipped and shows up by itself with
-  its first piece), as gallery squares side by side. A drawing opens in the
+  The Short About's Arts section (Mami's request, November 2026): the three
+  most recent pieces (by date) from Hand drawn and the three most recent
+  from Procreate, each set in its gallery order, three to a row, so each
+  row is one subcategory. Animations aren't here. A piece opens in the
   picture viewer, which steps through its whole subcategory like the
-  samples on /arts/; an animation loops in its square and links to its
-  page. Sets `art_total`, every piece on view on /arts/.
+  samples on /arts/ (hidden entries for the pieces not shown). An empty
+  subcategory is skipped and joins by itself with its first piece. Sets
+  `pick_count`.
 {%- endcomment -%}
-{%- assign art_total = 0 -%}
 {%- assign pick_count = 0 -%}
 {%- capture picks -%}
 {%- for g in site.data.categories.arts -%}
+  {%- if g.collection == "animations" -%}{%- continue -%}{%- endif -%}
   {%- include art-group-items.html slug=g.slug -%}
-  {%- assign art_total = art_total | plus: group_items.size -%}
-  {%- if group_items.size > 0 -%}
-    {%- assign pick_count = pick_count | plus: 1 -%}
-    {%- assign pick = group_items | first -%}
-    {%- if group.collection == "animations" %}
-  {% include gallery-item.html item=pick play=true %}
-    {%- else %}
-  {% include gallery-item.html item=pick viewer=group.slug %}
+  {%- assign recent = group_items | sort: "date" | reverse -%}
+  {%- assign recent_urls = "|" -%}
+  {%- for item in recent limit: 3 -%}{%- assign recent_urls = recent_urls | append: item.url | append: "|" -%}{%- endfor -%}
+  {%- for item in group_items -%}
+    {%- assign key = "|" | append: item.url | append: "|" -%}
+    {%- if recent_urls contains key -%}
+      {%- assign pick_count = pick_count | plus: 1 %}
+  {% include gallery-item.html item=item viewer=group.slug %}
     {%- endif -%}
-  {%- endif -%}
+  {%- endfor -%}
 {%- endfor -%}
 {%- endcapture -%}
 {%- capture rest -%}
 {%- for g in site.data.categories.arts -%}
+  {%- if g.collection == "animations" -%}{%- continue -%}{%- endif -%}
   {%- include art-group-items.html slug=g.slug -%}
-  {%- if group.collection != "animations" -%}
-    {%- for item in group_items offset: 1 %}
+  {%- assign recent = group_items | sort: "date" | reverse -%}
+  {%- assign recent_urls = "|" -%}
+  {%- for item in recent limit: 3 -%}{%- assign recent_urls = recent_urls | append: item.url | append: "|" -%}{%- endfor -%}
+  {%- for item in group_items -%}
+    {%- assign key = "|" | append: item.url | append: "|" -%}
+    {%- unless recent_urls contains key %}
   <span data-href="{{ item.url | relative_url }}"{% include viewer-attrs.html item=item viewer=group.slug %}></span>
-    {%- endfor -%}
-  {%- endif -%}
+    {%- endunless -%}
+  {%- endfor -%}
 {%- endfor -%}
 {%- endcapture -%}
 {%- if pick_count > 0 -%}
 {%- assign pick_cols = pick_count -%}
-{%- if pick_cols < 2 -%}{%- assign pick_cols = 2 -%}{%- endif %}
+{%- if pick_cols < 2 -%}{%- assign pick_cols = 2 -%}{%- endif -%}
+{%- if pick_cols > 3 -%}{%- assign pick_cols = 3 -%}{%- endif %}
 <div class="gallery-grid art-picks art-picks-{{ pick_cols }}">
   {{- picks }}
 </div>
