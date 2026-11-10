@@ -1,5 +1,6 @@
 ---
 title: Sharpening dot study
+cardImg: /assets/covers/sharpeningdotstudy.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: Sharpening.study was a project I built at Rutgers during HackRU, where it won Best Solo Hack and Best AI App with Cloudflare.

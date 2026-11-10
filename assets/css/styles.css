@@ -668,12 +668,10 @@ main:focus {
 /* Project and post cards (Mami's request, November 2026, after a card Mami
    liked in a screen recording): each project or post is a card on --surface
    with a hairline border and --radius-card corners, with good space between
-   cards; the picture is a small square on the left (projects, and posts
-   that have an image), and the serif title and the muted lines sit in line
-   beside it. On hover or keyboard focus the picture darkens under an
-   open-link icon and "View project" / "Read post" in the accent, and the
-   title turns accent; the card itself stays still. (Until then they were
-   bare rows that only lit up on hover.) */
+   cards. On hover or keyboard focus the title turns accent and the 🔗
+   nudges; the card itself stays still. (Until then they were bare rows that
+   only lit up on hover.) Posts are laid out here; projects, which have a
+   big picture on top, two to a row, under "Project cards" further down. */
 
 .post-row,
 .card {
@@ -686,8 +684,7 @@ main:focus {
   text-decoration: none;
 }
 
-.post-list li + li,
-.card + .card {
+.post-list li + li {
   margin-top: var(--card-gap);
 }
 
@@ -728,7 +725,7 @@ main:focus {
   font-variant-numeric: tabular-nums;
 }
 
-/* a post with a picture is laid out like a project card */
+/* a post with its own picture shows it as a small square on the left */
 .post-row.has-media {
   display: grid;
   grid-template-columns: var(--thumb-size) minmax(0, 1fr);
@@ -1079,26 +1076,73 @@ main iframe {
   content: " →";
 }
 
-/* Project cards (see "Project and post cards" above for the card): a small
-   square thumbnail on the left (Mami's requests, November 2026: "really
-   small for the previews", the screenshot at its real size is on the
-   project's own page; "just a little corner radius"; everything "aligned
-   with the title", phones too), and the title, the award line and the
-   description beside it. The thumbnail is --thumb-size: 72px on phones,
-   112px from 601px. */
+/* Project cards (Mami's request, November 2026, after a card in a second
+   screen recording; see "Project and post cards" above for the card box):
+   two to a row from 601px, one on phones. Each card: the project's picture
+   (cardImg: a PNG in assets/covers/, set in the project's file; Mami will
+   draw them in Procreate) on the card's own background, contained in a 4:3
+   space with room around it; then the serif title (+ 🔗, the In progress
+   pill), the award line on award projects, the description (three lines
+   at most; all of it is on the project's page) and "Category · year",
+   muted, at the bottom, level across a row. On hover the title turns
+   accent and the 🔗 nudges; nothing else moves, as in the recording. A
+   project without a cardImg shows its screenshot, filling the space. */
 
 .card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--card-gap);
   margin: var(--space-24) 0 var(--space-48);
 }
 
-.card {
-  display: grid;
-  grid-template-columns: var(--thumb-size) minmax(0, 1fr);
-  /* any spare height from the thumbnail goes under the description */
-  grid-template-rows: auto auto 1fr;
-  column-gap: var(--thumb-gap);
+@media (min-width: 601px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-cover {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin-bottom: var(--space-16);
+}
+
+.card-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-cover.is-shot {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-thumb);
+}
+
+.card-cover.is-shot picture {
+  width: 100%;
+  height: 100%;
+}
+
+.card-cover.is-shot img {
+  object-fit: cover;
+}
+
+.card-meta {
+  margin: auto 0 0;
+  padding-top: var(--space-12);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* A post with a picture (post-list.html) shows it as a small square */
 .card-media {
   position: relative;
   overflow: hidden;
@@ -1122,10 +1166,10 @@ main iframe {
   object-fit: cover;
 }
 
-/* Over the picture on hover or keyboard focus: the picture darkens under an
-   open-link icon and "View project" / "Read post" in the accent (only the
-   icon on phones, where the square is too small for the words). Hover only
-   where there's a real pointer, so a tap on a phone doesn't flash it. */
+/* Over a post's picture on hover or keyboard focus: the picture darkens
+   under an open-link icon and "Read post" in the accent (only the icon on
+   phones, where the square is too small for the words). Hover only where
+   there's a real pointer, so a tap on a phone doesn't flash it. */
 .card-hover {
   position: absolute;
   inset: 0;
@@ -1150,13 +1194,11 @@ main iframe {
   height: 26px;
 }
 
-.card:focus-visible .card-hover,
 .post-row:focus-visible .card-hover {
   opacity: 1;
 }
 
 @media (hover: hover) {
-  .card:hover .card-hover,
   .post-row:hover .card-hover {
     opacity: 1;
   }
@@ -1181,7 +1223,7 @@ main iframe {
 }
 
 /* The square: 48px = the 26px award line + the 22px line under it (bio and
-   project pages); project lists use 44px for their two 22px lines. The
+   project pages; project cards use .award-card, without the square). The
    padding is the space around the cup, which is about half as tall. */
 .award-icon {
   display: block;
@@ -1268,21 +1310,16 @@ main iframe {
 }
 
 .card-title {
-  grid-column: 2;
-  grid-row: 1;
-  font-size: 21px;
-  margin: 0 0 var(--space-4);
+  font-size: 20px;
+  margin: 0 0 var(--space-8);
 }
 
-/* Award in project lists (award.html size="card"): a small 🏆 before the
-   award in bold, and university · year muted under the award, all in line
-   with the title beside the thumbnail (Mami's request, November 2026: the
-   trophy's 44px square next to a thumbnail looked messy; the square stays
-   on project pages and the bio). Wrapped lines are balanced, and the year
-   is tied to the university's last word, so it never sits alone. */
+/* Award on project cards (award.html size="card"): a small 🏆 before the
+   award in bold, and the university muted under the award, under the title
+   (Mami's request, November 2026: the trophy's square looked messy on a
+   card; it stays on project pages and the bio). The year is on the card's
+   "Category · year" line. Wrapped lines are balanced. */
 .award-card {
-  grid-column: 2;
-  grid-row: 2;
   display: grid;
   grid-template-columns: 18px minmax(0, 1fr);
   column-gap: var(--space-8);
@@ -1313,10 +1350,14 @@ main iframe {
   color: var(--text-secondary);
 }
 
+/* three lines at most on the card; all of it is on the project's page */
 .card-description {
-  grid-column: 2;
-  grid-row: 3;
-  font-size: 16px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  font-size: 15px;
   line-height: 1.5;
   color: var(--text-secondary);
   margin: 0;
@@ -1331,24 +1372,14 @@ main iframe {
   }
 }
 
-/* The smallest phones (under 360px): a smaller thumbnail and title, so a
-   long one-word title ("SlayTheInterview" and its 🔗, which never wrap
-   apart) still fits beside the thumbnail */
+/* The smallest phones (under 360px): a little less padding, and a smaller
+   thumbnail on a post card with a picture */
 @media (max-width: 359px) {
   :root {
     --card-pad: 12px;
     --thumb-size: 56px;
     --thumb-gap: 10px;
   }
-
-  .card-title {
-    font-size: 19px;
-  }
-}
-
-
-.card .meta {
-  font-size: 14px;
 }
 
 /* Gallery grid (Arts): two columns at every width, square pictures all the

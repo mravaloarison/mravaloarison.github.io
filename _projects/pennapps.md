@@ -1,5 +1,6 @@
 ---
 title: We Love PennApps XXV
+cardImg: /assets/covers/pennapps.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A just-for-fun Chrome extension that replaces everything you type with "I love PennApps," awarded Most Useless Hack at PennApps XXV.

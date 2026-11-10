@@ -1,5 +1,6 @@
 ---
 title: Green
+cardImg: /assets/covers/green.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A solo-built iOS app that routes drivers around traffic to cut emissions, rewarding low-emission trips with redeemable points. Built with MapKit and SwiftUI.

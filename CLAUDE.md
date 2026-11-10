@@ -205,8 +205,9 @@ Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. **No rounded corners**
 rings and inline code are square too. Only true circles stay round: the
 nav's current-page dot, the round buttons (burger, viewer), the play mark
 and the status dot in the "In progress" tag. Two exceptions, both Mami's
-requests (November 2026): the cards' small thumbnails have `--radius-thumb`
-(5px; "just a little corner radius, enough to make it feel better, not too
+requests (November 2026): pictures inside cards (a post's small square, a
+project's screenshot when it has no cover) have `--radius-thumb` (5px;
+"just a little corner radius, enough to make it feel better, not too
 much"), and the project and post cards themselves `--radius-card` (8px,
 after a card Mami liked). Everything else stays square.
 
@@ -263,26 +264,46 @@ after a card Mami liked). Everything else stays square.
   `--surface` with a `--border` hairline and `--radius-card` (8px) corners,
   `--card-pad` inside (14px on phones, 20px from 601px) and `--card-gap`
   between cards (14px / 16px: Mami asked for "good space between them").
-  The picture, when there is one, is a small square on the left
-  (`--thumb-size`: 72px on phones, 112px from 601px, 56px under 360px so
-  "SlayTheInterview" still fits; `--radius-thumb` corners, a hairline),
-  level with the title, and everything else sits in line with the title
-  beside it. On hover (pointer devices) or keyboard focus the picture
-  darkens under an open-link icon and "View project" / "Read post" in the
-  accent (`card-hover.html`; icon only on phones), the title turns accent
-  and the 🔗 nudges up and right; the card itself never moves. All one link.
-- Project cards (`card-grid.html`): the serif title with a 🔗 after it
-  (and the "In progress" pill), the award on award projects (a small 🏆
-  before the award in bold, then "university · year" muted under it; Mami
-  found the trophy's yellow square next to a thumbnail messy, so lists
-  don't use it), then the description. The thumbnail is "really small"
-  (Mami's request: the screenshot at its real size is for the project's
-  own page; it was 200px, and on phones the full width over the text).
-  No tech stack in lists; it's on each project page.
-- Post cards (`post-list.html`): the serif title with its 🔗, the
-  description, then the date and reading time, muted ("Feb 8, 2026 · 2 min
-  read"). A post gets a thumbnail only when it has its own `image`; the
-  share card every page gets by default (`_config.yml`) doesn't count, so
+  On hover or keyboard focus the title turns accent and the 🔗 nudges up
+  and right; the card itself never moves. All one link.
+- **Project cards** (`card-grid.html`; Mami's request, November 2026, from
+  a second screen recording, tall cards in the style of
+  maggieappleton.com): **two to a row from 601px, one on phones**, cards in
+  a row the same height. Each card, top to bottom: the **cover**, a drawing
+  in a 4:3 space on the card's own background (`object-fit: contain`, so a
+  drawing of any shape fits, no frame); the serif title with its 🔗 (and
+  the "In progress" pill); the award on award projects (a small 🏆 before
+  the award in bold, the university muted under it; Mami found the
+  trophy's yellow square on a card messy, so lists don't use it); the
+  description, three lines at most (all of it is on the project's page);
+  and "Category · year" muted at the bottom (`margin-top: auto`, so it
+  lines up across a row; the award's year lives here). No tech stack in
+  lists; it's on each project page. (Before this, the cards had a small
+  square screenshot on the left with "View project" over it on hover.)
+- **Covers** (Mami's request: "if I need to replace the image, it's just
+  inside of a folder ... if I open one project I can just go cardImg"):
+  `cardImg:`, the second line of each project's file, points at a PNG in
+  **`assets/covers/`**. Mami will draw them in Procreate; until then the 13
+  there are placeholders Claude drew on 10 November 2026 (an object each:
+  coins for Better, a leaf for Green, a duck for DogDuckGo, a stopwatch for
+  MyTime, a chart board for ARAP Databook...), 800×600 with a see-through
+  background and a cream sticker edge like the logo. Mami asked for the
+  Power BI logo on ARAP Databook's; brand logos aren't drawn, so it's a
+  generic chart. A cover is shown as it is (an `<img>` with `alt=""`, the
+  card's text names the link), not through `picture.html` /
+  `optimize-images.py`, on purpose: replacing a PNG under the same name
+  would otherwise keep serving the old WebP copies. So a new one should be
+  exported at a sensible size (about 1200 px wide, see-through background).
+  A project without `cardImg` shows its screenshot instead, cropped to fill
+  the 4:3 space, with a hairline and `--radius-thumb`.
+- Post cards (`post-list.html`; Mami: "the blog seems to be perfect, no
+  change"): the serif title with its 🔗, the description, then the date
+  and reading time, muted ("Feb 8, 2026 · 2 min read"). A post gets a
+  picture only when it has its own `image`: a small square on the left
+  (`--thumb-size`: 72px on phones, 112px from 601px, 56px under 360px;
+  `--radius-thumb`, a hairline) that darkens under an open-link icon and
+  "Read post" on hover (`card-hover.html`; icon only on phones). The share
+  card every page gets by default (`_config.yml`) doesn't count, so
   today's posts are text-only cards.
 
 ### Components in `_includes/`
@@ -301,8 +322,8 @@ after a card Mami liked). Everything else stays square.
   dropped at Mami's request; don't bring it back unless asked.
 - `post-list.html` — post cards (see Layout); `descriptions=true` adds each
   post's description
-- `card-hover.html` — what shows over a card's picture on hover: the
-  open-link icon and a label, decorative (`aria-hidden`)
+- `card-hover.html` — what shows over a post card's picture on hover: the
+  open-link icon and "Read post", decorative (`aria-hidden`)
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — the "In progress" pill (when `status: ongoing`),
   then the tech stack as a boxless row: 24px icon + name, each
@@ -314,12 +335,11 @@ after a card Mami liked). Everything else stays square.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — the project list: per project a small thumbnail, the
-  title (via `link-title.html`, plus the "In progress" pill on ongoing
-  projects), `award.html size="card"` on award projects, and the
-  description, all beside the square thumbnail in line with the title
-  (see "Project and post cards"). Nothing on the thumbnail but the hover
-  cover, no tech row.
+- `card-grid.html` — the project cards: per project the cover (`cardImg`,
+  or the screenshot), the title (via `link-title.html`, plus the "In
+  progress" pill on ongoing projects), `award.html size="card"` on award
+  projects, the description and "Category · year" (see "Project cards").
+  No tech row.
 - `link-title.html` — a list title followed by Google's 🔗
   (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
   project and post titles in lists. Mami asked for the link emoji in October
@@ -340,13 +360,11 @@ after a card Mami liked). Everything else stays square.
   names and lines are balanced (`text-wrap: balance`), so no "Add-" / "On"
   or lone year. `size="large"` on project pages puts it in a callout-style
   box (`--surface`, 3px accent rule) with a 48px square (a 26px and a 22px
-  line). `size="card"` (project lists) is lighter, since it sits beside a
-  thumbnail (Mami found the 44px square there messy, November 2026): an
-  18px 🏆 with no square before the award in bold, then "university ·
-  year" muted under the award name (15px, 22px lines), both balanced when
-  they wrap, the year tied to the university's last word with no-break
-  spaces so it never sits alone. No foil, nothing over the image, no
-  animation.
+  line). `size="card"` (project cards) is lighter (Mami found the square
+  there messy, November 2026): an 18px 🏆 with no square before the award
+  in bold, then the university muted under the award name (15px, 22px
+  lines), both balanced when they wrap; the year is on the card's
+  "Category · year" line. No foil, nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below);
   `verb=` sets the word before each title ("Read" by default, "Watch" on
   animations)
@@ -388,7 +406,7 @@ appear as user scroll ... very smooth, same for all contents"): everything
 after a page's title comes in as it's seen, and all of it the same way:
 fading in while rising 28px into place (`--reveal-rise`), 1.1s,
 `cubic-bezier(0.25, 1, 0.5, 1)`. That's headings, text, project and post
-rows, pictures, gallery squares, the bio's paragraphs, the resume entries
+cards, pictures, gallery squares, the bio's paragraphs, the resume entries
 and the footer. Rows sliding in from the right were tried first; Mami
 wanted every piece to come up from below instead, so keep one motion. The
 title block (breadcrumb, eyebrow, h1, abstract) and the nav stay put, so a
@@ -504,6 +522,11 @@ cover to replace with real screens. MyTime and DogDuckGo are ongoing
 (`status: ongoing` in front matter → "In progress" pill on cards and the
 detail page, `creativeWorkStatus` in JSON-LD); drop the field when one ships. DogDuckGo's repo (mravaloarison/save)
 is private, so it has no GitHub link.
+
+To add a project, copy `_projects/_TEMPLATE.md` (ignored by Jekyll because
+of the underscore) and follow the steps in it; it covers the card's cover
+too. To change a card's picture, put the PNG in `assets/covers/` and point
+the project's `cardImg:` at it.
 
 The index at `/projects/` shows the two most recent projects per type
 under each heading, then "See all N … projects" to the category page when
@@ -702,6 +725,7 @@ style changes, so nothing already indexed 404s.
 
 ```yaml
 title: # required
+cardImg: # /assets/covers/<name>.png — the picture on the project's card (shown as is)
 description: # required, 120–160 chars, written for a search snippet
 category: # Work | Personal | Hackathon — drives the category page and breadcrumb
 date: # YYYY-MM-DD

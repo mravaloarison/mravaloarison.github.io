@@ -1,24 +1,38 @@
 {%- comment -%}
-  Project list: one card per project (Mami's request, November 2026, after a
-  card in a screen recording; see "Project and post cards" in styles.css):
-  a small square thumbnail on the left (the screenshot at its real size is
-  on the project's own page), and in line with the title beside it the
-  one-line award on award projects and the description. On hover the
-  thumbnail darkens under "View project". No tech stack here; it's on each
-  project page.
+  Project cards (Mami's request, November 2026, after a card in a screen
+  recording; see "Project cards" in styles.css): two to a row from 601px,
+  one on phones. Each card: the project's cover (`cardImg` in its file, a
+  PNG in assets/covers/), then the title, the award on award projects, the
+  description and "Category · year". The screenshot at its real size is on
+  the project's own page; no tech stack here either.
+  The cover is shown as it is (not through picture.html), so a PNG replaced
+  under the same name shows at once. `cardImg` can also be just the file
+  name ("better.png"). If the file isn't there (a typo, not uploaded yet),
+  the card shows the project's screenshot instead of a broken picture, and
+  the build warns (content_check.rb).
 {%- endcomment -%}
 <div class="card-grid">
   {% for item in include.items %}
+  {%- assign cover = nil -%}
+  {%- assign cover_path = item.cardImg | strip -%}
+  {%- if cover_path != "" -%}
+    {%- unless cover_path contains "/" -%}{%- assign cover_path = "/assets/covers/" | append: cover_path -%}{%- endunless -%}
+    {%- assign cover_first = cover_path | slice: 0 -%}
+    {%- if cover_first != "/" -%}{%- assign cover_path = "/" | append: cover_path -%}{%- endif -%}
+    {%- assign cover = site.static_files | where: "path", cover_path | first -%}
+  {%- endif %}
   <a class="card" href="{{ item.url | relative_url }}">
-    {% if item.image %}
-    <div class="card-media">
-      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 72px, 112px" %}
-      {% include card-hover.html label="View project" %}
+    <div class="card-cover{% unless cover %} is-shot{% endunless %}">
+      {%- if cover %}
+      <img src="{{ cover_path | relative_url }}" alt="" width="800" height="600" loading="lazy" decoding="async">
+      {%- elsif item.image %}
+      {% include picture.html src=item.image alt="" sizes="(max-width: 600px) 100vw, 340px" %}
+      {%- endif %}
     </div>
-    {% endif %}
     <h3 class="card-title">{% include link-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
     {% include award.html item=item size="card" %}
     <p class="card-description">{{ item.description }}</p>
+    <p class="card-meta">{{ item.category }} · {{ item.date | date: "%Y" }}</p>
   </a>
   {% endfor %}
 </div>

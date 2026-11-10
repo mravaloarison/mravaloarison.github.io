@@ -24,6 +24,17 @@ Jekyll::Hooks.register :site, :post_read do |site|
     unless categories.empty? || categories.include?(doc.data["category"])
       problems << "#{doc.relative_path}: category must be one of #{categories.join(', ')}"
     end
+    # The card's cover (card-grid.html reads it the same way: a bare file
+    # name means assets/covers/). A missing file only warns: the card shows
+    # the screenshot instead.
+    cover = doc.data["cardImg"].to_s.strip
+    next if cover.empty?
+
+    cover = "/assets/covers/#{cover}" unless cover.include?("/")
+    cover = "/#{cover}" unless cover.start_with?("/")
+    unless File.file?(File.join(site.source, cover))
+      warnings << "#{doc.relative_path}: cardImg #{cover} isn't there, so its card shows the screenshot"
+    end
   end
   (site.collections["arts"]&.docs || []).each do |doc|
     check.call(doc, %w(title description medium image image_alt))

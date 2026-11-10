@@ -1,5 +1,6 @@
 ---
 title: Portfolio 1.0
+cardImg: /assets/covers/portfolio1-0.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: My first portfolio, built in a rush before graduation with Next.js, Material UI, and GSAP, and kept online as a memory of where I started.

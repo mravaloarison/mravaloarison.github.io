@@ -1,5 +1,6 @@
 ---
 title: DogDuckGo
+cardImg: /assets/covers/dogduckgo.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A browser typing game on a watercolour pond. Dogs disguised as ducks swim at you carrying words; type each one before it reaches you. PixiJS and TypeScript.

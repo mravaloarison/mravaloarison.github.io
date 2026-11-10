@@ -1,5 +1,6 @@
 ---
 title: Cat-Culus
+cardImg: /assets/covers/cat-culus.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A Pygame where hand-tracked math problems save a cat from a ghost, inspired by Google's Cat Academy. I built the hand detection and game logic.
