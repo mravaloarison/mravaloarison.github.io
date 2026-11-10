@@ -129,6 +129,14 @@
       w: 800
     - src: /assets/images/arts/chickadee-1080w.webp
       w: 1080
+/assets/images/arts/coffee-cup.jpg:
+  width: 1651
+  height: 2201
+  webp:
+    - src: /assets/images/arts/coffee-cup-800w.webp
+      w: 800
+    - src: /assets/images/arts/coffee-cup-1600w.webp
+      w: 1600
 /assets/images/arts/fluffy-dog.jpg:
   width: 1512
   height: 2016
@@ -145,6 +153,14 @@
       w: 800
     - src: /assets/images/arts/german-shepherd-1512w.webp
       w: 1512
+/assets/images/arts/honey-jar.jpg:
+  width: 2400
+  height: 3200
+  webp:
+    - src: /assets/images/arts/honey-jar-800w.webp
+      w: 800
+    - src: /assets/images/arts/honey-jar-1600w.webp
+      w: 1600
 /assets/images/arts/kestrel.jpg:
   width: 1080
   height: 1350
@@ -161,6 +177,14 @@
       w: 800
     - src: /assets/images/arts/labrador-1512w.webp
       w: 1512
+/assets/images/arts/layered-cake.jpg:
+  width: 1800
+  height: 2400
+  webp:
+    - src: /assets/images/arts/layered-cake-800w.webp
+      w: 800
+    - src: /assets/images/arts/layered-cake-1600w.webp
+      w: 1600
 /assets/images/arts/mulan-and-shang.jpg:
   width: 3042
   height: 3060

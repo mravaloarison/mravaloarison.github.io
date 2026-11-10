@@ -517,7 +517,9 @@ menu and on `/arts/`, defined in `_data/categories.yml` under `arts`:
   `medium: Hand drawn`. Its page opens with Mami's story: "I started drawing
   with just a pencil, not as a professional or anything like that. I just
   loved doing it." (Was "Traditional" until November 2026.)
-- **Procreate** (`/arts/procreate/`): art with `medium: Procreate`.
+- **Procreate** (`/arts/procreate/`): art with `medium: Procreate`. Its
+  page opens with Mami's words (November 2026): "I'm just learning to
+  transition from traditional to digital right now."
 - **Animated** (`/arts/animated/`): the `animations` collection (see
   Animations).
 
@@ -554,7 +556,16 @@ gives the real one. Their titles are plain names, like the birds'; "Fluffy
 dog" because the breed isn't certain. The same evening Mami hid the three
 dogs again "for now" (`published: false`, like Panda and Two dogs), so the
 site shows the three birds, then Mulan and Shang; their `order` (4–6) is
-kept for when they come back. Procreate pieces are coming.
+kept for when they come back.
+
+The first Procreate pieces went up on November 10, 2026: **Honey jar,
+Coffee cup and Layered cake** (`order` 1–3, the order Mami sent the
+finished drawings), each drawn from life: Mami also sent a photo of each
+with the iPad beside the real thing (a small hexagonal jar on the couch
+arm, a reusable cup with a green silicone lid, a wrapped slice of layered
+cake at a café). Those photos aren't on the site. Their `date` is the day
+they went up until Mami gives the real ones, and "Layered cake" is a plain
+name until Mami says what the cake is (its top may read "ube").
 To add a piece, copy `_arts/_TEMPLATE.md` (ignored by Jekyll because of the
 underscore) and follow the steps in it.
 
