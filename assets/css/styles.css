@@ -1108,14 +1108,13 @@ main iframe {
   position: absolute;
   top: -1px;
   right: var(--card-pad);
-  width: 44px;
-  height: 64px;
+  width: 32px;   /* ends above the description's first line */
+  height: 46px;
   filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.45));
 }
 
-.card.has-medal .card-title,
-.card.has-medal .award-card {
-  padding-right: 56px;
+.card.has-medal .card-title {
+  padding-right: 44px;
 }
 
 .card-meta {
@@ -1206,7 +1205,7 @@ main iframe {
 }
 
 /* The square: 48px = the 26px award line + the 22px line under it (bio and
-   project pages; project cards use .award-card, without the square). The
+   project pages; project cards don't show the award). The
    padding is the space around the cup, which is about half as tall. */
 .award-icon {
   display: block;
@@ -1287,42 +1286,6 @@ main iframe {
 .card-title {
   font-size: 20px;
   margin: 0 0 var(--space-8);
-}
-
-/* Award on project cards (award.html size="card"): a small 🏆 before the
-   award in bold, and the university muted under the award, under the title
-   (Mami's request, November 2026: the trophy's square looked messy on a
-   card; it stays on project pages and the bio). The year is on the card's
-   "Category · year" line. Wrapped lines are balanced. */
-.award-card {
-  display: grid;
-  grid-template-columns: 18px minmax(0, 1fr);
-  column-gap: var(--space-8);
-  margin: 0 0 var(--space-8);
-  font-size: 15px;
-  line-height: 22px;
-}
-
-.award-card-icon {
-  align-self: start;
-  width: 18px;
-  height: 18px;
-  margin-top: 2px; /* centred on the first line */
-}
-
-.award-card-name,
-.award-card-where {
-  grid-column: 2;
-  text-wrap: balance;
-}
-
-.award-card-name {
-  font-weight: 700;
-  color: var(--text);
-}
-
-.award-card-where {
-  color: var(--text-secondary);
 }
 
 /* three lines at most on the card; all of it is on the project's page */

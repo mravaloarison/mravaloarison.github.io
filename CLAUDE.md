@@ -271,11 +271,12 @@ after a card Mami liked). Everything else stays square.
 - **Project cards** (`card-grid.html`): **two to a row from 601px, one on
   phones**, cards in a row the same height, and **all uniform, no picture**.
   Top to bottom: the underlined serif title (and the "In progress" pill);
-  the award on award projects (a small 🏆 before the award in bold, the
-  university muted under it); the description, three lines at most (all of
+  the description, three lines at most (all of
   it is on the project's page); and "Category · year" muted at the bottom
-  (`margin-top: auto`, so it lines up across a row; the award's year lives
-  here). No tech stack in lists. Covers were tried twice on 10 November
+  (`margin-top: auto`, so it lines up across a row). The award's name
+  ("Most Creative...", "Best...") isn't on cards (Mami's request, November
+  2026: "keep them for when they open it"); winners only wear the medal,
+  and the award box is on the project's page. No tech stack in lists. Covers were tried twice on 10 November
   2026 (a `cardImg` PNG per project in `assets/covers/`, first flat
   placeholders, then hand-drawn-style ones with a drawn badge) and Mami
   took them all out the same day: "maybe it's best we keep them all with no
@@ -284,8 +285,7 @@ after a card Mami liked). Everything else stays square.
   winner badge, "just more shinier ... attached to the card"): every
   project with an `award` has `assets/brand/winner-medal.svg` on its card,
   a gold medal with a star and a sheen on a strap that hangs from the
-  card's top edge, top right (44×64, `alt=""` since the award line says
-  it, a soft drop shadow; the title and award keep clear of it). It never
+  card's top edge, top right (32×46 on the card, so it ends above the description; `alt="Hackathon winner"`, a soft drop shadow; the title and award keep clear of it). It never
   moves or animates.
 - Post cards (`post-list.html`; Mami: "the blog seems to be perfect, no
   change"): the underlined serif title, the description, then the date
@@ -328,7 +328,7 @@ after a card Mami liked). Everything else stays square.
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
 - `card-grid.html` — the project cards: per project the winner's medal on
   award projects, the underlined title (plus the "In progress" pill on
-  ongoing projects), `award.html size="card"`, the description and
+  ongoing projects), the description and
   "Category · year" (see "Project cards"). No picture, no tech row.
 - `award.html` — a hackathon award as one unit: on the left, Google's 🏆
   (`assets/emoji/trophy.svg`) centred in a soft yellow square
@@ -344,11 +344,7 @@ after a card Mami liked). Everything else stays square.
   names and lines are balanced (`text-wrap: balance`), so no "Add-" / "On"
   or lone year. `size="large"` on project pages puts it in a callout-style
   box (`--surface`, 3px accent rule) with a 48px square (a 26px and a 22px
-  line). `size="card"` (project cards) is lighter (Mami found the square
-  there messy, November 2026): an 18px 🏆 with no square before the award
-  in bold, then the university muted under the award name (15px, 22px
-  lines), both balanced when they wrap; the year is on the card's
-  "Category · year" line. No foil, nothing over the image, no animation.
+  line). Project cards don't use it. No foil, nothing over the image, no animation.
 - `see-also.html` — trailing block of related links (details below);
   `verb=` sets the word before each title ("Read" by default, "Watch" on
   animations)

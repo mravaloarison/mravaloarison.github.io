@@ -1,7 +1,8 @@
 {%- comment -%}
   Project cards: two to a row from 601px, one on phones, all the same: the
   title (underlined, with the "In progress" pill on ongoing projects), the
-  award on award projects, the description and "Category · year". No
+  description and "Category · year". The award's name isn't on the card
+  (Mami's request); it's on the project's own page. No
   picture (Mami tried covers in November 2026 and took them out so every
   card is uniform). Award projects wear the gold winner's medal, hanging
   from the card's top edge (assets/brand/winner-medal.svg).
@@ -10,10 +11,9 @@
   {% for item in include.items %}
   <a class="card{% if item.award %} has-medal{% endif %}" href="{{ item.url | relative_url }}">
     {%- if item.award %}
-    <img class="card-medal" src="{{ '/assets/brand/winner-medal.svg' | relative_url }}" alt="" width="44" height="64">
+    <img class="card-medal" src="{{ '/assets/brand/winner-medal.svg' | relative_url }}" alt="Hackathon winner" width="44" height="64">
     {%- endif %}
     <h3 class="card-title"><span class="title-text">{{ item.title }}</span>{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
-    {% include award.html item=item size="card" %}
     <p class="card-description">{{ item.description }}</p>
     <p class="card-meta">{{ item.category }} · {{ item.date | date: "%Y" }}</p>
   </a>
