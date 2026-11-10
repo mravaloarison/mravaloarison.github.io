@@ -1,40 +1,18 @@
 {%- comment -%}
-  Project cards (Mami's request, November 2026, after a card in a screen
-  recording; see "Project cards" in styles.css): two to a row from 601px,
-  one on phones. Each card: the project's cover (`cardImg` in its file, a
-  PNG in assets/covers/), then the title, the award on award projects, the
-  description and "Category · year". The screenshot at its real size is on
-  the project's own page; no tech stack here either.
-  The cover is shown as it is (not through picture.html), so a PNG replaced
-  under the same name shows at once. `cardImg` can also be just the file
-  name ("better.png"). If the file isn't there (a typo, not uploaded yet),
-  the card shows the project's screenshot instead of a broken picture, and
-  the build warns (content_check.rb).
+  Project cards: two to a row from 601px, one on phones, all the same: the
+  title (underlined, with the "In progress" pill on ongoing projects), the
+  award on award projects, the description and "Category · year". No
+  picture (Mami tried covers in November 2026 and took them out so every
+  card is uniform). Award projects wear the gold winner's medal, hanging
+  from the card's top edge (assets/brand/winner-medal.svg).
 {%- endcomment -%}
-{%- comment -%} The "Hackathon winner" badge on award projects' covers: one picture, assets/covers/badge-hackathon-winner.png (delete the file and the badge is gone). {%- endcomment -%}
-{%- assign winner_badge = site.static_files | where: "path", "/assets/covers/badge-hackathon-winner.png" | first -%}
 <div class="card-grid">
   {% for item in include.items %}
-  {%- assign cover = nil -%}
-  {%- assign cover_path = item.cardImg | strip -%}
-  {%- if cover_path != "" -%}
-    {%- unless cover_path contains "/" -%}{%- assign cover_path = "/assets/covers/" | append: cover_path -%}{%- endunless -%}
-    {%- assign cover_first = cover_path | slice: 0 -%}
-    {%- if cover_first != "/" -%}{%- assign cover_path = "/" | append: cover_path -%}{%- endif -%}
-    {%- assign cover = site.static_files | where: "path", cover_path | first -%}
-  {%- endif %}
-  <a class="card" href="{{ item.url | relative_url }}">
-    <div class="card-cover{% unless cover %} is-shot{% endunless %}">
-      {%- if cover %}
-      <img src="{{ cover_path | relative_url }}" alt="" width="800" height="600" loading="lazy" decoding="async">
-      {%- elsif item.image %}
-      {% include picture.html src=item.image alt="" sizes="(max-width: 600px) 100vw, 340px" %}
-      {%- endif %}
-      {%- if item.award and winner_badge %}
-      <img class="card-badge" src="{{ winner_badge.path | relative_url }}" alt="" width="400" height="400" loading="lazy" decoding="async">
-      {%- endif %}
-    </div>
-    <h3 class="card-title">{% include link-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
+  <a class="card{% if item.award %} has-medal{% endif %}" href="{{ item.url | relative_url }}">
+    {%- if item.award %}
+    <img class="card-medal" src="{{ '/assets/brand/winner-medal.svg' | relative_url }}" alt="" width="44" height="64">
+    {%- endif %}
+    <h3 class="card-title"><span class="title-text">{{ item.title }}</span>{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>
     {% include award.html item=item size="card" %}
     <p class="card-description">{{ item.description }}</p>
     <p class="card-meta">{{ item.category }} · {{ item.date | date: "%Y" }}</p>

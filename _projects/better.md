@@ -1,6 +1,5 @@
 ---
 title: Better
-cardImg: /assets/covers/better.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A betting app built at HackPrinceton where we won Best Use of the Knot API; I built the iOS app and integrated Knot to track users' purchases.

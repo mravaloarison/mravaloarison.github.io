@@ -1,6 +1,5 @@
 ---
 title: ARAP SharePoint
-cardImg: /assets/covers/arapsharepoint.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: Building and maintaining a SharePoint site for Monroe University's ARAP office, with templates so each department can fill in its own content.

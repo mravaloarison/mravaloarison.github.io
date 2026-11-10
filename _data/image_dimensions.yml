@@ -32,13 +32,13 @@
     - src: /assets/images/Cat-Culus-1600w.webp
       w: 1600
 /assets/images/DogDuckGo.png:
-  width: 1280
-  height: 800
+  width: 1440
+  height: 900
   webp:
     - src: /assets/images/DogDuckGo-800w.webp
       w: 800
-    - src: /assets/images/DogDuckGo-1280w.webp
-      w: 1280
+    - src: /assets/images/DogDuckGo-1440w.webp
+      w: 1440
 /assets/images/Flappy-x-ML.png:
   width: 2281
   height: 1583

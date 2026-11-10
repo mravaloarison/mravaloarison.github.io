@@ -23,7 +23,7 @@
         {% include card-hover.html label="Read post" %}
       </span>
       {%- endif %}
-      <span class="post-title">{% include link-title.html text=post.title %}</span>
+      <span class="post-title"><span class="title-text">{{ post.title }}</span></span>
       {%- if include.descriptions and post.description %}
       <span class="post-description">{{ post.description }}</span>
       {%- endif %}

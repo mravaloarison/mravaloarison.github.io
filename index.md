@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Maminiaina "Mami" Ravaloarison — Product Engineer
-description: Maminiaina "Mami" Ravaloarison is a Product Engineer from Madagascar and 12-time hackathon winner, based in New York.
+description: "I'm a product engineer from Madagascar, based in New York. I build apps and games, and I've won 12 hackathons along the way. Outside of work, I draw and play bass. Right now, I'm looking for master's programs with scholarships."
 homepage: true
 seo:
   type: Person

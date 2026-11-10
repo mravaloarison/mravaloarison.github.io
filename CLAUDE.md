@@ -66,14 +66,14 @@ what's used is shipped:
 Newsreader latin and Nunito latin are preloaded from the head include.
 
 **Emoji are images, not a font** (an emoji font failed on iPhone, see
-"Things that have already gone wrong"). The two the site uses, 🔗 after list
-titles and 🏆 on awards, are Google's Noto Emoji artwork as SVGs in
-`assets/emoji/` (`link.svg`, `trophy.svg`), copied unchanged from
-github.com/googlefonts/noto-emoji (`2D/svg/`, Apache 2.0, with `LICENSE`
-beside them — keep it). To add one, copy `2D/svg/emoji_u<codepoint>.svg` in
-under a plain name, list it at the top of `LICENSE`, and use it as an
-`<img>` with `width`, `height` and `alt=""` (the text beside it carries the
-meaning).
+"Things that have already gone wrong"). The one the site uses, 🏆 on
+awards, is Google's Noto Emoji artwork as an SVG in `assets/emoji/`
+(`trophy.svg`), copied unchanged from github.com/googlefonts/noto-emoji
+(`2D/svg/`, Apache 2.0, with `LICENSE` beside it — keep it). To add one,
+copy `2D/svg/emoji_u<codepoint>.svg` in under a plain name, list it at the
+top of `LICENSE`, and use it as an `<img>` with `width`, `height` and
+`alt=""` (the text beside it carries the meaning). (A 🔗 after list titles
+was removed in November 2026: Mami found it ugly.)
 
 **Logo**: Mami's own Procreate drawing (November 2026) of a yellow
 Labrador's head in profile, in sunglasses, with a brown collar and a yellow
@@ -264,53 +264,31 @@ after a card Mami liked). Everything else stays square.
   `--surface` with a `--border` hairline and `--radius-card` (8px) corners,
   `--card-pad` inside (14px on phones, 20px from 601px) and `--card-gap`
   between cards (14px / 16px: Mami asked for "good space between them").
-  On hover or keyboard focus the title turns accent and the 🔗 nudges up
-  and right; the card itself never moves. All one link.
-- **Project cards** (`card-grid.html`; Mami's request, November 2026, from
-  a second screen recording, tall cards in the style of
-  maggieappleton.com): **two to a row from 601px, one on phones**, cards in
-  a row the same height. Each card, top to bottom: the **cover**, a drawing
-  in a 4:3 space on the card's own background (`object-fit: contain`, so a
-  drawing of any shape fits, no frame); the serif title with its 🔗 (and
-  the "In progress" pill); the award on award projects (a small 🏆 before
-  the award in bold, the university muted under it; Mami found the
-  trophy's yellow square on a card messy, so lists don't use it); the
-  description, three lines at most (all of it is on the project's page);
-  and "Category · year" muted at the bottom (`margin-top: auto`, so it
-  lines up across a row; the award's year lives here). No tech stack in
-  lists; it's on each project page. (Before this, the cards had a small
-  square screenshot on the left with "View project" over it on hover.)
-- **Covers** (Mami's request: "if I need to replace the image, it's just
-  inside of a folder ... if I open one project I can just go cardImg"):
-  `cardImg:`, the second line of each project's file, points at a PNG in
-  **`assets/covers/`**. Mami will draw them in Procreate; until then the 13
-  there are placeholders Claude drew on 10 November 2026 (an object each:
-  coins for Better, a leaf for Green, a duck for DogDuckGo, a stopwatch for
-  MyTime, a chart board for ARAP Databook...), 800×600 with a see-through
-  background. Mami found the first set (flat, sticker-edged) not nice
-  enough and asked for the hand-drawn look of maggieappleton.com's
-  illustrations, so they're redrawn that way: thin wobbly ink outlines,
-  muted watercolour fills with grain, each on a pale paper blob. Mami asked for the
-  Power BI logo on ARAP Databook's; brand logos aren't drawn, so it's a
-  generic chart. A cover is shown as it is (an `<img>` with `alt=""`, the
-  card's text names the link), not through `picture.html` /
-  `optimize-images.py`, on purpose: replacing a PNG under the same name
-  would otherwise keep serving the old WebP copies. So a new one should be
-  exported at a sensible size (about 1200 px wide, see-through background).
-  A project without `cardImg` shows its screenshot instead, cropped to fill
-  the 4:3 space, with a hairline and `--radius-thumb`.
-- **Hackathon winner badge** (Mami's request, November 2026, like
-  Devpost's WINNER corner "but a really good one, like an illustration"):
-  every project with an `award` gets
-  `assets/covers/badge-hackathon-winner.png` on the top left corner of its
-  cover (78px, tilted 8°, `alt=""` since the award line says it; it never
-  moves). Today's is Claude's placeholder in the covers' style (a gold
-  rosette, "HACKATHON Winner", two ribbon tails); Mami will draw the real
-  one: replace the file under the same name (square, see-through
-  background). Delete the file and the badge is gone. This is the one thing
-  allowed over a cover; the old foil band stays gone.
+  **Titles** (`.title-text`; Mami's request, November 2026, "very simple",
+  in place of the 🔗 emoji): a soft accent line under the title; on hover
+  or keyboard focus the title and its line just brighten. Nothing moves.
+  All one link.
+- **Project cards** (`card-grid.html`): **two to a row from 601px, one on
+  phones**, cards in a row the same height, and **all uniform, no picture**.
+  Top to bottom: the underlined serif title (and the "In progress" pill);
+  the award on award projects (a small 🏆 before the award in bold, the
+  university muted under it); the description, three lines at most (all of
+  it is on the project's page); and "Category · year" muted at the bottom
+  (`margin-top: auto`, so it lines up across a row; the award's year lives
+  here). No tech stack in lists. Covers were tried twice on 10 November
+  2026 (a `cardImg` PNG per project in `assets/covers/`, first flat
+  placeholders, then hand-drawn-style ones with a drawn badge) and Mami
+  took them all out the same day: "maybe it's best we keep them all with no
+  pic". Don't bring pictures back to project cards unless asked.
+- **Winner's medal** (Mami's request, November 2026: keep a hackathon
+  winner badge, "just more shinier ... attached to the card"): every
+  project with an `award` has `assets/brand/winner-medal.svg` on its card,
+  a gold medal with a star and a sheen on a strap that hangs from the
+  card's top edge, top right (44×64, `alt=""` since the award line says
+  it, a soft drop shadow; the title and award keep clear of it). It never
+  moves or animates.
 - Post cards (`post-list.html`; Mami: "the blog seems to be perfect, no
-  change"): the serif title with its 🔗, the description, then the date
+  change"): the underlined serif title, the description, then the date
   and reading time, muted ("Feb 8, 2026 · 2 min read"). A post gets a
   picture only when it has its own `image`: a small square on the left
   (`--thumb-size`: 72px on phones, 112px from 601px, 56px under 360px;
@@ -348,17 +326,10 @@ after a card Mami liked). Everything else stays square.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
-- `card-grid.html` — the project cards: per project the cover (`cardImg`,
-  or the screenshot), the title (via `link-title.html`, plus the "In
-  progress" pill on ongoing projects), `award.html size="card"` on award
-  projects, the description and "Category · year" (see "Project cards").
-  No tech row.
-- `link-title.html` — a list title followed by Google's 🔗
-  (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
-  project and post titles in lists. Mami asked for the link emoji in October
-  2026 (it was a ↗ before, like brittanychiang.com). The last word and the
-  emoji are wrapped together (`.title-end`, `nowrap`) so the emoji never
-  wraps alone. On hover it nudges 2px up and right.
+- `card-grid.html` — the project cards: per project the winner's medal on
+  award projects, the underlined title (plus the "In progress" pill on
+  ongoing projects), `award.html size="card"`, the description and
+  "Category · year" (see "Project cards"). No picture, no tech row.
 - `award.html` — a hackathon award as one unit: on the left, Google's 🏆
   (`assets/emoji/trophy.svg`) centred in a soft yellow square
   (`--accent-tint`, square corners) as tall as the two lines beside it, the cup
@@ -482,14 +453,17 @@ switch is modelled on leerob.com's Default | Long bio. The text under the
 name shares its font with `.abstract` (Newsreader 22px, `--text-secondary`;
 Mami wants this serif for both):
 
-- **Short (`/`, `index.md`)**: the headline as the abstract: the share
-  card's line (`CARD_LINE` in `make-icons.py`) plus where Mami's from and
-  what Mami's looking for now (Mami's request, November 2026): "Product
-  engineer from Madagascar, based in New York. 12 hackathon wins, and I
-  draw and play bass on the side. Right now I'm looking for master's
-  programs with scholarships." The card keeps
-  the shorter line (it has room for three lines). Abstracts go through
-  `smartify`, so apostrophes come out curly. Then the profile
+- **Short (`/`, `index.md`)**: the headline as the abstract, and the home
+  page's meta description is the same text, so Google shows it too (keep
+  the two the same; the `description:` in `index.md` is a copy). Mami
+  found the first version ("Product engineer from Madagascar, based in New
+  York. 12 hackathon wins, and I draw...") not worded right and wanted full
+  sentences like leerob.com's, with the same facts: "I'm a product
+  engineer from Madagascar, based in New York. I build apps and games, and
+  I've won 12 hackathons along the way. Outside of work, I draw and play
+  bass. Right now, I'm looking for master's programs with scholarships."
+  The share card keeps its own shorter line (`CARD_LINE`). Abstracts go
+  through `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
   projects by date, with "See all N projects"), **Arts** (Mami's request,
@@ -537,9 +511,15 @@ detail page, `creativeWorkStatus` in JSON-LD); drop the field when one ships. Do
 is private, so it has no GitHub link.
 
 To add a project, copy `_projects/_TEMPLATE.md` (ignored by Jekyll because
-of the underscore) and follow the steps in it; it covers the card's cover
-too. To change a card's picture, put the PNG in `assets/covers/` and point
-the project's `cardImg:` at it.
+of the underscore) and follow the steps in it.
+
+DogDuckGo's page follows the game's repo (mravaloarison/save, private). It
+was rewritten on 10 November 2026 from the `flat-art-and-learn-screens`
+branch (pull request 1, not merged yet): flat art instead of watercolour,
+golden retrievers from the left and right, Version 1 (words) and Version 2
+(sentences in a tray), Easy / Medium / Hard, endless levels, the heart
+frog, one game-over card. The Learn mode is gone. Its screenshot is a
+frame of that branch run locally (Version 1, Easy).
 
 The index at `/projects/` shows the two most recent projects per type
 under each heading, then "See all N … projects" to the category page when
@@ -738,7 +718,6 @@ style changes, so nothing already indexed 404s.
 
 ```yaml
 title: # required
-cardImg: # /assets/covers/<name>.png — the picture on the project's card (shown as is)
 description: # required, 120–160 chars, written for a search snippet
 category: # Work | Personal | Hackathon — drives the category page and breadcrumb
 date: # YYYY-MM-DD

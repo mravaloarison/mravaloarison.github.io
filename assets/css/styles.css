@@ -704,11 +704,6 @@ main:focus {
   line-height: 1.3;
 }
 
-.post-row:hover .post-title,
-.post-row:focus-visible .post-title {
-  color: var(--accent);
-}
-
 .post-description {
   display: block;
   margin-top: var(--space-4);
@@ -1076,17 +1071,12 @@ main iframe {
   content: " →";
 }
 
-/* Project cards (Mami's request, November 2026, after a card in a second
-   screen recording; see "Project and post cards" above for the card box):
-   two to a row from 601px, one on phones. Each card: the project's picture
-   (cardImg: a PNG in assets/covers/, set in the project's file; Mami will
-   draw them in Procreate) on the card's own background, contained in a 4:3
-   space with room around it; then the serif title (+ 🔗, the In progress
-   pill), the award line on award projects, the description (three lines
-   at most; all of it is on the project's page) and "Category · year",
-   muted, at the bottom, level across a row. On hover the title turns
-   accent and the 🔗 nudges; nothing else moves, as in the recording. A
-   project without a cardImg shows its screenshot, filling the space. */
+/* Project cards (see "Project and post cards" above for the card box): two
+   to a row from 601px, one on phones, all the same, no picture (covers
+   were tried in November 2026 and taken out at Mami's request): the
+   underlined serif title (+ the In progress pill), the award line on award
+   projects, the description (three lines at most) and "Category · year",
+   muted, at the bottom, level across a row. */
 
 .card-grid {
   display: grid;
@@ -1106,47 +1096,26 @@ main iframe {
   flex-direction: column;
 }
 
-.card-cover {
+.card {
   position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 3;
-  margin-bottom: var(--space-16);
 }
 
-.card-cover img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.card-cover.is-shot {
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-thumb);
-}
-
-.card-cover.is-shot picture {
-  width: 100%;
-  height: 100%;
-}
-
-.card-cover.is-shot img {
-  object-fit: cover;
-}
-
-/* The "Hackathon winner" badge (Mami's request, November 2026, like
-   Devpost's WINNER corner but drawn): on the cover's top left corner of
-   every award project, a little tilted. It never moves. */
-.card-cover .card-badge {
+/* The winner's medal on award projects (Mami's request, November 2026: a
+   shiny badge "attached to the card"): a gold medal on a strap that hangs
+   from the card's top edge, top right. It never moves; the title keeps
+   clear of it. */
+.card-medal {
   position: absolute;
-  top: -6px;
-  left: -6px;
-  width: 78px;
-  height: 78px;
-  object-fit: contain;
-  transform: rotate(-8deg);
+  top: -1px;
+  right: var(--card-pad);
+  width: 44px;
+  height: 64px;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.45));
+}
+
+.card.has-medal .card-title,
+.card.has-medal .award-card {
+  padding-right: 56px;
 }
 
 .card-meta {
@@ -1296,31 +1265,23 @@ main iframe {
 }
 
 
-.card:hover h3,
-.card:focus-visible h3 {
-  color: var(--accent);
+/* Project and post titles (Mami's request, November 2026, in place of the
+   🔗 emoji): a soft line under the title; on hover or focus the title and
+   its line just brighten. */
+.title-text {
+  text-decoration: underline;
+  text-decoration-color: rgb(245 197 66 / 0.4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition), text-decoration-color var(--transition);
 }
 
-/* Google's 🔗 after a project or post title (link-title.html): says "this
-   is a link" and nudges up and right on hover */
-.title-end {
-  white-space: nowrap;
-}
-
-.link-emoji {
-  display: inline-block;
-  width: 0.8em;
-  height: 0.8em;
-  margin-left: 0.3em;
-  vertical-align: -0.07em;
-  transition: transform var(--transition);
-}
-
-.card:hover .link-emoji,
-.card:focus-visible .link-emoji,
-.post-row:hover .link-emoji,
-.post-row:focus-visible .link-emoji {
-  transform: translate(2px, -2px);
+.card:hover .title-text,
+.card:focus-visible .title-text,
+.post-row:hover .title-text,
+.post-row:focus-visible .title-text {
+  color: #fff;
+  text-decoration-color: var(--accent);
 }
 
 .card-title {

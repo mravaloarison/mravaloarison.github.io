@@ -1,6 +1,5 @@
 ---
 title: SlayTheInterview
-cardImg: /assets/covers/slaytheinterview.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A mock-interview app built at SBUHacks where we won Best Overall; I built the backend, MongoDB integration, voice-to-text, and AI question generation.

@@ -1,6 +1,5 @@
 ---
 title: GeneReel
-cardImg: /assets/covers/genereel.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: An Adobe Express add-on that auto-generates short-form Reels from a prompt, awarded Most Creative Add-On at YHack; I built it and led the workflow.

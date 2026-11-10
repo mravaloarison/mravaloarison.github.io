@@ -1,6 +1,5 @@
 ---
 title: MyTime
-cardImg: /assets/covers/mytime.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: A native time-tracking app I'm building in SwiftUI for iPhone, iPad and Apple Watch, with hand-drawn task icons and Siri to start and stop timers by voice.

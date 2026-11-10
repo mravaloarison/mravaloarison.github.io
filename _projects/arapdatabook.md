@@ -1,6 +1,5 @@
 ---
 title: ARAP Databook
-cardImg: /assets/covers/arapdatabook.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: Recreating 100+ legacy Databook dashboards in Power BI for Monroe University, adjusting metrics for accuracy and delivering updated reports to stakeholders.

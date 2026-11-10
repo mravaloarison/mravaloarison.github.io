@@ -3,28 +3,21 @@
 # 1. Copy this file to _projects/<name>.md (no "_" at the start). <name> becomes
 #    its address: /projects/<name>/. (Files starting with "_" are ignored, which
 #    is why this one never shows up on the site.)
-# 2. The card's picture: put a PNG in assets/covers/ and write its path in
-#    cardImg below. A drawing on a see-through background looks best, about
-#    4:3 (wider than tall) and about 1200 px wide; bigger files only load
-#    slower. It's shown as it is, whatever its shape.
-#    To change a card's picture later, upload the new PNG to assets/covers/
-#    and point cardImg at it (or give it the old file's name to replace it).
-# 3. The screenshot for the project's own page and for link previews: put it in
+# 2. The screenshot for the project's own page and for link previews: put it in
 #    assets/images/, write its path in image and a sentence saying what it
 #    shows in image_alt. Then, if you can, run  python3 scripts/optimize-images.py
 #    (it makes lighter copies; the page works without them, just slower).
-#    A project with no cardImg shows this screenshot on its card instead.
-# 4. Fill in the rest, write the page under the second ---, and save. The project
+# 3. Fill in the rest, write the page under the second ---, and save. The project
 #    shows up by itself on Projects, on its type's page, and on About when it's
 #    one of the two newest.
 title: My new project
-cardImg: /assets/covers/my-new-project.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork   # or SoftwareApplication, for an app people can use
 description: One or two sentences, 120–160 characters, written so they read well as a search result.
 category: Personal   # Work | Personal | Hackathon
 date: 2026-11-10
-# For a hackathon win (delete these three lines if it isn't one):
+# For a hackathon win (delete these three lines if it isn't one). Its card
+# gets the gold winner's medal by itself:
 award: Best Use of Something
 event: SomeHacks
 organization: Some University

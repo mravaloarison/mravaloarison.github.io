@@ -12,11 +12,10 @@
 #   Arts page once you've posted art (plain "drawing" until then).
 # ─────────────────────────────────────────────────────────────────────────
 
-# The line under your name on the Short About page: the share card's line
-# (CARD_LINE in scripts/make-icons.py) plus where you're from and what
-# you're looking for right now.
+# The few sentences under your name on the Short About page. Google's
+# description of the home page uses the same text.
 headline: >-
-  Product engineer from Madagascar, based in New York. 12 hackathon wins, and I draw and play bass on the side. Right now I'm looking for master's programs with scholarships.
+  I'm a product engineer from Madagascar, based in New York. I build apps and games, and I've won 12 hackathons along the way. Outside of work, I draw and play bass. Right now, I'm looking for master's programs with scholarships.
 
 # Facts for search engines and AI assistants. Not shown on the page as-is:
 # they go into the hidden structured data (JSON-LD) and /llms.txt, which is
@@ -48,7 +47,7 @@ bio: |
 
   These days I'm a Junior Data Analyst in Monroe's Office of Academic Records, Assessment, and Planning. Every semester I go through more than 100 Power BI dashboards and bring them up to date, so the university can follow student performance, retention and graduation. I built my department's SharePoint site, I'm now updating another department's, and I'm redesigning the library's website on [LibGuides](https://www.springshare.com/libguides/){:target="_blank" rel="noopener"}. The work is broad, and I learn a lot from it.
 
-  Outside work, I build iOS apps and small games. Right now I'm building [MyTime](/projects/mytime/), a SwiftUI time tracker for iPhone, iPad and Apple Watch with hand-drawn task icons and Siri to start and stop timers. I'm also making [DogDuckGo](/projects/dogduckgo/), a typing game on a watercolor pond where dogs disguised as ducks swim at you. Before those, I made games you control with your hands or your nose.
+  Outside work, I build iOS apps and small games. Right now I'm building [MyTime](/projects/mytime/), a SwiftUI time tracker for iPhone, iPad and Apple Watch with hand-drawn task icons and Siri to start and stop timers. I'm also making [DogDuckGo](/projects/dogduckgo/), a typing game on a pond where dogs disguised as ducks swim at you. Before those, I made games you control with your hands or your nose.
 
   I use AI to move faster, but I still edit the code and refine things myself. Coding is much more of a puzzle for me now, where I piece things together, figure out the best structure and choose the best stack. I love that this lets me focus more on my art, and on the features and setup.
 

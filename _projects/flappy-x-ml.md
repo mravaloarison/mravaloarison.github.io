@@ -1,6 +1,5 @@
 ---
 title: Flappy x ML
-cardImg: /assets/covers/flappy-x-ml.png   # the picture on this project's card: a PNG in assets/covers/
 seo:
   type: CreativeWork
 description: Flappy Bird controlled by your nose — MediaPipe face detection drives the bird's position, built with Kaboom.js for the game mechanics.
