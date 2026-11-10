@@ -204,10 +204,11 @@ Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. **No rounded corners**
 `--radius-sm` and `--radius-md` are 0, and the pills, tags, buttons, focus
 rings and inline code are square too. Only true circles stay round: the
 nav's current-page dot, the round buttons (burger, viewer), the play mark
-and the status dot in the "In progress" tag. One exception, also Mami's
-request (November 2026: "just a little corner radius, enough to make it
-feel better, not too much"): the project list's small thumbnails have
-`--radius-thumb` (5px). Everything else stays square.
+and the status dot in the "In progress" tag. Two exceptions, both Mami's
+requests (November 2026): the cards' small thumbnails have `--radius-thumb`
+(5px; "just a little corner radius, enough to make it feel better, not too
+much"), and the project and post cards themselves `--radius-card` (8px,
+after a card Mami liked). Everything else stays square.
 
 ### Layout
 
@@ -256,32 +257,33 @@ feel better, not too much"): the project list's small thumbnails have
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
   the copyright line.
-- Post lists are quiet rows: serif title (with Google's 🔗 after it, see
-  `link-title.html`) on the left, date on the right, the description under
-  it, all one link (`post-list.html`). Since November 2026 (Mami's request)
-  post and project rows have no lines between them: each row is a box with
-  the same padding on every side (`--row-pad`: 12px on phones, 16px for
-  posts and 24px for projects from 601px), bled into the gutter with
-  negative margins so the text stays in line with the page, and on hover
-  (or keyboard focus) the box fills with `--surface` so it's obvious.
-- Project lists (`card-grid.html`) are one project per row, like
-  brittanychiang.com, with a small thumbnail (Mami's request, November
-  2026: "really small for the previews", the screenshot at its real size is
-  for the project's own page; it was 200px, and on phones the full width,
-  stacked over the text). At every width the thumbnail (`--thumb-width`:
-  80px on phones, 96px from 601px; 16:10, `--radius-thumb` corners,
-  hairline border) sits on the left, level with the title, and everything
-  else is in line with the title beside it (Mami's request: the
-  description stays aligned with the title on phones too): the serif title
-  with a 🔗 after it, the award on award projects (a small 🏆 before the
-  award in bold, then "university · year" muted under the award; Mami
+- **Project and post cards** (Mami's request, November 2026, after a card
+  Mami liked in a screen recording; until then they were bare rows that
+  only lit up on hover): every project and post in a list is a card on
+  `--surface` with a `--border` hairline and `--radius-card` (8px) corners,
+  `--card-pad` inside (14px on phones, 20px from 601px) and `--card-gap`
+  between cards (14px / 16px: Mami asked for "good space between them").
+  The picture, when there is one, is a small square on the left
+  (`--thumb-size`: 72px on phones, 112px from 601px, 56px under 360px so
+  "SlayTheInterview" still fits; `--radius-thumb` corners, a hairline),
+  level with the title, and everything else sits in line with the title
+  beside it. On hover (pointer devices) or keyboard focus the picture
+  darkens under an open-link icon and "View project" / "Read post" in the
+  accent (`card-hover.html`; icon only on phones), the title turns accent
+  and the 🔗 nudges up and right; the card itself never moves. All one link.
+- Project cards (`card-grid.html`): the serif title with a 🔗 after it
+  (and the "In progress" pill), the award on award projects (a small 🏆
+  before the award in bold, then "university · year" muted under it; Mami
   found the trophy's yellow square next to a thumbnail messy, so lists
-  don't use it), and the description. Each project is a padded box like
-  the post rows (no lines between them, see above). No tech stack in
-  lists; it's on each project page. No borders, no shadows. On hover the row never moves; its
-  box fills with `--surface`, the thumbnail zooms to 1.04 inside its frame
-  (`overflow: hidden`, 300ms), the title turns accent and the 🔗 nudges up
-  and right.
+  don't use it), then the description. The thumbnail is "really small"
+  (Mami's request: the screenshot at its real size is for the project's
+  own page; it was 200px, and on phones the full width over the text).
+  No tech stack in lists; it's on each project page.
+- Post cards (`post-list.html`): the serif title with its 🔗, the
+  description, then the date and reading time, muted ("Feb 8, 2026 · 2 min
+  read"). A post gets a thumbnail only when it has its own `image`; the
+  share card every page gets by default (`_config.yml`) doesn't count, so
+  today's posts are text-only cards.
 
 ### Components in `_includes/`
 
@@ -297,7 +299,10 @@ feel better, not too much"): the project list's small thumbnails have
   where it doesn't fit (two lines below about 428px, one line on a Pro
   Max). Forcing two lines on every phone was tried in October 2026 and
   dropped at Mami's request; don't bring it back unless asked.
-- `post-list.html` — title/date rows; `descriptions=true` adds a line under each
+- `post-list.html` — post cards (see Layout); `descriptions=true` adds each
+  post's description
+- `card-hover.html` — what shows over a card's picture on hover: the
+  open-link icon and a label, decorative (`aria-hidden`)
 - `blog-browse.html` — By year / By tag links, on the blog index and every year/tag page
 - `metadata-row.html` — the "In progress" pill (when `status: ongoing`),
   then the tech stack as a boxless row: 24px icon + name, each
@@ -312,8 +317,9 @@ feel better, not too much"): the project list's small thumbnails have
 - `card-grid.html` — the project list: per project a small thumbnail, the
   title (via `link-title.html`, plus the "In progress" pill on ongoing
   projects), `award.html size="card"` on award projects, and the
-  description, all beside the thumbnail (80px on phones, 96px from 601px)
-  in line with the title. Nothing on the thumbnail, no tech row.
+  description, all beside the square thumbnail in line with the title
+  (see "Project and post cards"). Nothing on the thumbnail but the hover
+  cover, no tech row.
 - `link-title.html` — a list title followed by Google's 🔗
   (`assets/emoji/link.svg`, 0.8em) that says "this is a link". Used for
   project and post titles in lists. Mami asked for the link emoji in October

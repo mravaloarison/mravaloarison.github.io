@@ -1,17 +1,19 @@
 {%- comment -%}
-  Project list: one row per project with a small thumbnail (Mami's request,
-  November 2026; the screenshot at its real size is on the project's own
-  page). From 601px the thumbnail is 96px wide with the title, the one-line
-  award on award projects, and the description beside it; on phones it's
-  80px wide beside the title, with the award and description under them at
-  full width. No tech stack here; it's on each project page.
+  Project list: one card per project (Mami's request, November 2026, after a
+  card in a screen recording; see "Project and post cards" in styles.css):
+  a small square thumbnail on the left (the screenshot at its real size is
+  on the project's own page), and in line with the title beside it the
+  one-line award on award projects and the description. On hover the
+  thumbnail darkens under "View project". No tech stack here; it's on each
+  project page.
 {%- endcomment -%}
 <div class="card-grid">
   {% for item in include.items %}
   <a class="card" href="{{ item.url | relative_url }}">
     {% if item.image %}
     <div class="card-media">
-      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 80px, 96px" %}
+      {% include picture.html src=item.image alt=item.image_alt sizes="(max-width: 600px) 72px, 112px" %}
+      {% include card-hover.html label="View project" %}
     </div>
     {% endif %}
     <h3 class="card-title">{% include link-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>

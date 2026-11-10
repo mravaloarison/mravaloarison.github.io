@@ -1,19 +1,33 @@
 {%- comment -%}
-  List of posts: one box per post, title on the left, date on the right.
-  Params: posts (required), descriptions (true to show each post's description
-  under its title, inside the same link)
+  List of posts, one card per post (Mami's request, November 2026, after a
+  card in a screen recording; see "Project and post cards" in styles.css):
+  the title, the description under it, then the date and reading time,
+  muted. A post with an `image` gets it as a small square on the left, like
+  the project cards, with "Read post" over it on hover.
+  Params: posts (required), descriptions (true to show each post's
+  description).
 {%- endcomment -%}
 <ul class="post-list">
   {% for post in include.posts %}
+  {%- assign words = post.content | strip_html | number_of_words -%}
+  {%- assign reading_time = words | divided_by: 200 -%}
+  {%- if reading_time < 1 -%}{%- assign reading_time = 1 -%}{%- endif -%}
+  {%- comment -%} Every page gets the share card as its `image` by default (_config.yml), for link previews; that's not a picture of the post. {%- endcomment -%}
+  {%- assign post_picture = nil -%}
+  {%- if post.image -%}{%- unless post.image contains "/assets/social/" -%}{%- assign post_picture = post.image -%}{%- endunless -%}{%- endif %}
   <li>
-    <a class="post-row" href="{{ post.url | relative_url }}">
-      <span class="post-row-main">
-        <span class="post-title">{% include link-title.html text=post.title %}</span>
-        <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <a class="post-row{% if post_picture %} has-media{% endif %}" href="{{ post.url | relative_url }}">
+      {%- if post_picture %}
+      <span class="card-media">
+        {% include picture.html src=post_picture alt=post.image_alt sizes="(max-width: 600px) 72px, 112px" %}
+        {% include card-hover.html label="Read post" %}
       </span>
+      {%- endif %}
+      <span class="post-title">{% include link-title.html text=post.title %}</span>
       {%- if include.descriptions and post.description %}
       <span class="post-description">{{ post.description }}</span>
       {%- endif %}
+      <span class="post-meta-line"><time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time> · {{ reading_time }} min read</span>
     </a>
   </li>
   {% endfor %}
