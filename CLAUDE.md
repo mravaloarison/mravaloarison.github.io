@@ -287,7 +287,10 @@ after a card Mami liked). Everything else stays square.
   there are placeholders Claude drew on 10 November 2026 (an object each:
   coins for Better, a leaf for Green, a duck for DogDuckGo, a stopwatch for
   MyTime, a chart board for ARAP Databook...), 800×600 with a see-through
-  background and a cream sticker edge like the logo. Mami asked for the
+  background. Mami found the first set (flat, sticker-edged) not nice
+  enough and asked for the hand-drawn look of maggieappleton.com's
+  illustrations, so they're redrawn that way: thin wobbly ink outlines,
+  muted watercolour fills with grain, each on a pale paper blob. Mami asked for the
   Power BI logo on ARAP Databook's; brand logos aren't drawn, so it's a
   generic chart. A cover is shown as it is (an `<img>` with `alt=""`, the
   card's text names the link), not through `picture.html` /
@@ -296,6 +299,16 @@ after a card Mami liked). Everything else stays square.
   exported at a sensible size (about 1200 px wide, see-through background).
   A project without `cardImg` shows its screenshot instead, cropped to fill
   the 4:3 space, with a hairline and `--radius-thumb`.
+- **Hackathon winner badge** (Mami's request, November 2026, like
+  Devpost's WINNER corner "but a really good one, like an illustration"):
+  every project with an `award` gets
+  `assets/covers/badge-hackathon-winner.png` on the top left corner of its
+  cover (78px, tilted 8°, `alt=""` since the award line says it; it never
+  moves). Today's is Claude's placeholder in the covers' style (a gold
+  rosette, "HACKATHON Winner", two ribbon tails); Mami will draw the real
+  one: replace the file under the same name (square, see-through
+  background). Delete the file and the badge is gone. This is the one thing
+  allowed over a cover; the old foil band stays gone.
 - Post cards (`post-list.html`; Mami: "the blog seems to be perfect, no
   change"): the serif title with its 🔗, the description, then the date
   and reading time, muted ("Feb 8, 2026 · 2 min read"). A post gets a
@@ -482,7 +495,7 @@ Mami wants this serif for both):
   projects by date, with "See all N projects"), **Arts** (Mami's request,
   November 2026: six pieces, the three most recent by date from Hand drawn
   and the three most recent from Procreate, each set in its gallery order,
-  three to a row, with "See all art"; no animations; `art-picks.html`) and
+  three to a row (two on phones, Mami's request), with "See all art"; no animations; `art-picks.html`) and
   **Blog** (the two most recent posts, with "See all blog posts"). The
   sections follow the nav's order.
 - **Long (`/bio/`, `bio.md`)**: the long Bio text (Markdown from `about.yml`,

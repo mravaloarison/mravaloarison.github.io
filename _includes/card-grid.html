@@ -11,6 +11,8 @@
   the card shows the project's screenshot instead of a broken picture, and
   the build warns (content_check.rb).
 {%- endcomment -%}
+{%- comment -%} The "Hackathon winner" badge on award projects' covers: one picture, assets/covers/badge-hackathon-winner.png (delete the file and the badge is gone). {%- endcomment -%}
+{%- assign winner_badge = site.static_files | where: "path", "/assets/covers/badge-hackathon-winner.png" | first -%}
 <div class="card-grid">
   {% for item in include.items %}
   {%- assign cover = nil -%}
@@ -27,6 +29,9 @@
       <img src="{{ cover_path | relative_url }}" alt="" width="800" height="600" loading="lazy" decoding="async">
       {%- elsif item.image %}
       {% include picture.html src=item.image alt="" sizes="(max-width: 600px) 100vw, 340px" %}
+      {%- endif %}
+      {%- if item.award and winner_badge %}
+      <img class="card-badge" src="{{ winner_badge.path | relative_url }}" alt="" width="400" height="400" loading="lazy" decoding="async">
       {%- endif %}
     </div>
     <h3 class="card-title">{% include link-title.html text=item.title %}{% if item.status == "ongoing" %} <span class="pill pill-status">In progress</span>{% endif %}</h3>

@@ -1107,6 +1107,7 @@ main iframe {
 }
 
 .card-cover {
+  position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 4 / 3;
@@ -1133,6 +1134,19 @@ main iframe {
 
 .card-cover.is-shot img {
   object-fit: cover;
+}
+
+/* The "Hackathon winner" badge (Mami's request, November 2026, like
+   Devpost's WINNER corner but drawn): on the cover's top left corner of
+   every award project, a little tilted. It never moves. */
+.card-cover .card-badge {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+  transform: rotate(-8deg);
 }
 
 .card-meta {
@@ -1474,10 +1488,12 @@ main iframe {
 }
 
 /* The Short About's Arts row (art-picks.html, Mami's request, November
-   2026): one square per Arts subcategory side by side, two columns while
-   Procreate is empty, three once it has a piece. */
-.art-picks-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+   2026): three squares to a row from 601px, so each row is one
+   subcategory; two to a row on phones (Mami's request). */
+@media (min-width: 601px) {
+  .art-picks-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* Content coming in (Mami's request, November 2026: "content should
@@ -2191,11 +2207,6 @@ figcaption {
   .gallery-title {
     padding: 40px var(--space-8) var(--space-8);
     font-size: 15px;
-  }
-
-  .art-picks-3 .gallery-title {   /* squares a third of a phone wide */
-    padding: 28px 6px 6px;
-    font-size: 13px;
   }
 
   .photo-grid {
