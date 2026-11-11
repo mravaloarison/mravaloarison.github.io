@@ -193,7 +193,7 @@ Mami's request; don't bring it back unless asked.
 All text pairs are at least 4.5:1 (accent: 11.2:1 on `--bg`, 4.7:1
 on `--surface`). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout and
-award-box rule, the current-page dot in the nav, and (as `--accent-tint`)
+award-box rule, the current-page paws in the nav, and (as `--accent-tint`)
 the square behind the trophy.
 
 ### Type
@@ -215,7 +215,7 @@ Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96. **No rounded corners**
 (Mami's request, November 2026; it was 6px, and 10px before that):
 `--radius-sm` and `--radius-md` are 0, and the pills, tags, buttons, focus
 rings and inline code are square too. Only true circles stay round: the
-nav's current-page dot, the round buttons (burger, viewer), the play mark
+round buttons (burger, viewer), the play mark
 and the status dot in the "In progress" tag. Two exceptions, both Mami's
 requests (November 2026): pictures inside cards (a post's small square, a
 project's screenshot when it has no cover) have `--radius-thumb` (5px;
@@ -243,17 +243,22 @@ after a card Mami liked). Everything else stays square.
   (Mami's request, November 2026): a chevron button beside the link,
   closed by default and open on the pages inside the group (a project, a
   type page, an Arts subcategory or piece); while a group is closed, the
-  dot for a page inside it sits on the group's link. Without JS the
+  paws for a page inside it sits on the group's link. Without JS the
   chevrons are hidden and every item is listed. The look Mami liked in the phone drawer:
   Newsreader links with a hairline between items (none after the last), the
   types in Nunito, indented. All links are `--text-secondary`; hover and the
-  current page go to `--text`, and the current page also gets a 6px accent
-  dot hanging in the margin, so it isn't marked by colour alone
-  (`aria-current` for screen readers). (On 11 November 2026 the dot was
-  swapped for the paw-print tag from the logo's collar, landing with a
-  small stamp on each page; Mami asked for "the tiny little dot" back the
-  same day. Don't bring the tag back unless asked.) Only the most specific
-  item gets the dot: on a project page it's on the type and Projects just brightens
+  current page go to `--text`, and the current page also gets **three
+  small paw prints** in the accent, a short trail hanging in the margin
+  (Mami's request, 11 November 2026, in place of a 6px dot: "not gigantic
+  compared to that dot, just slightly bigger", and "a little further from
+  the sidenav": 30×16px, 14px from the text; a CSS mask, so they take each
+  theme's accent), so the page isn't marked by colour alone
+  (`aria-current` for screen readers). The drawer has 52px of left padding
+  to hold them. (Earlier the same day the dot was swapped for the
+  paw-print tag from the logo's collar, with a stamp on each page, and
+  Mami asked for the dot back. Don't bring the tag back unless asked.)
+  Only the most specific
+  item gets the paws: on a project page it's on the type and Projects just brightens
   (`:has()`). About is current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left. **The dog
   sits in the middle of a card** like the project and post cards
