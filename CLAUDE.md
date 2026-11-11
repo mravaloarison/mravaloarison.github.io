@@ -226,7 +226,7 @@ after a card Mami liked). Everything else stays square.
 ### Layout
 
 - One text column, `--measure` 680px of text width, 24px side padding
-  (16px under 600px). From 1040px the nav sits in a `--nav-width` (216px)
+  (16px under 600px). From 1040px the nav sits in a `--nav-width` (240px)
   column to its left with a 32px gap, and the two are centered together.
   No horizontal page scroll, ever.
 - **Logo** on every page (`.site-logo`; it tilts 6° on hover). Clicking it
@@ -261,10 +261,9 @@ after a card Mami liked). Everything else stays square.
   (`:has()`). About is current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left, starting 96px
   from the top (like `main`) with the logo, so the logo lines up with the
-  h1, and the links below it in a box like the project and post cards
-  (Mami's request, 11 November 2026: `--surface`, a hairline,
-  `--radius-card`, holding the whole menu; the column went from 160px to
-  216px for it). Links
+  h1, and the links below it, no box (a box like the cards, on `--surface`, was
+  tried on 11 November 2026 and Mami had it removed the same day, keeping
+  the column wider: `--nav-width` went from 160px to 240px). Links
   are 22px and types 16px, below the 29px h2, so the page leads and the nav
   stays quiet. Pure CSS, works with JS off.
 - **Below 1040px**: a burger at the top right (drawer links 30px, types 18px). It morphs into an × and slides

@@ -87,7 +87,7 @@
   --radius-card: 8px;
 
   --measure: 680px;
-  --nav-width: 216px;
+  --nav-width: 240px;
   /* Project and post cards (see "Project and post cards"); from 601px the
      padding is 20px, the space between cards 16px and the thumbnail 112px */
   --card-pad: 14px;
@@ -2428,16 +2428,6 @@ figcaption {
     width: 32px;
     height: 32px;
     margin-right: -8px;
-  }
-
-  /* The menu sits in a box like the project and post cards (Mami's
-     request, November 2026): same background, hairline and corners, with
-     room on the left for the tag. */
-  .site-nav {
-    padding: var(--space-8) var(--space-16) var(--space-8) 36px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-card);
   }
 
   .site-header-inner {
