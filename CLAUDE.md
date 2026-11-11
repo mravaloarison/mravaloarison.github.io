@@ -193,7 +193,7 @@ Mami's request; don't bring it back unless asked.
 All text pairs are at least 4.5:1 (accent: 11.2:1 on `--bg`, 4.7:1
 on `--surface`). Links are ink-colored with a soft accent underline that
 turns fully accent on hover. Use the accent sparingly: links, the callout and
-award-box rule, the current-page paws in the nav, and (as `--accent-tint`)
+award-box rule, the current-page paw in the nav, and (as `--accent-tint`)
 the square behind the trophy.
 
 ### Type
@@ -243,22 +243,23 @@ after a card Mami liked). Everything else stays square.
   (Mami's request, November 2026): a chevron button beside the link,
   closed by default and open on the pages inside the group (a project, a
   type page, an Arts subcategory or piece); while a group is closed, the
-  paws for a page inside it sits on the group's link. Without JS the
+  paw for a page inside it sits on the group's link. Without JS the
   chevrons are hidden and every item is listed. The look Mami liked in the phone drawer:
   Newsreader links with a hairline between items (none after the last), the
   types in Nunito, indented. All links are `--text-secondary`; hover and the
-  current page go to `--text`, and the current page also gets **three
-  small paw prints** in the accent, a short trail hanging in the margin
+  current page go to `--text`, and the current page also gets **one
+  small paw print** in the accent, in the margin
   (Mami's request, 11 November 2026, in place of a 6px dot: "not gigantic
   compared to that dot, just slightly bigger", and "a little further from
-  the sidenav": 30×16px, 14px from the text; a CSS mask, so they take each
-  theme's accent), so the page isn't marked by colour alone
-  (`aria-current` for screen readers). The drawer has 52px of left padding
-  to hold them. (Earlier the same day the dot was swapped for the
+  the sidenav": 13×13px, 14px from the text; a CSS mask, so it takes each
+  theme's accent; a trail of three paws was tried first and Mami asked for
+  "just one paw not three" the same day), so the page isn't marked by colour alone
+  (`aria-current` for screen readers). The drawer has 36px of left padding
+  to hold it. (Earlier the same day the dot was swapped for the
   paw-print tag from the logo's collar, with a stamp on each page, and
   Mami asked for the dot back. Don't bring the tag back unless asked.)
   Only the most specific
-  item gets the paws: on a project page it's on the type and Projects just brightens
+  item gets the paw: on a project page it's on the type and Projects just brightens
   (`:has()`). About is current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left. **The dog
   sits in the middle of a card** like the project and post cards
