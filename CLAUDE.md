@@ -234,7 +234,8 @@ after a card Mami liked). Everything else stays square.
   2026", no arrows, the address unchanged (Mami's request, November 2026:
   not a link to About). Without JS it links to the big image
   (`logo-1024.webp`). Below 1040px it sits at the top left,
-  opposite the burger (44px); from 1040px it's hidden for now (see below). No site name next to it.
+  opposite the burger (44px); from 1040px it's in a card at the top of the
+  nav column (56px, see below). No site name next to it.
 - **Nav**: About · Projects · Arts · Blog, with the project types (Work ·
   Personal · Hackathons) indented under Projects and the Arts subcategories
   (Hand drawn · Procreate · Animated) under Arts, both from
@@ -254,27 +255,29 @@ after a card Mami liked). Everything else stays square.
   same day. Don't bring the tag back unless asked.) Only the most specific
   item gets the dot: on a project page it's on the type and Projects just brightens
   (`:has()`). About is current on both `/` and `/bio/`.
-- **1040px and up**: the nav is a sticky column on the left, and **the dog
-  is hidden there for now** (Mami's request, 11 November 2026: "hide it
-  until we find a better place for him"; `.site-logo { display: none }` in
-  the wide rules, so the intro's dog fades out there instead of gliding).
-  Phones and tablets keep the logo opposite the burger. **The first link
-  (About) is level with the first sentence under the page's title**
-  (Mami's request the same day): `initNavAlign` in `main.js` measures the
-  abstract's first line (the Long bio's first paragraph on `/bio/`) and
-  sets `--nav-top`, on load, once fonts are in, and on resize, because
-  titles sit lower on pages with a breadcrumb. It measures with offsets,
-  not `getBoundingClientRect`: a paragraph still rising into place
-  (content coming in) made the Long bio's menu land too low. Without JS
-  the menu keeps the place that's right for a page with no breadcrumb.
+- **1040px and up**: the nav is a sticky column on the left. **The dog
+  sits in the middle of a card** like the project and post cards
+  (`--surface`, a hairline, `--radius-card`; Mami's request, 11 November
+  2026, after hiding the dog for an afternoon "until we find a better
+  place for him"), as wide as the column and **lined up with the page's
+  title block**: from the top of the eyebrow ("PORTFOLIO") to the bottom
+  of the h1, taller when a title takes two lines. **The first link
+  (About) is level with the first sentence under the title** (Mami's
+  request the same day). `initNavAlign` in `main.js` measures the eyebrow,
+  the h1 and the abstract's first line (the Long bio's first paragraph on
+  `/bio/`) and sets `--logo-top`, `--logo-h` and `--nav-gap`, on load,
+  once fonts are in, and on resize, because titles sit lower on pages
+  with a breadcrumb. It measures with offsets, not
+  `getBoundingClientRect`: a paragraph still rising into place (content
+  coming in) made the Long bio's menu land too low. Without JS the column
+  keeps the place that's right for a page with no breadcrumb. Phones and
+  tablets keep the bare logo opposite the burger.
   There are no hairlines between the items on wide screens
   (Mami's request; the phone drawer keeps them) and no box. Tried and undone on 11 November 2026, all at Mami's
   request, so don't bring them back unless asked: a box like the cards
   around the menu; a wider column (216px, then 240px; it's 160px again);
   the paw-print tag as the marker; and the dog itself as the marker,
-  sitting beside the current link. Before it was hidden the dog sat above
-  the menu (56px), level with the page's title; Mami wasn't sure whether
-  it belongs on the left, in the middle or nearer the titles.
+  sitting beside the current link.
   are 22px and types 16px, below the 29px h2, so the page leads and the nav
   stays quiet. Pure CSS, works with JS off.
 - **Below 1040px**: a burger at the top right (drawer links 30px, types 18px). It morphs into an × and slides

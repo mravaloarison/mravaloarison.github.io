@@ -196,39 +196,44 @@
   // A reload (Mami's request): the logo plays the animation again where it
   // sits, once its strip is in. Not on the first visit (that's the intro),
   // nor with reduced motion.
-  // Wide screens: the first menu link sits level with the first sentence
-  // under the page's title (Mami's request, November 2026). Titles sit at
-  // different heights (a breadcrumb, a title on two lines), so this is
-  // measured; with JS off the menu keeps the place that's right for a page
-  // without a breadcrumb. Measured with offsets, not rects, so a paragraph
-  // that's still rising into place (content coming in, the intro) counts
-  // where it will land: with rects the Long bio's menu ended up too low.
+  // Wide screens (Mami's requests, November 2026): the dog's card sits
+  // beside the page's title block, from the top of the eyebrow ("PORTFOLIO")
+  // to the bottom of the title, and the first menu link sits level with the
+  // first sentence under it. Titles sit at different heights (a breadcrumb,
+  // a title on two lines), so this is measured; with JS off the column keeps
+  // the place that's right for a page without a breadcrumb. Measured with
+  // offsets, not rects, so a paragraph that's still rising into place
+  // (content coming in, the intro) counts where it will land: with rects
+  // the Long bio's menu ended up too low.
   function initNavAlign() {
     var root = document.documentElement;
-    var header = document.querySelector(".site-header");
-    var inner = document.querySelector(".site-header-inner");
     var link = document.querySelector(".site-nav a");
+    var h1 = document.querySelector("main h1");
+    if (!link || !h1 || !window.matchMedia) return;
+    var eyebrow = document.querySelector("main .eyebrow-row, main .eyebrow") || h1;
     // the first sentence: the abstract under the title, or the Long bio's first paragraph
     var first = document.querySelector("main .abstract, main .bio-text p");
-    if (!header || !inner || !link || !first || !window.matchMedia) return;
     var wide = window.matchMedia("(min-width: 1040px)");
 
-    function topWithin(el, ancestor) {
+    function pageTop(el) {
       var y = 0;
-      while (el && el !== ancestor) {
+      while (el) {
         y += el.offsetTop;
         el = el.offsetParent;
       }
       return y;
     }
     function align() {
-      root.style.removeProperty("--nav-top");
+      ["--logo-top", "--logo-h", "--nav-gap"].forEach(function (name) { root.style.removeProperty(name); });
       if (!wide.matches) return;
-      var pad = parseFloat(getComputedStyle(inner).paddingTop);
+      var top = pageTop(eyebrow);
+      var height = Math.max(72, pageTop(h1) + h1.offsetHeight - top);
+      root.style.setProperty("--logo-top", Math.round(top) + "px");
+      root.style.setProperty("--logo-h", Math.round(height) + "px");
+      if (!first) return;
       var line = parseFloat(getComputedStyle(first).lineHeight) || first.offsetHeight;
-      var want = topWithin(first, null) + line / 2;
-      var have = topWithin(link, header) + link.offsetHeight / 2;
-      root.style.setProperty("--nav-top", Math.max(16, Math.round(pad + want - have)) + "px");
+      var gap = pageTop(first) + line / 2 - (top + height) - link.offsetHeight / 2;
+      root.style.setProperty("--nav-gap", Math.max(0, Math.round(gap)) + "px");
     }
 
     align();
