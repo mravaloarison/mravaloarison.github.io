@@ -235,7 +235,7 @@ after a card Mami liked). Everything else stays square.
   not a link to About). Without JS it links to the big image
   (`logo-1024.webp`). Below 1040px it sits at the top left,
   opposite the burger (44px); from 1040px it's at the top of the nav column
-  (56px), its top lined up with the h1 or breadcrumb, with the links below
+  (56px), level with the page's title (see below), with the links below
   it. No site name next to it.
 - **Nav**: About · Projects · Arts · Blog, with the project types (Work ·
   Personal · Hackathons) indented under Projects and the Arts subcategories
@@ -256,9 +256,14 @@ after a card Mami liked). Everything else stays square.
   same day. Don't bring the tag back unless asked.) Only the most specific
   item gets the dot: on a project page it's on the type and Projects just brightens
   (`:has()`). About is current on both `/` and `/bio/`.
-- **1040px and up**: the nav is a sticky column on the left, starting 96px
-  from the top (like `main`) with the logo, so the logo lines up with the
-  h1, and the links below it, with no hairlines between the items on wide screens
+- **1040px and up**: the nav is a sticky column on the left. **The dog is
+  level with the page's title and the first link (About) with the first
+  sentence under it** (Mami's request, 11 November 2026): `initNavAlign`
+  in `main.js` measures the h1's first line and the abstract's (the Long
+  bio's first paragraph on `/bio/`) and sets `--logo-top` and `--nav-gap`,
+  on load, once fonts are in, and on resize, because titles sit lower on
+  pages with a breadcrumb. Without JS the column keeps the place that's
+  right for a page with no breadcrumb. The links sit below the logo, with no hairlines between the items on wide screens
   (Mami's request; the phone drawer keeps them) and no box (a box like the cards, on `--surface`, was
   tried on 11 November 2026 and Mami had it removed the same day, keeping
   the column wider: `--nav-width` went from 160px to 240px). Links

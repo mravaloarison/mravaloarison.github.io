@@ -196,6 +196,53 @@
   // A reload (Mami's request): the logo plays the animation again where it
   // sits, once its strip is in. Not on the first visit (that's the intro),
   // nor with reduced motion.
+  // Wide screens: line the side column up with the page (Mami's request,
+  // November 2026): the dog sits level with the page's title, and the first
+  // menu link level with the first line under it. Titles sit at different
+  // heights (a breadcrumb, a title on two lines), so this is measured; with
+  // JS off the column keeps its CSS place.
+  function initNavAlign() {
+    var root = document.documentElement;
+    var header = document.querySelector(".site-header");
+    var inner = document.querySelector(".site-header-inner");
+    var logo = document.querySelector(".site-logo");
+    var link = document.querySelector(".site-nav a");
+    var h1 = document.querySelector("main h1");
+    if (!header || !inner || !logo || !link || !h1 || !window.matchMedia) return;
+    // the first sentence: the abstract under the title, or the Long bio's first paragraph
+    var first = document.querySelector("main .abstract, main .bio-text p");
+    var wide = window.matchMedia("(min-width: 1040px)");
+
+    function firstLine(el) {
+      var lh = parseFloat(getComputedStyle(el).lineHeight);
+      var r = el.getBoundingClientRect();
+      return r.top + window.scrollY + (lh || r.height) / 2;
+    }
+    function inHeader(el) {
+      var r = el.getBoundingClientRect();
+      return r.top - header.getBoundingClientRect().top + r.height / 2;
+    }
+    function align() {
+      root.style.removeProperty("--logo-top");
+      root.style.removeProperty("--nav-gap");
+      if (!wide.matches) return;
+      // measure everything in its CSS place first, then move both at once
+      var pad = parseFloat(getComputedStyle(inner).paddingTop);
+      var top = Math.max(16, Math.round(pad + firstLine(h1) - inHeader(logo)));
+      var gap = null;
+      if (first) {
+        gap = parseFloat(getComputedStyle(logo).marginBottom) + firstLine(first) - (inHeader(link) + top - pad);
+      }
+      root.style.setProperty("--logo-top", top + "px");
+      if (gap !== null) root.style.setProperty("--nav-gap", Math.max(4, Math.round(gap)) + "px");
+    }
+
+    align();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+    window.addEventListener("load", align);
+    window.addEventListener("resize", align);
+  }
+
   function initLogoReload() {
     if (!logoAnim || document.documentElement.classList.contains("intro-running")) return;
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -977,6 +1024,7 @@
     later(3000, glide);
   }
 
+  initNavAlign();
   initIntro();
   initReveal();
   initLogoReload();

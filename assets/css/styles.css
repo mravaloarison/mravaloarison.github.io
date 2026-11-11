@@ -2417,15 +2417,18 @@ figcaption {
     display: block;
     max-width: none;
     margin: 0;
-    /* the same as main's top padding, so the top of the logo lines up with
-       the top of the h1 (or the breadcrumb on inner pages) */
-    padding: var(--space-96) 0 var(--space-32);
+    /* The dog sits level with the page's title and the first link level
+       with the first line under it (Mami's request, November 2026):
+       main.js measures the page and sets --logo-top and --nav-gap; without
+       JS it keeps the place that's right for a page without a breadcrumb
+       (132px, then 7px to the links). */
+    padding: var(--logo-top, 132px) 0 var(--space-32);
   }
 
   .site-logo {
     width: 56px;
     height: 56px;
-    margin-bottom: var(--space-24);
+    margin-bottom: var(--nav-gap, 7px);
   }
 
   .page-frame {
