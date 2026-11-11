@@ -159,10 +159,22 @@ italic font file is shipped.
 
 ### Color
 
-**Dark only.** There is no light theme and no theme toggle (removed October
-2026 at Mami's request; don't bring either back unless asked). The tokens live
-on `:root`, there is no `prefers-color-scheme` rule and no `data-theme`
-attribute. The accent is **yellow** (`#f5c542`).
+**Dark, and light on devices set to light** (Mami's request, 11 November
+2026: "by default switch from light screen to dark screen depending on
+user's default theme"). It follows `prefers-color-scheme` only: there is
+**no toggle** and no `data-theme` attribute (a toggle existed until October
+2026 and was removed at Mami's request; don't bring it back unless asked).
+The dark tokens are on `:root`; `@media (prefers-color-scheme: light)`
+swaps them for warm paper and dark ink: `--bg` `#faf6ef`, `--surface`
+`#f2ece1`, `--text` `#2a2521`, `--text-secondary` `#655c52`, `--border`
+`#e2d9c9`, and a deeper gold `--accent` `#8a5d00`, because the yellow can't
+be read as text on paper (5.3:1 on `--bg`, 4.9:1 on `--surface`). Use the
+tokens, never a hard-coded colour, so both themes follow. A few things stay
+dark in both: the picture viewer and art pages, and anything written over
+a picture (gallery names, play marks, a post picture's hover); those
+re-declare the dark tokens (`.viewer, .viewer-body, .gallery-item, ...`
+near the top of `styles.css`). The accent is **yellow** (`#f5c542`) in
+dark. Dark values:
 
 | Token              | Value     |
 | ------------------ | --------- |
@@ -268,12 +280,12 @@ after a card Mami liked). Everything else stays square.
   in place of the 🔗 emoji): a soft accent line under the title; on hover
   or keyboard focus the title and its line just brighten. Nothing moves.
   All one link.
-- **Project cards** (`card-grid.html`): **two to a row from 601px, one on
-  phones**, cards in a row the same height, and **all uniform, no picture**.
+- **Project cards** (`card-grid.html`): **one under another at every
+  width, like the post cards** (Mami's request, 11 November 2026; two to a
+  row was tried the day before), and **all uniform, no picture**.
   Top to bottom: the underlined serif title (and the "In progress" pill);
   the description, three lines at most (all of
-  it is on the project's page); and "Category · year" muted at the bottom
-  (`margin-top: auto`, so it lines up across a row). The award's name
+  it is on the project's page); and "Category · year" muted at the bottom. The award's name
   ("Most Creative...", "Best...") isn't on cards (Mami's request, November
   2026: "keep them for when they open it"); winners only wear the medal,
   and the award box is on the project's page. No tech stack in lists. Covers were tried twice on 10 November
@@ -982,9 +994,11 @@ in the About page's `mainEntity` is the likely reason a test in October
   showed up with the old stylesheet and looked broken. The stylesheet and
   script links carry `?v={{ site.time | date: '%s' }}` so every build gets a
   new URL. Keep it.
-- **A light theme existed** until October 2026, with a day/night toggle in the
-  header and `sessionStorage` to carry the choice. Mami asked for dark only;
-  the toggle, light tokens and their script were all removed.
+- **A light theme with a toggle existed** until October 2026 (a day/night
+  button in the header, `sessionStorage` to carry the choice). Mami asked
+  for dark only and it was all removed. In November 2026 Mami asked for
+  light again, but only following the device's setting; there is still no
+  toggle (see Color).
 - **Category filters linked to `#`** on the old site, making every facet
   invisible to search engines. They are real pages now, linked from each
   section index.

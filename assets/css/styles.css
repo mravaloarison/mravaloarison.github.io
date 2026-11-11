@@ -44,17 +44,21 @@
 /* Tokens */
 
 :root {
-  /* Dark is the default: warm ink background, yellow accent */
+  /* Dark: warm ink background, yellow accent. A device set to light gets
+     the light tokens below (Mami's request, November 2026: follow the
+     visitor's own setting; there is no toggle). */
   --bg: #171513;
   --surface: #211e1b;
   --text: #ede8e0;
+  --text-bright: #fff;   /* a card's title on hover */
   --text-secondary: #a89f93;
   --accent: #f5c542;
   /* the soft square behind the trophy on awards */
   --accent-tint: rgb(245 197 66 / 0.13);
+  --accent-soft: rgb(245 197 66 / 0.4);   /* the line under card titles */
   --border: #312d29;
   --border-strong: #46413b;
-
+  --overlay: rgb(20 16 12 / 0.35);   /* behind the phone menu */
 
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -100,6 +104,41 @@
   --reveal-rise: 28px;
 }
 
+/* Light: warm paper, dark ink, and a deeper gold so the accent still reads
+   as text (5.3:1 on --bg, 4.9:1 on --surface). */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #faf6ef;
+    --surface: #f2ece1;
+    --text: #2a2521;
+    --text-bright: #000;
+    --text-secondary: #655c52;
+    --accent: #8a5d00;
+    --accent-tint: rgb(245 197 66 / 0.28);
+    --accent-soft: rgb(138 93 0 / 0.45);
+    --border: #e2d9c9;
+    --border-strong: #cfc4b1;
+    --overlay: rgb(60 48 34 / 0.3);
+  }
+}
+
+/* Always dark, whatever the theme: the picture viewer and art pages (a
+   picture reads best on black), and what's written over a picture (gallery
+   names, play marks, a post picture's hover). */
+.viewer,
+.viewer-body,
+.gallery-item,
+.card-media,
+.anim-frame {
+  --bg: #171513;
+  --surface: #211e1b;
+  --text: #ede8e0;
+  --text-secondary: #a89f93;
+  --accent: #f5c542;
+  --border: #312d29;
+  --border-strong: #46413b;
+}
+
 /* Reset */
 
 *,
@@ -110,7 +149,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  color-scheme: dark;
+  color-scheme: dark light;
   /* Keep the scrollbar's space on every page, so short pages that don't
      scroll (blog index, a small category) line up exactly with long ones
      instead of jumping sideways when you move between them. */
@@ -1071,24 +1110,17 @@ main iframe {
   content: " →";
 }
 
-/* Project cards (see "Project and post cards" above for the card box): two
-   to a row from 601px, one on phones, all the same, no picture (covers
-   were tried in November 2026 and taken out at Mami's request): the
-   underlined serif title (+ the In progress pill), the award line on award
-   projects, the description (three lines at most) and "Category · year",
-   muted, at the bottom, level across a row. */
+/* Project cards (see "Project and post cards" above for the card box): one
+   under another like the post cards (Mami's request, November 2026; two to
+   a row was tried), all the same, no picture: the underlined serif title
+   (+ the In progress pill), the description (three lines at most) and
+   "Category · year", muted. */
 
 .card-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--card-gap);
   margin: var(--space-24) 0 var(--space-48);
-}
-
-@media (min-width: 601px) {
-  .card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .card {
@@ -1269,7 +1301,7 @@ main iframe {
    its line just brighten. */
 .title-text {
   text-decoration: underline;
-  text-decoration-color: rgb(245 197 66 / 0.4);
+  text-decoration-color: var(--accent-soft);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   transition: color var(--transition), text-decoration-color var(--transition);
@@ -1279,7 +1311,7 @@ main iframe {
 .card:focus-visible .title-text,
 .post-row:hover .title-text,
 .post-row:focus-visible .title-text {
-  color: #fff;
+  color: var(--text-bright);
   text-decoration-color: var(--accent);
 }
 
@@ -2310,7 +2342,7 @@ figcaption {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgb(20 16 12 / 0.35);
+    background: var(--overlay);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
     opacity: 0;
