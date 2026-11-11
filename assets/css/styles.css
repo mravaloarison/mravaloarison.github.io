@@ -87,7 +87,7 @@
   --radius-card: 8px;
 
   --measure: 680px;
-  --nav-width: 160px;
+  --nav-width: 216px;
   /* Project and post cards (see "Project and post cards"); from 601px the
      padding is 20px, the space between cards 16px and the thumbnail 112px */
   --card-pad: 14px;
@@ -489,19 +489,42 @@ main,
   color: var(--text);
 }
 
-/* "You are here": a small accent dot hanging in the margin, so the current
-   page isn't marked by colour alone. Only the most specific item gets it:
-   on a project page the dot sits on its type, and Projects just brightens. */
+/* "You are here": the dog's paw-print tag (cut from the logo, his collar's
+   tag; Mami's request, November 2026, in place of a yellow dot), hanging in
+   the margin beside the current page, so it isn't marked by colour alone.
+   Only the most specific item gets it: on a project page it sits on its
+   type, and Projects just brightens. It lands with a small stamp each time
+   a page opens (not with reduced motion). */
 .site-nav a[aria-current]::before {
   content: "";
   position: absolute;
-  left: -14px;
+  left: -24px;
   top: 50%;
-  width: 6px;
-  height: 6px;
-  margin-top: -3px;
-  border-radius: 50%;
-  background: var(--accent);
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  background: url("../brand/tag.webp") center / contain no-repeat;
+  animation: tag-stamp 420ms cubic-bezier(0.3, 1.3, 0.5, 1) 120ms backwards;
+}
+
+@keyframes tag-stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.9) rotate(-16deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.9) rotate(3deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav a[aria-current]::before {
+    animation: none;
+  }
 }
 
 .site-nav li:has(> .nav-sub a[aria-current]) > .nav-row > a::before {
@@ -2405,6 +2428,16 @@ figcaption {
     width: 32px;
     height: 32px;
     margin-right: -8px;
+  }
+
+  /* The menu sits in a box like the project and post cards (Mami's
+     request, November 2026): same background, hairline and corners, with
+     room on the left for the tag. */
+  .site-nav {
+    padding: var(--space-8) var(--space-16) var(--space-8) 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
   }
 
   .site-header-inner {
