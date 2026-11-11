@@ -87,7 +87,7 @@
   --radius-card: 8px;
 
   --measure: 680px;
-  --nav-width: 240px;
+  --nav-width: 160px;
   /* Project and post cards (see "Project and post cards"); from 601px the
      padding is 20px, the space between cards 16px and the thumbnail 112px */
   --card-pad: 14px;
@@ -2417,8 +2417,11 @@ figcaption {
     display: block;
     max-width: none;
     margin: 0;
-    /* Without JS the dog sits above the menu, where it's right for a page
-       without a breadcrumb. With JS, see .dog-marks below. */
+    /* The dog sits level with the page's title and the first link level
+       with the first line under it (Mami's request, November 2026):
+       main.js measures the page and sets --logo-top and --nav-gap; without
+       JS it keeps the place that's right for a page without a breadcrumb
+       (132px, then 7px to the links). */
     padding: var(--logo-top, 132px) 0 var(--space-32);
   }
 
@@ -2426,42 +2429,6 @@ figcaption {
     width: 56px;
     height: 56px;
     margin-bottom: var(--nav-gap, 7px);
-  }
-
-  /* With JS (main.js, initNavAlign; Mami's requests, November 2026): the
-     first link sits level with the first sentence under the page's title
-     (--nav-top), and the dog marks the current page in place of the dot:
-     it sits beside the current link (--dog-y is that link's middle), with
-     a wide gap before the menu, and glides when a group opens or closes. */
-  .dog-marks .site-header-inner {
-    position: relative;
-    padding-top: var(--nav-top, 196px);
-  }
-
-  .dog-marks .site-logo {
-    position: absolute;
-    left: 0;
-    top: calc(var(--dog-y, 0px) - 22px);
-    width: 44px;
-    height: 44px;
-    margin: 0;
-  }
-
-  .dog-ready .site-logo {
-    transition: top 320ms cubic-bezier(0.32, 0.72, 0, 1);
-  }
-
-  .dog-marks .site-logo[hidden] {
-    display: none;
-  }
-
-  .dog-marks .site-nav {
-    padding-left: 72px;
-  }
-
-  .dog-marks .site-nav a[aria-current]::before,
-  .js.dog-marks .site-nav .nav-group:not(.is-open) > .nav-row > a[aria-current]::before {
-    content: none;
   }
 
   .page-frame {
