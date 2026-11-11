@@ -2466,3 +2466,11 @@ figcaption {
     padding-top: var(--space-96);
   }
 }
+
+/* Wide screens: the paw sits further out from the menu (Mami's request,
+   November 2026): 24px from the text, not the drawer's 14px. */
+@media (min-width: 1040px) {
+  .site-nav a[aria-current]::before {
+    left: -37px;
+  }
+}

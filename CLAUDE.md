@@ -251,7 +251,7 @@ after a card Mami liked). Everything else stays square.
   small paw print** in the accent, in the margin
   (Mami's request, 11 November 2026, in place of a 6px dot: "not gigantic
   compared to that dot, just slightly bigger", and "a little further from
-  the sidenav": 13×13px, 14px from the text; a CSS mask, so it takes each
+  the sidenav": 13×13px, 14px from the text in the phone drawer and, after Mami asked for more space on big screens, 24px from 1040px; a CSS mask, so it takes each
   theme's accent; a trail of three paws was tried first and Mami asked for
   "just one paw not three" the same day), so the page isn't marked by colour alone
   (`aria-current` for screen readers). The drawer has 36px of left padding
