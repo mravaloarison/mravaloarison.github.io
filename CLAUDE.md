@@ -298,7 +298,10 @@ after a card Mami liked). Everything else stays square.
   `assets/images/photos/`, run through `optimize-images.py`. First photo
   large, up to five. Hidden until the list has an entry.
 - Footer: a hairline, then Email · GitHub · LinkedIn · Devpost · RSS and
-  the copyright line.
+  the credit line: "Coded and designed by Maminiaina Ravaloarison + Claude
+  and Cappuccino" (Mami's words, 12 November 2026: "coded and designed by
+  me + Claude and Cappuccino"; it replaced the © line), then the Icons8
+  link.
 - **Project and post cards** (Mami's request, November 2026, after a card
   Mami liked in a screen recording; until then they were bare rows that
   only lit up on hover): every project and post in a list is a card on
