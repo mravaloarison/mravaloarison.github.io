@@ -196,7 +196,7 @@
   // A reload (Mami's request): the logo plays the animation again where it
   // sits, once its strip is in. Not on the first visit (that's the intro),
   // nor with reduced motion.
-  // Wide screens (Mami's requests, November 2026): the dog's card sits
+  // Wide screens (Mami's requests, November 2026): the dog sits
   // beside the page's title block, from the top of the eyebrow ("PORTFOLIO")
   // to the bottom of the title, and the first menu link sits level with the
   // first sentence under it. Titles sit at different heights (a breadcrumb,

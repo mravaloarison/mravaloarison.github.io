@@ -2422,7 +2422,7 @@ figcaption {
     display: block;
     max-width: none;
     margin: 0;
-    /* The dog's card sits beside the page's title block and the first link
+    /* The dog sits beside the page's title block and the first link
        level with the first sentence under it (see .site-logo below):
        main.js measures the page and sets --logo-top, --logo-h and
        --nav-gap; without JS they keep the values that are right for a page
@@ -2430,20 +2430,17 @@ figcaption {
     padding: var(--logo-top, 96px) 0 var(--space-32);
   }
 
-  /* The dog sits in the middle of a card like the project and post cards
-     (Mami's request, 11 November 2026), as wide as the menu column and as
-     tall as the page's title block beside it: from the top of the eyebrow
-     to the bottom of the title. */
+  /* The dog stands on its own (no card: Mami had it in one for a few
+     hours on 11 November 2026 and took it out), against the left edge like
+     the menu's links, and centred in the height of the page's title block
+     beside it: from the top of the eyebrow to the bottom of the title. */
   .site-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
+    justify-content: flex-start;
+    width: fit-content;
     height: var(--logo-h, 93px);
     margin-bottom: var(--nav-gap, 6px);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-card);
   }
 
   .site-logo picture {

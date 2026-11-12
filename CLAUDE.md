@@ -234,7 +234,7 @@ after a card Mami liked). Everything else stays square.
   2026", no arrows, the address unchanged (Mami's request, November 2026:
   not a link to About). Without JS it links to the big image
   (`logo-1024.webp`). Below 1040px it sits at the top left,
-  opposite the burger (44px); from 1040px it's in a card at the top of the
+  opposite the burger (44px); from 1040px it's at the top of the
   nav column (56px, see below). No site name next to it.
 - **Nav**: About · Projects · Arts · Blog, with the project types (Work ·
   Personal · Hackathons) indented under Projects and the Arts subcategories
@@ -262,10 +262,11 @@ after a card Mami liked). Everything else stays square.
   item gets the paw: on a project page it's on the type and Projects just brightens
   (`:has()`). About is current on both `/` and `/bio/`.
 - **1040px and up**: the nav is a sticky column on the left. **The dog
-  sits in the middle of a card** like the project and post cards
-  (`--surface`, a hairline, `--radius-card`; Mami's request, 11 November
-  2026, after hiding the dog for an afternoon "until we find a better
-  place for him"), as wide as the column and **lined up with the page's
+  stands on its own against the left edge, like the links under it** (no
+  card: one like the project and post cards, with the dog in the middle,
+  was tried on 11 November 2026 and Mami took it out the same evening:
+  "remove the card for the dog, and just align it to the left like the
+  navs"; don't bring it back unless asked), **centred in the height of the page's
   title block**: from the top of the eyebrow ("PORTFOLIO") to the bottom
   of the h1, taller when a title takes two lines. **The first link
   (About) is level with the first sentence under the title** (Mami's
