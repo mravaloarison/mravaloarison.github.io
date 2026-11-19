@@ -1,0 +1,17 @@
+{%- comment -%}
+  A section's title row (Mami's request, November 2026): the h2, a link to
+  the section's page, on the left, and its See-all link on the right of the
+  same line, the way PORTFOLIO and Short | Long share the row above the
+  name. Params: title, url, all (the link's words, e.g. "See all 13
+  projects"; leave it out for no link), all_hidden (words only screen
+  readers hear after them, so the link still says what it opens where the
+  row has no room to show them), id (the h2's id; the title, slugified, by
+  default, as Markdown would make it).
+{%- endcomment -%}
+{%- assign head_id = include.id | default: include.title | slugify -%}
+<div class="section-head">
+  <h2 id="{{ head_id }}"><a href="{{ include.url | relative_url }}">{{ include.title }}</a></h2>
+  {%- if include.all and include.all != "" %}
+  <a class="see-all" href="{{ include.url | relative_url }}">{{ include.all }}{% if include.all_hidden and include.all_hidden != "" %}<span class="sr-only"> {{ include.all_hidden }}</span>{% endif %}</a>
+  {%- endif %}
+</div>

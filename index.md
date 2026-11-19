@@ -34,26 +34,22 @@ seo:
 {% include callout.html label="Looking for" text=looking_for %}
 {% endif %}
 
+{%- comment -%} Each section's See-all link sits on its title row (section-head.html). {%- endcomment -%}
 {%- assign latest_projects = site.projects | sort: "date" | reverse | slice: 0, 2 %}
-## <a href="{{ '/projects/' | relative_url }}">Projects</a>
+{%- capture projects_all %}See all {{ site.projects.size }} projects{% endcapture %}
+{% include section-head.html title="Projects" url="/projects/" all=projects_all %}
 
 {% include card-grid.html items=latest_projects %}
 
-<p class="see-more"><a href="{{ '/projects/' | relative_url }}">See all {{ site.projects.size }} projects</a></p>
-
-{%- comment -%} One piece from each Arts subcategory (art-picks.html); the section hides itself while there's no art. {%- endcomment -%}
+{%- comment -%} Recent pieces from Arts (art-picks.html); the section hides itself while there's no art. {%- endcomment -%}
 {%- capture art_row %}{% include art-picks.html %}{% endcapture %}
 {%- if pick_count > 0 %}
-## <a href="{{ '/arts/' | relative_url }}">Arts</a>
+{% include section-head.html title="Arts" url="/arts/" all="See all art" %}
 
 {{ art_row }}
-
-<p class="see-more"><a href="{{ '/arts/' | relative_url }}">See all art</a></p>
 {%- endif %}
 
 {%- assign latest_posts = site.posts | sort: "date" | reverse | slice: 0, 2 %}
-## <a href="{{ '/blog/' | relative_url }}">Blog</a>
+{% include section-head.html title="Blog" url="/blog/" all="See all blog posts" %}
 
 {% include post-list.html posts=latest_posts descriptions=true %}
-
-<p class="see-more"><a href="{{ '/blog/' | relative_url }}">See all blog posts</a></p>

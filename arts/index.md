@@ -9,8 +9,10 @@ description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digi
 {% for g in site.data.categories.arts %}
 {% include art-group-items.html slug=g.slug %}
 {% assign group_url = "/arts/" | append: group.slug | append: "/" %}
+{% assign group_see_all = "" %}
+{% if group_items.size > 0 %}{% capture group_see_all %}See all {{ group_items.size }} {{ group.items_label }}{% endcapture %}{% endif %}
 
-## <a href="{{ group_url | relative_url }}">{{ group.label }}</a>
+{% include section-head.html title=group.label url=group_url all=group_see_all %}
 
 {% if group_items.size == 0 %}
 <p class="meta">Working on it.</p>
@@ -21,7 +23,6 @@ description: "Art by Maminiaina Ravaloarison: pencil drawings made by hand, digi
 {% else %}
 {% include gallery-grid.html items=group_items limit=2 viewer=group.slug %}
 {% endif %}
-<p class="see-more"><a href="{{ group_url | relative_url }}">View all {{ group_items.size }} {{ group.items_label }}</a></p>
 {% endif %}
 {% endfor %}
 

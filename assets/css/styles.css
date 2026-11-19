@@ -1106,13 +1106,42 @@ main iframe {
   margin-bottom: 0;
 }
 
-.see-more {
-  margin: calc(-1 * var(--space-24)) 0 var(--space-48);
-  font-weight: 600;
+/* A section's title row (section-head.html; Mami's request, November
+   2026): the h2 on the left and its See-all link on the right of the same
+   line, quiet like Short | Long on the eyebrow row. On a screen too narrow
+   for both (none in use is), the link drops under the title, still on the
+   right, instead of running into it. */
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-12);
+  margin: var(--space-64) 0 var(--space-16);
 }
 
-.see-more a::after {
+.section-head h2 {
+  margin: 0;
+}
+
+.see-all {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.see-all:hover {
+  color: var(--text);
+}
+
+.see-all::after {
   content: " →";
+  content: " →" / "";
 }
 
 /* Project cards (see "Project and post cards" above for the card box): one
@@ -2153,6 +2182,10 @@ figcaption {
 
   h2 {
     font-size: 27px;
+    margin-top: var(--space-48);
+  }
+
+  .section-head {
     margin-top: var(--space-48);
   }
 
