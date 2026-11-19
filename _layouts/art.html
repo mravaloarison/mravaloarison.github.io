@@ -2,13 +2,13 @@
 ---
 {%- comment -%}
   One piece of art, full screen, like a photo viewer (Mami's request,
-  November 2026): close (back to its subcategory) top left,
+  November 2026): close (back to Drawings) top left,
   info (when it was made, plus the note if there is one) top right, ‹ › to
-  the pieces before and after it in that subcategory, the title under the
+  the pieces before and after it in Drawings, the title under the
   picture. The galleries open the same view in place (viewer-dialog.html
   and main.js); this page is what a shared link, a reload or no JS shows.
 {%- endcomment -%}
-{%- assign group = site.data.categories.arts | where: "name", page.medium | first -%}
+{%- assign group = site.data.categories.arts | where: "collection", "arts" | first -%}
 {%- include art-group-items.html slug=group.slug -%}
 {%- assign group_url = "/arts/" | append: group.slug | append: "/" -%}
 {%- assign n = group_items.size -%}

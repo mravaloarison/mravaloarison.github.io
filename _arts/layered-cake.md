@@ -2,7 +2,7 @@
 title: Layered cake
 description: "A Procreate drawing of a square slice of layered cake, drawn from life in soft crayon strokes: a white top with purple lettering over pastel layers."
 medium: Procreate
-order: 3
+order: 10
 # Not dated by Mami yet: the day it went up on the site until Mami gives the real one.
 date: 2026-11-10
 image: /assets/images/arts/layered-cake.jpg

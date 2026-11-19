@@ -238,7 +238,7 @@ after a card Mami liked). Everything else stays square.
   nav column (56px, see below). No site name next to it.
 - **Nav**: About · Projects · Arts · Blog, with the project types (Work ·
   Personal · Hackathons) indented under Projects and the Arts subcategories
-  (Hand drawn · Procreate · Animated) under Arts, both from
+  (Drawings · Animated) under Arts, both from
   `_data/categories.yml`. Each of those two groups folds into a dropdown
   (Mami's request, November 2026): a chevron button beside the link,
   closed by default and open on the pages inside the group (a project, a
@@ -370,6 +370,15 @@ after a card Mami liked). Everything else stays square.
   `_data/tech_icons.yml` (fallback `source-code.png`). Every tech gets its
   own icon where Icons8 has one (Firebase and Firestore differ). The free
   Icons8 licence needs the "Icons by Icons8" footer link — never remove it.
+- `section-head.html` — a section's title row (Mami's request, 19
+  November 2026): the h2 (a link) on the left and its See-all link on the
+  right of the same line ("See all 13 projects →", 15px Nunito 600,
+  `--text-secondary`, brightening on hover, like Short | Long), in place of
+  the link that sat under the section. Used on About (Projects, Arts,
+  Blog), `/projects/` (each type, "See all 6 projects" with "in Hackathons"
+  for screen readers only, since the full words don't fit beside the title
+  on a phone) and `/arts/`. If a screen is ever too narrow for both, the
+  link drops under the title, still on the right.
 - `card-grid.html` — the project cards: per project the winner's medal on
   award projects, the underlined title (plus the "In progress" pill on
   ongoing projects), the description and
@@ -401,10 +410,10 @@ after a card Mami liked). Everything else stays square.
   data the picture viewer reads, `play=true` (Animated) adds a small round
   play mark to each thumbnail. Each square is `gallery-item.html`.
 - `art-picks.html` — the Short About's Arts section: the three most recent
-  pieces (by date) from Hand drawn and from Procreate, each set in its
-  gallery order, three to a row so each row is one subcategory (it showed
+  pieces (by date) of each medium (Hand drawn, then Procreate), each set in
+  the Drawings gallery order, three to a row so each row is one medium (it showed
   one piece per subcategory, the duck included, until Mami asked for these
-  six). A piece opens in the viewer and steps through its whole subcategory
+  six). A piece opens in the viewer and steps through all of Drawings
   (hidden `data-viewer` entries for the rest, as on `/arts/`; Markdown
   writes that wrapper as `<div hidden="">`). An empty subcategory is
   skipped, and the section hides itself if there's no art at all.
@@ -466,7 +475,7 @@ and category pages (Arts calls them subcategories).
 /projects/category/:category/       Work · Personal · Hackathons
 /projects/:slug/                    Project detail
 /arts/                              Arts index
-/arts/:subcategory/                 Hand drawn · Procreate · Animated
+/arts/:subcategory/                 Drawings · Animated
 /arts/:slug/                        Art piece (the full-screen viewer)
 /arts/animated/:slug/               Animation detail
 /blog/                              Blog & Journal index
@@ -506,7 +515,7 @@ Mami wants this serif for both):
   through `smartify`, so apostrophes come out curly. Then the profile
   links (email, GitHub, LinkedIn, Devpost, Resume), the "Looking for" callout
   (off while `looking_for:` is empty), then **Projects** (the two most recent
-  projects by date, with "See all N projects"), **Arts** (Mami's request,
+  projects by date, with "See all N projects" on the title row), **Arts** (Mami's request,
   November 2026: six pieces, the three most recent by date from Hand drawn
   and the three most recent from Procreate, each set in its gallery order,
   three to a row (two on phones, Mami's request), with "See all art"; no animations; `art-picks.html`) and
@@ -574,16 +583,21 @@ See Also → prev/next.
 ### Arts
 
 Mami draws, and recently started digital work in Procreate and animating.
-Three subcategories (November 2026, at Mami's request), in this order in the
-menu and on `/arts/`, defined in `_data/categories.yml` under `arts`:
+Two subcategories (Mami's request, 19 November 2026: "all arts combined in
+one section ... just separate animation and not animation and that's all"),
+in this order in the menu and on `/arts/`, defined in `_data/categories.yml`
+under `arts`:
 
-- **Hand drawn** (`/arts/hand-drawn/`): pencil on paper, art with
-  `medium: Hand drawn`. Its page opens with Mami's story: "I started drawing
-  with just a pencil, not as a professional or anything like that. I just
-  loved doing it." (Was "Traditional" until November 2026.)
-- **Procreate** (`/arts/procreate/`): art with `medium: Procreate`. Its
-  page opens with Mami's words (November 2026): "I'm just learning to
-  transition from traditional to digital right now."
+- **Drawings** (`/arts/drawings/`): the whole `arts` collection, pencil on
+  paper (`medium: Hand drawn`) and Procreate (`medium: Procreate`) in one
+  gallery; the `mediums` listed under it are the valid `medium` values.
+  Its page opens with Mami's two lines, hand drawn then Procreate: "I
+  started drawing with just a pencil, not as a professional or anything
+  like that. I just loved doing it. I'm just learning to transition from
+  traditional to digital right now." Until then Hand drawn
+  (`/arts/hand-drawn/`) and Procreate (`/arts/procreate/`) were separate
+  subcategories; both URLs redirect to Drawings. `medium` stays on every
+  piece (JSON-LD `artMedium`, the About picks).
 - **Animated** (`/arts/animated/`): the `animations` collection (see
   Animations).
 
@@ -593,8 +607,8 @@ empty; an empty one is `noindex` and out of the sitemap and switches on by
 itself with its first piece. `/arts/` opens with "I love drawing, and I
 recently started doing digital work in Procreate. I just really wanted them
 to be out here because they are also part of my work." (Mami's words), then
-each subcategory under its h2 with two samples and "View all N …" to its
-page (Mami's request: samples, not everything), or "Working on it." The
+each subcategory under its h2 with two samples and "See all N …" on the
+title row to its page (Mami's request: samples, not everything), or "Working on it." The
 viewer there still steps through the whole subcategory (the pieces past the
 samples are hidden `data-viewer` entries). The old
 `/arts/medium/*` and `/animations/` URLs redirect (`redirect_from`).
@@ -634,12 +648,13 @@ To add a piece, copy `_arts/_TEMPLATE.md` (ignored by Jekyll because of the
 underscore) and follow the steps in it.
 
 **Order** (Mami's request, November 2026: "the birds should remain the
-first to be seen, then the dogs, then Mulan"): `order:` in a piece's front
+first to be seen, then the dogs, then Mulan"; the Procreate pieces come
+after, since the merge into Drawings): `order:` in a piece's front
 matter (1 comes first; 2.5 fits between 2 and 3) sets its place in its
 gallery, on `/arts/`, in the viewer's ‹ › and in JSON-LD; pieces without
-one come after the numbered ones, newest first. Hand drawn is Kestrel 1,
+one come after the numbered ones, newest first. Drawings is Kestrel 1,
 Chickadee 2, Sparrow 3, Fluffy dog 4, Labrador 5, German shepherd 6, Mulan
-and Shang 7. `art-group-items.html` (Liquid) and
+and Shang 7, Honey jar 8, Coffee cup 9, Layered cake 10. `art-group-items.html` (Liquid) and
 `PortfolioSEO.art_group_items` (Ruby) both apply it; keep them the same.
 
 **Galleries** (`gallery-grid.html`): two columns at every width, square
@@ -780,7 +795,7 @@ status: # optional; "ongoing" shows an In progress pill
 ```yaml
 title:
 description:
-medium: # Procreate | Hand drawn — its Arts subcategory (page, gallery, ‹ ›)
+medium: # Procreate | Hand drawn — one of the `mediums` under Drawings
 order: # optional — its place in the gallery (1 first); unordered come after, newest first
 date:
 image:
@@ -826,7 +841,7 @@ linkable. Enforce all of these:
    (section index → item, or section index → category page → item). This
    is the guarantee that nothing is orphaned.
 3. **Category, medium, and tag pages are real pages**, generated at build
-   time — `/projects/category/hackathons/`, `/arts/hand-drawn/`,
+   time — `/projects/category/hackathons/`, `/arts/drawings/`,
    `/blog/tag/technology/`, and the section index links to each of them. The
    old site linked these to `#`, which meant search engines saw zero of them.
 4. **`see-also.html` renders on every detail page and is never empty.** Use

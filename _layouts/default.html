@@ -63,7 +63,7 @@
             <ul class="nav-sub" id="nav-sub-arts" aria-label="Art types">
               {%- for g in site.data.categories.arts %}
               {%- assign g_url = "/arts/" | append: g.slug | append: "/" %}
-              <li><a href="{{ g_url | relative_url }}"{% if page.url == g_url %} aria-current="page"{% elsif page.collection == "arts" and page.medium == g.name %} aria-current="true"{% elsif page.collection == "animations" and g.collection == "animations" %} aria-current="true"{% endif %}>{{ g.label }}</a></li>
+              <li><a href="{{ g_url | relative_url }}"{% if page.url == g_url %} aria-current="page"{% elsif page.collection == "arts" and g.mediums contains page.medium %} aria-current="true"{% elsif page.collection == "animations" and g.collection == "animations" %} aria-current="true"{% endif %}>{{ g.label }}</a></li>
               {%- endfor %}
             </ul>
           </li>

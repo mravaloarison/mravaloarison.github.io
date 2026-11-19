@@ -7,8 +7,8 @@ Jekyll::Hooks.register :site, :post_read do |site|
   problems = []
   warnings = []
   categories = Array(site.data.dig("categories", "projects")).map { |c| c["name"] }
-  # Art's `medium` is one of the Arts subcategories that hold the arts collection.
-  mediums = Array(site.data.dig("categories", "arts")).select { |c| c["collection"] != "animations" }.map { |c| c["name"] }
+  # Art's `medium` is one of those listed under the Arts subcategory that holds the arts collection.
+  mediums = Array(site.data.dig("categories", "arts")).select { |c| c["collection"] != "animations" }.flat_map { |c| Array(c["mediums"]) }
 
   check = lambda do |doc, fields|
     fields.each do |f|

@@ -1,43 +1,38 @@
 {%- comment -%}
   The Short About's Arts section (Mami's request, November 2026): the three
-  most recent pieces (by date) from Hand drawn and the three most recent
-  from Procreate, each set in its gallery order, three to a row, so each
-  row is one subcategory. Animations aren't here. A piece opens in the
-  picture viewer, which steps through its whole subcategory like the
-  samples on /arts/ (hidden entries for the pieces not shown). An empty
-  subcategory is skipped and joins by itself with its first piece. Sets
-  `pick_count`.
+  most recent pieces (by date) drawn by hand and the three most recent from
+  Procreate (each `medium` listed under Drawings), each set in the Drawings
+  gallery order, three to a row, so each row is one medium. Animations
+  aren't here. A piece opens in the picture viewer, which steps through all
+  of Drawings like the samples on /arts/ (hidden entries for the pieces not
+  shown). A medium with no pieces is skipped and joins by itself with its
+  first one. Sets `pick_count`.
 {%- endcomment -%}
 {%- assign pick_count = 0 -%}
+{%- assign drawings_group = site.data.categories.arts | where: "collection", "arts" | first -%}
+{%- include art-group-items.html slug=drawings_group.slug -%}
+{%- assign picked_urls = "|" -%}
 {%- capture picks -%}
-{%- for g in site.data.categories.arts -%}
-  {%- if g.collection == "animations" -%}{%- continue -%}{%- endif -%}
-  {%- include art-group-items.html slug=g.slug -%}
-  {%- assign recent = group_items | sort: "date" | reverse -%}
+{%- for medium in group.mediums -%}
+  {%- assign recent = group_items | where: "medium", medium | sort: "date" | reverse -%}
   {%- assign recent_urls = "|" -%}
   {%- for item in recent limit: 3 -%}{%- assign recent_urls = recent_urls | append: item.url | append: "|" -%}{%- endfor -%}
   {%- for item in group_items -%}
     {%- assign key = "|" | append: item.url | append: "|" -%}
     {%- if recent_urls contains key -%}
-      {%- assign pick_count = pick_count | plus: 1 %}
+      {%- assign pick_count = pick_count | plus: 1 -%}
+      {%- assign picked_urls = picked_urls | append: item.url | append: "|" %}
   {% include gallery-item.html item=item viewer=group.slug %}
     {%- endif -%}
   {%- endfor -%}
 {%- endfor -%}
 {%- endcapture -%}
 {%- capture rest -%}
-{%- for g in site.data.categories.arts -%}
-  {%- if g.collection == "animations" -%}{%- continue -%}{%- endif -%}
-  {%- include art-group-items.html slug=g.slug -%}
-  {%- assign recent = group_items | sort: "date" | reverse -%}
-  {%- assign recent_urls = "|" -%}
-  {%- for item in recent limit: 3 -%}{%- assign recent_urls = recent_urls | append: item.url | append: "|" -%}{%- endfor -%}
-  {%- for item in group_items -%}
-    {%- assign key = "|" | append: item.url | append: "|" -%}
-    {%- unless recent_urls contains key %}
+{%- for item in group_items -%}
+  {%- assign key = "|" | append: item.url | append: "|" -%}
+  {%- unless picked_urls contains key %}
   <span data-href="{{ item.url | relative_url }}"{% include viewer-attrs.html item=item viewer=group.slug %}></span>
-    {%- endunless -%}
-  {%- endfor -%}
+  {%- endunless -%}
 {%- endfor -%}
 {%- endcapture -%}
 {%- if pick_count > 0 -%}

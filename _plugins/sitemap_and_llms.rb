@@ -156,7 +156,7 @@ module PortfolioSEO
       out << "- [About Mami Ravaloarison](#{u('/')}): bio, experience, education, awards, certificates, languages and interests\n"
       out << "- [Projects](#{u('/projects/')}): #{PortfolioSEO.projects(@site).size} projects — work, personal and hackathon\n"
       out << "- [Blog](#{u('/blog/')}): #{PortfolioSEO.posts(@site).size} posts\n"
-      out << "- [Arts](#{u('/arts/')}): Mami's art, in three parts: hand drawn, Procreate and animated\n" unless PortfolioSEO.arts(@site).empty? && PortfolioSEO.animations(@site).empty?
+      out << "- [Arts](#{u('/arts/')}): Mami's art, in two parts: drawings (by hand in pencil, and in Procreate) and animations\n" unless PortfolioSEO.arts(@site).empty? && PortfolioSEO.animations(@site).empty?
       PortfolioSEO.art_groups(@site).each do |g|
         next if PortfolioSEO.art_group_items(@site, g).empty?
 
